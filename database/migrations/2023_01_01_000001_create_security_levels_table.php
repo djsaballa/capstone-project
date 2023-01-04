@@ -16,10 +16,6 @@ class CreateSecurityLevelsTable extends Migration
         Schema::create('security_levels', function (Blueprint $table) {
             $table->id();
             $table->integer('security_level');
-            $table->foreignId('role_id')
-                  ->constrained('roles')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
