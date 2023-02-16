@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// LOGIN
 Route::get('/', function () {
-    return view('welcome');
+    return view('login/main');
 });
