@@ -10,75 +10,72 @@
         <!-- BEGIN: Side Menu -->
         <nav class="side-nav">
             <a href="" class="intro-x flex items-center pl-5 pt-4">
-                <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('build/assets/images/logo.svg') }}">
-                <span class="hidden xl:block text-white text-lg ml-3">
-                    Rubick
-                </span>
+                <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                <span class="hidden xl:block text-white text-lg ml-3"> ADDFI </span>
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
-                @foreach ($side_menu as $menuKey => $menu)
-                    @if ($menu == 'devider')
-                        <li class="side-nav__devider my-6"></li>
-                    @else
-                        <li>
-                            <a href="{{ isset($menu['route_name']) ? route($menu['route_name'], $menu['params']) : 'javascript:;' }}" class="{{ $first_level_active_index == $menuKey ? 'side-menu side-menu--active' : 'side-menu' }}">
-                                <div class="side-menu__icon">
-                                    <i data-lucide="{{ $menu['icon'] }}"></i>
-                                </div>
-                                <div class="side-menu__title">
-                                    {{ $menu['title'] }}
-                                    @if (isset($menu['sub_menu']))
-                                        <div class="side-menu__sub-icon {{ $first_level_active_index == $menuKey ? 'transform rotate-180' : '' }}">
-                                            <i data-lucide="chevron-down"></i>
-                                        </div>
-                                    @endif
-                                </div>
-                            </a>
-                            @if (isset($menu['sub_menu']))
-                                <ul class="{{ $first_level_active_index == $menuKey ? 'side-menu__sub-open' : '' }}">
-                                    @foreach ($menu['sub_menu'] as $subMenuKey => $subMenu)
-                                        <li>
-                                            <a href="{{ isset($subMenu['route_name']) ? route($subMenu['route_name'], $subMenu['params']) : 'javascript:;' }}" class="{{ $second_level_active_index == $subMenuKey ? 'side-menu side-menu--active' : 'side-menu' }}">
-                                                <div class="side-menu__icon">
-                                                    <i data-lucide="activity"></i>
-                                                </div>
-                                                <div class="side-menu__title">
-                                                    {{ $subMenu['title'] }}
-                                                    @if (isset($subMenu['sub_menu']))
-                                                        <div class="side-menu__sub-icon {{ $second_level_active_index == $subMenuKey ? 'transform rotate-180' : '' }}">
-                                                            <i data-lucide="chevron-down"></i>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </a>
-                                            @if (isset($subMenu['sub_menu']))
-                                                <ul class="{{ $second_level_active_index == $subMenuKey ? 'side-menu__sub-open' : '' }}">
-                                                    @foreach ($subMenu['sub_menu'] as $lastSubMenuKey => $lastSubMenu)
-                                                        <li>
-                                                            <a href="{{ isset($lastSubMenu['route_name']) ? route($lastSubMenu['route_name'], $lastSubMenu['params']) : 'javascript:;' }}" class="{{ $third_level_active_index == $lastSubMenuKey ? 'side-menu side-menu--active' : 'side-menu' }}">
-                                                                <div class="side-menu__icon">
-                                                                    <i data-lucide="zap"></i>
-                                                                </div>
-                                                                <div class="side-menu__title">{{ $lastSubMenu['title'] }}</div>
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </li>
-                    @endif
-                @endforeach
+                <li>
+                    <a href="index.html" class="side-menu side-menu--active">
+                        <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+                        <div class="side-menu__title">
+                            Dashboard
+                            <div class="side-menu__sub-icon transform rotate-180"> </i> </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="list-of-profiles.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
+                        <div class="side-menu__title">
+                            List of Profiles
+                            <div class="side-menu__sub-icon "> </i> </div>
+                        </div>
+                    </a>
+                </li>
+                </li>
+                <li>
+                    <a href="list-of-users.html" class="side-menu ">
+                        <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
+                        <div class="side-menu__title">
+                            List of Users
+                            <div class="side-menu__sub-icon "> </i> </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="inbox.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
+                        <div class="side-menu__title">
+                            Inbox
+                            <div class="side-menu__sub-icon "> </i> </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="audit-logs.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
+                        <div class="side-menu__title">
+                            Audit Logs
+                            <div class="side-menu__sub-icon "></i> </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="archive.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
+                        <div class="side-menu__title">
+                            Archive
+                            <div class="side-menu__sub-icon "></i> </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- END: Side Menu -->
         <!-- BEGIN: Content -->
         <div class="content">
-            @include('../layout/components/top-bar')
             @yield('subcontent')
         </div>
         <!-- END: Content -->
