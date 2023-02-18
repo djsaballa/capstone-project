@@ -24,7 +24,7 @@
             <div class="side-nav__devider my-6"></div>
             <ul>
                 <li>
-                    <a href="index.html" class="side-menu side-menu--active">
+                    <a href="/" class="side-menu side-menu--active">
                         <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
                         <div class="side-menu__title">
                             Dashboard
@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="list-of-profiles.html" class="side-menu">
+                    <a href="/list-of-profiles" class="side-menu">
                         <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
                         <div class="side-menu__title">
                             List of Profiles
@@ -43,7 +43,7 @@
                 </li>
                 </li>
                 <li>
-                    <a href="list-of-users.html" class="side-menu ">
+                    <a href="list-of-users" class="side-menu ">
                         <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
                         <div class="side-menu__title">
                             List of Users
@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="inbox.html" class="side-menu">
+                    <a href="inbox" class="side-menu">
                         <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
                         <div class="side-menu__title">
                             Inbox
@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="audit-logs.html" class="side-menu">
+                    <a href="audit-logs" class="side-menu">
                         <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
                         <div class="side-menu__title">
                             Audit Logs
@@ -71,7 +71,7 @@
                 </li>
 
                 <li>
-                    <a href="archive.html" class="side-menu">
+                    <a href="archive" class="side-menu">
                         <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
                         <div class="side-menu__title">
                             Archive
