@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// LOGIN
+// Temp Routing
 Route::get('/', function () {
-    return view('login/main');
+    return view('dashboard');
 });
 
 Route::get('/list-of-profiles', function () {
