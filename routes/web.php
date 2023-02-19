@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< Updated upstream
 Route::get('/', function () {
     return view('dashboard');
 });
+=======
+// Temp Routing
+Route::controller(PageController::class)->group(function() {
+    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('list-of-profiles-page', 'listOfprofiles')->name('list-of-profiles');
+    Route::get('list-of-users-page', 'listOfUsers')->name('list-of-users');
+    Route::get('audit-logs-page', 'auditLogs')->name('audit-logs');
+    Route::get('inbox-page', 'inbox')->name('inbox');
+    Route::get('archive-page', 'archive')->name('archive');
+});
+>>>>>>> Stashed changes
