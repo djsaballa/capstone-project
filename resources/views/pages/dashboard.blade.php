@@ -316,6 +316,4 @@
             </div>
         </div>
     </div>
-    <!-- END: Content -->
-    </div>
 @endsection
