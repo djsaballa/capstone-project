@@ -13,12 +13,6 @@ use App\Http\Controllers\PageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-<<<<<<< Updated upstream
-Route::get('/', function () {
-    return view('dashboard');
-});
-=======
 // Temp Routing
 Route::controller(PageController::class)->group(function() {
     Route::get('/', 'dashboard')->name('dashboard');
@@ -28,4 +22,3 @@ Route::controller(PageController::class)->group(function() {
     Route::get('inbox-page', 'inbox')->name('inbox');
     Route::get('archive-page', 'archive')->name('archive');
 });
->>>>>>> Stashed changes
