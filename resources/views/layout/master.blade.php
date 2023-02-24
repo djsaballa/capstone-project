@@ -17,10 +17,12 @@
 
 <body class="py-5">
     <div class="flex mt-[4.7rem] md:mt-0">
+
         @include('components.side-menu')
+        
         <div class="content">
-        @include('components.top-bar-nav')
-        @yield('content')
+            @include('components.top-bar-nav')
+            @yield('content')
         </div>
 
         <script src="dist/js/app.js"></script>
