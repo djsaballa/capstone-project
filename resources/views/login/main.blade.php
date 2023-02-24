@@ -1,7 +1,7 @@
-@extends('../layout/' . $layout)
+@extends('../layout/main')
 
 @section('head')
-    <title>Login</title>
+    @yield('subhead')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
                 <a href="" class="-intro-x flex items-center pt-5">
                     <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('build/assets/images/logo.svg') }}">
                     <span class="text-white text-lg ml-3">
-                        Rubick
+                        ADDFI
                     </span>
                 </a>
                 <div class="my-auto">
