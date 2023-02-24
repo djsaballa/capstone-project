@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
->>>>>>> Stashed changes:resources/views/pages/dashboard.blade.php
         <!-- BEGIN: Content -->
             <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12 2xl:col-span-9">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,26 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Temp Routing
-Route::get('/', function () {
-    return view('dashboard');
-});
-
-Route::get('/list-of-profiles', function () {
-    return view('list-of-profiles');
-});
-
-Route::get('/list-of-users', function () {
-    return view('list-of-users');
-});
-
-Route::get('/inbox', function () {
-    return view('inbox');
-});
-
-Route::get('/audit-logs', function () {
-    return view('audit-logs');
-});
-
-Route::get('/archive', function () {
-    return view('archive');
+Route::controller(AdminController::class)->group(function() {
+    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('list-of-profiles-page', 'listOfprofiles')->name('list-of-profiles');
+    Route::get('list-of-users-page', 'listOfUsers')->name('list-of-users');
+    Route::get('audit-logs-page', 'auditLogs')->name('audit-logs');
+    Route::get('inbox-page', 'inbox')->name('inbox');
+    Route::get('archive-page', 'archive')->name('archive');
 });
