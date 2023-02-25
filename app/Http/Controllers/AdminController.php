@@ -28,16 +28,16 @@ class AdminController extends Controller
         ]);
     }
     
-    public function auditLogs()
-    {
-        return view('pages/audit-logs', [
-            
-        ]);
-    }
-     
     public function inbox()
     {
         return view('pages/inbox', [
+            
+        ]);
+    }
+
+    public function auditLogs()
+    {
+        return view('pages/audit-logs', [
             
         ]);
     }

@@ -14,12 +14,18 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-// Temp Routing
+// ADMIN
 Route::controller(AdminController::class)->group(function() {
-    Route::get('/', 'dashboard')->name('dashboard');
-    Route::get('list-of-profiles-page', 'listOfprofiles')->name('list-of-profiles');
-    Route::get('list-of-users-page', 'listOfUsers')->name('list-of-users');
-    Route::get('audit-logs-page', 'auditLogs')->name('audit-logs');
-    Route::get('inbox-page', 'inbox')->name('inbox');
-    Route::get('archive-page', 'archive')->name('archive');
+    // DASHBOARD
+    Route::get('/', 'dashboard')->name('admin_dashboard');
+    // LIST OF PROFILES
+    Route::get('/admin-list-of-profiles', 'listOfprofiles')->name('admin_list_of_profiles');
+    // LIST OF USERS
+    Route::get('/admin-list-of-users', 'listOfUsers')->name('admin_list_of_users');
+    // INBOX
+    Route::get('/admin-inbox', 'inbox')->name('admin_inbox');
+    // AUDIT LOGS
+    Route::get('/admin-audit-logs', 'auditLogs')->name('admin_audit_logs');
+    // ARCHIVE
+    Route::get('/admin-archive', 'archive')->name('admin_archive');
 });
