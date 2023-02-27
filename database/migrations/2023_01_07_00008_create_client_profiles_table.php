@@ -35,14 +35,6 @@ class CreateClientProfilesTable extends Migration
             $table->string('district_servant_remark');
             $table->string('division_servant_remark');
             $table->string('social_worker_recommendation');
-            $table->foreignId('family_composition_id')
-                  ->constrained('family_compositions')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-            $table->foreignId('medical_condition_id')
-                  ->constrained('medical_conditions')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
             $table->foreignId('employee_encoder_id')
                   ->constrained('employees')
                   ->onUpdate('cascade')

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminController;
 */
 
 // ADMIN
-Route::controller(AdminController::class)->group(function() {
+Route::controller(UserController::class)->group(function() {
     // DASHBOARD
     Route::get('/', 'dashboard')->name('admin_dashboard');
     // LIST OF PROFILES
@@ -29,3 +29,5 @@ Route::controller(AdminController::class)->group(function() {
     // ARCHIVE
     Route::get('/admin-archive', 'archive')->name('admin_archive');
 });
+
+// USER

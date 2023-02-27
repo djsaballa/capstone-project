@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFamilyCompositionsTable extends Migration
+class CreateMedicalCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateFamilyCompositionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('family_compositions', function (Blueprint $table) {
+        Schema::create('medical_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('relationship');
-            $table->string('occupation');
-            $table->integer('contact_number');
+            $table->string('medical_category');
+            $table->integer('priority_level');
+            $table->foreignId('disease_id')
+                ->constrained('diseases')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateFamilyCompositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('family_compositions');
+        Schema::dropIfExists('priorities');
     }
 }
