@@ -12,28 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Temp Routing
-Route::get('/', function () {
-    return view('dashboard');
-});
-
-Route::get('/list-of-profiles', function () {
-    return view('list-of-profiles');
-});
-
-Route::get('/list-of-users', function () {
-    return view('list-of-users');
-});
-
-Route::get('/inbox', function () {
-    return view('inbox');
-});
-
-Route::get('/audit-logs', function () {
-    return view('audit-logs');
-});
-
-Route::get('/archive', function () {
-    return view('archive');
+// ADMIN
+Route::controller(UserController::class)->group(function() {
+    // DASHBOARD
+    Route::get('/', 'dashboard')->name('admin_dashboard');
+    // LIST OF PROFILES
+    Route::get('/admin-list-of-profiles', 'listOfprofiles')->name('admin_list_of_profiles');
+    // LIST OF USERS
+    Route::get('/admin-list-of-users', 'listOfUsers')->name('admin_list_of_users');
+    // INBOX
+    Route::get('/admin-inbox', 'inbox')->name('admin_inbox');
+    // AUDIT LOGS
+    Route::get('/admin-audit-logs', 'auditLogs')->name('admin_audit_logs');
+    // ARCHIVE
+    Route::get('/admin-archive', 'archive')->name('admin_archive');
+    // LOGIN 
+    Route::get('/login', 'login')->name('user_login');
 });

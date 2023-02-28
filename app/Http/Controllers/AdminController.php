@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-   
+    public function login()
+    {
+        return view('login/main', [
+
+        ]);
+    }
+
     public function dashboard()
     {
         return view('pages/dashboard', [
