@@ -28,6 +28,8 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/admin-audit-logs', 'auditLogs')->name('admin_audit_logs');
     // ARCHIVE
     Route::get('/admin-archive', 'archive')->name('admin_archive');
+    // LOGIN
+    Route::get('/auth-login', 'login')->name('auth_login');
 });
 
 // USER
