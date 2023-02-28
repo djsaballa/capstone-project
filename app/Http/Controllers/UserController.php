@@ -6,11 +6,31 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // LOGIN
     public function login()
     {
         return view('login/main', [
 
         ]);
+    }
+
+    // LOGIN AUTH
+    public function loginAuth(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+        
+        if ($request->username == 'username') {
+            if ($request->password == 'password') {
+                return redirect(route('admin_dashboard'));
+            } else {
+                return back()->with('fail', 'Incorrect Password');
+            }
+        } else {
+            return back()->with('fail', 'Username not recognized');
+        }
     }
    
     public function dashboard()

@@ -15,9 +15,13 @@ use App\Http\Controllers\UserController;
 */
 
 // ADMIN
-Route::controller(UserController::class)->group(function() {
+Route::controller(UserController::class)->group(function () {
+    // LOGIN
+    Route::get('/', 'login')->name('login');
+        // LOGIN AUTH
+        Route::post('/login-auth', 'loginAuth')->name('login_auth');
     // DASHBOARD
-    Route::get('/', 'dashboard')->name('admin_dashboard');
+    Route::get('/admin-dashboard', 'dashboard')->name('admin_dashboard');
     // LIST OF PROFILES
     Route::get('/admin-list-of-profiles', 'listOfprofiles')->name('admin_list_of_profiles');
     // LIST OF USERS
@@ -28,8 +32,6 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/admin-audit-logs', 'auditLogs')->name('admin_audit_logs');
     // ARCHIVE
     Route::get('/admin-archive', 'archive')->name('admin_archive');
-    // LOGIN
-    Route::get('/auth-login', 'login')->name('auth_login');
 });
 
 // USER
