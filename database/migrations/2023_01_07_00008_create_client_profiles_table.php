@@ -16,6 +16,7 @@ class CreateClientProfilesTable extends Migration
         Schema::create('client_profiles', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('address');
             $table->string('gender');
@@ -30,11 +31,14 @@ class CreateClientProfilesTable extends Migration
             $table->string('contact_person2_name');
             $table->integer('contact_person2_contact_number');
             $table->string('background_info');
+            $table->string('background_info_attachment')->nullable();
             $table->string('action_taken');
+            $table->string('action_taken_attachment')->nullable();
             $table->string('locale_servant_remark');
             $table->string('district_servant_remark');
             $table->string('division_servant_remark');
             $table->string('social_worker_recommendation');
+            $table->string('status');
             $table->foreignId('employee_encoder_id')
                   ->constrained('employees')
                   ->onUpdate('cascade')

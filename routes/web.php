@@ -14,24 +14,34 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// ADMIN
 Route::controller(UserController::class)->group(function () {
     // LOGIN
     Route::get('/', 'login')->name('login');
         // LOGIN AUTH
         Route::post('/login-auth', 'loginAuth')->name('login_auth');
     // DASHBOARD
-    Route::get('/admin-dashboard', 'dashboard')->name('admin_dashboard');
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
     // LIST OF PROFILES
-    Route::get('/admin-list-of-profiles', 'listOfprofiles')->name('admin_list_of_profiles');
+    Route::get('/list-of-profiles', 'listOfprofiles')->name('list_of_profiles');
+        // ADD PROFILE
+        Route::get('/add-profile-1', 'addProfile1')->name('add_profile_1');
+        Route::get('/add-profile-2', 'addProfile2')->name('add_profile_2');
+        Route::get('/add-profile-3', 'addProfile3')->name('add_profile_3');
+        Route::get('/add-profile-4', 'addProfile4')->name('add_profile_4');
+        Route::get('/add-profile-5', 'addProfile5')->name('add_profile_5');
+        Route::get('/add-profile-privacy', 'addProfilePrivacy')->name('add_profile_privacy');
     // LIST OF USERS
-    Route::get('/admin-list-of-users', 'listOfUsers')->name('admin_list_of_users');
+    Route::get('/list-of-users', 'listOfUsers')->name('list_of_users');
+        // ADD USER
+        Route::get('/add-user', 'addUser')->name('add_user');
+        // EDIT USER
+        Route::get('/edit-user', 'editUser')->name('edit_user');
     // INBOX
-    Route::get('/admin-inbox', 'inbox')->name('admin_inbox');
+    Route::get('/inbox', 'inbox')->name('inbox');
     // AUDIT LOGS
-    Route::get('/admin-audit-logs', 'auditLogs')->name('admin_audit_logs');
+    Route::get('/audit-logs', 'auditLogs')->name('audit_logs');
     // ARCHIVE
-    Route::get('/admin-archive', 'archive')->name('admin_archive');
+    Route::get('/archive', 'archive')->name('archive');
 });
 
 // USER
