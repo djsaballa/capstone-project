@@ -28,7 +28,18 @@ class CreateEmployeesTable extends Migration
             $table->foreignId('locale_id')
                 ->constrained('locales')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->nullable();
+            $table->foreignId('district_id')
+                ->constrained('districts')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->nullable();
+            $table->foreignId('division_id')
+                ->constrained('divisions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->nullable();
             $table->timestamps();
         });
     }
