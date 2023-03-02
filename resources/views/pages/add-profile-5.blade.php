@@ -93,8 +93,7 @@
                     <button class="btn btn-primary w-24 ml-2">Finish</button>
                 </div>
                 <!-- END: Wizard Layout -->
-            </form>
-        </div>
-        <!-- END: Content -->
+            </div>
+            <!-- END: Content -->
     </div>
 @endsection
