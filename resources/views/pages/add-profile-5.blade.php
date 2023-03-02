@@ -56,11 +56,8 @@
                 <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Setup Background Information</div>
             </div>
         </div>
-        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-
-            <div class="font-medium text-base">Background Information</div>
-            <form method="POST" action="/profile">
-                @csrf
+            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                <div class="font-medium text-base">Background Information</div>
                 <div class="mt-3">
                     <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG PASYENTE,
                         PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
@@ -97,8 +94,7 @@
                     </a>
                 </div>
                 <!-- END: Wizard Layout -->
-            </form>
-        </div>
-        <!-- END: Content -->
+            </div>
+            <!-- END: Content -->
     </div>
 @endsection
