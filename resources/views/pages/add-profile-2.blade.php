@@ -50,6 +50,9 @@
             </div>
 
         </div>
+
+        <form method="POST" action="/profile">
+        @csrf
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <div class="font-medium text-base">Family Composition</div>
             <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
@@ -112,6 +115,7 @@
             </div>
         </div>
     </div>
+</form>
     <!-- END: Wizard Layout -->
     </div>
 @endsection

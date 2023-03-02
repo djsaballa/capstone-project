@@ -15,7 +15,7 @@
 
 <!-- END: Head -->
 
-<body>
+<body class="login">>
     @yield('content')
     <script src="dist/js/app.js"></script>
 </body>

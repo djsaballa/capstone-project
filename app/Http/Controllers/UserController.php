@@ -9,7 +9,7 @@ class UserController extends Controller
     // LOGIN ----------------------------------------------------------------------------------------------------------
     public function login()
     {
-        return view('login/main', [
+        return view('login/login', [
 
         ]);
     }

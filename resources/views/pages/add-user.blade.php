@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex items-center mt-8">
         <h2 class="intro-y text-lg font-medium mr-auto">
-            Add Profile
+            Add User
         </h2>
     </div>
     <!-- BEGIN: Wizard Layout -->
@@ -26,7 +26,7 @@
                             <div class="mt-3">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" class="form-control mt-2" id="exampleInputPassword1"
-                                    placeholder="Password">
+                                    placeholder="Password" value="Password">
                             </div>
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"

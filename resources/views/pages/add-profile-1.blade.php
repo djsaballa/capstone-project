@@ -55,6 +55,8 @@
                 </h2>
             </div>
             <div class="p-5">
+                <form method="POST" action="/profile">
+                @csrf
                 <div class="flex flex-col-reverse xl:flex-row flex-col">
                     <div class="flex-1 mt-6 xl:mt-0">
                         <div class="grid grid-cols-12 gap-x-5">
@@ -198,6 +200,7 @@
                         </div>
                     </div>
                 </div>
+                </form>
                 <!-- END: Wizard Layout -->
             </div>
         @endsection
