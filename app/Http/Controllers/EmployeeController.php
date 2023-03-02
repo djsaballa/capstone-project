@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
 
-class UserController extends Controller
+class EmployeeController extends Controller
 {
     // LOGIN ----------------------------------------------------------------------------------------------------------
     public function login()
@@ -45,7 +46,7 @@ class UserController extends Controller
         return view('pages.list-of-profiles');
     }
 
-    // ADD PROFILE 
+    // ADD PROFILE
     public function addProfilePrivacy()
     {
         return view('pages.add-profile-privacy');
@@ -79,7 +80,8 @@ class UserController extends Controller
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers()
     {
-        return view('pages.list-of-users');
+        $employees = Employee::all();
+        return view('pages.list-of-users', compact('employees'));
     }
 
     public function addUser()

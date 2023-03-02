@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::controller(UserController::class)->group(function () {
+Route::controller(EmployeeController::class)->group(function () {
     // LOGIN
     Route::get('/', 'login')->name('login');
         // LOGIN AUTH

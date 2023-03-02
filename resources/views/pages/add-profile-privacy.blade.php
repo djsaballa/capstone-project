@@ -62,7 +62,7 @@
                 <label class="form-check-label" for="flexSwitchCheckDefault">I Accept</label>
             </div>
             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                <a href="{{ route('list_of_profiles') }}"> 
+                <a href="{{ route('list_of_profiles') }}">
                     <button class="btn btn-secondary w-24 ml-2">Cancel</button>
                 </a>
                 <a href="{{ route('add_profile_1') }}">

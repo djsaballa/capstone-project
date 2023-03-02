@@ -57,7 +57,7 @@
         </div>
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <div class="font-medium text-base">Contact Persons</div>
-            <form method="POST" action="/profile">
+            <form method="GET" action="{{ route('add_profile_5') }}">
                 @csrf
                 <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
                     <div class="mt-3 col-span-3 2xl:col-span-1">
@@ -110,12 +110,8 @@
                         <button class="btn btn-primary w-50 ml-2">Add Response</button>
                     </div>
                     <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                        <a href="{{ route('add_profile_3') }}">
-                            <button class="btn btn-secondary w-24 ml-2">Previous</button>
-                        </a>
-                        <a href="{{ route('add_profile_5') }}">
-                            <button class="btn btn-primary w-24 ml-2">Next</button>
-                        </a>
+                        <a href="{{ route('add_profile_3') }}" class="btn btn-secondary w-24 ml-2">Previous</a>
+                        <button class="btn btn-primary w-24 ml-2">Next</button>
                     </div>
                 </div>
         </div>
