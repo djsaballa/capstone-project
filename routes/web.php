@@ -29,6 +29,11 @@ Route::controller(EmployeeController::class)->group(function () {
         Route::get('/add-profile-3', 'addProfile3')->name('add_profile_3');
         Route::get('/add-profile-4', 'addProfile4')->name('add_profile_4');
         Route::get('/add-profile-5', 'addProfile5')->name('add_profile_5');
+        Route::get('/edit-profile-1', 'editProfile1')->name('edit_profile_1');
+        Route::get('/edit-profile-2', 'editProfile2')->name('edit_profile_2');
+        Route::get('/edit-profile-3', 'editProfile3')->name('edit_profile_3');
+        Route::get('/edit-profile-4', 'editProfile4')->name('edit_profile_4');
+        Route::get('/edit-profile-5', 'editProfile5')->name('edit_profile_5');
         Route::get('/add-profile-privacy', 'addProfilePrivacy')->name('add_profile_privacy');
     // LIST OF USERS
     Route::get('/list-of-users', 'listOfUsers')->name('list_of_users');
