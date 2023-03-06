@@ -24,6 +24,15 @@ class CreateMedicalConditionsTable extends Migration
                   ->constrained('client_profiles')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->foreignId('disease_id')
+                  ->constrained('diseases')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreignId('medical_category_id')
+                  ->nullable()
+                  ->constrained('medical_categories')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

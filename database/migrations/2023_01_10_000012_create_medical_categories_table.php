@@ -17,10 +17,6 @@ class CreateMedicalCategoriesTable extends Migration
             $table->id();
             $table->string('medical_category');
             $table->integer('priority_level');
-            $table->foreignId('disease_id')
-                ->constrained('diseases')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }
