@@ -47,6 +47,9 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::get('/audit-logs', 'auditLogs')->name('audit_logs');
     // ARCHIVE
     Route::get('/archive', 'archive')->name('archive');
+    // VIEW PROFILE
+    Route::get('/view-profile-1', 'viewProfile1')->name('view_profile_1');
+    Route::get('/view-profile-2', 'viewProfile2')->name('view_profile_2');
 });
 
 // USER

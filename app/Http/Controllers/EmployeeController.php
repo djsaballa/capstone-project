@@ -102,6 +102,16 @@ class EmployeeController extends Controller
     {
         return view('pages.edit-profile-5');
     }
+    // VIEW PROFILE ---------------------------------------------------------------------------------------------------------
+    public function viewProfile1()
+    {
+        return view('pages.view-profile-1');
+    }
+    public function viewProfile2()
+    {
+        return view('pages.view-profile-2');
+    }
+
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers()
     {
