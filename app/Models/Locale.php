@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Employee;
+use App\Models\District;
+use App\Models\Division;
 
 class Locale extends Model
 {
@@ -25,9 +28,19 @@ class Locale extends Model
         "division_id"
     ];
 
-    public function locale()
+    public function employees()
     {
-        return $this->belongsTo(Locale::class);
+        return $this->hasMany(Employee::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+    
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
     }
 
     public function getId()

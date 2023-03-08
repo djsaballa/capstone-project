@@ -37,9 +37,14 @@ class Employee extends Model
         "division_id"
     ];
 
-    public function employee()
+    public function role()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Role::class);
+    }
+
+    public function locale()
+    {
+        return $this->belongsTo(Locale::class);
     }
 
     public function getId()

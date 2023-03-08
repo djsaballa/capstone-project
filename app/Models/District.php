@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Division;
 
 class District extends Model
 {
@@ -24,9 +25,14 @@ class District extends Model
         "division_id"
     ];
 
-    public function district()
+    public function locales()
     {
-        return $this->belongsTo(District::class);
+        return $this->hasMany(Locale::class);
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
     }
 
     public function getId()
