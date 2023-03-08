@@ -15,6 +15,7 @@ class CreateClientProfilesTable extends Migration
     {
         Schema::create('client_profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('picture')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

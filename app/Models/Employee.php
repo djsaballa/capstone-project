@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Role;
-use App\Models\SecurityLevel;
 use App\Models\Locale;
 use App\Models\District;
 use App\Models\Division;
-
+use App\Models\ClientProfile;
 class Employee extends Model
 {
     use HasFactory;
@@ -45,6 +44,21 @@ class Employee extends Model
     public function locale()
     {
         return $this->belongsTo(Locale::class);
+    }
+
+    public function clientProfiles()
+    {
+        return $this->hasMany(ClientProfile::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+
+    public function inboxes()
+    {
+        return $this->hasMany(Inbox::class);
     }
 
     public function getId()
