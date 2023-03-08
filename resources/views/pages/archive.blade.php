@@ -102,8 +102,56 @@
                             </div>
                         </div>
                         <!-- END: General Report -->
+                                <!-- START DROPDOWN -->
+        <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
+            <label for="regular-form-1" class="form-label">List of Division</label>
+            <div class="flex w-full sm:w-auto mr-2">
+                <select class="form-select box ml-2">
+                    <option>Division 1</option>
+                    <option>Division 2</option>
+                    <option>Division 3</option>
+                    <option>Division 4</option>
+                    <option>Division 5</option>
+                </select>
+            </div>
+            <label for="regular-form-1" class="form-label">List of District</label>
+            <div class="flex w-full sm:w-auto mr-2">
+                <select class="form-select box ml-2">
+                    <option>District 1</option>
+                    <option>District 2</option>
+                    <option>District 3</option>
+                    <option>District 4</option>
+                    <option>District 5</option>
+                </select>
+            </div>
+            <label for="regular-form-1" class="form-label">List of Locale</label>
+            <div class="flex w-full sm:w-auto mr-2">
+                <select class="form-select box ml-2">
+                    <option>Locale 1</option>
+                    <option>Locale 2</option>
+                    <option>Locale 3</option>
+                    <option>Locale 4</option>
+                    <option>Locale 5</option>
+                </select>
+            </div>
+            <label for="regular-form-1" class="form-label">Status</label>
+            <div class="flex w-full sm:w-auto mr-2">
+                <select class="form-select box ml-2 ">
+                    <option>Status 1</option>
+                    <option>Status 2</option>
+                    <option>Status 3</option>
+                    <option>Status 4</option>
+                    <option>Status 5</option>
+                </select>
+            </div>
+            <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
+                <button class="btn btn-primary w-24 ml-2">Go</button>
+                <button class="btn btn-secondary w-24 ml-2">Reset</button>
+            </div>
+        </div>
+    <!-- END DROPDOWN -->
                         <!-- BEGIN: Data List -->
-                        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+                        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible mt-5">
                             <table class="table table-report -mt-2">
                                 <thead>
                                     <tr>
