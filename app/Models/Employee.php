@@ -24,6 +24,7 @@ class Employee extends Model
     }
 
     protected $fillable = [
+        "picture",
         "first_name",
         "middle_name",
         "last_name",

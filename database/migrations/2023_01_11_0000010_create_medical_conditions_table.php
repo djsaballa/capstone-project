@@ -15,7 +15,6 @@ class CreateMedicalConditionsTable extends Migration
     {
         Schema::create('medical_conditions', function (Blueprint $table) {
             $table->id();
-            $table->string('sickness');
             $table->date('since_when');
             $table->string('medicine_supplements');
             $table->string('dosage');
