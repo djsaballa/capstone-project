@@ -23,7 +23,7 @@ class InboxSeeder extends Seeder
                 Inbox::create([
                     "checked" => $data['0'],
                     "content" => $data['1'],
-                    "date_time" => $data['2'],
+                    "date_sent" => $data['2'],
                     "sender_employee_id" => $data['3'],
                 ]);
             }

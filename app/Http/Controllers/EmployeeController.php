@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Locale;
 use App\Models\Employee;
 
 class EmployeeController extends Controller
@@ -43,7 +46,11 @@ class EmployeeController extends Controller
     // LIST OF PROFILES ------------------------------------------------------------------------------------------------
     public function listOfProfiles()
     {
-        return view('pages.list-of-profiles');
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        return view(('pages.list-of-profiles'), compact('divisions', 'districts', 'locales'));
     }
 
     // ADD PROFILE

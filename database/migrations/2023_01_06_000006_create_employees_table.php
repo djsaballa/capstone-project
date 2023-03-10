@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('last_name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->integer('contact_number');
+            $table->string('contact_number');
             $table->foreignId('role_id')
                   ->constrained('roles')
                   ->onUpdate('cascade')

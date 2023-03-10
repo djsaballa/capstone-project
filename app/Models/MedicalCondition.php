@@ -35,7 +35,7 @@ class MedicalCondition extends Model
 
     public function clientProfile()
     {
-        return $this->hasMany(ClientProfile::class);
+        return $this->belongsTo(ClientProfile::class);
     }
 
     public function medicalCategory()

@@ -22,7 +22,7 @@ class MedicalConditionSeeder extends Seeder
             if (!$firstline) {
                 MedicalCondition::create([
                     "since_when" => $data['0'],
-                    "medicine_supplement" => $data['1'],
+                    "medicine_supplements" => $data['1'],
                     "dosage" => $data['2'],
                     "frequency" => $data['3'],
                     "client_profile_id" => $data['4'],

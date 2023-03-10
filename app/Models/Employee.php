@@ -8,6 +8,9 @@ use App\Models\Role;
 use App\Models\Locale;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\Inbox;
+use App\Models\History;
+use App\Models\ProgressReport;
 use App\Models\ClientProfile;
 class Employee extends Model
 {
@@ -50,6 +53,11 @@ class Employee extends Model
     public function clientProfiles()
     {
         return $this->hasMany(ClientProfile::class);
+    }
+
+    public function progressReport()
+    {
+        return $this->hasMany(ProgressReport::class);
     }
 
     public function histories()

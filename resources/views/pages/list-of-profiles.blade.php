@@ -39,31 +39,28 @@
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
                 <select class="form-select box ml-2">
-                    <option>Division 1</option>
-                    <option>Division 2</option>
-                    <option>Division 3</option>
-                    <option>Division 4</option>
-                    <option>Division 5</option>
+                    <option selected disabled hidden>Select Division</option>
+                    @foreach($divisions as $division)
+                        <option>{{ $division->division }}</option>
+                    @endforeach
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of District</label>
             <div class="flex w-full sm:w-auto mr-2">
                 <select class="form-select box ml-2">
-                    <option>District 1</option>
-                    <option>District 2</option>
-                    <option>District 3</option>
-                    <option>District 4</option>
-                    <option>District 5</option>
+                    <option selected disabled hidden>Select District</option>
+                    @foreach($districts as $district)
+                        <option>{{ $district->district }}</option>
+                    @endforeach
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of Locale</label>
             <div class="flex w-full sm:w-auto mr-2">
                 <select class="form-select box ml-2">
-                    <option>Locale 1</option>
-                    <option>Locale 2</option>
-                    <option>Locale 3</option>
-                    <option>Locale 4</option>
-                    <option>Locale 5</option>
+                    <option selected disabled hidden>Select Locale</option>
+                    @foreach($locales as $locale)
+                        <option>{{ $locale->locale }}</option>
+                    @endforeach
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">Status</label>

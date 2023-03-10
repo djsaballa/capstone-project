@@ -23,7 +23,7 @@ class Inbox extends Model
     protected $fillable = [
         "checked",
         "content",
-        "date_dent",
+        "date_sent",
         "sender_employee_id",
     ];
 

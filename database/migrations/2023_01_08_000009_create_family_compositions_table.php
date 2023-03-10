@@ -20,7 +20,7 @@ class CreateFamilyCompositionsTable extends Migration
             $table->string('last_name');
             $table->string('relationship');
             $table->string('occupation');
-            $table->integer('contact_number');
+            $table->string('contact_number');
             $table->foreignId('client_profile_id')
                   ->constrained('client_profiles')
                   ->onUpdate('cascade')

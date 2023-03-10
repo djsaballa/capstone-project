@@ -24,13 +24,13 @@ class CreateClientProfilesTable extends Migration
             $table->integer('age');
             $table->date('birth_date');
             $table->string('occupation');
-            $table->integer('height');
-            $table->integer('weight');
+            $table->string('height');
+            $table->string('weight');
             $table->string('baptism_date')->nullable();
             $table->string('contact_person1_name');
-            $table->integer('contact_person1_contact_number');
+            $table->string('contact_person1_contact_number');
             $table->string('contact_person2_name');
-            $table->integer('contact_person2_contact_number');
+            $table->string('contact_person2_contact_number');
             $table->string('background_info');
             $table->string('background_info_attachment')->nullable();
             $table->string('action_taken');

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('inbox', function (Blueprint $table) {
+        Schema::create('inboxes', function (Blueprint $table) {
             $table->id();
             $table->boolean('checked');
             $table->string('content');
