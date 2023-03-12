@@ -4,12 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <link href="{{ asset('build/assets/images/logo.svg') }}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
 
     <!-- BEGIN: CSS Assets-->
-    <link rel="stylesheet" href="dist/css/app.css" />
+    @vite('resources/css/app.css')
     <!-- END: CSS Assets-->
 </head>
 
@@ -17,7 +17,7 @@
 
 <body class="login">>
     @yield('content')
-    <script src="dist/js/app.js"></script>
+    @vite('resources/js/app.js')
 </body>
 
 </html>
