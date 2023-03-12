@@ -15,9 +15,6 @@
                         ADDFII
                     </span>
                 </a>
-                <span class="error" style="color: red;">@error('username'){{ $message }} @enderror</span>
-                <span class="error" style="color: red;">@error('password'){{ $message }} @enderror</span>
-                <span class="error" style="color: red;">{{ Session::get('fail') }}</span>
                 <div class="my-auto">
                     <img alt="Midone - HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="dist/images/illustration.svg">
                     <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">A few more clicks to <br> sign in to your account.</div>
@@ -30,6 +27,9 @@
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                        Log In
                     </h2>
+                    <p class="error intro-x text-center" style="color: red;">@error('username'){{ $message }} @enderror</p>
+                    <p class="error intro-x text-center" style="color: red;">@error('password'){{ $message }} @enderror</p>
+                    <p class="error intro-x text-center" style="color: red;">{{ Session::get('fail') }}</p>
                     <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your accounts in one place</div>
                     <form method="POST" action="{{ route('login_auth') }}">
                     @csrf

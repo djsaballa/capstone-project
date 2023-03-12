@@ -20,7 +20,7 @@ Route::controller(EmployeeController::class)->group(function () {
         // LOGIN AUTH
         Route::post('/login-auth', 'loginAuth')->name('login_auth');
     // DASHBOARD
-    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard/{employee_id}', 'dashboard')->name('dashboard');
     // LIST OF PROFILES
     Route::get('/list-of-profiles', 'listOfprofiles')->name('list_of_profiles');
         // ADD PROFILE

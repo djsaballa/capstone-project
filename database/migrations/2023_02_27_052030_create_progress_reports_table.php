@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('assignee_contact_number');
             $table->string('case_note');
             $table->string('remarks');
-            $table->string('attachment');
+            $table->binary('attachment');
             $table->foreignId('client_profile_id')
                 ->constrained('client_profiles')
                 ->onUpdate('cascade')

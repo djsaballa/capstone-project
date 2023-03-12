@@ -25,22 +25,28 @@ class EmployeeController extends Controller
             'username' => 'required',
             'password' => 'required'
         ]);
-        
-        if ($request->username == 'username') {
-            if ($request->password == 'password') {
-                return redirect(route('dashboard'));
-            } else {
-                return back()->with('fail', 'Incorrect Password');
-            }
-        } else {
+
+        $login_info = Employee::where('username', '=', $request->username)->first();
+
+        if (!$login_info) {
             return back()->with('fail', 'Username not recognized');
+        } else {
+            if ($request->password != $login_info->password) {
+                return back()->with('fail','Incorrect password');
+            } else {
+                $employee_id = $login_info->id;
+
+                return redirect(route('dashboard', $employee_id));
+            }
         }
     }
    
     // DASHBOARD -------------------------------------------------------------------------------------------------------
-    public function dashboard()
+    public function dashboard($employee_id)
     {
-        return view('pages.dashboard');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.dashboard', compact('employee_info'));
     }
     
     // LIST OF PROFILES ------------------------------------------------------------------------------------------------
