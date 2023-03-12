@@ -1,6 +1,6 @@
 <nav class="side-nav">
         <a href="" class="intro-x flex items-center pl-5 pt-4">
-            <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+            <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('resources/images/logo.svg') }}">
             <span class="hidden xl:block text-white text-lg ml-3"> ADDFI </span>
         </a>
         <div class="side-nav__devider my-6"></div>

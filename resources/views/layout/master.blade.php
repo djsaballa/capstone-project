@@ -9,7 +9,7 @@
     <title>Dashboard</title>
 
     <!-- BEGIN: CSS Assets-->
-    <link rel="stylesheet" href="dist/css/app.css" />
+    @vite('resources/css/app.css')
     <!-- END: CSS Assets-->
 </head>
 
@@ -25,7 +25,7 @@
             @yield('content')
         </div>
 
-        <script src="dist/js/app.js"></script>
+        @vite('resources/js/app.js')
     </div>
 </body>
 
