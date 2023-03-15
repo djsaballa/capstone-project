@@ -5,20 +5,20 @@
     <div class="grid grid-cols-12 gap-6 mt-8">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                Edit Profile
+                View Profile
             </h2>
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#personal-info" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#family-comp" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#medical-condition" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
-                            data-lucide="phone"></i> Contact Information </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="#contact-persons" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                            data-lucide="phone"></i> Contact Persons </a>
+                    <a href="#background-info" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
             </div>
@@ -29,8 +29,8 @@
             <!-- BEGIN: Wizard Layout -->
             <div class="intro-y box lg:mt-5">
                 <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                    <h2 class="font-medium text-base mr-auto">
-                        Personal Information
+                    <h2 class="font-medium text-base mr-auto" id="contact-persons">
+                        Contact Information
                     </h2>
                     <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
                         to PDF</button>
@@ -42,25 +42,17 @@
                                 <thead class="table-dark">
                                     <tr class="bg-primary">
                                         <th scope="col">Name</th>
-                                        <th scope="col">Relatioship</th>
                                         <th scope="col">Tel. Number</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">John Smith</th>
-                                        <td>Father</td>
-                                        <td>09123456789</td>
+                                        <th scope="row">{{ $client_profile_info->contact_person1_name }}</th>
+                                        <td>{{ $client_profile_info->contact_person1_contact_number }}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">John Smith</th>
-                                        <td>Father</td>
-                                        <td>09123456789</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">John Smith</th>
-                                        <td>Father</td>
-                                        <td>09123456789</td>
+                                    <th scope="row">{{ $client_profile_info->contact_person2_name }}</th>
+                                        <td>{{ $client_profile_info->contact_person2_contact_number }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -69,12 +61,12 @@
                     </div>
                     <!-- START FAMILY COMPOSITION -->
                     <div class="mt-5">
-                        <div class="font-medium text-base">Background Information</div>
+                        <div class="font-medium text-base" id="background-info">Background Information</div>
                         <div class="mt-3">
                             <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
                                 PASYENTE,
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
-                            <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here"></textarea>
+                            <textarea id="update-profile-form-5" class="form-control" value="Input text here" disabled>{{ $client_profile_info->background_info }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
                         <form data-single="true" action="/file-upload" class="dropzone">
@@ -88,7 +80,7 @@
                         <div class="mt-3">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
-                            <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here"></textarea>
+                            <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
                         <form data-single="true" action="/file-upload" class="dropzone">
@@ -101,8 +93,8 @@
                         </form>
                         <!-- END FAMILY COMPOSITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <button class="btn btn-secondary w-24 ml-2">Back</button>
-                            <button class="btn btn-primary w-100 ml-2">Return to List Profiles</button>
+                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}"> Back </a>
+                            <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_profiles', $employee_info->id) }}"> Return to List Profiles </a>
                         </div>
                     </div>
                 </div>

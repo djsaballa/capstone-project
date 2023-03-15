@@ -21,6 +21,7 @@ class CreateClientProfilesTable extends Migration
             $table->string('last_name');
             $table->string('address');
             $table->string('gender');
+            $table->string('contact_number');
             $table->integer('age');
             $table->date('birth_date');
             $table->string('occupation');

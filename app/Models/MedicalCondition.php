@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use App\Models\ClientProfile;
 use App\Models\Disease;
 use App\Models\MedicalCategory;
+use App\Models\MedicalOperation;
 
 class MedicalCondition extends Model
 {
@@ -28,6 +30,8 @@ class MedicalCondition extends Model
         "medicine_supplement",
         "dosage",
         "frequency",
+        "hospital",
+        "doctor",
         "client_profile_id",
         "disease_id",
         "medical_category_id"
@@ -46,5 +50,17 @@ class MedicalCondition extends Model
     public function disease()
     {
         return $this->belongsTo(Disease::class);
+    }
+
+    public function medicalOperation()
+    {
+        return $this->hasMany(MedicalOperation::class);
+    }
+
+    public function dateFormatFjY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("F j, Y");
+
+        return $formattedDate;
     }
 }

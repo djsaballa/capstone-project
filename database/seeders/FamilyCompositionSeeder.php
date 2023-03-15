@@ -25,9 +25,10 @@ class FamilyCompositionSeeder extends Seeder
                     "middle_name" => $data['1'],
                     "last_name" => $data['2'],
                     "relationship" => $data['3'],
-                    "occupation" => $data['4'],
-                    "contact_number" => $data['5'],
-                    "client_profile_id" => $data['6'],
+                    "educational_attainment" => $data['4'],
+                    "occupation" => $data['5'],
+                    "contact_number" => $data['6'],
+                    "client_profile_id" => $data['7'],
                 ]);
             }
             $firstline = false;

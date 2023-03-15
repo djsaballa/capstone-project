@@ -55,4 +55,24 @@ class Locale extends Model
         
         return $locale_name;
     }
+
+    public static function getDivisionName($locale_id)
+    {
+        $locale = Locale::find($locale_id);
+        $division_id = $locale->division_id;
+        $division = Division::find($division_id);
+        $division_name = $division->division;
+        
+        return $division_name;
+    }
+
+    public static function getDistrictName($locale_id)
+    {
+        $locale = Locale::find($locale_id);
+        $district_id = $locale->district_id;
+        $district = District::find($district_id);
+        $district_name = $district->district;
+        
+        return $district_name;
+    }
 }

@@ -32,6 +32,7 @@ class ClientProfile extends Model
         "last_name",
         "address",
         "gender",
+        "contact_number",
         "age",
         "birthdate",
         "occupation",
@@ -43,8 +44,8 @@ class ClientProfile extends Model
         "contact_person2_contact_number",
         "background_info",
         "background_info_attachment",
-        "action_take",
-        "action_take_attachement",
+        "action_taken",
+        "action_taken_attachement",
         "locale_servant_remark",
         "district_servant_remark",
         "division_servant_remark",
@@ -82,5 +83,15 @@ class ClientProfile extends Model
     public function locale()
     {
         return $this->belongsTo(Locale::class);
+    }
+
+    public static function getFullName($client_profile_id)
+    {
+        $client_profile = ClientProfile::find($client_profile_id);
+        $firstName = $client_profile->first_name;
+        $middleName = $client_profile->middle_name;
+        $lastName = $client_profile->last_name;
+
+        return $firstName . " " . $middleName . " " . $lastName;
     }
 }

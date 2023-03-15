@@ -25,6 +25,7 @@ class FamilyComposition extends Model
         "middle_name",
         "last_name",
         "relationship",
+        "educational_attainment",
         "occupation",
         "contact_number",
         "client_profile_if",
@@ -33,5 +34,15 @@ class FamilyComposition extends Model
     public function clientProfile()
     {
         return $this->belongsTo(ClientProfile::class);
+    }
+
+    public static function getFullName($family_composition_id)
+    {
+        $family_composition = ClientProfile::find($family_composition_id);
+        $firstName = $family_composition->first_name;
+        $middleName = $family_composition->middle_name;
+        $lastName = $family_composition->last_name;
+
+        return $firstName . " " . $middleName . " " . $lastName;
     }
 }

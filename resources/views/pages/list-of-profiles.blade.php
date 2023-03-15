@@ -85,330 +85,50 @@
             <thead>
                 <tr>
                     <th class="whitespace-nowrap"> </th>
-                    <th class="whitespace-nowrap">CLIENTS NAME</th>
+                    <th class="whitespace-nowrap">CLIENT'S NAME</th>
                     <th class="text-center whitespace-nowrap">GENDER</th>
                     <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
-                    <th class="text-center whitespace-nowrap">PROFILE STATUS</th>
+                    <th class="text-center whitespace-nowrap">LAST INTERACTION</th>
                     <th class="text-center whitespace-nowrap">ACTIONS</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
+                @foreach($client_profiles as $client_profile)
+                    <tr class="intro-x">
+                        <td class="w-40">
+                            <div class="flex">
+                                <div class="w-10 h-10 image-fit zoom-in">
+                                    <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
+                                        src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
+                                </div>
+
                             </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-7.jpg" title="Uploaded at 9 October 2021">
+                        </td>
+                        <td>
+                            <a href="" class="font-medium whitespace-nowrap">{{ $client_profile->getFullName($client_profile->id) }}</a>
+                        </td>
+                        <td class="text-center">{{ $client_profile->gender }}</td>
+                        <td class="w-40">
+                            <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
+                        </td>
+                        <td class="w-40">
+                            <div class="flex items-center justify-center "> KNP </div>
+                        </td>
+                        <td class="table-report__action w-400">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
+                                        class="w-4 h-4 mr-1"></i> Edit </a>
+                                <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
+                                    data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
+                                        class="w-4 h-4 mr-1"></i> Archive </a>
+                                <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
+                                        class="w-4 h-4 mr-1"></i> View</a>
+                                <a class="flex items-center mr-3" href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="file-check-2"
+                                        class="w-4 h-4 mr-1"></i> View Report </a>
                             </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-3.jpg" title="Uploaded at 3 March 2022">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-6.jpg" title="Uploaded at 24 August 2022">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-3.jpg" title="Uploaded at 20 April 2020">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-4.jpg" title="Uploaded at 24 July 2022">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-7.jpg" title="Uploaded at 11 May 2021">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-15.jpg" title="Uploaded at 16 January 2021">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center"> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-2.jpg" title="Uploaded at 21 August 2020">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                    </td>
-                    <td class="text-center">Male</td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center"> 09123456789 </div>
-                    </td>
-                    <td class="w-40">
-                        <div class="flex items-center justify-center "> KNP </div>
-                    </td>
-                    <td class="table-report__action w-400">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1"></i> Edit </a>
-                            <a class="flex items-center mr-3 text-danger mr-3" href="javascript:;" data-tw-toggle="modal"
-                                data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                    class="w-4 h-4 mr-1"></i> Archive </a>
-                            <a class="flex items-center mr-3 " href="javascript:;"> <i data-lucide="eye"
-                                    class="w-4 h-4 mr-1"></i> View</a>
-                            <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="file-check-2"
-                                    class="w-4 h-4 mr-1"></i> View Report </a>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

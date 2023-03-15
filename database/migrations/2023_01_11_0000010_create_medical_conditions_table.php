@@ -19,6 +19,8 @@ class CreateMedicalConditionsTable extends Migration
             $table->string('medicine_supplements');
             $table->string('dosage');
             $table->string('frequency');
+            $table->string('hospital');
+            $table->string('doctor');
             $table->foreignId('client_profile_id')
                   ->constrained('client_profiles')
                   ->onUpdate('cascade')
