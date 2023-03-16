@@ -30,7 +30,7 @@
             <div class="intro-y box lg:mt-5">
                 <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                     <h2 class="font-medium text-base mr-auto" id="contact-persons">
-                        Contact Information
+                        Contact Persons
                     </h2>
                     <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
                         to PDF</button>
@@ -60,8 +60,12 @@
                         <!-- END PERSONAL INFO -->
                     </div>
                     <!-- START FAMILY COMPOSITION -->
-                    <div class="mt-5">
-                        <div class="font-medium text-base" id="background-info">Background Information</div>
+                    <div class="intro-y box lg:mt-5">
+                        <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                            <h2 class="font-medium text-base mr-auto" id="personal-info">
+                                Background Information
+                            </h2>
+                        </div>
                         <div class="mt-3">
                             <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
                                 PASYENTE,
@@ -83,7 +87,7 @@
                             <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                        <form data-single="true" action="/file-upload" class="dropzone">
+                        <form data-single="true" action="/file-upload" class="dropzone" >
                             <div class="fallback"> <input name="file" type="file" /> </div>
                             <div class="dz-message" data-dz-message>
                                 <div class="text-lg font-medium">Drop files here or click to upload.</div>
