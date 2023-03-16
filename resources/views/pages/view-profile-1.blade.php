@@ -44,49 +44,53 @@
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">First
-                                            Name:<span class="ml-3">Juan</span></label>
+                                            Name:<span class="ml-3">{{ $client_profile_info->first_name }}</span></label>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Middle
-                                            Name:<span class="ml-3">Dela</span></label>
+                                            Name:<span class="ml-3">{{ $client_profile_info->middle_name }}</span></label>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Last
-                                            Name:<span class="ml-3">Cruz</span></label>
+                                            Name:<span class="ml-3">{{ $client_profile_info->last_name }}</span></label>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Birthdate:<span class="ml-3">01/10/2001</span></label>
+                                        <label for="startDate">Birthdate:<span class="ml-3">{{ $client_profile_info->birth_date }}</span></label>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Gender:<span class="ml-3">Male</span></label>
+                                            id="update-profile-form-3-ts-label">Gender:<span class="ml-3">{{ $client_profile_info->gender }}</span></label>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-4" class="form-label">Age:<span class="ml-3">21</span></label>
+                                        <label for="update-profile-form-4" class="form-label">Age:<span class="ml-3">{{ $client_profile_info->age }}</span></label>
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Occupation:<span class="ml-3">None</span></label>
+                                            id="update-profile-form-3-ts-label">Occupation:<span class="ml-3">{{ $client_profile_info->occupation }}</span></label>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Baptism Date:<span class="ml-3">01/20/2017</span></label>
+                                        <label for="startDate">Baptism Date:<span class="ml-3">{{ $client_profile_info->baptism_date }}</span></label>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
-                                    <div class="mt-3 ">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Division:<span class="ml-3">Bicol</span></label>
+                                    <div class="mt-3">
+                                        <label for="update-profile-form-4" class="form-label">Contact
+                                            Number: {{ $client_profile_info->contact_number }}</label>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">District:<span class="ml-3">Disrict 1</span></label>
+                                            id="update-profile-form-3-ts-label">Division:<span class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span></label>
+                                    </div>
+                                    <div class="mt-3 ">
+                                        <label for="update-profile-form-3-tomselected" class="form-label"
+                                            id="update-profile-form-3-ts-label">District:<span class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span></label>
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Locale:<span class="ml-3">Locale 1</span></label>
+                                            id="update-profile-form-3-ts-label">Locale:<span class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span></label>
                                     </div>
                                 </div>
                                 <div class="w-52 mx-auto xl:mr-0 xl:ml-6 mt-5">
@@ -142,7 +146,7 @@
                                     <th scope="col">Tel. Number</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody> 
                                 @foreach ($family_compositions as $family_composition)
                                     <tr>
                                         <th scope="row">{{ $family_composition->getFullName($family_composition->id) }}
