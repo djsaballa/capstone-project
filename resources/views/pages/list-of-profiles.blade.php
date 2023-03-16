@@ -96,14 +96,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="intro-x">
-                    <td class="w-40">
-                        <div class="flex">
-                            <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
-                            </div>
-
+                @foreach($client_profiles as $client_profile)
+                    <tr class="intro-x">
+                        <td class="w-40">
+                            <div class="flex">
+                                <div class="w-10 h-10 image-fit zoom-in">
+                                    <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
+                                        src=" {{ asset ('dist/images/preview-4.jpg') }}" title="Uploaded at 18 April 2021">
+                                </div>
                         </div>
                     </td>
                     <td>
