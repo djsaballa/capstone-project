@@ -16,15 +16,18 @@ return new class extends Migration
         Schema::create('progress_reports', function (Blueprint $table) {
             $table->id();
             $table->date('date_time');
-            $table->date('assignee');
+            $table->foreignId('assignee_employee_id')
+                ->constrained('employees')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('assignee_contact_number');
             $table->string('case_note');
             $table->string('remarks');
-            $table->string('attachment');
+            $table->binary('attachment');
             $table->foreignId('client_profile_id')
-                  ->constrained('client_profiles')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->constrained('client_profiles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

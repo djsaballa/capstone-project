@@ -30,6 +30,7 @@
             <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
         </div>
         <!-- BEGIN: Users Layout -->
+        @foreach($employees as $employee)
         <div class="intro-y col-span-12 md:col-span-6">
             <div class="box">
                 <div class="flex flex-col lg:flex-row items-center p-5">
@@ -37,8 +38,22 @@
                         <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-5.jpg') }}">
                     </div>
                     <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Denzel Washington</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
+                        <a href="" class="font-medium">{{ $employee->getFullName($employee->id) }}</a>
+                        @if (($employee->getSecurityLevel($employee->role_id)) == 1)
+                            <div class="text-slate-500 text-xs mt-0.5">
+                                {{$employee->getLocaleName($employee->locale_id) ." - ". $employee->getRoleName($employee->role_id) }}
+                            </div>
+                        @elseif (($employee->getSecurityLevel($employee->role_id)) == 2)
+                            <div class="text-slate-500 text-xs mt-0.5">
+                                {{$employee->getDistrictName($employee->district_id) ." - ". $employee->getRoleName($employee->role_id) }}
+                            </div>
+                        @elseif (($employee->getSecurityLevel($employee->role_id)) == 3)
+                            <div class="text-slate-500 text-xs mt-0.5">
+                                {{$employee->getDivisionName($employee->division_id) ." - ". $employee->getRoleName($employee->role_id) }}
+                            </div>
+                        @else
+                            <div class="text-slate-500 text-xs mt-0.5">{{ $employee->getRoleName($employee->role_id) }}</div>
+                        @endif
                     </div>
                     <div class="flex mt-4 lg:mt-0">
                         <a href="{{ route('edit_user') }}"> 
@@ -48,329 +63,7 @@
                 </div>
             </div>
         </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-15.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Denzel Washington</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Software Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-4.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Johnny Depp</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Al Pacino</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Leonardo DiCaprio</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-14.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Johnny Depp</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-1.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Russell Crowe</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-12.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Arnold Schwarzenegger</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-13.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Johnny Depp</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-13.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Angelina Jolie</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-4.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">John Travolta</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-13.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Nicolas Cage</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-12.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Johnny Depp</a>
-                        <div class="text-slate-500 text-xs mt-0.5">DevOps Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-13.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Nicolas Cage</a>
-                        <div class="text-slate-500 text-xs mt-0.5">DevOps Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Denzel Washington</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Nicolas Cage</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Frontend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-1.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Johnny Depp</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-8.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Sylvester Stallone</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Kate Winslet</a>
-                        <div class="text-slate-500 text-xs mt-0.5">DevOps Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="intro-y col-span-12 md:col-span-6">
-            <div class="box">
-                <div class="flex flex-col lg:flex-row items-center p-5">
-                    <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-15.jpg">
-                    </div>
-                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                        <a href="" class="font-medium">Tom Cruise</a>
-                        <div class="text-slate-500 text-xs mt-0.5">Backend Engineer</div>
-                    </div>
-                    <div class="flex mt-4 lg:mt-0">
-                        <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
         <!-- BEGIN: Users Layout -->
         <!-- END: Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">

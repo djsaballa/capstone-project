@@ -1,78 +1,58 @@
 @extends('layout.master')
 
 @section('content')
-    <div class="flex items-center mt-8">
-        <h2 class="intro-y text-lg font-medium mr-auto">
-            Add Profile
-        </h2>
-    </div>
-    <!-- BEGIN: Wizard Layout -->
-    <div class="intro-y box py-10 sm:py-20 mt-5">
-        <div
-            class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
-            <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy') }}"> 
-                    <button
-                        class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" ><i
-                            data-lucide="shield"></i></button>
-                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Privacy Notice</div>
-                </a>
+    <!-- END: Top Bar -->
+    <div class="grid grid-cols-12 gap-6 mt-8">
+        <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+            <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+                Edit Profile
+            </h2>
+            <!-- BEGIN: File Manager Menu -->
+            <div class="intro-y box p-5 mt-6">
+                <div class="mt-1">
+                    <a href="" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                        <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
+                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                            data-lucide="users"></i> Family Composition </a>
+                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                            data-lucide="thermometer"></i> Medical Condition </a>
+                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                            data-lucide="phone"></i> Contact Information </a>
+                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                            data-lucide="file-text"></i> Background Information </a>
+                </div>
             </div>
-            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button class="w-10 h-10 rounded-full btn btn-primary ">1</button>
-                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Setup Personal Information</div>
-            </div>
-            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>2</button>
-                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Family
-                    Composition</div>
-            </div>
-            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>3</button>
-                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Medical
-                    Conditon</div>
-            </div>
-            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>4</button>
-                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Contact
-                    Persons</div>
-            </div>
-            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>5</button>
-                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background
-                    Information</div>
-            </div>
-
+            <!-- END: File Manager Menu -->
         </div>
-        <div class="intro-y box lg:mt-5">
-            <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                <h2 class="font-medium text-base mr-auto">
-                    Personal Information
-                </h2>
-            </div>
-            <div class="p-5">
-                <form method="GET" action="{{ route('add_profile_2') }}">
-                @csrf
+
+        <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+            <!-- BEGIN: Wizard Layout -->
+            <div class="intro-y box lg:mt-5">
+                <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                    <h2 class="font-medium text-base mr-auto">
+                        Personal Information
+                    </h2>
+                </div>
+                <div class="p-5">
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
                         <div class="flex-1 mt-6 xl:mt-0">
                             <div class="grid grid-cols-12 gap-x-5">
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">First Name</label>
+                                        <label for="update-profile-form-1" class="form-label">First
+                                            Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
                                             placeholder="First Name" value="First Name">
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">Middle Name</label>
+                                        <label for="update-profile-form-1" class="form-label">Middle
+                                            Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
                                             placeholder="Middle Name" value="Middle Name">
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">Last Name</label>
+                                        <label for="update-profile-form-1" class="form-label">Last
+                                            Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
                                             placeholder="Last Name" value="Last Name">
                                     </div>
@@ -154,7 +134,8 @@
                                         </select>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="update-profile-form-4" class="form-label">Phone Number</label>
+                                        <label for="update-profile-form-4" class="form-label">Phone
+                                            Number</label>
                                         <input id="update-profile-form-4" type="text" class="form-control"
                                             placeholder="Input text" value="09123456789">
                                     </div>
@@ -175,10 +156,12 @@
                                                     </line>
                                                     <line x1="6" y1="6" x2="18" y2="18">
                                                     </line>
-                                                </svg> </div>
+                                                </svg>
+                                            </div>
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
-                                            <button type="button" class="btn btn-primary w-full">Change Photo</button>
+                                            <button type="button" class="btn btn-primary w-full">Change
+                                                Photo</button>
                                             <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
                                         </div>
                                     </div>
@@ -190,13 +173,18 @@
                                     <textarea id="update-profile-form-5" class="form-control" placeholder="Adress">10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore</textarea>
                                 </div>
                             </div>
+                            <div class="mt-3">
+                                <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
+                                    data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash"
+                                        class="w-4 h-4 mr-1"></i> Archive Profile </a>
+                            </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <a href="{{ route('add_profile_privacy') }}" class="btn btn-secondary w-24 ml-2">Previous</a>
                                 <button class="btn btn-primary w-24 ml-2">Next</button>
                             </div>
                         </div>
+                        <!-- END: Wizard Layout -->
                     </div>
-                </form>
-                <!-- END: Wizard Layout -->
+                </div>
             </div>
+            <!-- END: Content -->
         @endsection

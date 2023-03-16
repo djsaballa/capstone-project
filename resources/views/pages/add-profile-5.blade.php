@@ -56,8 +56,11 @@
                 <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Setup Background Information</div>
             </div>
         </div>
-            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                <div class="font-medium text-base">Background Information</div>
+        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+
+            <div class="font-medium text-base">Background Information</div>
+            <form method="GET" action="{{ route('list_of_profiles') }}">
+                @csrf
                 <div class="mt-3">
                     <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG PASYENTE,
                         PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
@@ -86,12 +89,8 @@
                     </div>
                 </form>
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                    <a href="{{ route('add_profile_4') }}">
-                        <button class="btn btn-secondary w-24 ml-2">Previous</button>
-                    </a>
-                    <a href="{{ route('list_of_profiles') }}">
-                        <button class="btn btn-primary w-24 ml-2">Finish</button>
-                    </a>
+                    <a href="{{ route('add_profile_4') }}" class="btn btn-secondary w-24 ml-2">Previous</a>
+                    <button class="btn btn-primary w-24 ml-2">Finish</button>
                 </div>
                 <!-- END: Wizard Layout -->
             </div>

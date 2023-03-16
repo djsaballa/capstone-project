@@ -15,31 +15,32 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->binary('picture')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->integer('contact_number');
+            $table->string('contact_number');
             $table->foreignId('role_id')
                   ->constrained('roles')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->foreignId('locale_id')
+                ->nullable()
                 ->constrained('locales')
                 ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->nullable();
+                ->onDelete('cascade');
             $table->foreignId('district_id')
+                ->nullable()
                 ->constrained('districts')
                 ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->nullable();
+                ->onDelete('cascade');
             $table->foreignId('division_id')
+                ->nullable()
                 ->constrained('divisions')
                 ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->nullable();
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

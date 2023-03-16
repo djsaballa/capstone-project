@@ -1,0 +1,5 @@
+medical_category,priority_level
+With Illness,1
+Chronic,2
+Terminal,3
+Surgical,3

@@ -15,13 +15,23 @@ class CreateMedicalConditionsTable extends Migration
     {
         Schema::create('medical_conditions', function (Blueprint $table) {
             $table->id();
-            $table->string('sickness');
             $table->date('since_when');
             $table->string('medicine_supplements');
             $table->string('dosage');
             $table->string('frequency');
+            $table->string('hospital');
+            $table->string('doctor');
             $table->foreignId('client_profile_id')
                   ->constrained('client_profiles')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreignId('disease_id')
+                  ->constrained('diseases')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreignId('medical_category_id')
+                  ->nullable()
+                  ->constrained('medical_categories')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();
