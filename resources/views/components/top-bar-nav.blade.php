@@ -16,7 +16,7 @@
                 <div class="notification-content__title">Notifications</div>
                 <div class="cursor-pointer relative flex items-center ">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-2.jpg') }} ">
+                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-2.jpg">
                         <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div class="ml-2 overflow-hidden">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-4.jpg') }} ">
+                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-4.jpg">
                         <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div class="ml-2 overflow-hidden">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-14.jpg ') }}">
+                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-14.jpg">
                         <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div class="ml-2 overflow-hidden">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-9.jpg ') }}">
+                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-9.jpg">
                         <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div class="ml-2 overflow-hidden">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img alt="Midone - HTML Admin Template" class="rounded-full" src=" {{ asset('dist/images/profile-7.jpg ') }}">
+                        <img alt="Midone - HTML Admin Template" class="rounded-full" src="dist/images/profile-7.jpg">
                         <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div class="ml-2 overflow-hidden">
@@ -86,7 +86,7 @@
     <!-- BEGIN: Account Menu -->
     <div class="intro-x dropdown w-8 h-8">
         <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in" role="button" aria-expanded="false" data-tw-toggle="dropdown">
-            <img alt="Midone - HTML Admin Template" src=" {{ asset('dist/images/profile-15.jpg ') }}">
+            <img alt="Midone - HTML Admin Template" src="dist/images/profile-15.jpg">
         </div>
         <div class="dropdown-menu w-56">
             <ul class="dropdown-content bg-primary text-white">
