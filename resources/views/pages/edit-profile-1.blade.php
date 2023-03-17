@@ -69,9 +69,9 @@
                                             id="update-profile-form-3-ts-label">Gender</label>
                                         <select id="update-profile-form-3" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">MALE</option>
-                                            <option value="2">MALE</option>
-                                            <option value="3">FEMALE</option>
+                                            <option value="1" selected="true">Male</option>
+                                            <option value="2">Male</option>
+                                            <option value="3">Female</option>
 
                                         </select>
                                     </div>
