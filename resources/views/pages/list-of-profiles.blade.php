@@ -135,7 +135,7 @@
                                         class="w-4 h-4 mr-1"></i> Archive </a>
                                 <a class="flex items-center mr-3 " href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="eye"
                                         class="w-4 h-4 mr-1"></i> View</a>
-                                <a class="flex items-center mr-3" href=""> <i data-lucide="file-check-2"
+                                <a class="flex items-center mr-3" href="{{ route('view_progress_report', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="file-check-2"
                                         class="w-4 h-4 mr-1"></i> View Report </a>
 
                         </div>

@@ -141,6 +141,15 @@ class EmployeeController extends Controller
         return view('pages.edit-profile-5');
     }
 
+    // PROGRESS REPORTS ------------------------------------------------------------------------------------------------
+    public function viewProgressReport($employee_id, $client_profile_id)
+    {
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        return view('pages.progress-report-view-report', compact('employee_info', 'client_profile_info'));
+    }
+
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($employee_id)
     {
