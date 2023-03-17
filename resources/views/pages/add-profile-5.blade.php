@@ -62,8 +62,8 @@
             <form method="GET" action="{{ route('list_of_profiles') }}">
                 @csrf
                 <div class="mt-3">
-                    <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG PASYENTE,
-                        PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
+                    <label for="update-profile-form-5" class="form-label">Background Information (Kalagayan ng Pasyente,
+                       Pamilya, Finansya, Emosyonal, Physical)</label>
                     <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here"></textarea>
                 </div>
                 <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
@@ -76,7 +76,7 @@
                     </div>
                 </form>
                 <div class="mt-3">
-                    <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES RENDERED</label>
+                    <label for="update-profile-form-5" class="form-label">Action Taken/ Services Rendered</label>
                     <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here"></textarea>
                 </div>
                 <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>

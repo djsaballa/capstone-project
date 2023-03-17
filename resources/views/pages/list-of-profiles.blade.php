@@ -99,11 +99,11 @@
             <thead>
                 <tr>
                     <th class="whitespace-nowrap"> </th>
-                    <th class="whitespace-nowrap">CLIENT'S NAME</th>
-                    <th class="text-center whitespace-nowrap">GENDER</th>
-                    <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
-                    <th class="text-center whitespace-nowrap">LAST INTERACTION</th>
-                    <th class="text-center whitespace-nowrap">ACTIONS</th>
+                    <th class="whitespace-nowrap">Client's Name</th>
+                    <th class="text-center whitespace-nowrap">Gender</th>
+                    <th class="text-center whitespace-nowrap">Contact Number</th>
+                    <th class="text-center whitespace-nowrap">Last Interaction</th>
+                    <th class="text-center whitespace-nowrap">Actions</th>
                 </tr>
             </thead>
             <tbody>
