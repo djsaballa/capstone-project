@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <link href="asset {{ ('dist/images/logo.svg" rel="shortcut icon') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>ADDFII PROFILING</title>
 
     <!-- BEGIN: CSS Assets-->
     @vite('resources/css/app.css')
