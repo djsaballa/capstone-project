@@ -25,7 +25,7 @@
                         <div class="flex">
                             <div class="w-10 h-10 image-fit zoom-in">
                                 <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                    src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
+                                    src="{{assets('dist/images/preview-4.jpg')}}" title="Uploaded at 18 April 2021">
                             </div>
 
                         </div>

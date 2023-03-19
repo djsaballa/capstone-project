@@ -149,6 +149,15 @@ class EmployeeController extends Controller
 
         return view('pages.progress-report-view-report', compact('employee_info', 'client_profile_info'));
     }
+    public function addProgressReport()
+    {
+        return view('progress-report-add-report');
+    }
+        
+    public function progressReport()
+    {
+        return view('progress-report');
+    }
 
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($employee_id)
