@@ -168,7 +168,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
+                                                        src=" {{ asset ('dist/images/preview-4.jpg')}}" title="Uploaded at 18 April 2021">
                                                 </div>
 
                                             </div>
@@ -198,7 +198,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-7.jpg"
+                                                        src=" {{ asset ('dist/images/preview-7.jpg')}}"
                                                         title="Uploaded at 9 October 2021">
                                                 </div>
 
@@ -230,7 +230,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-3.jpg" title="Uploaded at 3 March 2022">
+                                                        src=" {{ asset ('dist/images/preview-3.jpg')}}" title="Uploaded at 3 March 2022">
                                                 </div>
 
                                             </div>
@@ -260,7 +260,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-6.jpg"
+                                                        src=" {{ asset ('dist/images/preview-6.jpg')}}"
                                                         title="Uploaded at 24 August 2022">
                                                 </div>
 
@@ -291,7 +291,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-3.jpg" title="Uploaded at 20 April 2020">
+                                                        src=" {{ asset ('dist/images/preview-3.jpg')}}" title="Uploaded at 20 April 2020">
                                                 </div>
 
                                             </div>
@@ -321,7 +321,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-4.jpg" title="Uploaded at 24 July 2022">
+                                                        src=" {{ asset ('dist/images/preview-4.jpg')}}" title="Uploaded at 24 July 2022">
                                                 </div>
 
                                             </div>
@@ -351,7 +351,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-7.jpg" title="Uploaded at 11 May 2021">
+                                                        src=" {{ asset ('dist/images/preview-7.jpg')}}" title="Uploaded at 11 May 2021">
                                                 </div>
 
                                             </div>
@@ -381,7 +381,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-15.jpg"
+                                                        src=" {{ asset ('dist/images/preview-15.jpg')}}"
                                                         title="Uploaded at 16 January 2021">
                                                 </div>
 
@@ -412,7 +412,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                        src="dist/images/preview-2.jpg"
+                                                        src=" {{ asset ('dist/images/preview-2.jpg')}}"
                                                         title="Uploaded at 21 August 2020">
                                                 </div>
 

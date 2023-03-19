@@ -127,7 +127,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-14.jpg">
+                                            src=" {{ asset ('dist/images/profile-14.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Kevin Spacey</div>
                                 </div>
@@ -148,7 +148,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-15.jpg">
+                                            src=" {{ asset ('dist/images/profile-15.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Tom Cruise</div>
                                 </div>
@@ -169,7 +169,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-7.jpg">
+                                            src=" {{ asset ('dist/images/profile-7.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Johnny Depp</div>
                                 </div>
@@ -190,7 +190,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-8.jpg">
+                                            src=" {{ asset ('dist/images/profile-8.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Denzel Washington</div>
                                 </div>
@@ -211,7 +211,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-9.jpg">
+                                            src=" {{ asset ('dist/images/profile-9.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Christian Bale</div>
                                 </div>
@@ -232,7 +232,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-3.jpg">
+                                            src=" {{ asset ('dist/images/profile-3.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Johnny Depp</div>
                                 </div>
@@ -253,7 +253,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-9.jpg">
+                                            src=" {{ asset ('dist/images/profile-9.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Denzel Washington</div>
                                 </div>
@@ -274,7 +274,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-7.jpg">
+                                            src=" {{ asset ('dist/images/profile-7.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Robert De Niro</div>
                                 </div>
@@ -295,7 +295,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-12.jpg">
+                                            src=" {{ asset ('dist/images/profile-12.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Russell Crowe</div>
                                 </div>
@@ -316,7 +316,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-5.jpg">
+                                            src=" {{ asset ('dist/images/profile-5.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Brad Pitt</div>
                                 </div>
@@ -337,7 +337,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-12.jpg">
+                                            src=" {{ asset ('dist/images/profile-12.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Johnny Depp</div>
                                 </div>
@@ -358,7 +358,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-5.jpg">
+                                            src=" {{ asset ('dist/images/profile-5.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Charlize Theron</div>
                                 </div>
@@ -379,7 +379,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-11.jpg">
+                                            src=" {{ asset ('dist/images/profile-11.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Brad Pitt</div>
                                 </div>
@@ -400,7 +400,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-6.jpg">
+                                            src=" {{ asset ('dist/images/profile-6.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Tom Hanks</div>
                                 </div>
@@ -421,7 +421,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-15.jpg">
+                                            src=" {{ asset ('dist/images/profile-15.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Johnny Depp</div>
                                 </div>
@@ -442,7 +442,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-5.jpg">
+                                            src=" {{ asset ('dist/images/profile-5.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Russell Crowe</div>
                                 </div>
@@ -463,7 +463,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-6.jpg">
+                                            src=" {{ asset ('dist/images/profile-6.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Brad Pitt</div>
                                 </div>
@@ -484,7 +484,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-6.jpg">
+                                            src=" {{ asset ('dist/images/profile-6.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Johnny Depp</div>
                                 </div>
@@ -505,7 +505,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-15.jpg">
+                                            src=" {{ asset ('dist/images/profile-15.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Denzel Washington</div>
                                 </div>
@@ -526,7 +526,7 @@
 
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                         <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src="dist/images/profile-1.jpg">
+                                            src=" {{ asset ('dist/images/profile-1.jpg')}}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">Angelina Jolie</div>
                                 </div>

@@ -46,7 +46,10 @@ Route::controller(EmployeeController::class)->group(function () {
         Route::get('/edit-profile-5', 'editProfile5')->name('edit_profile_5');
 
         // VIEW PROGRESS REPORTS
-        Route::get('/progress-report-view-report/{employee_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
+        Route::get('/progress-report', 'progressReport')->name('progress_report');
+        Route::get('/progress-report-view-report', 'viewProgressReport')->name('view_progress_report');
+        Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
+       
 
     // LIST OF USERS
     Route::get('/list-of-users/{employee_id}', 'listOfUsers')->name('list_of_users');

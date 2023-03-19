@@ -107,16 +107,12 @@
                 </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
                 @foreach($client_profiles as $client_profile)
-=======
->>>>>>> parent of fe251e0 (view-profile)
                 <tr class="intro-x">
                     <td class="w-40">
                         <div class="flex">
                             <div class="w-10 h-10 image-fit zoom-in">
                                 <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-<<<<<<< HEAD
                                 src=" {{ asset ('dist/images/preview-4.jpg') }}" title="Uploaded at 18 April 2021">
                             </div>
                         </td>
@@ -139,17 +135,8 @@
                                         class="w-4 h-4 mr-1"></i> Archive </a>
                                 <a class="flex items-center mr-3 " href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="eye"
                                         class="w-4 h-4 mr-1"></i> View</a>
-                                <a class="flex items-center mr-3" href="{{ route('view_progress_report', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="file-check-2"
+                                <a class="flex items-center mr-3" href=""> <i data-lucide="file-check-2"
                                         class="w-4 h-4 mr-1"></i> View Report </a>
-=======
-                                    src="dist/images/preview-4.jpg" title="Uploaded at 18 April 2021">
-                            </div>
-
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
->>>>>>> parent of fe251e0 (view-profile)
 
                         </div>
                     </td>
