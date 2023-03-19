@@ -213,21 +213,30 @@
                         </div>
                     </div>
                     <div class="mt-3 ">
-                        <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5 ">
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Hospital: <span class="ml-3">Bicol Medical Center</span></label>
-                                <label for="update-profile-form-1" class="form-label">Hospital: <span class="ml-3">Bicol Medical Center</span></label>
-                            </div>
-                            <div class="mt-3  col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Doctor: <span class="ml-3">Juan dela Cruz</span></label>
-                                <label for="update-profile-form-1" class="form-label">Doctor: <span class="ml-3">Juan dela Cruz</span></label>
-                            </div>
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Do you have Phil-health Card? Please
-                                    Specify. <span class="ml-3">None</span> </label>
-                                    <label for="update-profile-form-1" class="form-label">Do you have Phil-health Card? Please
-                                    Specify. <span class="ml-3">None</span> </label>
-                        </div>
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr class="bg-primary">
+                                    <th scope="col">Hospital</th>
+                                    <th scope="col">Doctor </th>
+                                    <th scope="col">Do you have Phil-health Card? Please
+                                        Specify </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Bicol Medical Center</th>
+                                    <td>Bicol Medical Center</td>
+                                    <td>None</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Juan dela Cruz</th>
+                                    <td>Juan dela Cruz</td>
+                                    <td>None</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                         <!-- END MEDICAL CONDITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-primary w-24 ml-2"

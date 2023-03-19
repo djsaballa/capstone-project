@@ -72,7 +72,7 @@
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
                             <textarea id="update-profile-form-5" class="form-control" value="Input text here" disabled>{{ $client_profile_info->background_info }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
+                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
                         <form data-single="true" action="/file-upload" class="dropzone">
                             <div class="fallback"> <input name="file" type="file" /> </div>
                             <div class="dz-message" data-dz-message>
@@ -86,7 +86,7 @@
                                 RENDERED</label>
                             <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
+                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
                         <form data-single="true" action="/file-upload" class="dropzone" >
                             <div class="fallback"> <input name="file" type="file" /> </div>
                             <div class="dz-message" data-dz-message>

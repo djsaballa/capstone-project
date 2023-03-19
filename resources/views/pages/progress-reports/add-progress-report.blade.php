@@ -1,8 +1,8 @@
 @extends('layout.master')
 
 @section('content')
-    <!-- END: Top Bar -->
-    <div class="grid grid-cols-12 gap-6 mt-8">
+    <!-- END: Top Bar -->  
+    <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
                 Progress Report
