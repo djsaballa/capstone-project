@@ -46,8 +46,7 @@ Route::controller(EmployeeController::class)->group(function () {
         Route::get('/edit-profile-5', 'editProfile5')->name('edit_profile_5');
 
         // VIEW PROGRESS REPORTS
-        Route::get('/progress-report', 'progressReport')->name('progress_report');
-        Route::get('/progress-report-view-report', 'viewProgressReport')->name('view_progress_report');
+        Route::get('/view-progress-report/{employee_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
         Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
        
 
@@ -61,13 +60,13 @@ Route::controller(EmployeeController::class)->group(function () {
         Route::get('/edit-user', 'editUser')->name('edit_user');
 
     // INBOX
-    Route::get('/inbox', 'inbox')->name('inbox');
+    Route::get('/inbox/{employee_id}', 'inbox')->name('inbox');
 
     // AUDIT LOGS
-    Route::get('/audit-logs', 'auditLogs')->name('audit_logs');
+    Route::get('/audit-logs/{employee_id}', 'auditLogs')->name('audit_logs');
 
     // ARCHIVE
-    Route::get('/archive', 'archive')->name('archive');
+    Route::get('/archive/{employee_id}', 'archive')->name('archive');
 });
 
 // USER

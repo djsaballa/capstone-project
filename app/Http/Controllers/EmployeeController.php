@@ -63,7 +63,7 @@ class EmployeeController extends Controller
 
         $client_profiles = ClientProfile::all();
 
-        return view(('pages.list-of-profiles'), compact('employee_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
+        return view(('pages.client-profiles.list-of-profiles'), compact('employee_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
     }
 
     // VIEW PROFILE ----------------------------------------------------------------------------------------------------
@@ -74,71 +74,71 @@ class EmployeeController extends Controller
         $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
         $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
 
-        return view('pages.view-profile-1', compact('employee_info', 'client_profile_info', 'family_compositions', 'medical_conditions'));
+        return view('pages.client-profiles.view.view-profile-1', compact('employee_info', 'client_profile_info', 'family_compositions', 'medical_conditions'));
     }
     public function viewProfile2($employee_id, $client_profile_id)
     {
         $employee_info = Employee::find($employee_id);
         $client_profile_info = ClientProfile::find($client_profile_id);
 
-        return view('pages.view-profile-2', compact('employee_info', 'client_profile_info'));
+        return view('pages.client-profiles.view.view-profile-2', compact('employee_info', 'client_profile_info'));
     }
 
     // ADD PROFILE -----------------------------------------------------------------------------------------------------
     public function addProfilePrivacy()
     {
-        return view('pages.add-profile-privacy');
+        return view('pages.client-profiles.add.add-profile-privacy');
     }
 
     public function addProfile1()
     {
-        return view('pages.add-profile-1');
+        return view('pages.client-profiles.add.add-profile-1');
     }
 
     public function addProfile2()
     {
-        return view('pages.add-profile-2');
+        return view('pages.client-profiles.add.add-profile-2');
     }
 
     public function addProfile3()
     {
-        return view('pages.add-profile-3');
+        return view('pages.client-profiles.add.add-profile-3');
     }
 
     public function addProfile4()
     {
-        return view('pages.add-profile-4');
+        return view('pages.client-profiles.add.add-profile-4');
     }
 
     public function addProfile5()
     {
-        return view('pages.add-profile-5');
+        return view('pages.client-profiles.add.add-profile-5');
     }
 
     // EDIT PROFILE ----------------------------------------------------------------------------------------------------
     public function editProfile1()
     {
-        return view('pages.edit-profile-1');
+        return view('pages.client-profiles.edit.edit-profile-1');
     }
 
     public function editProfile2()
     {
-        return view('pages.edit-profile-2');
+        return view('pages.client-profiles.edit.edit-profile-2');
     }
 
     public function editProfile3()
     {
-        return view('pages.edit-profile-3');
+        return view('pages.client-profiles.edit.edit-profile-3');
     }
 
     public function editProfile4()
     {
-        return view('pages.edit-profile-4');
+        return view('pages.client-profiles.edit.edit-profile-4');
     }
 
     public function editProfile5()
     {
-        return view('pages.edit-profile-5');
+        return view('pages.client-profiles.edit.edit-profile-5');
     }
 
     // PROGRESS REPORTS ------------------------------------------------------------------------------------------------
@@ -147,16 +147,11 @@ class EmployeeController extends Controller
         $employee_info = Employee::find($employee_id);
         $client_profile_info = ClientProfile::find($client_profile_id);
 
-        return view('pages.progress-report-view-report', compact('employee_info', 'client_profile_info'));
+        return view('pages.progress-reports.view-progress-report', compact('employee_info', 'client_profile_info'));
     }
     public function addProgressReport()
     {
-        return view('progress-report-add-report');
-    }
-        
-    public function progressReport()
-    {
-        return view('progress-report');
+        return view('pages.progress-reports.add-progress-report');
     }
 
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
@@ -165,36 +160,42 @@ class EmployeeController extends Controller
         $employees = Employee::all();
         $employee_info = Employee::find($employee_id);
 
-        return view('pages.list-of-users', compact('employees', 'employee_info'));
+        return view('pages.users.list-of-users', compact('employees', 'employee_info'));
     }
 
     public function addUser()
     {
-        return view('pages.add-user');
+        return view('pages.users.add-user');
     }
     
     public function editUser()
     {
-        return view('pages.edit-user');
+        return view('pages.users.edit-user');
     }
 
     // INBOX -----------------------------------------------------------------------------------------------------------
-    public function inbox()
+    public function inbox($employee_id)
     {
-        return view('pages.inbox');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.inbox', compact('employee_info'));
     }
 
     // AUDIT LOGS ------------------------------------------------------------------------------------------------------
-    public function auditLogs()
+    public function auditLogs($employee_id)
     {
-        return view('pages.audit-logs');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.audit-logs', compact('employee_info'));
     }
      
 
     // ARCHIVE ---------------------------------------------------------------------------------------------------------
-    public function archive()
+    public function archive($employee_id)
     {
-        return view('pages.archive');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.archive', compact('employee_info'));
     }
 
 
