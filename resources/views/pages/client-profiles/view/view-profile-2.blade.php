@@ -23,8 +23,9 @@
                 </div>
             </div>
             <!-- END: File Manager Menu -->
+            @include('components.remarks')
         </div>
-
+     
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <!-- BEGIN: Wizard Layout -->
             <div class="intro-y box lg:mt-5">
