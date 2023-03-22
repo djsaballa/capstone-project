@@ -1,0 +1,52 @@
+operation,date,medical_condition_id
+Lorem ipsum dolor sit amet,2019-05-03,1
+Lorem ipsum dolor sit,2019-06-05,1
+Lorem ipsum dolor,2019-06-06,2
+Lorem ipsum,2019-06-07,3
+Lorem,2015-05-10,4
+Lorem ipsum dolor sit amet,2020-01-27,5
+Lorem ipsum dolor sit,2020-01-28,5
+Lorem ipsum dolor,2020-01-29,7
+Lorem ipsum,2020-01-30,7
+Lorem,2020-01-31,8
+Excepteur,2020-02-01,10
+Excepteur sint,2020-02-02,11
+Excepteur sint occaecat,2020-02-03,11
+Duis,2020-02-04,12
+Duis aute,2020-02-05,13
+Duis aute irure,2020-02-06,14
+Duis aute irure dolor,2020-02-07,14
+Duis aute irure dolor in,2020-02-08,16
+Excepteur,2020-02-09,17
+Excepteur sint,2020-02-10,17
+Excepteur sint occaecat,2020-02-11,19
+Duis,2020-02-12,20
+Duis aute,2020-02-13,22
+Duis aute irure,2020-02-14,23
+Duis aute irure dolor,2020-02-15,23
+Duis aute irure dolor in,2020-02-16,25
+Ut enim,2020-02-17,26
+Ut enim ad,2020-02-18,27
+Ut enim ad minim,2020-02-19,28
+Ut enim ad minim veniam,2020-02-20,28
+Quis nostrud,2020-02-21,29
+Quis nostrud excercitation,2020-02-22,31
+Sunt in,2020-02-23,32
+Sunt in culpa,2020-02-24,32
+Sunt in culpa qui,2020-02-25,34
+Sunt in culpa qui officia,2020-02-26,34
+Ut enim,2020-02-27,35
+Ut enim ad,2020-02-28,37
+Ut enim ad minim,2020-02-29,37
+Ut enim ad minim veniam,2020-03-01,38
+Quis nostrud,2020-03-02,40
+Quis nostrud excercitation,2020-03-03,40
+Sunt in,2020-03-04,41
+Sunt in culpa,2020-03-05,43
+Sunt in culpa qui,2020-03-06,44
+Sunt in culpa qui officia,2020-03-07,44
+Lorem ipsum dolor sit amet,2020-03-08,46
+Lorem ipsum dolor sit,2020-03-09,47
+Lorem ipsum dolor,2020-03-10,49
+Lorem ipsum,2020-03-11,50
+Lorem,2020-03-12,50

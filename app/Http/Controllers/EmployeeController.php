@@ -10,6 +10,7 @@ use App\Models\Locale;
 use App\Models\Employee;
 use App\Models\FamilyComposition;
 use App\Models\MedicalCondition;
+use App\Models\MedicalOperation;
 
 class EmployeeController extends Controller
 {
@@ -73,8 +74,10 @@ class EmployeeController extends Controller
         $client_profile_info = ClientProfile::find($client_profile_id);
         $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
         $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
+        $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
+        $medical_operations = MedicalOperation::all();
 
-        return view('pages.client-profiles.view.view-profile-1', compact('employee_info', 'client_profile_info', 'family_compositions', 'medical_conditions'));
+        return view('pages.client-profiles.view.view-profile-1', compact('employee_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
     }
     public function viewProfile2($employee_id, $client_profile_id)
     {

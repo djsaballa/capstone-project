@@ -9,6 +9,7 @@ use App\Models\ClientProfile;
 use App\Models\Disease;
 use App\Models\MedicalCategory;
 use App\Models\MedicalOperation;
+use Hamcrest\Core\HasToString;
 
 class MedicalCondition extends Model
 {
@@ -57,10 +58,17 @@ class MedicalCondition extends Model
         return $this->hasMany(MedicalOperation::class);
     }
 
-    public function dateFormatFjY($date)
+    public function dateFormatMdY($date)
     {
-        $formattedDate = Carbon::parse($date)->format("F j, Y");
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
 
         return $formattedDate;
+    }
+
+    public function getMedicalOperations($medical_condition_id)
+    {
+        $medical_operations = MedicalOperation::whereIn('medical_condition_id', $medical_condition_id)->get();
+
+        return $medical_operations;
     }
 }

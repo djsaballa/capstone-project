@@ -10,6 +10,7 @@ use App\Models\ProgressReport;
 use App\Models\History;
 use App\Models\Employee;
 use App\Models\Locale;
+use Carbon\Carbon;
 
 class ClientProfile extends Model
 {
@@ -93,5 +94,12 @@ class ClientProfile extends Model
         $lastName = $client_profile->last_name;
 
         return $firstName . " " . $middleName . " " . $lastName;
+    }
+
+    public function dateFormatMdY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
+
+        return $formattedDate;
     }
 }

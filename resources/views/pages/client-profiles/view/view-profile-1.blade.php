@@ -55,7 +55,7 @@
                                             Name:<span class="ml-3">{{ $client_profile_info->last_name }}</span></label>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Birthdate:<span class="ml-3">{{ $client_profile_info->birth_date }}</span></label>
+                                        <label for="startDate">Birthdate:<span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->birth_date) }}</span></label>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
@@ -71,7 +71,7 @@
                                             id="update-profile-form-3-ts-label">Occupation:<span class="ml-3">{{ $client_profile_info->occupation }}</span></label>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Baptism Date:<span class="ml-3">{{ $client_profile_info->baptism_date }}</span></label>
+                                        <label for="startDate">Baptism Date:<span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</span></label>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
@@ -130,7 +130,7 @@
                     <!-- START FAMILY COMPOSITION -->
                     <div class="intro-y box lg:mt-5">
                         <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                            <h2 class="font-medium text-base mr-auto" id="personal-info">
+                            <h2 class="font-medium text-base mr-auto" id="family-comp">
                                 Family Composition
                             </h2>
                         </div>
@@ -162,7 +162,7 @@
                     <!-- MEDICAL CONDITION -->
                     <div class="intro-y box lg:mt-5">
                         <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                            <h2 class="font-medium text-base mr-auto" id="personal-info">
+                            <h2 class="font-medium text-base mr-auto" id="medical-condition">
                                 Medical Condition
                             </h2>
                         </div>
@@ -182,7 +182,7 @@
                                         <th scope="row">
                                             {{ $medical_condition->disease->getName($medical_condition->disease_id) }}</th>
                                         <th scope="row">
-                                            {{ $medical_condition->dateFormatFjY($medical_condition->since_when) }}</th>
+                                            {{ $medical_condition->dateFormatMdY($medical_condition->since_when) }}</th>
                                         <td>{{ $medical_condition->medicine_supplements }}</td>
                                         <td>{{ $medical_condition->dosage }}</td>
                                         <td>{{ $medical_condition->frequency }}</td>
@@ -199,15 +199,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">None</th>
-                                        <td>None</td>
+                                    @foreach ($medical_conditions as $medical_condition)
+                                        @php
+                                            $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
+                                        @endphp
 
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">None</th>
-                                        <td>None</td>
-                                    </tr>
+                                        @if($matching_objects->first())
+                                            @foreach($matching_objects as $matching_object)
+                                                <tr>
+                                                    <td scope="row">{{ $matching_object->operation }}</td>
+                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>   
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <th scope="row">None</th>
+                                                <th scope="row">None</th>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -223,17 +233,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">Bicol Medical Center</th>
-                                    <td>Bicol Medical Center</td>
-                                    <td>None</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">Juan dela Cruz</th>
-                                    <td>Juan dela Cruz</td>
-                                    <td>None</td>
-                                </tr>
+                                @foreach ($medical_conditions as $medical_condition)
+                                    <tr>
+                                        <th scope="row">{{ $medical_condition->hospital }}</th>
+                                        <td>{{ $medical_condition->doctor }}</td>
+                                    </tr>
+                                 @endforeach
                             </tbody>
                         </table>
                     </div>

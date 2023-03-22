@@ -25,9 +25,11 @@ class MedicalConditionSeeder extends Seeder
                     "medicine_supplements" => $data['1'],
                     "dosage" => $data['2'],
                     "frequency" => $data['3'],
-                    "client_profile_id" => $data['4'],
-                    "disease_id" => $data['5'],
-                    "medical_category_id" => $data['6'],
+                    "doctor" => $data['4'],
+                    "hospital" => $data['5'],
+                    "client_profile_id" => $data['6'],
+                    "disease_id" => $data['7'],
+                    "medical_category_id" => $data['8'],
                 ]);
             }
             $firstline = false;
