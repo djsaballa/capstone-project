@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClientProfile;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
 use App\Models\Employee;
+use App\Models\ClientProfile;
 use App\Models\FamilyComposition;
+use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
 
@@ -88,60 +89,97 @@ class EmployeeController extends Controller
     }
 
     // ADD PROFILE -----------------------------------------------------------------------------------------------------
-    public function addProfilePrivacy()
+    public function addProfilePrivacy($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-privacy');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-privacy', compact('employee_info'));
     }
 
-    public function addProfile1()
+    public function addProfile1($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-1');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-1', compact('employee_info'));
     }
 
-    public function addProfile2()
+    public function addProfile2($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-2');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-2', compact('employee_info'));
     }
 
-    public function addProfile3()
+    public function addProfile3($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-3');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-3', compact('employee_info'));
     }
 
-    public function addProfile4()
+    public function addProfile4($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-4');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-4', compact('employee_info'));
     }
 
-    public function addProfile5()
+    public function addProfile5($employee_id)
     {
-        return view('pages.client-profiles.add.add-profile-5');
+        $employee_info = Employee::find($employee_id);
+
+        return view('pages.client-profiles.add.add-profile-5', compact('employee_info'));
     }
 
     // EDIT PROFILE ----------------------------------------------------------------------------------------------------
-    public function editProfile1()
+    public function editProfile1($employee_id, $client_profile_id)
     {
-        return view('pages.client-profiles.edit.edit-profile-1');
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+
+        return view('pages.client-profiles.edit.edit-profile-1', compact('employee_info', 'client_profile_info', 'divisions', 'districts', 'locales'));
     }
 
-    public function editProfile2()
+    public function editProfile2($employee_id, $client_profile_id)
     {
-        return view('pages.client-profiles.edit.edit-profile-2');
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+        $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
+
+        return view('pages.client-profiles.edit.edit-profile-2', compact('employee_info', 'client_profile_info', 'family_compositions'));
     }
 
-    public function editProfile3()
+    public function editProfile3($employee_id, $client_profile_id)
     {
-        return view('pages.client-profiles.edit.edit-profile-3');
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+        $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
+        $medical_operations = MedicalOperation::all();
+
+        $diseases = Disease::all();
+
+        return view('pages.client-profiles.edit.edit-profile-3', compact('employee_info', 'client_profile_info', 'medical_conditions', 'medical_operations', 'diseases'));
     }
 
-    public function editProfile4()
+    public function editProfile4($employee_id, $client_profile_id)
     {
-        return view('pages.client-profiles.edit.edit-profile-4');
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        return view('pages.client-profiles.edit.edit-profile-4', compact('employee_info', 'client_profile_info'));
     }
 
-    public function editProfile5()
+    public function editProfile5($employee_id, $client_profile_id)
     {
-        return view('pages.client-profiles.edit.edit-profile-5');
+        $employee_info = Employee::find($employee_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        return view('pages.client-profiles.edit.edit-profile-5', compact('employee_info', 'client_profile_info'));
     }
 
     // PROGRESS REPORTS ------------------------------------------------------------------------------------------------

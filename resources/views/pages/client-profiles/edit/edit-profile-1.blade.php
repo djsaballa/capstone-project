@@ -10,15 +10,15 @@
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="{{ route('edit_profile_1', [$employee_info->id, $client_profile_info->id]) }}" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_profile_3', [$employee_info->id, $client_profile_info->id]) }}" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_profile_5', [$employee_info->id, $client_profile_info->id]) }}" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
             </div>
@@ -42,23 +42,23 @@
                                         <label for="update-profile-form-1" class="form-label">First
                                             Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="First Name" value="First Name">
+                                            placeholder="First Name" value="{{ $client_profile_info->first_name }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Middle
                                             Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="Middle Name" value="Middle Name">
+                                            placeholder="Middle Name" value="{{ $client_profile_info->middle_name }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Last
                                             Name</label>
                                         <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="Last Name" value="Last Name">
+                                            placeholder="Last Name" value="{{ $client_profile_info->last_name }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Birthdate</label>
-                                        <input id="startDate" class="form-control" type="date" />
+                                        <input id="startDate" class="form-control" type="date" value="{{ $client_profile_info->birth_date }}"/>
                                         <span id="startDateSelected"></span>
                                     </div>
 
@@ -69,31 +69,28 @@
                                             id="update-profile-form-3-ts-label">Gender</label>
                                         <select id="update-profile-form-3" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">Male</option>
-                                            <option value="2">Male</option>
-                                            <option value="3">Female</option>
-
+                                            <option value="{{ $client_profile_info->gender }}" selected="true">{{ $client_profile_info->gender }}</option>
+                                            @if($client_profile_info->gender == 'Male')
+                                                <option value="Female">Female</option>
+                                            @else
+                                                <option value="Male">Male</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Age</label>
                                         <input id="update-profile-form-4" type="text" class="form-control"
-                                            placeholder="Input text" value="1">
+                                            placeholder="Input text" value="{{ $client_profile_info->age }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Occupation</label>
-                                        <select id="update-profile-form-3" data-search="true"
-                                            class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">None</option>
-                                            <option value="2">None</option>
-                                            <option value="3">Vendor</option>
-
-                                        </select>
+                                            <input id="update-profile-form-1" type="text" class="form-control"
+                                            placeholder="Occupation" value="{{ $client_profile_info->occupation }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Baptism Date</label>
-                                        <input id="startDate" class="form-control" type="date" />
+                                        <input id="startDate" class="form-control" type="date" value="{{ $client_profile_info->baptism_date }}"/>
                                         <span id="startDateSelected"></span>
                                     </div>
 
@@ -104,10 +101,10 @@
                                             id="update-profile-form-3-ts-label">Division</label>
                                         <select id="update-profile-form-3" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">Division 1</option>
-                                            <option value="2">Division 1</option>
-                                            <option value="3">Division 2</option>
-
+                                            <option value="{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }})" selected="true">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</option>
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->division }}">{{ $division->division }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="mt-3 ">
@@ -115,10 +112,10 @@
                                             id="update-profile-form-3-ts-label">District</label>
                                         <select id="update-profile-form-3" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">District 1</option>
-                                            <option value="2">District 1</option>
-                                            <option value="3">District 2</option>
-
+                                            <option value="{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}" selected="true">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</option>
+                                            @foreach ($districts as $district)
+                                                <option value="{{ $district->district }}">{{ $district->district }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -127,17 +124,17 @@
                                             id="update-profile-form-3-ts-label">Locale</label>
                                         <select id="update-profile-form-3" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">Locale 1</option>
-                                            <option value="2">Locale 1</option>
-                                            <option value="3">Locale 2</option>
-
+                                            <option value="{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}" selected="true">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</option>
+                                            @foreach ($locales as $locale)
+                                                <option value="{{ $locale->locale }}">{{ $locale->locale }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-4" class="form-label">Phone
                                             Number</label>
                                         <input id="update-profile-form-4" type="text" class="form-control"
-                                            placeholder="Input text" value="09123456789">
+                                            placeholder="Input text" value="{{ $client_profile_info->contact_number }}">
                                     </div>
                                 </div>
                                 <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
@@ -170,7 +167,7 @@
                             <div class="col-span-12">
                                 <div class="mt-3">
                                     <label for="update-profile-form-5" class="form-label">Address</label>
-                                    <textarea id="update-profile-form-5" class="form-control" placeholder="Adress">10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore</textarea>
+                                    <textarea id="update-profile-form-5" class="form-control" placeholder="Address" >{{ $client_profile_info->address }}</textarea>
                                 </div>
                             </div>
                             <div class="mt-3">
@@ -179,7 +176,7 @@
                                         class="w-4 h-4 mr-1"></i> Archive Profile </a>
                             </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <button class="btn btn-primary w-24 ml-2">Next</button>
+                                <a class="btn btn-primary w-24 ml-2" href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}">Next</a>
                             </div>
                         </div>
                         <!-- END: Wizard Layout -->

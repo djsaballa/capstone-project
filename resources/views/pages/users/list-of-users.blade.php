@@ -7,7 +7,7 @@
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_user') }}"> 
+            <a href="{{ route('add_user', $employee_info->id) }}"> 
                 <button class="btn btn-primary shadow-md mr-2">Add New User</button>
             </a>
             <div class="dropdown">
@@ -56,7 +56,7 @@
                         @endif
                     </div>
                     <div class="flex mt-4 lg:mt-0">
-                        <a href="{{ route('edit_user') }}"> 
+                        <a href="{{ route('edit_user', [$employee_info->id, $employee->id]) }}"> 
                             <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
                         </a>
                     </div>

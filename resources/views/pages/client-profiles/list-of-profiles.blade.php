@@ -6,7 +6,7 @@
     </h2>
     <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_profile_privacy') }}">
+            <a href="{{ route('add_profile_privacy', $employee_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New Profiles</button>
             </a>
             <div class="dropdown">
@@ -128,13 +128,13 @@
                         </td>
                         <td class="table-report__action w-400">
                             <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-lucide="check-square"
+                                <a class="flex items-center mr-3 " href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="eye"
+                                        class="w-4 h-4 mr-1"></i> View</a>
+                                <a class="flex items-center mr-3" href="{{ route('edit_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="check-square"
                                         class="w-4 h-4 mr-1"></i> Edit </a>
                                 <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
                                     data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
                                         class="w-4 h-4 mr-1"></i> Archive </a>
-                                <a class="flex items-center mr-3 " href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="eye"
-                                        class="w-4 h-4 mr-1"></i> View</a>
                                 <a class="flex items-center mr-3" href="{{ route('view_progress_report', [$employee_info->id, $client_profile->id]) }}"> <i data-lucide="file-check-2"
                                         class="w-4 h-4 mr-1"></i> View Report </a>
 
