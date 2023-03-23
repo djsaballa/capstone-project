@@ -38,7 +38,7 @@ class FamilyComposition extends Model
 
     public static function getFullName($family_composition_id)
     {
-        $family_composition = ClientProfile::find($family_composition_id);
+        $family_composition = FamilyComposition::find($family_composition_id);
         $firstName = $family_composition->first_name;
         $middleName = $family_composition->middle_name;
         $lastName = $family_composition->last_name;
