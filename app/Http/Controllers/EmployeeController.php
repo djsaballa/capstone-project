@@ -54,6 +54,14 @@ class EmployeeController extends Controller
         return view('pages.dashboard', compact('employee_info'));
     }
     
+    // LOAD DROPDOWN OPTIONS
+    public function getDistrictOptions($division_id)
+    {
+        $districts = District::where('division_id', $division_id)->pluck('district', 'id');
+
+        return response()->json($districts);
+    }
+
     // LIST OF PROFILES ------------------------------------------------------------------------------------------------
     public function listOfProfiles($employee_id)
     {
@@ -80,6 +88,7 @@ class EmployeeController extends Controller
 
         return view('pages.client-profiles.view.view-profile-1', compact('employee_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
     }
+
     public function viewProfile2($employee_id, $client_profile_id)
     {
         $employee_info = Employee::find($employee_id);

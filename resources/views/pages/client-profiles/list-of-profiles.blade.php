@@ -37,44 +37,29 @@
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2">
+                <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter">
                     <option selected disabled hidden>Select Division</option>
                     @foreach ($divisions as $division)
-                        <option>{{ $division->division }}</option>
+                        <option value="{{ $division->id }}">{{ $division->division }}</option>
                     @endforeach
-                    <option>Division 1</option>
-                    <option>Division 2</option>
-                    <option>Division 3</option>
-                    <option>Division 4</option>
-                    <option>Division 5</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of District</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2">
+                <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled>
                     <option selected disabled hidden>Select District</option>
                     @foreach ($districts as $district)
-                        <option>{{ $district->district }}</option>
+                        <option value="{{ $district->id }}">{{ $district->district }}</option>
                     @endforeach
-                    <option>District 1</option>
-                    <option>District 2</option>
-                    <option>District 3</option>
-                    <option>District 4</option>
-                    <option>District 5</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of Locale</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2">
+                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"disabled>
                     <option selected disabled hidden>Select Locale</option>
                     @foreach ($locales as $locale)
                         <option>{{ $locale->locale }}</option>
                     @endforeach
-                    <option>Locale 1</option>
-                    <option>Locale 2</option>
-                    <option>Locale 3</option>
-                    <option>Locale 4</option>
-                    <option>Locale 5</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">Status</label>
@@ -147,6 +132,8 @@
                             </td>
                         </tr>
                     @endforeach
+                </tbody>
+            </table>
         </div>
         <!-- BEGIN: Delete Confirmation Modal -->
         <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
@@ -173,4 +160,33 @@
         </div>
         <!-- END: Delete Confirmation Modal -->
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#list-of-profile-division-filter').on('change', function() {
+                var division_id = $(this).val();
+                console.log(division_id)
+                if(division_id) {
+                    $.ajax({
+                        url: '/get-district-options/' + division_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#list-of-profile-district-filter').empty();
+                            $.each(data, function(key, value) {
+                                $('#list-of-profile-district-filter').append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                            console.log(key, value);
+                            $('#list-of-profile-district-filter').prop('disabled', false);
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        }
+                    });
+                } else {
+                    $('#list-of-profile-district-filter').prop('disabled', true);
+                    $('#list-of-profile-district-filter').empty();
+                }
+            });
+        });
+    </script>
 @endsection

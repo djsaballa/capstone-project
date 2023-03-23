@@ -23,6 +23,9 @@ Route::controller(EmployeeController::class)->group(function () {
     // DASHBOARD
     Route::get('/dashboard/{employee_id}', 'dashboard')->name('dashboard');
 
+    // LOAD OPTIONS
+    Route::get('/get-district-options/{division_id}', 'getDistrictOptions')->name('get_district_options');
+
     // LIST OF PROFILES
     Route::get('/list-of-profiles/{employee_id}', 'listOfprofiles')->name('list_of_profiles');
 
@@ -48,7 +51,6 @@ Route::controller(EmployeeController::class)->group(function () {
         // VIEW PROGRESS REPORTS
         Route::get('/view-progress-report/{employee_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
         Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
-       
 
     // LIST OF USERS
     Route::get('/list-of-users/{employee_id}', 'listOfUsers')->name('list_of_users');

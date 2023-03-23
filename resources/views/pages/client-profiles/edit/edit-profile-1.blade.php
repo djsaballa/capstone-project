@@ -213,8 +213,8 @@
                             </div>
                             <!-- END: Wizard Layout -->
                         </div>
+                    </div>
                 </div>
-            </div>
             </form>
             <!-- END: Content -->
         @endsection
