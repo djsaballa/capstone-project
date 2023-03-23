@@ -23,7 +23,8 @@
         </div>
         <!-- END: File Manager Menu -->
     </div>
-
+    <form method="GET" action="">
+    @csrf
     <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
         <!-- BEGIN: Wizard Layout -->
         <div class="intro-y box py-10 sm:py-20 mt-5">
@@ -83,5 +84,7 @@
         </div>
     </div>
 </div>
+</form>
+
 <!-- END: Content -->
 @endsection

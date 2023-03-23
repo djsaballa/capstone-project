@@ -25,6 +25,8 @@
     </div>
 
     <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
+        <form method="GET" action="">
+            @csrf
         <!-- BEGIN: Wizard Layout -->
         <div class="intro-y box lg:mt-5">
             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
@@ -70,5 +72,6 @@
         </div>
     </div>
 </div>
+</form>
 <!-- END: Content -->
 @endsection

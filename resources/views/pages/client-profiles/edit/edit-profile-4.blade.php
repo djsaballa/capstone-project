@@ -26,6 +26,8 @@
 
     <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
         <!-- BEGIN: Wizard Layout -->
+        <form method="GET" action="">
+        @csrf
         <div class="intro-y box lg:mt-5">
             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                 <div class="font-medium text-base">Contact Person</div>
@@ -62,5 +64,6 @@
                 </div>
             </div>
         </div>
+    </form>
         <!-- END: Content -->
 @endsection
