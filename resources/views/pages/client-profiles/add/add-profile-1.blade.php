@@ -11,11 +11,12 @@
         <div
             class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
             <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy') }}"> 
+                <a href="{{ route('add_profile_privacy') }}">
                     <button
-                        class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" ><i
+                        class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"><i
                             data-lucide="shield"></i></button>
-                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Privacy Notice</div>
+                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Privacy Notice
+                    </div>
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
@@ -24,25 +25,29 @@
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>2</button>
+                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                    disabled>2</button>
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Family
                     Composition</div>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>3</button>
+                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                    disabled>3</button>
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Medical
                     Conditon</div>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>4</button>
+                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                    disabled>4</button>
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Contact
                     Persons</div>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400" disabled>5</button>
+                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                    disabled>5</button>
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background
                     Information</div>
             </div>
@@ -56,7 +61,7 @@
             </div>
             <div class="p-5">
                 <form method="GET" action="{{ route('add_profile_2') }}">
-                @csrf
+                    @csrf
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
                         <div class="flex-1 mt-6 xl:mt-0">
                             <div class="grid grid-cols-12 gap-x-5">
@@ -164,7 +169,7 @@
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
                                             <img class="rounded-md" alt="Midone - HTML Admin Template"
-                                                src="{{asset ('dist/images/profile-6.jpg')}}">
+                                                src="{{ asset('dist/images/profile-6.jpg') }}">
                                             <div
                                                 class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -175,7 +180,8 @@
                                                     </line>
                                                     <line x1="6" y1="6" x2="18" y2="18">
                                                     </line>
-                                                </svg> </div>
+                                                </svg>
+                                            </div>
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <button type="button" class="btn btn-primary w-full">Change Photo</button>
@@ -191,7 +197,8 @@
                                 </div>
                             </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <a href="{{ route('add_profile_privacy') }}" class="btn btn-secondary w-24 ml-2">Previous</a>
+                                <a href="{{ route('add_profile_privacy') }}"
+                                    class="btn btn-secondary w-24 ml-2">Previous</a>
                                 <button class="btn btn-primary w-24 ml-2">Next</button>
                             </div>
                         </div>

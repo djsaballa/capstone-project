@@ -63,7 +63,7 @@
                 @csrf
                 <div class="mt-3">
                     <label for="update-profile-form-5" class="form-label">Background Information (Kalagayan ng Pasyente,
-                       Pamilya, Finansya, Emosyonal, Physical)</label>
+                        Pamilya, Finansya, Emosyonal, Physical)</label>
                     <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here"></textarea>
                 </div>
                 <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
@@ -93,7 +93,7 @@
                     <button class="btn btn-primary w-24 ml-2">Finish</button>
                 </div>
                 <!-- END: Wizard Layout -->
-            </div>
-            <!-- END: Content -->
+        </div>
+        <!-- END: Content -->
     </div>
 @endsection

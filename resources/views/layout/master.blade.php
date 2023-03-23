@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="asset {{ ('dist/images/logo.svg" rel="shortcut icon') }}">
+    <link href="asset {{ 'dist/images/logo.svg" rel="shortcut icon' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ADDFII PROFILING</title>
 
@@ -19,7 +19,7 @@
     <div class="flex mt-[4.7rem] md:mt-0">
 
         @include('components.side-menu')
-        
+
         <div class="content">
             @include('components.top-bar-nav')
             @yield('content')
