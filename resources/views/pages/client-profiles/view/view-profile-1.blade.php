@@ -44,54 +44,54 @@
                             <div class="grid grid-cols-12 gap-x-5">
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">First
-                                            Name:<span class="ml-3">{{ $client_profile_info->first_name }}</span></label>
+                                        <label for="update-profile-form-1" class="form-label font-medium">First
+                                            Name:</label><span  class="ml-3">{{ $client_profile_info->first_name }}</span>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">Middle
-                                            Name:<span class="ml-3">{{ $client_profile_info->middle_name }}</span></label>
+                                        <label for="update-profile-form-1" class="form-label font-medium">Middle
+                                            Name:</label><span class="ml-3">{{ $client_profile_info->middle_name }}</span>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-1" class="form-label">Last
-                                            Name:<span class="ml-3">{{ $client_profile_info->last_name }}</span></label>
+                                        <label for="update-profile-form-1" class="form-label font-medium">Last
+                                            Name:</label><span class="ml-3">{{ $client_profile_info->last_name }}</span></label>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Birthdate:<span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->birth_date) }}</span></label>
+                                        <label class="form-label font-medium" for="startDate">Birthdate:</label><span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->birth_date) }}</span>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Gender:<span class="ml-3">{{ $client_profile_info->gender }}</span></label>
+                                        <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                            id="update-profile-form-3-ts-label">Gender:</label><span class="ml-3">{{ $client_profile_info->gender }}</span>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-4" class="form-label">Age:<span class="ml-3">{{ $client_profile_info->age }}</span></label>
+                                        <label for="update-profile-form-4" class="form-label font-medium">Age:</label><span class="ml-3">{{ $client_profile_info->age }}</span>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Occupation:<span class="ml-3">{{ $client_profile_info->occupation }}</span></label>
+                                        <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                            id="update-profile-form-3-ts-label">Occupation:</label><span class="ml-3">{{ $client_profile_info->occupation }}</span>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="startDate">Baptism Date:<span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</span></label>
+                                        <label class="form-label font-medium" for="startDate">Baptism Date:</label><span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</span>
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3">
-                                        <label for="update-profile-form-4" class="form-label">Contact
-                                            Number: {{ $client_profile_info->contact_number }}</label>
+                                        <label for="update-profile-form-4" class="form-label font-medium">Contact
+                                            Number:</label> {{ $client_profile_info->contact_number }}</label>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Division:<span class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span></label>
+                                        <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                            id="update-profile-form-3-ts-label">Division:</label><span class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span>
                                     </div>
                                     <div class="mt-3 ">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">District:<span class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span></label>
+                                        <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                            id="update-profile-form-3-ts-label">District:</label><span class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span>
                                     </div>
 
                                     <div class="mt-3">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Locale:<span class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span></label>
+                                        <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                            id="update-profile-form-3-ts-label">Locale:</label><span class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span>
                                     </div>
                                 </div>
                                 <div class="w-52 mx-auto xl:mr-0 xl:ml-6 mt-5">
@@ -121,7 +121,7 @@
                             </div>
                             <div class="col-span-12">
                                 <div class="mt-3">
-                                    <label for="update-profile-form-5" class="form-label">Address</label>
+                                    <label for="update-profile-form-5" class="form-label font-medium">Address</label>
                                     <textarea id="update-profile-form-5" class="form-control" placeholder="Address" disabled>{{ $client_profile_info->address }}</textarea>
                                 </div>
                             </div>

@@ -34,122 +34,103 @@
             <form method="GET" action="">
                 @csrf
                 <div class="intro-y box lg:mt-5">
-                    <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                        <div class="font-medium text-base">Medical Condition</div>
-                        <div class="grid grid-cols-10 gap-4 gap-y-5 mt-5">
-                            @foreach ($medical_conditions as $medical_condition)
-                                <div class="col-span-2 2xl:col-span-1">
-                                    <label for="update-profile-form-3-tomselected" class="form-label"
-                                        id="update-profile-form-3-ts-label">Ano Sakit?</label>
-                                    <select id="update-profile-form-3" data-search="true"
-                                        class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                        <option
-                                            value="{{ $medical_condition->disease->getName($medical_condition->disease_id) }}"
-                                            selected="true">
-                                            {{ $medical_condition->disease->getName($medical_condition->disease_id) }}
-                                        </option>
-                                        @foreach ($diseases as $disease)
-                                            <option value="{{ $disease->disease }}">{{ $disease->disease }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-span-2 2xl:col-span-1">
-                                    <label for="update-profile-form-3-tomselected" class="form-label"
-                                        id="update-profile-form-3-ts-label">Gamot na Iniinom?</label>
-                                    <input id="update-profile-form-1" type="text" class="form-control"
-                                        placeholder="Medicine/Supplements"
-                                        value="{{ $medical_condition->medicine_supplements }}">
-                                </div>
-                                <div class="col-span-2 2xl:col-span-1">
-                                    <label for="update-profile-form-3-tomselected" class="form-label"
-                                        id="update-profile-form-3-ts-label">Dosage </label>
-                                    <input id="update-profile-form-1" type="text" class="form-control"
-                                        placeholder="Dosage" value="{{ $medical_condition->dosage }}">
-                                </div>
-                                <div class="col-span-2 2xl:col-span-1">
-                                    <label for="update-profile-form-3-tomselected" class="form-label"
-                                        id="update-profile-form-3-ts-label">Frequency</label>
-                                    <input id="update-profile-form-1" type="text" class="form-control"
-                                        placeholder="Frequency" value="{{ $medical_condition->frequency }}">
-                                </div>
-                            @endforeach
-                            <div
-                                class="intro-y flex items-center justify-center sm:justify-end mt-5 col-span-2 2xl:col-span-1">
-                                <button class="btn btn-primary w-50 ml-2">Add Response</button>
-                            </div>
+                    <!-- MEDICAL CONDITION -->
+                    <div class="intro-y box lg:mt-5">
+                        <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                            <h2 class="font-medium text-base mr-auto" id="medical-condition">
+                                Medical Condition
+                            </h2>
                         </div>
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr class="bg-primary">
+                                    <th scope="col">Ano Sakit?</th>
+                                    <th scope="col">Kailan Pa?</th>
+                                    <th scope="col">Gamot na Iniinom?</th>
+                                    <th scope="col">Dosage?</th>
+                                    <th scope="col">Gaano Kadalas Inumin?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($medical_conditions as $medical_condition)
+                                    <tr>
+                                        <th scope="row">
+                                            {{ $medical_condition->disease->getName($medical_condition->disease_id) }}</th>
+                                        <th scope="row">
+                                            {{ $medical_condition->dateFormatMdY($medical_condition->since_when) }}</th>
+                                        <td>{{ $medical_condition->medicine_supplements }}</td>
+                                        <td>{{ $medical_condition->dosage }}</td>
+                                        <td>{{ $medical_condition->frequency }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="mt-5">
+                            <table class="table">
+                                <thead class="table-dark">
+                                    <tr class="bg-primary">
+                                        <th scope="col">Naging Operasyon</th>
+                                        <th scope="col">Petsa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($medical_conditions as $medical_condition)
+                                        @php
+                                            $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
+                                        @endphp
 
-                        <div class="grid grid-cols-10 gap-4 gap-y-5 mt-5">
-                            @foreach ($medical_conditions as $medical_condition)
-                                @php
-                                    $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
-                                @endphp
-
-                                @if ($matching_objects->first())
-                                    @foreach ($matching_objects as $matching_object)
-                                        <div class="col-span-2 2xl:col-span-1">
-                                            <label for="update-profile-form-3-tomselected" class="form-label"
-                                                id="update-profile-form-3-ts-label">Mga naging Operasyon?</label>
-                                            <input id="update-profile-form-1" type="text" class="form-control"
-                                                placeholder="Operation" value="{{ $matching_object->operation }}">
-                                        </div>
-                                        <div class="col-span-2 2xl:col-span-1 mt-3">
-                                            <label for="startDate">Petsa ng Operation</label>
-                                            <input id="startDate" class="form-control" type="date"
-                                                value="{{ $medical_condition->dateFormatMdY($matching_object->date) }}" />
-                                            <span id="startDateSelected"></span>
-                                        </div>
+                                        @if ($matching_objects->first())
+                                            @foreach ($matching_objects as $matching_object)
+                                                <tr>
+                                                    <td scope="row">{{ $matching_object->operation }}</td>
+                                                    <td scope="row">
+                                                        {{ $medical_condition->dateFormatMdY($matching_object->date) }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <th scope="row">None</th>
+                                                <th scope="row">None</th>
+                                            </tr>
+                                        @endif
                                     @endforeach
-                                @else
-                                    <div class="col-span-2 2xl:col-span-1">
-                                        <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Mga naging Operasyon?</label>
-                                        <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="Operation" value="">
-                                    </div>
-                                    <div class="col-span-2 2xl:col-span-1 mt-3">
-                                        <label for="startDate">Petsa ng Operation</label>
-                                        <input id="startDate" class="form-control" type="date" value="" />
-                                        <span id="startDateSelected"></span>
-                                    </div>
-                                @endif
-                            @endforeach
-                            <div
-                                class="intro-y flex items-center justify-center sm:justify-end mt-5 col-span-2 2xl:col-span-1">
-                                <button class="btn btn-primary w-50 ml-2">Add Response</button>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                            @foreach ($medical_conditions as $medical_condition)
-                                <div class="mt-3 col-span-3 2xl:col-span-1">
-                                    <label for="update-profile-form-1" class="form-label">Hospital</label>
-                                    <input id="update-profile-form-1" type="text" class="form-control"
-                                        placeholder="Hospital" value="{{ $medical_condition->hospital }}">
-                                </div>
-                                <div class="mt-3  col-span-3 2xl:col-span-1">
-                                    <label for="update-profile-form-1" class="form-label">Doctor</label>
-                                    <input id="update-profile-form-1" type="text" class="form-control"
-                                        placeholder="Doctor" value="{{ $medical_condition->doctor }}">
-                                </div>
-                            @endforeach
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Do you have Phil-health
-                                    Card?</label>
-                                <input id="update-profile-form-1" type="text" class="form-control"
-                                    placeholder="Input here" value="Phil-health Card">
-                            </div>
-                            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
-                                <a class="btn btn-secondary w-24 ml-2"
-                                    href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}">Previous</a>
-                                <a class="btn btn-primary w-24 ml-2"
-                                    href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}">Next</a>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <!-- END: Wizard Layout -->
+                    <div class="mt-5">
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr class="bg-primary">
+                                    <th scope="col">Hospital</th>
+                                    <th scope="col">Doctor </th>
+                                    <th scope="col">Do you have Phil-health Card? Please
+                                        Specify </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($medical_conditions as $medical_condition)
+                                    <tr>
+                                        <th scope="row">{{ $medical_condition->hospital }}</th>
+                                        <td>{{ $medical_condition->doctor }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end m-5">
+                            <a class="btn btn-secondary w-24 ml-2"
+                                href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}">Previous</a>
+                            <a class="btn btn-primary w-24 ml-2"
+                                href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}">Next</a>
+                        </div>
+                    </div>
+                    
+                    <!-- END MEDICAL CONDITION -->
+                    
                 </div>
         </div>
-    </div>
+        <!-- END: Wizard Layout -->
     </form>
     <!-- END: Content -->
 @endsection
