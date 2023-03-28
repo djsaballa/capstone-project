@@ -28,7 +28,7 @@ class ClientController extends Controller
 
         return view(('pages.client-profiles.list-of-profiles'), compact('employee_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
     }
-    
+
     // VIEW PROFILE ----------------------------------------------------------------------------------------------------
     public function viewProfile1($employee_id, $client_profile_id)
     {
@@ -152,28 +152,32 @@ class ClientController extends Controller
         $employee_id = $request->employeeId;
         $client_profile_id = $request->clientProfileId;
 
-        $client_profile_info = 
+        $client_profile_update = 
         [
-            'first_name' => $request->firstName ,
-            'middle_name' => $request->middleName ,
-            'last_name' => $request->lastName ,
-            'birth_date' => $request->birthDate ,
-            'gender' => $request->gender ,
-            'age' => $request->age ,
-            'occupation' => $request->occupation ,
-            'baptism_date' => $request->baptismDate ,
-            'division' => $request->division ,
-            'district' => $request->district ,
-            'locale' => $request->locale ,
-            'contact_number' => $request->contactNumber ,
-            'address' => $request->address ,
+            'first_name' => $request->firstName,
+            'middle_name' => $request->middleName,
+            'last_name' => $request->lastName,
+            'birth_date' => $request->birthDate,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'occupation' => $request->occupation,
+            'baptism_date' => $request->baptismDate,
+            'division' => $request->division,
+            'district' => $request->district,
+            'locale' => $request->locale,
+            'contact_number' => $request->contactNumber,
+            'address' => $request->address,
         ];
 
-        $employee_info = Employee::find($employee_id);
         $client_profile_info = ClientProfile::find($client_profile_id);
-        $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
-        
-        return view(('pages.client-profiles.edit.edit-profile-2'), compact('client_profile_info', 'employee_info', 'client_profile_info', 'family_compositions'));
+
+        $update = $client_profile_info->update($client_profile_update);
+
+        if($update) {
+            return redirect()->route('edit_profile_2', [$employee_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
     }
 
     public function editProfile2($employee_id, $client_profile_id)
@@ -183,6 +187,44 @@ class ClientController extends Controller
         $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
 
         return view('pages.client-profiles.edit.edit-profile-2', compact('employee_info', 'client_profile_info', 'family_compositions'));
+    }
+
+    public function editProfile2Next(Request $request)
+    {
+        $request->validate([
+            'familyFirstName' => 'required',
+            'familyLastName' => 'required',
+            'familyRelationship' => 'required',
+            'familyEduc' => 'required',
+            'familyOccupation' => 'required',
+            'familyContactNumber' => 'required',
+        ]);
+
+        $employee_id = $request->employeeId;
+        $client_profile_id = $request->clientProfileId;
+        $fam_comp_id = $request->famCompId;
+
+        $fam_comp_update = 
+        [
+            'first_name' => $request->familyFirstName,
+            'middle_name' => $request->familyMiddleName,
+            'last_name' => $request->familyLastName,
+            'relationship' => $request->familyRelationship,
+            'educational_attainment' => $request->familyEduc,
+            'occupation' => $request->familyOccupation,
+            'contact_number' =>  $request->familyContactNumber,
+        ];
+
+        dd($fam_comp_update);
+
+        $fam_comp_info = FamilyComposition::find($fam_comp_id);
+        $update = $fam_comp_info->update($fam_comp_update);
+
+        if($update) {
+            return redirect()->route('edit_profile_2', [$employee_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
     }
 
     public function editProfile3($employee_id, $client_profile_id)
@@ -205,11 +247,75 @@ class ClientController extends Controller
         return view('pages.client-profiles.edit.edit-profile-4', compact('employee_info', 'client_profile_info'));
     }
 
+    public function editProfile4Next(Request $request)
+    {
+        $request->validate([
+            'contactPerson1' => 'required',
+            'contactPerson1Number' => 'required',
+            'contactPerson2' => 'required',
+            'contactPerson2Number' => 'required',
+        ],
+        [
+            'contactPerson1.required' => 'Name is required',
+            'contactPerson1Number.required' => 'Contact Number is required',
+            'contactPerson2.required' => 'Name is required',
+            'contactPerson2Number.required' => 'Contact Number is required',
+        ]);
+
+        $employee_id = $request->employeeId;
+        $client_profile_id = $request->clientProfileId;
+
+        $client_profile_update = 
+        [
+            'contact_person1_name' => $request->contactPerson1,
+            'contact_person1_contact_number' => $request->contactPerson1Number,
+            'contact_person2_name' => $request->contactPerson2,
+            'contact_person2_contact_number' => $request->contactPerson2Number,
+        ];
+
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        $update = $client_profile_info->update($client_profile_update);
+
+        if($update) {
+            return redirect()->route('edit_profile_5', [$employee_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
+    }
+
     public function editProfile5($employee_id, $client_profile_id)
     {
         $employee_info = Employee::find($employee_id);
         $client_profile_info = ClientProfile::find($client_profile_id);
 
         return view('pages.client-profiles.edit.edit-profile-5', compact('employee_info', 'client_profile_info'));
+    }
+
+    public function editProfile5Next(Request $request)
+    {
+        $request->validate([
+            'backgroundInfo' => 'required',
+            'actionTaken' => 'required',
+        ]);
+
+        $employee_id = $request->employeeId;
+        $client_profile_id = $request->clientProfileId;
+
+        $client_profile_update = 
+        [
+            'background_info' => $request->backgroundInfo,
+            'action_taken' => $request->actionTaken,
+        ];
+
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        $update = $client_profile_info->update($client_profile_update);
+
+        if($update) {
+            return redirect()->route('list_of_profiles', [$employee_id]);
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
     }
 }

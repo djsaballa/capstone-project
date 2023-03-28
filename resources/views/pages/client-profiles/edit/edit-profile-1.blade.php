@@ -38,11 +38,11 @@
                         Personal Information
                     </h2>
                 </div>
-                <p class="error intro-x text-center" style="color: red;">
+                <div class="">
                     @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
+                        <p style="color: red;">{{ $error }}</p>
                     @endforeach
-                </p>
+                </div>
                 <div class="p-5">
                     <form method="POST" action="{{ route('edit_profile_1_next') }}">
                         @csrf

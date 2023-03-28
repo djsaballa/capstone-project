@@ -39,6 +39,11 @@
                             Family Composition
                         </h2>
                     </div>
+                    <div class="">
+                        @foreach ($errors->all() as $error)
+                            <p style="color: red;">{{ $error }}</p>
+                        @endforeach
+                    </div>
                     <div class="px-5 sm:px-20 mt-5 pt-5">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
                             <!-- START FAMILY COMPOSITION -->
@@ -47,7 +52,9 @@
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
-                                            <th scope="col">Name</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Middle Name</th>
+                                            <th scope="col">Last Name</th>
                                             <th scope="col">Relationship</th>
                                             <th scope="col">Educational Attainment</th>
                                             <th scope="col">Occupation</th>
@@ -57,18 +64,39 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($family_compositions as $family_composition)
-                                            <tr>
-                                                <th scope="row">
-                                                    {{ $family_composition->getFullName($family_composition->id) }}
-                                                </th>
-                                                <td>{{ $family_composition->relationship }}</td>
-                                                <td>{{ $family_composition->educational_attainment }}</td>
-                                                <td>{{ $family_composition->occupation }}</td>
-                                                <td>{{ $family_composition->contact_number }}</td>
-                                                <td><a class="btn btn-primary flex items-center mr-3 " href=""> <i
-                                                            data-lucide="save" class="w-4 h-4 mr-1"></i> Save </a>
-                                                </td>
-                                            </tr>
+                                            <form method="POST" action="{{ route('edit_profile_2_next') }}">
+                                                @csrf
+                                                <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                                                <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
+                                                <input id="fam-comp-id" name="famCompId" value="{{$family_composition->id }}" hidden>
+                                                <tr>
+                                                    <td scope="row">
+                                                        <input id="family-first-name" name="familyFirstName" value="{{ $family_composition->first_name }}" class="">
+                                                    </td>
+                                                    <td scope="row">
+                                                        <input id="family-middle-name" name="familyMiddleName" value="{{ $family_composition->middle_name }}" class="">
+                                                    </td>
+                                                    <td scope="row">
+                                                        <input id="family-last-name" name="familyLastName" value="{{ $family_composition->last_name }}" class="">
+                                                    </td>
+                                                    <td> 
+                                                        <input id="family-relationship" name="familyRelationship" value="{{ $family_composition->relationship }}" class="" >
+                                                    </td>
+                                                    <td> 
+                                                        <input id="family-educ" name="familyEduc" value="{{ $family_composition->educational_attainment }}" class="" >
+                                                    </td>
+                                                    <td> 
+                                                        <input id="family-occupation" name="familyOccupation" value="{{ $family_composition->occupation }}" class="" >
+                                                    </td>
+                                                    <td> 
+                                                        <input id="family-contact-number" name="familyContactNumber" value="{{ $family_composition->contact_number }}" class="" >
+                                                    </td>
+                                                    <td> 
+                                                        <button class="btn btn-primary flex items-center mr-3 " type="submit">
+                                                        <i data-lucide="save" class="w-4 h-4 mr-1"></i> Save </button>
+                                                    </td>
+                                                </tr>
+                                            </form>
                                         @endforeach
                                     </tbody>
                                 </table>

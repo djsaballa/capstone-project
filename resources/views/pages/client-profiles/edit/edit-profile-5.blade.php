@@ -30,8 +30,10 @@
         </div>
 
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
-            <form method="GET" action="">
+            <form method="POST" action="{{ route('edit_profile_5_next') }}">
                 @csrf
+                <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                 <!-- BEGIN: Wizard Layout -->
                 <div class="intro-y box lg:mt-5">
                     <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
@@ -41,7 +43,7 @@
                             <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
                                 PASYENTE,
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
-                            <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here">{{ $client_profile_info->background_info }}</textarea>
+                            <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ $client_profile_info->background_info }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
                         <form data-single="true" action="/file-upload" class="dropzone">
@@ -55,7 +57,7 @@
                         <div class="mt-3">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
-                            <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here">{{ $client_profile_info->action_taken }}</textarea>
+                            <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ $client_profile_info->action_taken }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
                         <form data-single="true" action="/file-upload" class="dropzone">
@@ -69,8 +71,7 @@
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-secondary w-24 ml-2"
                                 href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}">Previous</a>
-                            <a class="btn btn-primary w-24 ml-2"
-                                href="{{ route('edit_profile_5', [$employee_info->id, $client_profile_info->id]) }}">Finish</a>
+                            <button type="submit" class="btn btn-primary w-24 ml-2">Finish</button>
                         </div>
                         <!-- END: Wizard Layout -->
                     </div>

@@ -28,7 +28,7 @@ class FamilyComposition extends Model
         "educational_attainment",
         "occupation",
         "contact_number",
-        "client_profile_if",
+        "client_profile_id",
     ];
 
     public function clientProfile()
