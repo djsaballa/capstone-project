@@ -29,6 +29,11 @@ class Disease extends Model
         return $this->hasMany(MedicalCondition::class);
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getName($disease_id)
     {
         $disease = Disease::find($disease_id);

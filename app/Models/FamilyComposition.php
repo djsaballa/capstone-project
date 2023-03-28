@@ -36,6 +36,11 @@ class FamilyComposition extends Model
         return $this->belongsTo(ClientProfile::class);
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public static function getFullName($family_composition_id)
     {
         $family_composition = FamilyComposition::find($family_composition_id);

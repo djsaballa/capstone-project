@@ -58,6 +58,11 @@ class MedicalCondition extends Model
         return $this->hasMany(MedicalOperation::class);
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function dateFormatMdY($date)
     {
         $formattedDate = Carbon::parse($date)->format("M. d, Y");

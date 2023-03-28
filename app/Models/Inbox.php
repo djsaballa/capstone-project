@@ -31,4 +31,9 @@ class Inbox extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

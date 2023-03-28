@@ -86,6 +86,11 @@ class ClientProfile extends Model
         return $this->belongsTo(Locale::class);
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public static function getFullName($client_profile_id)
     {
         $client_profile = ClientProfile::find($client_profile_id);

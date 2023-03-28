@@ -31,6 +31,11 @@ class MedicalOperation extends Model
         return $this->belongsTo(MedicalCondition::class);
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getMedicalOperations($medical_condition_id)
     {
         $operations = MedicalOperation::where('medical_condition_id', '=', $medical_condition_id);

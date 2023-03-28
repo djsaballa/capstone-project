@@ -41,4 +41,9 @@ class ProgressReport extends Model
     {
         return $this->belongsTo(ClientProfile::class);
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

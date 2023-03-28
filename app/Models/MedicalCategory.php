@@ -29,4 +29,9 @@ class MedicalCategory extends Model
     {
         return $this->hasMany(MedicalCondition::class);
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
