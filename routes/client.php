@@ -28,6 +28,9 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/edit-profile-2/{employee_id}/{client_profile_id}', 'editProfile2')->name('edit_profile_2');
   Route::post('/edit-profile-2-next', 'editProfile2Next')->name('edit_profile_2_next');
   Route::get('/edit-profile-3/{employee_id}/{client_profile_id}', 'editProfile3')->name('edit_profile_3');
+  Route::post('/edit-profile-3-medcon-next', 'editProfile3MedConNext')->name('edit_profile_3_medcon_next');
+  Route::post('/edit-profile-3-operation-next', 'editProfile3OperationNext')->name('edit_profile_3_operation_next');
+  Route::post('/edit-profile-3-philhealth-next', 'editProfile3PhilhealthNext')->name('edit_profile_3_philhealth_next');
   Route::get('/edit-profile-4/{employee_id}/{client_profile_id}', 'editProfile4')->name('edit_profile_4');
   Route::post('/edit-profile-4-next', 'editProfile4Next')->name('edit_profile_4_next');
   Route::get('/edit-profile-5/{employee_id}/{client_profile_id}', 'editProfile5')->name('edit_profile_5');

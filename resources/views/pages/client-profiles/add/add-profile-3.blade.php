@@ -61,9 +61,9 @@
             <div class="font-medium text-base">Medical Condition</div>
             <div class="grid grid-cols-10 gap-4 gap-y-5 mt-5">
                 <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label"
-                        id="update-profile-form-3-ts-label">Ano
-                        Sakit?</label>
+                    <label for="update-profile-form-3-tomselected" class="form-label" id="update-profile-form-3-ts-label">
+                        Ano Sakit?
+                    </label>
                     <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
                         tabindex="-1" hidden="hidden">
                         <option value="1" selected="true">Option</option>
@@ -71,22 +71,13 @@
                         <option value="3">Option 2</option>
                         <option value="2">Option 3</option>
                         <option value="3">Option 4</option>
-
                     </select>
                 </div>
                 <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label"
-                        id="update-profile-form-3-ts-label">Gamot
-                        na Iniinom?</label>
-                    <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
-                        tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true">Option</option>
-                        <option value="2">Option 1</option>
-                        <option value="3">Option 2</option>
-                        <option value="2">Option 3</option>
-                        <option value="3">Option 4</option>
-
-                    </select>
+                    <label for="update-profile-form-3-tomselected" class="form-label" id="update-profile-form-3-ts-label">
+                        Gamot na Iniinom?
+                    </label>
+                    <input id="input-wizard-1" type="text" class="form-control" placeholder="Full Name">
                 </div>
                 <div class="col-span-2 2xl:col-span-1">
                     <label for="update-profile-form-3-tomselected" class="form-label"

@@ -61,14 +61,16 @@ class ClientController extends Controller
 
         $client_profiles = ClientProfile::all();
 
-
+        $client_profile_update = [
+            'status' => 'archive'
+        ];
         dd($client_profile_id);
-        if(!is_null($client_profile_id)) {
-            // $delete = ClientProfile::find($employee_id)->delete();
-            // if($delete) {
+        if (!is_null($client_profile_id)) {
+            // $archive = ClientProfile::find($employee_id)->update($client_profile_update);
+            // if ($archive) {
             //     return view(('pages.client-profiles.list-of-profiles'), compact('employee_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
             // } else {
-            //     return back()->with('message', 'Deletion of Client Profile was unsuccessful.');
+            //     return back()->with('message', 'Client Profile was unsuccessfully archived.');
             // }
             return view(('pages.client-profiles.list-of-profiles'), compact('employee_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
         } else {
@@ -173,7 +175,7 @@ class ClientController extends Controller
 
         $update = $client_profile_info->update($client_profile_update);
 
-        if($update) {
+        if ($update) {
             return redirect()->route('edit_profile_2', [$employee_id, $client_profile_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
@@ -200,11 +202,9 @@ class ClientController extends Controller
             'familyContactNumber' => 'required',
         ]);
 
-        $employee_id = $request->employeeId;
-        $client_profile_id = $request->clientProfileId;
         $fam_comp_id = $request->famCompId;
 
-        $fam_comp_update = 
+        $fam_comp_update =
         [
             'first_name' => $request->familyFirstName,
             'middle_name' => $request->familyMiddleName,
@@ -215,13 +215,11 @@ class ClientController extends Controller
             'contact_number' =>  $request->familyContactNumber,
         ];
 
-        dd($fam_comp_update);
-
         $fam_comp_info = FamilyComposition::find($fam_comp_id);
         $update = $fam_comp_info->update($fam_comp_update);
 
-        if($update) {
-            return redirect()->route('edit_profile_2', [$employee_id, $client_profile_id]);
+        if ($update) {
+            return back()->with(['status' => 'Family Composition has been saved.']);;
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -237,6 +235,92 @@ class ClientController extends Controller
         $diseases = Disease::all();
 
         return view('pages.client-profiles.edit.edit-profile-3', compact('employee_info', 'client_profile_info', 'medical_conditions', 'medical_operations', 'diseases'));
+    }
+
+    public function editProfile3MedConNext(Request $request)
+    {
+        $request->validate([
+            'medicalConditionName' => 'required',
+            'medicalConditionDate' => 'required',
+            'medicalConditionDosage' => 'required',
+            'medicalConditionFrequency' => 'required',
+            'medicalConditionHospital' => 'required',
+            'medicalDoctor' => 'required',
+        ]);
+
+        $med_con_id = $request->medConId;
+
+        $med_con_update =
+        [
+            'disease_id' => $request->medicalConditionName,
+            'since_when' => $request->medicalConditionDate,
+            'dosage' => $request->medicalConditionDosage,
+            'frequency' => $request->medicalConditionFrequency,
+            'hospital' => $request->medicalConditionHospital,
+            'doctor' => $request->medicalDoctor,
+        ];
+
+        $med_con_info = MedicalCondition::find($med_con_id);
+        $update = $med_con_info->update($med_con_update);
+
+        if ($update) {
+            return back()->with(['status' => 'Medical Condition has been saved.']);;
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
+    }
+
+    public function editProfile3OperationNext(Request $request)
+    {
+        $request->validate([
+            'operation' => 'required',
+            'operationDate' => 'required',
+        ]);
+
+        $medical_operation_id = $request->operationId;
+
+        $medical_operation_update =
+        [
+            'operation' => $request->operation,
+            'date' => $request->operationDate,
+        ];
+
+        $medical_operation_info = MedicalOperation::find($medical_operation_id);
+        $update = $medical_operation_info->update($medical_operation_update);
+
+        if ($update) {
+            return back()->with(['status' => 'Operation has been saved.']);;
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
+    }
+
+    public function editProfile3PhilhealthNext(Request $request)
+    {
+        $request->validate([
+            'philhealthMember' => 'required',
+            'healthCard' => 'required',
+        ]);
+
+        $employee_id = $request->employeeId;
+        $client_profile_id = $request->clientProfileId;
+
+        $client_profile_update =
+        [
+            'philhealth_member' => $request->philhealthMember,
+            'health_card' => $request->healthCard,
+        ];
+
+        //dd($client_profile_update);
+
+        $client_profile_info = ClientProfile::find($client_profile_id);
+        $update = $client_profile_info->update($client_profile_update);
+
+        if ($update) {
+            return redirect()->route('edit_profile_4', [$employee_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'Edit was unsuccessful.');
+        }
     }
 
     public function editProfile4($employee_id, $client_profile_id)
@@ -265,7 +349,7 @@ class ClientController extends Controller
         $employee_id = $request->employeeId;
         $client_profile_id = $request->clientProfileId;
 
-        $client_profile_update = 
+        $client_profile_update =
         [
             'contact_person1_name' => $request->contactPerson1,
             'contact_person1_contact_number' => $request->contactPerson1Number,
@@ -277,7 +361,7 @@ class ClientController extends Controller
 
         $update = $client_profile_info->update($client_profile_update);
 
-        if($update) {
+        if ($update) {
             return redirect()->route('edit_profile_5', [$employee_id, $client_profile_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
@@ -288,8 +372,9 @@ class ClientController extends Controller
     {
         $employee_info = Employee::find($employee_id);
         $client_profile_info = ClientProfile::find($client_profile_id);
+        $diseases = Disease::all();
 
-        return view('pages.client-profiles.edit.edit-profile-5', compact('employee_info', 'client_profile_info'));
+        return view('pages.client-profiles.edit.edit-profile-5', compact('employee_info', 'client_profile_info', 'diseases'));
     }
 
     public function editProfile5Next(Request $request)
@@ -302,7 +387,7 @@ class ClientController extends Controller
         $employee_id = $request->employeeId;
         $client_profile_id = $request->clientProfileId;
 
-        $client_profile_update = 
+        $client_profile_update =
         [
             'background_info' => $request->backgroundInfo,
             'action_taken' => $request->actionTaken,
@@ -312,7 +397,9 @@ class ClientController extends Controller
 
         $update = $client_profile_info->update($client_profile_update);
 
-        if($update) {
+        if ($update) {
+            $request->session()->flash('status', 'Client profile has been successfully edited!');
+            
             return redirect()->route('list_of_profiles', [$employee_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');

@@ -28,6 +28,7 @@ class ClientProfile extends Model
 
     protected $fillable = [
         "picture",
+        "privacy_consent",
         "first_name",
         "middle_name",
         "last_name",
@@ -39,6 +40,8 @@ class ClientProfile extends Model
         "occupation",
         "height",
         "baptism_date",
+        "philhealth_member",
+        "health_card",
         "contact_person1_name",
         "contact_person1_contact_number",
         "contact_person2_name",

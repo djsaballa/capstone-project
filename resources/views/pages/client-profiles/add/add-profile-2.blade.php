@@ -70,12 +70,11 @@
                             id="update-profile-form-3-ts-label">Relationship</label>
                         <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
                             tabindex="-1" hidden="hidden">
-                            <option value="1" selected="true">Father</option>
-                            <option value="2">Father</option>
-                            <option value="3">Mother</option>
-                            <option value="2">Brother</option>
-                            <option value="3">Sister</option>
-
+                            <option value="" selected="true" disabled>Select Relationship</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Brother">Brother</option>
+                            <option value="Sister">Sister</option>
                         </select>
                     </div>
                     <div class="col-span-2 2xl:col-span-1">
@@ -83,11 +82,10 @@
                             id="update-profile-form-3-ts-label">Educational Attainment</label>
                         <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
                             tabindex="-1" hidden="hidden">
-                            <option value="1" selected="true">College</option>
-                            <option value="2">College</option>
-                            <option value="3">High School</option>
-                            <option value="3">Elementary</option>
-
+                            <option value="College Graduate" selected="true">College Graduate</option>
+                            <option value="College Graduate">College Graduate</option>
+                            <option value="High School Graduate">High School Graduate</option>
+                            <option value="Elementary Graduate">Elementary Graduate</option>
                         </select>
                     </div>
                     <div class="col-span-2 2xl:col-span-1">

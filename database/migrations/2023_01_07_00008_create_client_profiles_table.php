@@ -16,6 +16,7 @@ class CreateClientProfilesTable extends Migration
         Schema::create('client_profiles', function (Blueprint $table) {
             $table->id();
             $table->binary('picture')->nullable();
+            $table->boolean('privacy_consent');
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
@@ -28,6 +29,8 @@ class CreateClientProfilesTable extends Migration
             $table->string('height');
             $table->string('weight');
             $table->string('baptism_date')->nullable();
+            $table->string('philhealth_member');
+            $table->string('health_card')->nullable();
             $table->string('contact_person1_name');
             $table->string('contact_person1_contact_number');
             $table->string('contact_person2_name');

@@ -31,19 +31,25 @@
 
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <!-- BEGIN: Wizard Layout -->
-            <form method="GET" action="">
-                @csrf
-                <div class="intro-y box py-10 sm:py-20">
-                    <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                        <h2 class="font-medium text-base mr-auto" id="family-comp">
-                            Family Composition
-                        </h2>
-                    </div>
-                    <div class="form-control">
-                        @foreach ($errors->all() as $error)
-                            <p style="color: red;">{{ $error }}</p>
-                        @endforeach
-                    </div>
+
+            <div class="intro-y box py-10 sm:py-20">
+                <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                    <h2 class="font-medium text-base mr-auto" id="family-comp">
+                        Family Composition
+                    </h2>
+                </div>
+                <div class="">
+                    @foreach ($errors->all() as $error)
+                        <p style="color: red;">{{ $error }}</p>
+                    @endforeach
+                    @if (\Session::has('status'))
+                        <div style="color: green;">
+                            <ul>
+                                <li>{!! \Session::get('status') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                </div>
                     <div class="px-5 sm:px-20 mt-5 pt-5">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
                             <!-- START FAMILY COMPOSITION -->
@@ -64,26 +70,40 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($family_compositions as $family_composition)
+                                            <form></form>
                                             <form method="POST" action="{{ route('edit_profile_2_next') }}">
                                                 @csrf
-                                                <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
-                                                <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
-                                                <input id="fam-comp-id" name="famCompId" value="{{$family_composition->id }}" hidden>
                                                 <tr>
-                                                    <td scope="row">
+                                                    <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                                                    <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
+                                                    <input id="fam-comp-id" name="famCompId" value="{{$family_composition->id }}" hidden>
+                                                    <td>
                                                         <input id="family-first-name" name="familyFirstName" value="{{ $family_composition->first_name }}" class="form-control">
                                                     </td>
-                                                    <td scope="row">
+                                                    <td>
                                                         <input id="family-middle-name" name="familyMiddleName" value="{{ $family_composition->middle_name }}" class="form-control">
                                                     </td>
-                                                    <td scope="row">
+                                                    <td>
                                                         <input id="family-last-name" name="familyLastName" value="{{ $family_composition->last_name }}" class="form-control">
                                                     </td>
                                                     <td> 
-                                                        <input id="family-relationship" name="familyRelationship" value="{{ $family_composition->relationship }}" class="form-control" >
+                                                        <select id="family-relationship" name="familyRelationship" data-search="true" class="tom-select w-full tomselected"
+                                                            tabindex="-1" hidden="hidden">
+                                                            <option value="{{ $family_composition->relationship }}" selected="true">{{ $family_composition->relationship }}</option>
+                                                            <option value="Father">Father</option>
+                                                            <option value="Mother">Mother</option>
+                                                            <option value="Brother">Brother</option>
+                                                            <option value="Sister">Sister</option>
+                                                        </select>                                                    
                                                     </td>
                                                     <td> 
-                                                        <input id="family-educ" name="familyEduc" value="{{ $family_composition->educational_attainment }}" class="form-control" >
+                                                        <select id="family-educ" name="familyEduc" data-search="true" class="tom-select w-full tomselected"
+                                                            tabindex="-1" hidden="hidden">
+                                                            <option value="{{ $family_composition->educational_attainment }}" selected="true">{{ $family_composition->educational_attainment }}</option>
+                                                            <option value="College Graduate">College Graduate</option>
+                                                            <option value="High School Graduate">High School Graduate</option>
+                                                            <option value="Elementary Graduate">Elementary Graduate</option>
+                                                        </select>
                                                     </td>
                                                     <td> 
                                                         <input id="family-occupation" name="familyOccupation" value="{{ $family_composition->occupation }}" class="form-control" >
@@ -114,7 +134,6 @@
                 </div>
         </div>
     </div>
-    </form>
 
     <!-- END: Content -->
 @endsection

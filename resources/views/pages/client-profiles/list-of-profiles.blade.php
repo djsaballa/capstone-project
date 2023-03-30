@@ -1,6 +1,13 @@
 @extends('layout.master')
 
 @section('content')
+    @if (\Session::has('status'))
+        <div class="mt-10" style="color: green;">
+            <ul>
+                <li>{!! \Session::get('status') !!}</li>
+            </ul>
+        </div>
+    @endif
     <h2 class="intro-y text-lg font-medium mt-10">
         List of Profiles
     </h2>
