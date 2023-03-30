@@ -39,7 +39,7 @@
                             Family Composition
                         </h2>
                     </div>
-                    <div class="">
+                    <div class="form-control">
                         @foreach ($errors->all() as $error)
                             <p style="color: red;">{{ $error }}</p>
                         @endforeach
@@ -71,25 +71,25 @@
                                                 <input id="fam-comp-id" name="famCompId" value="{{$family_composition->id }}" hidden>
                                                 <tr>
                                                     <td scope="row">
-                                                        <input id="family-first-name" name="familyFirstName" value="{{ $family_composition->first_name }}" class="">
+                                                        <input id="family-first-name" name="familyFirstName" value="{{ $family_composition->first_name }}" class="form-control">
                                                     </td>
                                                     <td scope="row">
-                                                        <input id="family-middle-name" name="familyMiddleName" value="{{ $family_composition->middle_name }}" class="">
+                                                        <input id="family-middle-name" name="familyMiddleName" value="{{ $family_composition->middle_name }}" class="form-control">
                                                     </td>
                                                     <td scope="row">
-                                                        <input id="family-last-name" name="familyLastName" value="{{ $family_composition->last_name }}" class="">
+                                                        <input id="family-last-name" name="familyLastName" value="{{ $family_composition->last_name }}" class="form-control">
                                                     </td>
                                                     <td> 
-                                                        <input id="family-relationship" name="familyRelationship" value="{{ $family_composition->relationship }}" class="" >
+                                                        <input id="family-relationship" name="familyRelationship" value="{{ $family_composition->relationship }}" class="form-control" >
                                                     </td>
                                                     <td> 
-                                                        <input id="family-educ" name="familyEduc" value="{{ $family_composition->educational_attainment }}" class="" >
+                                                        <input id="family-educ" name="familyEduc" value="{{ $family_composition->educational_attainment }}" class="form-control" >
                                                     </td>
                                                     <td> 
-                                                        <input id="family-occupation" name="familyOccupation" value="{{ $family_composition->occupation }}" class="" >
+                                                        <input id="family-occupation" name="familyOccupation" value="{{ $family_composition->occupation }}" class="form-control" >
                                                     </td>
                                                     <td> 
-                                                        <input id="family-contact-number" name="familyContactNumber" value="{{ $family_composition->contact_number }}" class="" >
+                                                        <input id="family-contact-number" name="familyContactNumber" value="{{ $family_composition->contact_number }}" class="form-control" >
                                                     </td>
                                                     <td> 
                                                         <button class="btn btn-primary flex items-center mr-3 " type="submit">

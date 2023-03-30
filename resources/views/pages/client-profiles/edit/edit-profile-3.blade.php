@@ -53,15 +53,28 @@
                             </thead>
                             <tbody>
                                 @foreach ($medical_conditions as $medical_condition)
-                                    <tr>
-                                        <th scope="row">
-                                            {{ $medical_condition->disease->getName($medical_condition->disease_id) }}</th>
-                                        <th scope="row">
-                                            {{ $medical_condition->dateFormatMdY($medical_condition->since_when) }}</th>
-                                        <td>{{ $medical_condition->medicine_supplements }}</td>
-                                        <td>{{ $medical_condition->dosage }}</td>
-                                        <td>{{ $medical_condition->frequency }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input id="medical-condition-name" name="medicalConditionName"
+                                            value="{{ $medical_condition->disease->getName($medical_condition->disease_id) }}" class="form-control">
+                                    </th>
+                                    <td>
+                                        <input id="medical-condition-date" name="medicalConditionDate"
+                                            value=" {{ $medical_condition->dateFormatMdY($medical_condition->since_when) }}" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input id="medical-condition-medicine-supplement"
+                                            name="medicalConditionMedicineSupplement"
+                                            value=" {{ $medical_condition->medicine_supplements }}"
+                                            class="form-control">
+                                    </td>
+                                    <td><input id="medical-condition-dosage" name="medicalConditionDosage"
+                                            value=" {{ $medical_condition->dosage }}" class="form-control">
+                                    </td>
+                                    <td><input id="medical-condition-frequency" name="medicalConditionFrequency"
+                                            value=" {{ $medical_condition->frequency }}" class="form-control">
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -71,6 +84,10 @@
                                     <tr class="bg-primary">
                                         <th scope="col">Naging Operasyon</th>
                                         <th scope="col">Petsa</th>
+                                        <th scope="col">Hospital</th>
+                                        <th scope="col">Doctor </th>
+                                        <th scope="col">Do you have Phil-health Card? Please
+                                            Specify </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,42 +99,29 @@
                                         @if ($matching_objects->first())
                                             @foreach ($matching_objects as $matching_object)
                                                 <tr>
-                                                    <td scope="row">{{ $matching_object->operation }}</td>
-                                                    <td scope="row">
-                                                        {{ $medical_condition->dateFormatMdY($matching_object->date) }}
+                                                   <th scope="row"><input id="operation" name="operation" value="{{ $matching_object->operation }}" class="form-control"></th>
+                                                    <td> 
+                                                        <input id="medical-condition-date" name="medicalConditionDate" value="{{ $medical_condition->dateFormatMdY($matching_object->date) }}" class="form-control">
+                                                    
                                                     </td>
+                                                    <td><input id="medical-condition-hospital" name="medicalConditionHospital" value="{{ $medical_condition->hospital }}" class="form-control"></td>
+                                                    <td><input id="medical-doctor" name="medicalDoctor" value="{{ $medical_condition->doctor }}" class="form-control"></td>
+                                                    
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
                                                 <th scope="row">None</th>
-                                                <th scope="row">None</th>
+                                                <td>None</td>
+                                                <td>None</td>
+                                                <td>None</td>
+                                                <td>None</td>
+                                                
                                             </tr>
                                         @endif
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="mt-5">
-                        <table class="table">
-                            <thead class="table-dark">
-                                <tr class="bg-primary">
-                                    <th scope="col">Hospital</th>
-                                    <th scope="col">Doctor </th>
-                                    <th scope="col">Do you have Phil-health Card? Please
-                                        Specify </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($medical_conditions as $medical_condition)
-                                    <tr>
-                                        <th scope="row">{{ $medical_condition->hospital }}</th>
-                                        <td>{{ $medical_condition->doctor }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end m-5">
                             <a class="btn btn-secondary w-24 ml-2"
                                 href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}">Previous</a>
