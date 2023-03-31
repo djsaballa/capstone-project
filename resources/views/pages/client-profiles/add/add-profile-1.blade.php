@@ -11,7 +11,7 @@
         <div
             class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
             <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy') }}">
+                <a href="{{ route('add_profile_privacy', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"><i
                             data-lucide="shield"></i></button>
@@ -59,31 +59,40 @@
                     Personal Information
                 </h2>
             </div>
+            <div class="">
+                @foreach ($errors->all() as $error)
+                    <p style="color: red;">{{ $error }}</p>
+                @endforeach
+            </div>
             <div class="p-5">
-                <form method="GET" action="{{ route('add_profile_2') }}">
+                <form method="POST" action="{{ route('add_profile_1_next') }}">
                     @csrf
+                    @php
+                        $old_input = session('client_profile_add');
+                    @endphp
+                    <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
                         <div class="flex-1 mt-6 xl:mt-0">
                             <div class="grid grid-cols-12 gap-x-5">
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">First Name</label>
-                                        <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="First Name" value="First Name">
+                                        <input id="first-name" name="firstName" type="text" class="form-control"
+                                            placeholder="First Name" value="{{ old('firstName', $old_input['first_name'] ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Middle Name</label>
-                                        <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="Middle Name" value="Middle Name">
+                                        <input iid="middle-name" name="middleName" type="text" class="form-control"
+                                            placeholder="Middle Name" value="{{ old('middleName', $old_input['middle_name'] ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Last Name</label>
-                                        <input id="update-profile-form-1" type="text" class="form-control"
-                                            placeholder="Last Name" value="Last Name">
+                                        <input id="last-name" name="lastName" type="text" class="form-control"
+                                            placeholder="Last Name" value="{{ old('lastName', $old_input['last_name'] ?? null) }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Birthdate</label>
-                                        <input id="startDate" class="form-control" type="date" />
+                                        <input id="birth-date" name="birthDate" value="{{ old('birthDate', $old_input['birth_date'] ?? null)}}" class="form-control" type="date" />
                                         <span id="startDateSelected"></span>
                                     </div>
 
@@ -92,33 +101,36 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Gender</label>
-                                        <select id="update-profile-form-3" data-search="true"
+                                        <select id="gender" name="gender" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">MALE</option>
-                                            <option value="2">MALE</option>
-                                            <option value="3">FEMALE</option>
-
+                                            @if ($old_input)
+                                                @if ($old_input['gender'] == "Male")
+                                                    <option value="{{ $old_input['gender'] }}">{{ $old_input['gender'] }}</option>
+                                                    <option value="Female">Female</option>
+                                                @else
+                                                    <option value="{{ $old_input['gender'] }}" selected="true">{{ $old_input['gender'] }}</option>
+                                                    <option value="Male" selected="true">Male</option>
+                                                @endif
+                                            @else
+                                                <option value="Male" selected="true">Male</option>
+                                                <option value="Female">Female</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Age</label>
-                                        <input id="update-profile-form-4" type="text" class="form-control"
-                                            placeholder="Input text" value="1">
+                                        <input id="age" name="age" type="number" class="form-control"
+                                            placeholder="Age" value="{{ old('age', $old_input['age'] ?? null) }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Occupation</label>
-                                        <select id="update-profile-form-3" data-search="true"
-                                            class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">None</option>
-                                            <option value="2">None</option>
-                                            <option value="3">Vendor</option>
-
-                                        </select>
+                                        <input id="occupation" name="occupation" type="text" class="form-control"
+                                            placeholder="Occupation" value="{{ old('occupation', $old_input['occupation'] ?? null) }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Baptism Date</label>
-                                        <input id="startDate" class="form-control" type="date" />
+                                        <input id="baptism-date" name="baptismDate" value="{{ old('baptismDate', $old_input['baptism_date'] ?? null) }}" class="form-control" type="date" />
                                         <span id="startDateSelected"></span>
                                     </div>
 
@@ -127,41 +139,89 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Division</label>
-                                        <select id="update-profile-form-3" data-search="true"
+                                        <select id="division" name="division" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">Division 1</option>
-                                            <option value="2">Division 1</option>
-                                            <option value="3">Division 2</option>
-
+                                            @if ($old_input)
+                                                @php
+                                                    $old_input_division = $divisions->find( $old_input['division'] );
+                                                @endphp
+                                                <option value="{{ $old_input_division->id }}" selected="true"> {{ $old_input_division->division }} </option>
+                                            @else
+                                                @if ( old('division') )
+                                                    @php
+                                                        $old_division = $divisions->find( old('division') );
+                                                    @endphp
+                                                    <option value="{{ $old_division->id }}" selected="true"> {{ $old_division->division }} </option>
+                                                @else
+                                                    <option value="Select Division" selected="true" disabled> Select Division</option>
+                                                @endif
+                                            @endif
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->id }}">
+                                                    {{ $division->division }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">District</label>
-                                        <select id="update-profile-form-3" data-search="true"
+                                        <select id="district" name="district" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">District 1</option>
-                                            <option value="2">District 1</option>
-                                            <option value="3">District 2</option>
-
+                                            @if ($old_input)
+                                                @php
+                                                    $old_input_district = $districts->find( $old_input['district'] );
+                                                @endphp
+                                                <option value="{{ $old_input_district->id }}" selected="true"> {{ $old_input_district->district }} </option>
+                                            @else
+                                                @if ( old('district') )
+                                                    @php
+                                                        $old_district = $districts->find( old('district') );
+                                                    @endphp
+                                                    <option value="{{ $old_district->id }}" selected="true"> {{ $old_district->district }} </option>
+                                                @else
+                                                    <option value="Select District" selected="true" disabled> Select District</option>
+                                                @endif
+                                            @endif
+                                            @foreach ($districts as $district)
+                                                <option value="{{ $district->id }}">
+                                                    {{ $district->district }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Locale</label>
-                                        <select id="update-profile-form-3" data-search="true"
+                                        <select id="locale" name="locale" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                            <option value="1" selected="true">Locale 1</option>
-                                            <option value="2">Locale 1</option>
-                                            <option value="3">Locale 2</option>
-
+                                            @if ($old_input)
+                                                @php
+                                                    $old_input_locale = $locales->find( $old_input['locale'] );
+                                                @endphp
+                                                <option value="{{ $old_input_locale->id }}" selected="true"> {{ $old_input_locale->locale }} </option>
+                                            @else
+                                                @if ( old('locale') )
+                                                    @php
+                                                        $old_locale = $locales->find( old('locale') );
+                                                    @endphp
+                                                    <option value="{{ $old_locale->id }}" selected="true"> {{ $old_locale->locale }} </option>
+                                                @else
+                                                    <option value="Select Locale" selected="true" disabled> Select Locale</option>
+                                                @endif
+                                            @endif
+                                            @foreach ($locales as $locale)
+                                                <option value="{{ $locale->id }}">
+                                                    {{ $locale->locale }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-4" class="form-label">Phone Number</label>
-                                        <input id="update-profile-form-4" type="text" class="form-control"
-                                            placeholder="Input text" value="09123456789">
+                                        <input id="contact-number" name="contactNumber" type="text" class="form-control"
+                                            placeholder="09123456789" value="{{ old('contactNumber', $old_input['contact_number'] ?? null) }}">
                                     </div>
                                 </div>
                                 <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
@@ -193,11 +253,11 @@
                             <div class="col-span-12">
                                 <div class="mt-3">
                                     <label for="update-profile-form-5" class="form-label">Address</label>
-                                    <textarea id="update-profile-form-5" class="form-control" placeholder="Adress">10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore</textarea>
+                                    <textarea id="address" name="address" class="form-control" placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input['address'] ?? null) }}</textarea>
                                 </div>
                             </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <a href="{{ route('add_profile_privacy') }}"
+                                <a href="{{ route('add_profile_privacy', $user_info->id) }}"
                                     class="btn btn-secondary w-24 ml-2">Previous</a>
                                 <button class="btn btn-primary w-24 ml-2">Next</button>
                             </div>

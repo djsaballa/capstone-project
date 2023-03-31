@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\ClientProfile;
 
 class History extends Model
@@ -24,13 +24,13 @@ class History extends Model
     protected $fillable = [
         "action_take",
         "date",
-        "employee_id",
+        "user_id",
         "client_profile_id",
     ];
 
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     public function clientProfile()

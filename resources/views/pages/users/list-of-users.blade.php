@@ -7,7 +7,7 @@
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_user', $employee_info->id) }}">
+            <a href="{{ route('add_user', $user_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New User</button>
             </a>
             <div class="dropdown">
@@ -31,7 +31,7 @@
             <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
         </div>
         <!-- BEGIN: Users Layout -->
-        @foreach ($employees as $employee)
+        @foreach ($users as $user)
             <div class="intro-y col-span-12 md:col-span-6">
                 <div class="box">
                     <div class="flex flex-col lg:flex-row items-center p-5">
@@ -40,26 +40,26 @@
                                 src=" {{ asset('dist/images/profile-5.jpg') }}">
                         </div>
                         <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                            <a href="" class="font-medium">{{ $employee->getFullName($employee->id) }}</a>
-                            @if ($employee->getSecurityLevel($employee->role_id) == 1)
+                            <a href="" class="font-medium">{{ $user->getFullName($user->id) }}</a>
+                            @if ($user->getSecurityLevel($user->role_id) == 1)
                                 <div class="text-slate-500 text-xs mt-0.5">
-                                    {{ $employee->getLocaleName($employee->locale_id) . ' - ' . $employee->getRoleName($employee->role_id) }}
+                                    {{ $user->getLocaleName($user->locale_id) . ' - ' . $user->getRoleName($user->role_id) }}
                                 </div>
-                            @elseif ($employee->getSecurityLevel($employee->role_id) == 2)
+                            @elseif ($user->getSecurityLevel($user->role_id) == 2)
                                 <div class="text-slate-500 text-xs mt-0.5">
-                                    {{ $employee->getDistrictName($employee->district_id) . ' - ' . $employee->getRoleName($employee->role_id) }}
+                                    {{ $user->getDistrictName($user->district_id) . ' - ' . $user->getRoleName($user->role_id) }}
                                 </div>
-                            @elseif ($employee->getSecurityLevel($employee->role_id) == 3)
+                            @elseif ($user->getSecurityLevel($user->role_id) == 3)
                                 <div class="text-slate-500 text-xs mt-0.5">
-                                    {{ $employee->getDivisionName($employee->division_id) . ' - ' . $employee->getRoleName($employee->role_id) }}
+                                    {{ $user->getDivisionName($user->division_id) . ' - ' . $user->getRoleName($user->role_id) }}
                                 </div>
                             @else
-                                <div class="text-slate-500 text-xs mt-0.5">{{ $employee->getRoleName($employee->role_id) }}
+                                <div class="text-slate-500 text-xs mt-0.5">{{ $user->getRoleName($user->role_id) }}
                                 </div>
                             @endif
                         </div>
                         <div class="flex mt-4 lg:mt-0">
-                            <a href="{{ route('edit_user', [$employee_info->id, $employee->id]) }}">
+                            <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
                                 <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
                             </a>

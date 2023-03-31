@@ -8,7 +8,7 @@ use App\Models\FamilyComposition;
 use App\Models\MedicalCondition;
 use App\Models\ProgressReport;
 use App\Models\History;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Locale;
 use Carbon\Carbon;
 
@@ -55,7 +55,7 @@ class ClientProfile extends Model
         "division_servant_remark",
         "social_worker_recommendation",
         "status",
-        "employee_encoder_id",
+        "user_encoder_id",
         "locale_id"
     ];
 
@@ -79,9 +79,9 @@ class ClientProfile extends Model
         return $this->hasMany(History::class);
     }
 
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     public function locale()

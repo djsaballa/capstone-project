@@ -9,19 +9,19 @@
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('edit_profile_1', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('edit_profile_3', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_4', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="{{ route('edit_profile_5', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_5', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -73,7 +73,7 @@
                                             <form method="POST" action="{{ route('edit_profile_3_medcon_next') }}">
                                                 @csrf
                                                 <tr>
-                                                    <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                                                    <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                                     <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                                                     <input id="med-con-id" name="medConId" value="{{$medical_condition->id }}" hidden>
                                                     <td scope="row">
@@ -143,7 +143,7 @@
                                                     <form method="POST" action="{{ route('edit_profile_3_operation_next') }}">
                                                     @csrf
                                                         <tr>
-                                                            <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                                                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                                             <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                                                             <input id="operation-id" name="operationId" value="{{$matching_object->id }}" hidden>
                                                             <td>
@@ -177,7 +177,7 @@
                             <div class="intro-y lg:mt-5">
                                 <form method="POST" action="{{ route('edit_profile_3_philhealth_next') }}">
                                     @csrf
-                                    <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                                    <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                     <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                                     <div class="mt-3">
                                         <div class="col-span-6 2xl:col-span-3">
@@ -188,9 +188,9 @@
                                                 tabindex="-1" hidden="hidden">
                                                 <option value="{{ $client_profile_info->philhealth_member }}" selected="true" > {{ $client_profile_info->philhealth_member }} </option>
                                                 @if( $client_profile_info->philhealth_member == 'Yes')
-                                                    <option value="No"> No </option>
+                                                <option value="No"> No </option>
                                                 @elseif( $client_profile_info->philhealth_member == 'No')
-                                                    <option value="Yes"> Yes </option>
+                                                <option value="Yes"> Yes </option>
                                                 @endif
                                             </select>
                                             <label for="update-profile-form-1" class="form-label">
@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end m-5">
                                             <a class="btn btn-secondary w-24 ml-2"
-                                                href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}">Previous</a>
+                                                href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
                                             <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
                                         </div>
                                     </div>

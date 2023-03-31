@@ -50,7 +50,7 @@ class ClientProfileSeeder extends Seeder
                     "division_servant_remark" => $data['25'],
                     "social_worker_recommendation" => $data['26'],
                     "status" => $data['27'],
-                    "employee_encoder_id" => $data['28'],
+                    "user_encoder_id" => $data['28'],
                     "locale_id" => $data['29']
                 ]);
             }

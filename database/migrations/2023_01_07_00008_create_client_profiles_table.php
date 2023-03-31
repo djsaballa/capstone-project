@@ -39,13 +39,13 @@ class CreateClientProfilesTable extends Migration
             $table->binary('background_info_attachment')->nullable();
             $table->string('action_taken');
             $table->binary('action_taken_attachment')->nullable();
-            $table->string('locale_servant_remark');
-            $table->string('district_servant_remark');
-            $table->string('division_servant_remark');
-            $table->string('social_worker_recommendation');
+            $table->string('locale_servant_remark')->nullable();
+            $table->string('district_servant_remark')->nullable();
+            $table->string('division_servant_remark')->nullable();
+            $table->string('social_worker_recommendation')->nullable();
             $table->string('status');
-            $table->foreignId('employee_encoder_id')
-                  ->constrained('employees')
+            $table->foreignId('user_encoder_id')
+                  ->constrained('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->foreignId('locale_id')

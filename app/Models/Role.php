@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\SecurityLevel;
 
 class Role extends Model
@@ -31,9 +31,9 @@ class Role extends Model
         return $this->belongsTo(SecurityLevel::class);
     }
 
-    public function employees()
+    public function users()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(User::class);
     }
 
     public function getId()

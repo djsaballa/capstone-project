@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('progress_reports', function (Blueprint $table) {
             $table->id();
             $table->date('date_time');
-            $table->foreignId('assignee_employee_id')
-                ->constrained('employees')
+            $table->foreignId('assignee_user_id')
+                ->constrained('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('assignee_contact_number');

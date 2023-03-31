@@ -23,7 +23,7 @@ class ProgressReportSeeder extends Seeder
 
                 ProgressReport::create([
                     "date_time" => $data['0'],
-                    "assignee_employee_id" => $data['1'],
+                    "assignee_user_id" => $data['1'],
                     "assignee_contact_number" => $data['2'],
                     "case_note" => $data['3'],
                     "remarks" => $data['4'],

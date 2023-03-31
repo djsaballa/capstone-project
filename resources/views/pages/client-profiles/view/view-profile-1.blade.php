@@ -16,10 +16,10 @@
                             data-lucide="users"></i> Family Composition </a>
                     <a href="#medical-condition" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i
                             class="w-4 h-4 mr-2" data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('view_profile_2', [$employee_info->id, $client_profile_info->id]) }}#contact-persons"
+                    <a href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}#contact-persons"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Persons </a>
-                    <a href="{{ route('view_profile_2', [$employee_info->id, $client_profile_info->id]) }}#background-info"
+                    <a href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}#background-info"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -246,7 +246,7 @@
                         <!-- END MEDICAL CONDITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-primary w-24 ml-2"
-                                href="{{ route('view_profile_2', [$employee_info->id, $client_profile_info->id]) }}"> Next
+                                href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}"> Next
                             </a>
                         </div>
                     </div>

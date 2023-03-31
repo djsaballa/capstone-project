@@ -18,8 +18,8 @@ return new class extends Migration
             $table->boolean('checked');
             $table->string('content');
             $table->date('date_sent');
-            $table->foreignId('sender_employee_id')
-                  ->constrained('employees')
+            $table->foreignId('sender_user_id')
+                  ->constrained('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();

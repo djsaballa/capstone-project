@@ -11,7 +11,7 @@
         <div
             class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
             <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy') }}">
+                <a href="{{ route('add_profile_privacy', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"><i
                             data-lucide="shield"></i></button>
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_1') }}">
+                <a href="{{ route('add_profile_1', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">1</button>
                     <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Personal
@@ -56,8 +56,9 @@
 
         </div>
 
-        <form method="GET" action="{{ route('add_profile_3') }}">
+        <form method="POST" action="{{ route('add_profile_2_next') }}">
             @csrf
+            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                 <div class="font-medium text-base">Family Composition</div>
                 <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
@@ -82,7 +83,7 @@
                             id="update-profile-form-3-ts-label">Educational Attainment</label>
                         <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
                             tabindex="-1" hidden="hidden">
-                            <option value="College Graduate" selected="true">College Graduate</option>
+                            <option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option>
                             <option value="College Graduate">College Graduate</option>
                             <option value="High School Graduate">High School Graduate</option>
                             <option value="Elementary Graduate">Elementary Graduate</option>
@@ -108,7 +109,7 @@
                     </div>
 
                     <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                        <a href="{{ route('add_profile_1') }}" class="btn btn-secondary w-24">Previous</a>
+                        <a href="{{ route('add_profile_1', $user_info->id) }}" class="btn btn-secondary w-24">Previous</a>
                         <button class="btn btn-primary w-24 ml-2">Next</button>
                     </div>
                 </div>
