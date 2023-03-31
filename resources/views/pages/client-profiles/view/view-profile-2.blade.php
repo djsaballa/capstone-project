@@ -10,11 +10,11 @@
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#personal-info" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="{{ route('view_profile_1', [$user_info->id, $client_profile_info->id]) }}#personal-info" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#family-comp" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('view_profile_1', [$user_info->id, $client_profile_info->id]) }}#family-comp" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}#medical-condition" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('view_profile_1', [$user_info->id, $client_profile_info->id]) }}#medical-condition" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
                     <a href="#contact-persons" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Persons </a>
@@ -98,8 +98,8 @@
                         </form>
                         <!-- END FAMILY COMPOSITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_profile_1', [$employee_info->id, $client_profile_info->id]) }}"> Back </a>
-                            <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_profiles', $employee_info->id) }}"> Return to List Profiles </a>
+                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>
+                            <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_profiles', $user_info->id) }}"> Return to List Profiles </a>
                         </div>
                     </div>
                 </div>

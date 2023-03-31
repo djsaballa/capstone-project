@@ -23,7 +23,7 @@ class HistorySeeder extends Seeder
                 History::create([
                     "action_taken" => $data['0'],
                     "date" => $data['1'],
-                    "employee_id" => $data['2'],
+                    "user_id" => $data['2'],
                     "client_profile_id" => $data['3'],
                 ]);
             }

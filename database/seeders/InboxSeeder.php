@@ -24,7 +24,7 @@ class InboxSeeder extends Seeder
                     "checked" => $data['0'],
                     "content" => $data['1'],
                     "date_sent" => $data['2'],
-                    "sender_employee_id" => $data['3'],
+                    "sender_user_id" => $data['3'],
                 ]);
             }
             $firstline = false;

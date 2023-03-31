@@ -1,4 +1,4 @@
-action_taken,date,employee_id,client_profile_id
+action_taken,date,user_id,client_profile_id
 Lorem Ipsum,1/30/2022,1,1
 Lorem Ipsum,1/31/2022,2,2
 Lorem Ipsum,2/1/2022,3,3

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Employee;
+use App\Models\User;
 
 class Inbox extends Model
 {
@@ -24,12 +24,12 @@ class Inbox extends Model
         "checked",
         "content",
         "date_sent",
-        "sender_employee_id",
+        "sender_user_id",
     ];
 
-    public function employee()
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class);
     }
 
     public function getId()

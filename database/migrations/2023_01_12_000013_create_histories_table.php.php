@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('action_taken');
             $table->string('date');
-            $table->foreignId('employee_id')
-                ->constrained('employees')
+            $table->foreignId('user_id')
+                ->constrained('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('client_profile_id')

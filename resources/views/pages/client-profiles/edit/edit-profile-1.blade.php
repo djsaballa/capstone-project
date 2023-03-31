@@ -10,19 +10,19 @@
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('edit_profile_1', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('edit_profile_2', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('edit_profile_3', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('edit_profile_4', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_4', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="{{ route('edit_profile_5', [$employee_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_profile_5', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="p-5">
                     <form method="POST" action="{{ route('edit_profile_1_next') }}">
                         @csrf
-                        <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
+                        <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                         <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                         <div class="flex flex-col-reverse xl:flex-row flex-col">
                             <div class="flex-1 mt-6 xl:mt-0">
@@ -111,7 +111,6 @@
                                                 value="{{ $client_profile_info->baptism_date }}" />
                                             <span id="startDateSelected"></span>
                                         </div>
-
                                     </div>
                                     <div class="col-span-6 2xl:col-span-3">
                                         <div class="mt-3 ">
@@ -125,7 +124,7 @@
                                                     {{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}
                                                 </option>
                                                 @foreach ($divisions as $division)
-                                                    <option value="{{ $division->division }}">{{ $division->division }}
+                                                    <option value="{{ $division->id }}">{{ $division->division }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -141,7 +140,7 @@
                                                     {{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}
                                                 </option>
                                                 @foreach ($districts as $district)
-                                                    <option value="{{ $district->district }}">{{ $district->district }}
+                                                    <option value="{{ $district->id }}">{{ $district->district }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -158,7 +157,7 @@
                                                     {{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}
                                                 </option>
                                                 @foreach ($locales as $locale)
-                                                    <option value="{{ $locale->locale }}">{{ $locale->locale }}</option>
+                                                    <option value="{{ $locale->id }}">{{ $locale->locale }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -6,7 +6,7 @@
     <div class="side-nav__devider my-6"></div>
     <ul>
         <li>
-            <a href="{{ route('dashboard', $employee_info->id) }}" class="side-menu side-menu--active">
+            <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu side-menu--active">
                 <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
                 <div class="side-menu__title">
                     Dashboard
@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('list_of_profiles', $employee_info->id) }}" class="side-menu">
+            <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu">
                 <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
                 <div class="side-menu__title">
                     List of Profiles
@@ -25,7 +25,7 @@
         </li>
         </li>
         <li>
-            <a href="{{ route('list_of_users', $employee_info->id) }}" class="side-menu ">
+            <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu ">
                 <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
                 <div class="side-menu__title">
                     List of Users
@@ -34,7 +34,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('inbox', $employee_info->id) }}" class="side-menu">
+            <a href="{{ route('inbox', $user_info->id) }}" class="side-menu">
                 <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
                 <div class="side-menu__title">
                     Inbox
@@ -43,7 +43,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('audit_logs', $employee_info->id) }}" class="side-menu">
+            <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu">
                 <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
                 <div class="side-menu__title">
                     Audit Logs
@@ -53,7 +53,7 @@
         </li>
 
         <li>
-            <a href="{{ route('archive', $employee_info->id) }}" class="side-menu">
+            <a href="{{ route('archive', $user_info->id) }}" class="side-menu">
                 <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
                 <div class="side-menu__title">
                     Archive

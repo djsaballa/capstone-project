@@ -1,4 +1,4 @@
-date_time,assignee_employee_id,assignee_contact_number,case_note,remarks,attachment,client_profile_id
+date_time,assignee_user_id,assignee_contact_number,case_note,remarks,attachment,client_profile_id
 2022-01-02 13:00:00,101,109332977,lorem ipsum ,lorem ipsum ,file,1
 2022-01-03 13:00:00,102,140903550,lorem ipsum ,lorem ipsum ,file,2
 2022-01-04 13:00:00,103,894101322,lorem ipsum ,lorem ipsum ,file,3

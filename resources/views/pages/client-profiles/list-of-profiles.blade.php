@@ -1,10 +1,10 @@
 @extends('layout.master')
 
 @section('content')
-    @if (\Session::has('status'))
+    @if (Session::has('status'))
         <div class="mt-10" style="color: green;">
             <ul>
-                <li>{!! \Session::get('status') !!}</li>
+                <li>{{ Session::get('status') }}</li>
             </ul>
         </div>
     @endif
@@ -13,7 +13,7 @@
     </h2>
     <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_profile_privacy', $employee_info->id) }}">
+            <a href="{{ route('add_profile_privacy', $user_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New Profiles</button>
             </a>
             <div class="dropdown">
@@ -123,16 +123,16 @@
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center mr-3 "
-                                        href="{{ route('view_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i
+                                        href="{{ route('view_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
                                     <a class="flex items-center mr-3"
-                                        href="{{ route('edit_profile_1', [$employee_info->id, $client_profile->id]) }}"> <i
+                                        href="{{ route('edit_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                     <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
                                         data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
                                             class="w-4 h-4 mr-1"></i> Archive </a>
                                     <a class="flex items-center mr-3"
-                                        href="{{ route('view_progress_report', [$employee_info->id, $client_profile->id]) }}">
+                                        href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
 
                                 </div>
@@ -159,7 +159,7 @@
                         <div class="px-5 pb-8 text-center">
                             <button type="button" data-tw-dismiss="modal"
                                 class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
-                            <a href="{{ route('delete_profile', [$employee_info->id, $client_profile->id]) }}" class="btn btn-danger w-24">Delete</a>
+                            <a href="{{ route('delete_profile', [$user_info->id, $client_profile->id]) }}" class="btn btn-danger w-24">Delete</a>
                         </div>
                     </div>
                 </div>

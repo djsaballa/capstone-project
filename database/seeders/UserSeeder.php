@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Employee;
+use App\Models\User;
 
-class EmployeeSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        $csvFile = fopen(base_path("database/seeders/seeds/employees.csv"), "r");
+        $csvFile = fopen(base_path("database/seeders/seeds/users.csv"), "r");
   
         $firstline = true;
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
@@ -36,7 +36,7 @@ class EmployeeSeeder extends Seeder
                     $data9 = null;
                 }
 
-                Employee::create([
+                User::create([
                     "first_name" => $data['0'],
                     "middle_name" => $data['1'],
                     "last_name" => $data['2'],
