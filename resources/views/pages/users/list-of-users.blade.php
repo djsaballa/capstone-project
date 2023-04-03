@@ -59,8 +59,10 @@
                             @endif
                         </div>
                         <div class="flex mt-4 lg:mt-0">
-                            <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
+                            <a href="{{ route('view_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
+                            </a>
+                            <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
                             </a>
                         </div>

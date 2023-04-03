@@ -135,7 +135,7 @@ class ClientController extends Controller
 
         $user_id = $request->userId;
 
-        return redirect()->route('add_profile_2', $user_id);
+        return redirect()->route('add_profile_3', $user_id);
     }
 
     public function addProfile2($user_id)
@@ -147,15 +147,16 @@ class ClientController extends Controller
 
     public function addProfile2Next(Request $request)
     {
-        
-        return view('pages.client-profiles.add.add-profile-3', compact('user_info'));
+        $user_id = $request->userId;
+
+        return redirect()->route('add_profile_3', $user_id);
     }
 
     public function addProfile3($user_id)
     {
         $user_info = User::find($user_id);
 
-        return view('add_profile_2', compact('user_info'));
+        return view('pages.client-profiles.add.add-profile-3', compact('user_info'));
     }
 
     public function addProfile4($user_id)
@@ -225,6 +226,15 @@ class ClientController extends Controller
         session()->put('client_profile_add', $client_profile_add);
         
         $user_id = $request->userId;
+
+        return redirect()->route('add_profile_6', $user_id);
+    }
+
+    public function addProfile6($user_id)
+    {
+        $user_info = User::find($user_id);
+
+        return view('pages.client-profiles.add.add-profile-6', compact('user_info'));
     }
 
     // EDIT PROFILE ----------------------------------------------------------------------------------------------------

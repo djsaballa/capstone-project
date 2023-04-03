@@ -84,18 +84,31 @@ class UserController extends Controller
         return view('pages.users.list-of-users', compact('users', 'user_info'));
     }
 
-    public function addUser()
+    public function viewUser($user_id, $employee_id)
     {
-        return view('pages.users.add-user');
+        $user_info = User::find($user_id);
+        $employee_info = User::find($employee_id);
+
+        return view('pages.users.view-user', compact('user_info', 'employee_info'));
+    }
+
+    public function addUser($user_id)
+    {
+        $user_info = User::find($user_id);
+
+        return view('pages.users.add-user', compact('user_info'));
     }
     
-    public function editUser()
+    public function editUser($user_id, $employee_id)
     {
-        return view('pages.users.edit-user');
+        $user_info = User::find($user_id);
+        $employee_info = User::find($employee_id);
+
+        return view('pages.users.edit-user', compact('user_info', 'employee_info'));
     }
 
     // INBOX -----------------------------------------------------------------------------------------------------------
-    public function inbox($user_id)
+    public function inbox($user_id, $employee_id)
     {
         $user_info = User::find($user_id);
 

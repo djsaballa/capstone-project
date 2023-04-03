@@ -34,6 +34,9 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/list-of-users/{user_id}', 'listOfUsers')->name('list_of_users');
 
         // ADD USER
+        Route::get('/view-user/{user_id}/{employee_id)', 'viewUser')->name('view_user');
+        
+        // ADD USER
         Route::get('/add-user/{user_id}', 'addUser')->name('add_user');
 
         // EDIT USER
