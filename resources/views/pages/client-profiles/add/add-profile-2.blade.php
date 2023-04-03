@@ -28,8 +28,10 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button class="w-10 h-10 rounded-full btn btn-primary ">2</button>
-                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Setup Family
+                <button
+                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                    disabled>2</button>
+                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Family
                     Composition</div>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
@@ -53,7 +55,11 @@
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background
                     Information</div>
             </div>
-
+            
+            <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
+                <button class="w-10 h-10 rounded-full btn btn-primary ">6</button>
+                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Review</div>
+            </div>
         </div>
 
         <form method="POST" action="{{ route('add_profile_2_next') }}">

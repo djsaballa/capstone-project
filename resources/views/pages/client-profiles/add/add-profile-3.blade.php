@@ -53,6 +53,12 @@
             <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background
                 Information</div>
         </div>
+        <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
+            <button
+                class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
+                disabled>5</button>
+            <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Review</div>
+        </div>
 
     </div>
     <form method="GET" action="{{ route('add_profile_4', $user_info->id) }}">
@@ -77,7 +83,7 @@
                     <label for="update-profile-form-3-tomselected" class="form-label" id="update-profile-form-3-ts-label">
                         Gamot na Iniinom?
                     </label>
-                    <input id="input-wizard-1" type="text" class="form-control" placeholder="Full Name">
+                    <input id="input-wizard-1" type="text" class="form-control" placeholder="Name of Medicine">
                 </div>
                 <div class="col-span-2 2xl:col-span-1">
                     <label for="update-profile-form-3-tomselected" class="form-label"
@@ -85,10 +91,10 @@
                     </label>
                     <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
                         tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true">College</option>
-                        <option value="2">College</option>
-                        <option value="3">High School</option>
-                        <option value="3">Elementary</option>
+                        <option value="1" selected="true"></option>
+                        <option value="2">10 mg</option>
+                        <option value="3">100 mg</option>
+                        <option value="3">500 mg</option>
 
                     </select>
                 </div>
