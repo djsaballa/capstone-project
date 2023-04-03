@@ -135,7 +135,7 @@ class ClientController extends Controller
 
         $user_id = $request->userId;
 
-        return redirect()->route('add_profile_1', $user_id);
+        return redirect()->route('add_profile_2', $user_id);
     }
 
     public function addProfile2($user_id)
