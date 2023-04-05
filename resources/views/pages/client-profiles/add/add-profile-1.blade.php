@@ -266,7 +266,7 @@
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                                 <a href="{{ route('add_profile_privacy', $user_info->id) }}"
                                     class="btn btn-secondary w-24 ml-2">Previous</a>
-                                <button class="btn btn-primary w-24 ml-2">Next</button>
+                                <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
                             </div>
                         </div>
                     </div>

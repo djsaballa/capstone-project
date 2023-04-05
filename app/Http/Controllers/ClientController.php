@@ -110,7 +110,7 @@ class ClientController extends Controller
             'division' => 'required',
             'district' => 'required',
             'locale' => 'required',
-            'contactNumber' => 'required',
+            'contactNumber' => 'required|numeric',
             'address' => 'required',
         ]);
 
@@ -253,8 +253,9 @@ class ClientController extends Controller
     public function editProfile1Next(Request $request)
     {
         $request->validate([
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'firstName' => 'required|string',
+            'middleName' => 'nullable|string',
+            'lastName' => 'required|string',
             'birthDate' => 'required',
             'gender' => 'required',
             'age' => 'required',
@@ -263,14 +264,14 @@ class ClientController extends Controller
             'division' => 'required',
             'district' => 'required',
             'locale' => 'required',
-            'contactNumber' => 'required',
+            'contactNumber' => 'required|numeric',
             'address' => 'required',
         ]);
 
         $user_id = $request->userId;
         $client_profile_id = $request->clientProfileId;
 
-        $client_profile_update = 
+        $client_profile_update =
         [
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
@@ -280,9 +281,7 @@ class ClientController extends Controller
             'age' => $request->age,
             'occupation' => $request->occupation,
             'baptism_date' => $request->baptismDate,
-            'division' => $request->division,
-            'district' => $request->district,
-            'locale' => $request->locale,
+            'locale_id' => $request->locale,
             'contact_number' => $request->contactNumber,
             'address' => $request->address,
         ];
@@ -310,12 +309,13 @@ class ClientController extends Controller
     public function editProfile2Next(Request $request)
     {
         $request->validate([
-            'familyFirstName' => 'required',
-            'familyLastName' => 'required',
+            'familyFirstName' => 'required|string',
+            'familyMiddleName' => 'nullable|string',
+            'familyLastName' => 'required|string',
             'familyRelationship' => 'required',
             'familyEduc' => 'required',
-            'familyOccupation' => 'required',
-            'familyContactNumber' => 'required',
+            'familyOccupation' => 'required|string',
+            'familyContactNumber' => 'required|numeric',
         ]);
 
         $fam_comp_id = $request->famCompId;
@@ -447,18 +447,20 @@ class ClientController extends Controller
 
     public function editProfile4Next(Request $request)
     {
-        $request->validate([
-            'contactPerson1' => 'required',
-            'contactPerson1Number' => 'required',
-            'contactPerson2' => 'required',
-            'contactPerson2Number' => 'required',
-        ],
-        [
-            'contactPerson1.required' => 'Name is required',
-            'contactPerson1Number.required' => 'Contact Number is required',
-            'contactPerson2.required' => 'Name is required',
-            'contactPerson2Number.required' => 'Contact Number is required',
-        ]);
+        $request->validate(
+            [
+                'contactPerson1' => 'required|string',
+                'contactPerson1Number' => 'required|numeric',
+                'contactPerson2' => 'required|string',
+                'contactPerson2Number' => 'required|numeric',
+            ],
+            [
+                'contactPerson1.required' => 'Name is required',
+                'contactPerson1Number.required' => 'Contact Number is required',
+                'contactPerson2.required' => 'Name is required',
+                'contactPerson2Number.required' => 'Contact Number is required',
+            ]
+        );
 
         $user_id = $request->userId;
         $client_profile_id = $request->clientProfileId;
@@ -516,7 +518,9 @@ class ClientController extends Controller
             
             return redirect()->route('list_of_profiles', [$user_id]);
         } else {
-            return back()->withErrors('message', 'Edit was unsuccessful.');
+            $request->session()->flash('status!', 'Edit was unsuccessful.');
+
+            return redirect()->route('list_of_profiles', [$user_id]);
         }
     }
 }

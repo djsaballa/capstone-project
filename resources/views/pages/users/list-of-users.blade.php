@@ -5,6 +5,20 @@
     <h2 class="intro-y text-lg font-medium mt-10">
         List Of Users
     </h2>
+    @if (Session::has('status'))
+        <div class="mt-10" style="color: green;">
+            <ul>
+                <li>{{ Session::get('status') }}</li>
+            </ul>
+        </div>
+    @endif
+    @if (Session::has('status!'))
+        <div class="mt-10" style="color: green;">
+            <ul>
+                <li>{{ Session::get('status') }}</li>
+            </ul>
+        </div>
+    @endif
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <a href="{{ route('add_user', $user_info->id) }}">
@@ -53,7 +67,7 @@
                                 <div class="text-slate-500 text-xs mt-0.5">
                                     {{ $user->getDivisionName($user->division_id) . ' - ' . $user->getRoleName($user->role_id) }}
                                 </div>
-                            @else
+                            @elseif ($user->getSecurityLevel($user->role_id) == 4)
                                 <div class="text-slate-500 text-xs mt-0.5">{{ $user->getRoleName($user->role_id) }}
                                 </div>
                             @endif
