@@ -67,7 +67,7 @@
                                 <div class="text-slate-500 text-xs mt-0.5">
                                     {{ $user->getDivisionName($user->division_id) . ' - ' . $user->getRoleName($user->role_id) }}
                                 </div>
-                            @elseif ($user->getSecurityLevel($user->role_id) == 4)
+                            @elseif ($user->getSecurityLevel($user->role_id) == 4 || 5)
                                 <div class="text-slate-500 text-xs mt-0.5">{{ $user->getRoleName($user->role_id) }}
                                 </div>
                             @endif

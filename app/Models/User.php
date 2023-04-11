@@ -34,6 +34,7 @@ class User extends Model
         "username",
         "password",
         "contact_number",
+        "status",
         "role_id",
         "locale_id",
         "district_id",

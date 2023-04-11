@@ -132,6 +132,8 @@ class UserController extends Controller
             'contact_number' => $request->contactNumber,
             'role_id' => $request->role,
             'locale_id' => $request->locale,
+            'district_id' => $request->district,
+            'division_id' => $request->division,
         ];
 
         $create = User::create($user_save);

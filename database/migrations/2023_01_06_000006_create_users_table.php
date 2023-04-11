@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('contact_number');
+            $table->string('status');
             $table->foreignId('role_id')
                   ->constrained('roles')
                   ->onUpdate('cascade')

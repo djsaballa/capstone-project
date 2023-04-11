@@ -20,13 +20,8 @@ class UserSeeder extends Seeder
         $firstline = true;
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
-                if (!empty($data['7'])) {
-                   $data7 = $data['7'];
-                } else {
-                    $data7 = null;
-                }
                 if (!empty($data['8'])) {
-                    $data8 = $data['8'];
+                   $data8 = $data['8'];
                 } else {
                     $data8 = null;
                 }
@@ -34,6 +29,11 @@ class UserSeeder extends Seeder
                     $data9 = $data['9'];
                 } else {
                     $data9 = null;
+                }
+                if (!empty($data['10'])) {
+                    $data10 = $data['10'];
+                } else {
+                    $data10 = null;
                 }
 
                 User::create([
@@ -43,10 +43,11 @@ class UserSeeder extends Seeder
                     "username" => $data['3'],
                     "password" => $data['4'],
                     "contact_number" => $data['5'],
-                    "role_id" => $data['6'],
-                    "locale_id" => $data7,
-                    "district_id" => $data8,
-                    "division_id" => $data9
+                    "status" => $data['6'],
+                    "role_id" => $data['7'],
+                    "locale_id" => $data8,
+                    "district_id" => $data9,
+                    "division_id" => $data10
                 ]);
             }
             $firstline = false;
