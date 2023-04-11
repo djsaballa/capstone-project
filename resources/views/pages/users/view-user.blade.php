@@ -113,6 +113,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                            <a href="{{ route('list_of_users', [$user_info->id, $employee_info->id]) }}" class="btn btn-primary w-24 ml-2">Return</a>
+                        </div>
                     </div>
                 </div>
             </div>
