@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Inbox extends Model
 {
@@ -35,5 +36,22 @@ class Inbox extends Model
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getSenderName($sender_employee_id)
+    {
+        $sender_info = User::find($sender_employee_id);
+        $firstName = $sender_info->first_name;
+        $middleName = $sender_info->middle_name;
+        $lastName = $sender_info->last_name;
+
+        return $firstName . " " . $middleName . " " . $lastName;
+    }
+
+    public function dateFormatMdY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
+
+        return $formattedDate;
     }
 }

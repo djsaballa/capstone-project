@@ -14,6 +14,7 @@ use App\Models\FamilyComposition;
 use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
+use App\Models\Inbox;
 
 
 class UserController extends Controller
@@ -81,7 +82,7 @@ class UserController extends Controller
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($user_id)
     {
-        $users = User::where('status', 'Active')->get();
+        $users = User::where('status', 'Active')->paginate(10);
         $user_info = User::find($user_id);
 
         return view('pages.users.list-of-users', compact('users', 'user_info'));
@@ -211,8 +212,9 @@ class UserController extends Controller
     public function inbox($user_id)
     {
         $user_info = User::find($user_id);
+        $inboxes = Inbox::orderBy('date_sent', 'DESC')->get();
 
-        return view('pages.inbox', compact('user_info'));
+        return view('pages.inbox', compact('user_info', 'inboxes'));
     }
 
     // AUDIT LOGS ------------------------------------------------------------------------------------------------------
@@ -228,8 +230,13 @@ class UserController extends Controller
     public function archive($user_id)
     {
         $user_info = User::find($user_id);
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        return view('pages.archive', compact('user_info'));
+        $client_profiles_total = ClientProfile::all();
+
+        return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles_total'));
     }
 
 

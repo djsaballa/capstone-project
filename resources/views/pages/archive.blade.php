@@ -12,15 +12,19 @@
                     <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw"
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
                 </div>
+                @php
+                    $client_profiles = $client_profiles_total->where('status', 'Archive');
+                    $non_brethren = $client_profiles_total->whereNull('baptism_date');
+                    $ongoing = $client_profiles_total->where('status', 'Active');
+                @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="user" class="report-box__icon text-success"></i>
-
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">500</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($client_profiles_total) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Total Profiles</div>
                             </div>
                         </div>
@@ -32,7 +36,7 @@
                                     <i data-lucide="user" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">380</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($client_profiles_total) - count($non_brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Brethren</div>
                             </div>
                         </div>
@@ -44,7 +48,7 @@
                                     <i data-lucide="user" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($non_brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Non-Brethren</div>
                             </div>
                         </div>
@@ -56,7 +60,7 @@
                                     <i data-lucide="user" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
                                 <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
                             </div>
                         </div>
@@ -103,34 +107,31 @@
                     <!-- END: General Report -->
                     <!-- START DROPDOWN -->
                     <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
-                        <label for="regular-form-1" class="form-label">List of Division</label>
+                    <label for="regular-form-1" class="form-label">List of Division</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2">
-                                <option>Division 1</option>
-                                <option>Division 2</option>
-                                <option>Division 3</option>
-                                <option>Division 4</option>
-                                <option>Division 5</option>
+                            <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter">
+                                <option selected disabled hidden>Select Division</option>
+                                @foreach ($divisions as $division)
+                                    <option value="{{ $division->id }}">{{ $division->division }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2">
-                                <option>District 1</option>
-                                <option>District 2</option>
-                                <option>District 3</option>
-                                <option>District 4</option>
-                                <option>District 5</option>
+                            <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled>
+                                <option selected disabled hidden>Select District</option>
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->district }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <label for="regular-form-1" class="form-label">List of Locale</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2">
-                                <option>Locale 1</option>
-                                <option>Locale 2</option>
-                                <option>Locale 3</option>
-                                <option>Locale 4</option>
-                                <option>Locale 5</option>
+                            <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"disabled>
+                                <option selected disabled hidden>Select Locale</option>
+                                @foreach ($locales as $locale)
+                                    <option>{{ $locale->locale }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <label for="regular-form-1" class="form-label">Status</label>
@@ -155,293 +156,46 @@
                             <thead>
                                 <tr>
                                     <th class="whitespace-nowrap"> </th>
-                                    <th class="whitespace-nowrap">CLIENTS NAME</th>
+                                    <th class="whitespace-nowrap">CLIENT'S NAME</th>
                                     <th class="text-center whitespace-nowrap">GENDER</th>
                                     <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
                                     <th class="text-center whitespace-nowrap">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-4.jpg') }}"
-                                                    title="Uploaded at 18 April 2021">
+                                @foreach ($client_profiles as $client_profile)
+                                    <tr class="intro-x">
+                                        <td class="w-40">
+                                            <div class="flex">
+                                                <div class="w-10 h-10 image-fit zoom-in">
+                                                    <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
+                                                        src=" {{ asset('dist/images/preview-4.jpg') }}"
+                                                        title="Uploaded at 18 April 2021">
+                                                </div>
                                             </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-7.jpg') }}"
-                                                    title="Uploaded at 9 October 2021">
+                                        </td>
+                                        <td>
+                                            <a href=""
+                                                class="font-medium whitespace-nowrap">{{ $client_profile->getFullName($client_profile->id) }}</a>
+                                        </td>
+                                        <td class="text-center">{{ $client_profile->gender }}</td>
+                                        <td class="w-40">
+                                            <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
+                                        </td>
+                                        <td class="w-40">
+                                            <div class="flex items-center justify-center "> KNP </div>
+                                        </td>
+                                        <td class="table-report__action w-400">
+                                            <div class="flex justify-center items-center">
+                                                <a class="flex items-center mr-3" href="javascript:;"> <i
+                                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                                <a class="flex items-center mr-3 text-danger" href="javascript:;"
+                                                    data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
+                                                        data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
                                             </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-3.jpg') }}"
-                                                    title="Uploaded at 3 March 2022">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-6.jpg') }}"
-                                                    title="Uploaded at 24 August 2022">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-3.jpg') }}"
-                                                    title="Uploaded at 20 April 2020">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-4.jpg') }}"
-                                                    title="Uploaded at 24 July 2022">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-7.jpg') }}"
-                                                    title="Uploaded at 11 May 2021">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center "> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-15.jpg') }}"
-                                                    title="Uploaded at 16 January 2021">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center"> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="intro-x">
-                                    <td class="w-40">
-                                        <div class="flex">
-                                            <div class="w-10 h-10 image-fit zoom-in">
-                                                <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
-                                                    src=" {{ asset('dist/images/preview-2.jpg') }}"
-                                                    title="Uploaded at 21 August 2020">
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="font-medium whitespace-nowrap">Juan Dela Cruz</a>
-
-                                    </td>
-                                    <td class="text-center">Male</td>
-                                    <td class="w-40">
-                                        <div class="flex items-center justify-center"> 09123456789 </div>
-                                    </td>
-
-                                    <td class="table-report__action w-400">
-                                        <div class="flex justify-center items-center">
-                                            <a class="flex items-center mr-3" href="javascript:;"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                            <a class="flex items-center mr-3 text-danger mr-3" href="javascript:;"
-                                                data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                                    data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
-
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
