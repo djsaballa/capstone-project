@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <a href="" class="btn btn-light w-24 ml-2">Return</a>
+                            <a href="{{ route('list_of_users', $user_info->id ) }}" class="btn btn-secondary w-24 ml-2">Cancel</a>
                             <button class="btn btn-primary w-24 ml-2">Save</button>
                         </div>
                     </div>

@@ -81,7 +81,7 @@ class UserController extends Controller
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($user_id)
     {
-        $users = User::all();
+        $users = User::where('status', 'Active')->get();
         $user_info = User::find($user_id);
 
         return view('pages.users.list-of-users', compact('users', 'user_info'));
@@ -208,7 +208,7 @@ class UserController extends Controller
     }
 
     // INBOX -----------------------------------------------------------------------------------------------------------
-    public function inbox($user_id, $employee_id)
+    public function inbox($user_id)
     {
         $user_info = User::find($user_id);
 
