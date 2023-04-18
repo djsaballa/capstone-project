@@ -15,6 +15,7 @@ use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
 use App\Models\Inbox;
+use App\Models\History;
 
 
 class UserController extends Controller
@@ -212,7 +213,7 @@ class UserController extends Controller
     public function inbox($user_id)
     {
         $user_info = User::find($user_id);
-        $inboxes = Inbox::orderBy('date_sent', 'DESC')->get();
+        $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(10);
 
         return view('pages.inbox', compact('user_info', 'inboxes'));
     }
@@ -221,8 +222,9 @@ class UserController extends Controller
     public function auditLogs($user_id)
     {
         $user_info = User::find($user_id);
+        $histories = History::orderBy('date', 'DESC')->paginate(10);
 
-        return view('pages.audit-logs', compact('user_info'));
+        return view('pages.audit-logs', compact('user_info', 'histories'));
     }
      
 

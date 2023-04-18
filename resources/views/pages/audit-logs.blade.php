@@ -6,8 +6,6 @@
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
-
-            <div class="hidden xl:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0">
             </div>
         </div>
@@ -19,35 +17,34 @@
                         <th class="whitespace-nowrap">
                             <input class="form-check-input" type="checkbox">
                         </th>
-                        <th class="whitespace-nowrap">PROFILE EDITED/ARCHIVED </th>
                         <th class="whitespace-nowrap">USER THAT EDITED/ARCHIVED</th>
+                        <th class="whitespace-nowrap">PROFILE EDITED/ARCHIVED </th>
                         <th class="text-center whitespace-nowrap">ACTION TAKEN</th>
-                        <th class="whitespace-nowrap">CHANGE HISTORY</th>
+                        <th class="whitespace-nowrap">DATE</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Russell Crowe</a>
+                    @foreach ($histories as $history)
+                        <tr class="intro-x">
+                            <td class="w-10">
+                                <input class="form-check-input" type="checkbox">
+                            </td>
+                            <td class="w-40 !py-4"> <a href=""
+                                    class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
+                            <td class="w-40">
+                                <a href="" class="font-medium whitespace-nowrap">Russell Crowe</a>
+                            </td>
+                            <td class="text-center">
+                                <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
+                                        class="w-4 h-4 mr-2"></i> Edit </div>
+                            </td>
+                            <td>
 
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                            </td>
+                        </tr>
+                    @endforeach
                     <tr class="intro-x">
                         <td class="w-10">
                             <input class="form-check-input" type="checkbox">

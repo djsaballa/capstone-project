@@ -89,6 +89,11 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
                 <div class="pagination">
+                    <p>
+                        Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} items
+                    </p>
+                </div>
+                <div class="pagination">
                     {{ $users->links() }}
                 </div>
             </nav>

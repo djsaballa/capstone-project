@@ -197,7 +197,12 @@
                     <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
                         <nav class="w-full sm:w-auto sm:mr-auto">
                             <div class="pagination">
-                                {{ $client_profiles_archives ->links() }}
+                                <p>
+                                    Showing {{ $client_profiles_archives->firstItem() }} to {{ $client_profiles_archives->lastItem() }} of {{ $client_profiles_archives->total() }} items
+                                </p>
+                            </div>
+                            <div class="pagination">
+                                {{ $client_profiles_archives->links() }}
                             </div>
                         </nav>
                     </div>
