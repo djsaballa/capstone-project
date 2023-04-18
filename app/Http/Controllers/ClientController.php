@@ -24,7 +24,7 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $client_profiles = ClientProfile::where('status', 'Active')->get();
+        $client_profiles = ClientProfile::where('status', 'Active')->paginate(10);
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
     }
