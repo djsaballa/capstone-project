@@ -235,8 +235,9 @@ class UserController extends Controller
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
         $client_profiles_total = ClientProfile::all();
+        $client_profiles_archives = ClientProfile::where('status', 'Archive')->paginate(10);
 
-        return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles_total'));
+        return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles_total', 'client_profiles_archives'));
     }
 
 

@@ -13,7 +13,6 @@
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
                 </div>
                 @php
-                    $client_profiles = $client_profiles_total->where('status', 'Archive');
                     $non_brethren = $client_profiles_total->whereNull('baptism_date');
                     $ongoing = $client_profiles_total->where('status', 'Active');
                 @endphp
@@ -163,7 +162,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($client_profiles as $client_profile)
+                                @foreach ($client_profiles_archives as $client_profiles_archive)
                                     <tr class="intro-x">
                                         <td class="w-40">
                                             <div class="flex">
@@ -176,11 +175,11 @@
                                         </td>
                                         <td>
                                             <a href=""
-                                                class="font-medium whitespace-nowrap">{{ $client_profile->getFullName($client_profile->id) }}</a>
+                                                class="font-medium whitespace-nowrap">{{ $client_profiles_archive->getFullName($client_profiles_archive->id) }}</a>
                                         </td>
-                                        <td class="text-center">{{ $client_profile->gender }}</td>
+                                        <td class="text-center">{{ $client_profiles_archive->gender }}</td>
                                         <td class="w-40">
-                                            <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
+                                            <div class="flex items-center justify-center ">{{ $client_profiles_archive->contact_number }}</div>
                                         </td>
                                         <td class="w-40">
                                             <div class="flex items-center justify-center "> KNP </div>
