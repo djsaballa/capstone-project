@@ -14,9 +14,6 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
-                        <th class="whitespace-nowrap">
-                            <input class="form-check-input" type="checkbox">
-                        </th>
                         <th class="whitespace-nowrap">USER THAT EDITED/ARCHIVED</th>
                         <th class="whitespace-nowrap">PROFILE EDITED/ARCHIVED </th>
                         <th class="text-center whitespace-nowrap">ACTION TAKEN</th>
@@ -27,170 +24,32 @@
                 <tbody>
                     @foreach ($histories as $history)
                         <tr class="intro-x">
-                            <td class="w-10">
-                                <input class="form-check-input" type="checkbox">
+                            <td class="w-40 !py-4">
+                                <a href="{{ route('view_user', [$user_info->id, $history->user_id]) }}" class="underline decoration-dotted whitespace-nowrap">
+                                    {{ $history->user->getFullName($history->user_id) }}
+                                </a>
                             </td>
-                            <td class="w-40 !py-4"> <a href=""
-                                    class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">Russell Crowe</a>
+                                <a href="{{ route('view_profile_1', [$user_info->id, $history->client_profile_id]) }}" class="font-medium whitespace-nowrap">
+                                    {{ $history->clientProfile->getFullName($history->client_profile_id) }}
+                                </a>
                             </td>
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                        class="w-4 h-4 mr-2"></i> Edit </div>
+                                @if ( $history->action_taken == 'Edit')
+                                    <div class="flex items-center justify-center whitespace-nowrap ">
+                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
+                                    </div>
+                                @elseif ( $history->action_taken == 'Archive' )
+                                    <div class="flex items-center justify-center whitespace-nowrap text-danger">
+                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
+                                    </div>
+                                @endif
                             </td>
                             <td>
-
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $history->dateFormatMdY($history->date) }}</div>
                             </td>
                         </tr>
                     @endforeach
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Al Pacino</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Russell Crowe</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Al Pacino</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Angelina Jolie</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Johnny Depp</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-2"></i> Edit </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Leonardo DiCaprio</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap "> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-2"></i> Edit</div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-10">
-                            <input class="form-check-input" type="checkbox">
-                        </td>
-                        <td class="w-40 !py-4"> <a href=""
-                                class="underline decoration-dotted whitespace-nowrap">Russell Crowe</a> </td>
-                        <td class="w-40">
-                            <a href="" class="font-medium whitespace-nowrap">Kevin Spacey</a>
-
-                        </td>
-                        <td class="text-center">
-                            <div class="flex items-center justify-center whitespace-nowrap text-danger"> <i
-                                    data-lucide="check-square" class="w-4 h-4 mr-2"></i> Archive </div>
-                        </td>
-                        <td>
-
-                            <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">30 March, 11:00</div>
-                        </td>
-
-
                     </tr>
                 </tbody>
             </table>
@@ -199,32 +58,15 @@
         <!-- BEGIN: Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             <nav class="w-full sm:w-auto sm:mr-auto">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"> <i class="w-4 h-4" data-lucide="chevron-left"></i> </a>
-                    </li>
-                    <li class="page-item"> <a class="page-link" href="#">...</a> </li>
-                    <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                    <li class="page-item active"> <a class="page-link" href="#">2</a> </li>
-                    <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                    <li class="page-item"> <a class="page-link" href="#">...</a> </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"> <i class="w-4 h-4" data-lucide="chevron-right"></i> </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
-                    </li>
-                </ul>
+                <div class="pagination">
+                    <p>
+                        Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
+                    </p>
+                </div>
+                <div class="pagination">
+                    {{ $histories->links() }}
+                </div>
             </nav>
-            <select class="w-20 form-select box mt-3 sm:mt-0">
-                <option>10</option>
-                <option>25</option>
-                <option>35</option>
-                <option>50</option>
-            </select>
         </div>
         <!-- END: Pagination -->
     </div>

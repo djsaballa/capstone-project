@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\ClientProfile;
+use Carbon\Carbon;
 
 class History extends Model
 {
@@ -41,5 +42,12 @@ class History extends Model
     public function getId()
     {
         return $this->id;
+    }
+
+    public function dateFormatMdY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
+
+        return $formattedDate;
     }
 }

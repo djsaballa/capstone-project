@@ -1,4 +1,4 @@
-action_taken,date,employee_id,client_profile_id
+action_taken,date,user_id,client_profile_id
 Edit,2022-01-30,1,1
 Archive,2022-01-31,2,2
 Edit,2022-02-01,3,3
