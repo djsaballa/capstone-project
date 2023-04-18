@@ -91,17 +91,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
-                                    <div class="box p-5">
-                                        <div class="flex">
-                                            <i data-lucide="user" class="report-box__icon text-success"></i>
-                                        </div>
-                                        <div class="text-3xl font-medium leading-8 mt-6">120</div>
-                                        <div class="text-base text-slate-500 mt-1">Expired Cases</div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- END: General Report -->
