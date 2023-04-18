@@ -149,6 +149,15 @@
                 </tbody>
             </table>
         </div>
+        <!-- END: Pagination -->
+           <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+            <nav class="w-full sm:w-auto sm:mr-auto">
+                <div class="pagination">
+                    {{ $client_profiles ->links() }}
+                </div>
+            </nav>
+        </div>
+        <!-- END: Pagination -->
         <!-- BEGIN: Delete Confirmation Modal -->
         <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">

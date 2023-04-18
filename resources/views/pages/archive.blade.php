@@ -35,7 +35,8 @@
                                     <i data-lucide="user" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($client_profiles_total) - count($non_brethren) }}</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">
+                                    {{ count($client_profiles_total) - count($non_brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Brethren</div>
                             </div>
                         </div>
@@ -106,9 +107,10 @@
                     <!-- END: General Report -->
                     <!-- START DROPDOWN -->
                     <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
-                    <label for="regular-form-1" class="form-label">List of Division</label>
+                        <label for="regular-form-1" class="form-label">List of Division</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter">
+                            <select class="form-select box ml-2" id="list-of-profile-division-filter"
+                                name="list-of-profile-division-filter">
                                 <option selected disabled hidden>Select Division</option>
                                 @foreach ($divisions as $division)
                                     <option value="{{ $division->id }}">{{ $division->division }}</option>
@@ -117,7 +119,8 @@
                         </div>
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled>
+                            <select class="form-select box ml-2" id="list-of-profile-district-filter"
+                                name="list-of-profile-district-filter" disabled>
                                 <option selected disabled hidden>Select District</option>
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}">{{ $district->district }}</option>
@@ -126,7 +129,8 @@
                         </div>
                         <label for="regular-form-1" class="form-label">List of Locale</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"disabled>
+                            <select class="form-select box ml-2" id="list-of-profile-locale-filter"
+                                name="list-of-profile-locale-filter"disabled>
                                 <option selected disabled hidden>Select Locale</option>
                                 @foreach ($locales as $locale)
                                     <option>{{ $locale->locale }}</option>
@@ -179,7 +183,8 @@
                                         </td>
                                         <td class="text-center">{{ $client_profiles_archive->gender }}</td>
                                         <td class="w-40">
-                                            <div class="flex items-center justify-center ">{{ $client_profiles_archive->contact_number }}</div>
+                                            <div class="flex items-center justify-center ">
+                                                {{ $client_profiles_archive->contact_number }}</div>
                                         </td>
                                         <td class="w-40">
                                             <div class="flex items-center justify-center "> KNP </div>
@@ -199,6 +204,15 @@
                         </table>
                     </div>
                     <!-- END: Data List -->
+                    <!-- END: Pagination -->
+                    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+                        <nav class="w-full sm:w-auto sm:mr-auto">
+                            <div class="pagination">
+                                {{ $client_profiles_archives ->links() }}
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- END: Pagination -->
 
                 </div>
             </div>
