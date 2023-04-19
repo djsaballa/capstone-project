@@ -17,7 +17,6 @@ use App\Models\MedicalOperation;
 use App\Models\Inbox;
 use App\Models\History;
 
-
 class UserController extends Controller
 {
     // LOGIN ----------------------------------------------------------------------------------------------------------
@@ -42,7 +41,7 @@ class UserController extends Controller
             return back()->with('fail', 'Username not recognized');
         } else {
             if ($request->password != $login_info->password) {
-                return back()->with('fail','Incorrect password');
+                return back()->with('fail', 'Incorrect password');
             } else {
                 $user_id = $login_info->id;
 
@@ -227,7 +226,6 @@ class UserController extends Controller
         return view('pages.audit-logs', compact('user_info', 'histories'));
     }
      
-
     // ARCHIVE ---------------------------------------------------------------------------------------------------------
     public function archive($user_id)
     {

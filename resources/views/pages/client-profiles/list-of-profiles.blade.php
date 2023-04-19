@@ -188,7 +188,6 @@
         $(document).ready(function() {
             $('#list-of-profile-division-filter').on('change', function() {
                 var division_id = $(this).val();
-                console.log(division_id)
                 if(division_id) {
                     $.ajax({
                         url: '/get-district-options/' + division_id,
