@@ -53,9 +53,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <!-- END: Data List -->
-        <!-- BEGIN: Pagination -->
+            <!-- BEGIN: Pagination -->
         <div class="intro-y p-5 text-slate-500 grid justify-center">
             <div class="flex justify-center">
                 Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
@@ -65,6 +63,8 @@
             </div>
         </div>
         <!-- END: Pagination -->
+        </div>
+        <!-- END: Data List -->
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->
     <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">

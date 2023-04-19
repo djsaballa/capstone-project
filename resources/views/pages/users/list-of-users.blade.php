@@ -42,7 +42,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
         </div>
         <!-- BEGIN: Users Layout -->
         @foreach ($users as $user)

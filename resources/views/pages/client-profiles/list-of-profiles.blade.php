@@ -45,7 +45,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
         </div>
         <!-- START DROPDOWN -->
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
@@ -101,7 +100,6 @@
                         <th class="whitespace-nowrap">Client's Name</th>
                         <th class="text-center whitespace-nowrap">Gender</th>
                         <th class="text-center whitespace-nowrap">Contact Number</th>
-                        <th class="text-center whitespace-nowrap">Last Interaction</th>
                         <th class="text-center whitespace-nowrap">Actions</th>
                     </tr>
                 </thead>
@@ -123,9 +121,6 @@
                             <td class="text-center">{{ $client_profile->gender }}</td>
                             <td class="w-40">
                                 <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
-                            </td>
-                            <td class="w-40">
-                                <div class="flex items-center justify-center "> KNP </div>
                             </td>
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
