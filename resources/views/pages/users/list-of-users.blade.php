@@ -84,19 +84,14 @@
                 </div>
             </div>
         @endforeach
-        <!-- BEGIN: Users Layout -->
-        <!-- END: Pagination -->
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            <nav class="w-full sm:w-auto sm:mr-auto">
-                <div class="pagination">
-                    <p>
-                        Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} items
-                    </p>
-                </div>
-                <div class="pagination">
-                    {{ $users->links() }}
-                </div>
-            </nav>
+        <!-- BEGIN: Pagination -->
+        <div class="intro-y col-span-12 p-5 text-slate-500 grid justify-center">
+            <div class="flex justify-center">
+                Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} items
+            </div>
+            <div class="flex justify-center">
+                {{ $users->links() }}
+            </div>
         </div>
         <!-- END: Pagination -->
     </div>

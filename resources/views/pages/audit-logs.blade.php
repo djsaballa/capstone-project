@@ -56,17 +56,13 @@
         </div>
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            <nav class="w-full sm:w-auto sm:mr-auto">
-                <div class="pagination">
-                    <p>
-                        Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
-                    </p>
-                </div>
-                <div class="pagination">
-                    {{ $histories->links() }}
-                </div>
-            </nav>
+        <div class="p-5 text-slate-500 grid justify-center">
+            <div class="flex justify-center">
+                Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
+            </div>
+            <div class="flex justify-center">
+                {{ $histories->links() }}
+            </div>
         </div>
         <!-- END: Pagination -->
     </div>

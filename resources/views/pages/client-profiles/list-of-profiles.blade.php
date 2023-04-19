@@ -150,17 +150,13 @@
             </table>
         </div>
         <!-- END: Pagination -->
-           <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            <nav class="w-full sm:w-auto sm:mr-auto">
-                <div class="pagination">
-                    <p>
-                        Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of {{ $client_profiles->total() }} items
-                    </p>
-                </div>
-                <div class="pagination">
-                    {{ $client_profiles->links() }}
-                </div>
-            </nav>
+        <div class="p-5 text-slate-500 grid justify-center">
+            <div class="flex justify-center">
+                Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of {{ $client_profiles->total() }} items
+            </div>
+            <div class="flex justify-center">
+                {{ $client_profiles->links() }}
+            </div>
         </div>
         <!-- END: Pagination -->
         <!-- BEGIN: Delete Confirmation Modal -->
