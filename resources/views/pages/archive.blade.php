@@ -193,8 +193,8 @@
                         </table>
                     </div>
                     <!-- END: Data List -->
-                    <!-- END: Pagination -->
-                    <div class="p-5 text-slate-500 grid justify-center">
+                    <!-- BEGIN: Pagination -->
+                    <div class="intro-y col-span-12 p-5 text-slate-500 grid justify-center">
                         <div class="flex justify-center">
                             Showing {{ $client_profiles_archives->firstItem() }} to {{ $client_profiles_archives->lastItem() }} of {{ $client_profiles_archives->total() }} items
                         </div>
