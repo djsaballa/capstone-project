@@ -143,10 +143,16 @@
                     @endforeach
                 </div>
             </div>
+            <div class="p-5 text-slate-500 grid justify-center">
+                <div class="flex justify-center">
+                    Showing {{ $inboxes->firstItem() }} to {{ $inboxes->lastItem() }} of {{ $inboxes->total() }} items
+                </div>
+                <div class="flex justify-center">
+                    {{ $inboxes->links() }}
+                </div>
+            </div>
             <!-- END: Inbox Content -->
         </div>
-    </div>
-    </div>
     <!-- END: Content -->
     </div>
 @endsection

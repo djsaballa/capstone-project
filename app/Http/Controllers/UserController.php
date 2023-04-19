@@ -213,7 +213,7 @@ class UserController extends Controller
     public function inbox($user_id)
     {
         $user_info = User::find($user_id);
-        $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(10);
+        $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(15);
 
         return view('pages.inbox', compact('user_info', 'inboxes'));
     }
