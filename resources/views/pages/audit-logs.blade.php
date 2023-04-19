@@ -56,7 +56,7 @@
         </div>
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        <div class="p-5 text-slate-500 grid justify-center">
+        <div class="intro-y p-5 text-slate-500 grid justify-center">
             <div class="flex justify-center">
                 Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
             </div>

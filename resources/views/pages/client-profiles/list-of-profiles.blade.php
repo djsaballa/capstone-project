@@ -150,7 +150,7 @@
             </table>
         </div>
         <!-- END: Pagination -->
-        <div class="p-5 text-slate-500 grid justify-center">
+        <div class="intro-y p-5 text-slate-500 grid justify-center">
             <div class="flex justify-center">
                 Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of {{ $client_profiles->total() }} items
             </div>
