@@ -23,7 +23,7 @@ class History extends Model
     }
 
     protected $fillable = [
-        "action_take",
+        "action_taken",
         "date",
         "user_id",
         "client_profile_id",

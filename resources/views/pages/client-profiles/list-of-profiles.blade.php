@@ -8,10 +8,10 @@
             </ul>
         </div>
     @endif
-    @if (Session::has('status!'))
-        <div class="mt-10" style="color: green;">
+    @if (Session::has('error'))
+        <div class="mt-10" style="color: red;">
             <ul>
-                <li>{{ Session::get('status') }}</li>
+                <li>{{ Session::get('error') }}</li>
             </ul>
         </div>
     @endif
@@ -47,11 +47,21 @@
             </div>
         </div>
         <!-- START DROPDOWN -->
+        @php
+            use App\Models\District;
+            use App\Models\Locale;
+
+            $districts = District::all();
+            $districts_json = $districts->toJson();
+            
+            $locales = Locale::all();
+            $locales_json = $locales->toJson();
+        @endphp
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter">
-                    <option selected disabled hidden>Select Division</option>
+                <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter" onchange="loadDistricts( {{ $districts_json }} )">
+                    <option value="" selected disabled hidden>Select Division</option>
                     @foreach ($divisions as $division)
                         <option value="{{ $division->id }}">{{ $division->division }}</option>
                     @endforeach
@@ -59,35 +69,19 @@
             </div>
             <label for="regular-form-1" class="form-label">List of District</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled>
-                    <option selected disabled hidden>Select District</option>
-                    @foreach ($districts as $district)
-                        <option value="{{ $district->id }}">{{ $district->district }}</option>
-                    @endforeach
+                <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
+                    <option value="" selected disabled hidden>Select District</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of Locale</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"disabled>
-                    <option selected disabled hidden>Select Locale</option>
-                    @foreach ($locales as $locale)
-                        <option>{{ $locale->locale }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <label for="regular-form-1" class="form-label">Status</label>
-            <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2 ">
-                    <option>Status 1</option>
-                    <option>Status 2</option>
-                    <option>Status 3</option>
-                    <option>Status 4</option>
-                    <option>Status 5</option>
+                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter" disabled="true">
+                    <option value="" selected disabled hidden>Select Locale</option>
                 </select>
             </div>
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                <button class="btn btn-primary w-24 ml-2">Go</button>
-                <button class="btn btn-secondary w-24 ml-2">Reset</button>
+                <button class="btn btn-primary w-24 ml-2" onclick="filterProfiles( {{ $user_info->id }} )">Go</button>
+                <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_profiles', $user_info->id) }}">Reset</a>
             </div>
         </div>
         <!-- END DROPDOWN -->
@@ -100,6 +94,7 @@
                         <th class="whitespace-nowrap">Client's Name</th>
                         <th class="text-center whitespace-nowrap">Gender</th>
                         <th class="text-center whitespace-nowrap">Contact Number</th>
+                        <th class="text-center whitespace-nowrap">Locale</th>
                         <th class="text-center whitespace-nowrap">Actions</th>
                     </tr>
                 </thead>
@@ -122,6 +117,9 @@
                             <td class="w-40">
                                 <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
                             </td>
+                            <td class="w-40">
+                                <div class="flex items-center justify-center ">{{ $client_profile->locale->getLocaleName($client_profile->locale_id) }}</div>
+                            </td>
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center mr-3 "
@@ -130,13 +128,12 @@
                                     <a class="flex items-center mr-3"
                                         href="{{ route('edit_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                    <a class="flex items-center mr-3 text-danger" href="javascript:;" data-tw-toggle="modal"
-                                        data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                            class="w-4 h-4 mr-1"></i> Archive </a>
+                                    <button class="flex items-center mr-3 text-danger"
+                                        onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal" data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
+                                        class="w-4 h-4 mr-1"></i> Archive </button>
                                     <a class="flex items-center mr-3"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
-
                                 </div>
                             </td>
                         </tr>
@@ -154,57 +151,37 @@
             </div>
         </div>
         <!-- END: Pagination -->
-        <!-- BEGIN: Delete Confirmation Modal -->
-        <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+        <!-- BEGIN: Archive Confirmation Modal -->
+        <div id="archive-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body p-0">
                         <div class="p-5 text-center">
                             <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
                             <div class="text-3xl mt-5">Are you sure?</div>
-                            <div class="text-slate-500 mt-2">
-                                Do you really want to delete this client profile?
-                                <br>
-                                This process cannot be undone.
+                            <div class="modal-body">
+                                Do you really want to archive this client profile?
                             </div>
                         </div>
+                        <input type="hidden" id="client-profile-id">
                         <div class="px-5 pb-8 text-center">
-                            <button type="button" data-tw-dismiss="modal"
-                                class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
-                            <a href="{{ route('delete_profile', [$user_info->id, $client_profile->id]) }}" class="btn btn-danger w-24">Delete</a>
+                            <button type="button" class="btn btn-outline-secondary w-24 mr-1" data-tw-dismiss="modal">Cancel</button>
+                            <button type="button" id="archive-client-profile" onclick="archiveProfile( {{ $user_info->id }} )" class="btn btn-danger w-24">Archive</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- END: Delete Confirmation Modal -->
     </div>
     <script>
-        $(document).ready(function() {
-            $('#list-of-profile-division-filter').on('change', function() {
-                var division_id = $(this).val();
-                if(division_id) {
-                    $.ajax({
-                        url: '/get-district-options/' + division_id,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#list-of-profile-district-filter').empty();
-                            $.each(data, function(key, value) {
-                                $('#list-of-profile-district-filter').append('<option value="'+ key +'">'+ value +'</option>');
-                            });
-                            console.log(key, value);
-                            $('#list-of-profile-district-filter').prop('disabled', false);
-                        },
-                        error: function(xhr, textStatus, errorThrown) {
-                            console.log(errorThrown);
-                        }
-                    });
-                } else {
-                    $('#list-of-profile-district-filter').prop('disabled', true);
-                    $('#list-of-profile-district-filter').empty();
-                }
-            });
-        });
+        function getProfileId(id) {
+            $("#client-profile-id").val(id);
+        }
+        function archiveProfile(user_id) {
+            var client_profile_id = $("#client-profile-id").val();
+            window.location.href = "/archive-profile/" + user_id + "/" + client_profile_id;
+        }
     </script>
 @endsection

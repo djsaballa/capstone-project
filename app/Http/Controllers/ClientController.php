@@ -12,6 +12,8 @@ use App\Models\FamilyComposition;
 use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
+use App\Models\History;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -26,7 +28,7 @@ class ClientController extends Controller
 
         $client_profiles = ClientProfile::where('status', 'Active')->paginate(10);
 
-        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
 
     // VIEW PROFILE ----------------------------------------------------------------------------------------------------
@@ -51,30 +53,26 @@ class ClientController extends Controller
     }
 
     // DELETE PROFILE --------------------------------------------------------------------------------------------------
-    public function deleteProfile($user_id, $client_profile_id)
+    public function archiveProfile($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
+        $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
+        if ($archive) {
+            $audit_log =
+            [
+                'action_taken' => 'Archive',
+                'date' => Carbon::now(),
+                'user_id' => $user_id,
+                'client_profile_id' => $client_profile_id
+            ];
 
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        $client_profiles = ClientProfile::all();
-
-        $client_profile_update = [
-            'status' => 'archive'
-        ];
-        dd($client_profile_id);
-        if (!is_null($client_profile_id)) {
-            // $archive = ClientProfile::find($user_id)->update($client_profile_update);
-            // if ($archive) {
-            //     return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
-            // } else {
-            //     return back()->with('message', 'Client Profile was unsuccessfully archived.');
-            // }
-            return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles' ));
+            $create = History::create($audit_log);
+            if ($create) {
+                session()->flash('status', 'Client Profile has been successfully archived.');
+                return redirect()->route('list_of_profiles', $user_id);
+            }
         } else {
-            return back()->with('message', 'Deletion of Client Profile was unsuccessful.');
+            session()->flash('error', 'An error has occurred, Client Profile has not been archived.');
+            return redirect()->route('list_of_profiles', $user_id);
         }
     }
 

@@ -11,8 +11,8 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/view-profile-1/{user_id}/{client_profile_id}', 'viewProfile1')->name('view_profile_1');
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', 'viewProfile2')->name('view_profile_2');
 
-  // DELETE CLIENT PROFILE
-  Route::post('/delete-profile/{user_id}/{client_profile_id}', 'deleteProfile')->name('delete_profile');
+  // ARCHIVE CLIENT PROFILE
+  Route::get('/archive-profile/{user_id}/{client_profile_id}', 'archiveProfile')->name('archive_profile');
 
   // ADD PROFILE
   Route::get('/add-profile-privacy/{user_id}', 'addProfilePrivacy')->name('add_profile_privacy');

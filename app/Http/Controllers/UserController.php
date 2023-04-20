@@ -22,9 +22,7 @@ class UserController extends Controller
     // LOGIN ----------------------------------------------------------------------------------------------------------
     public function login()
     {
-        return view('login/login', [
-
-        ]);
+        return view('login/login');
     }
 
     // LOGIN AUTH
@@ -50,20 +48,56 @@ class UserController extends Controller
         }
     }
    
+    // FILTER PROFILES -------------------------------------------------------------------------------------------------
+    public function filterLocaleProfiles($user_id, $locale_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+    
+    public function filterDistrictProfiles($user_id, $district_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+
+    public function filterDivisionProfiles($user_id, $division_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+
     // DASHBOARD -------------------------------------------------------------------------------------------------------
     public function dashboard($user_id)
     {
         $user_info = User::find($user_id);
 
         return view('pages.dashboard', compact('user_info'));
-    }
-    
-    // LOAD DROPDOWN OPTIONS
-    public function getDistrictOptions($division_id)
-    {
-        $districts = District::where('division_id', $division_id)->pluck('district', 'id');
-
-        return response()->json($districts);
     }
 
     // PROGRESS REPORTS ------------------------------------------------------------------------------------------------

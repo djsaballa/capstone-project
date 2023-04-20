@@ -24,8 +24,10 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/dashboard/{user_id}', 'dashboard')->name('dashboard');
 
     // LOAD OPTIONS
-    Route::get('/get-district-options/{division_id}', 'getDistrictOptions')->name('get_district_options');
-
+    Route::get('/filter-locale-profiles/{user_id}/{locale_id}', 'filterLocaleProfiles')->name('filter_locale_profiles');
+    Route::get('/filter-district-profiles/{user_id}/{district_id}', 'filterDistrictProfiles')->name('filter_district_profiles');
+    Route::get('/filter-division-profiles/{user_id}/{division_id}', 'filterDivisionProfiles')->name('filter_division_profiles');
+    
     // VIEW PROGRESS REPORTS
     Route::get('/view-progress-report/{user_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
     Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
