@@ -151,7 +151,6 @@
                                     <th class="whitespace-nowrap">CLIENT'S NAME</th>
                                     <th class="text-center whitespace-nowrap">GENDER</th>
                                     <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
-                                    <th class="text-center whitespace-nowrap">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,14 +174,11 @@
                                             <div class="flex items-center justify-center ">
                                                 {{ $client_profiles_archive->contact_number }}</div>
                                         </td>
-                                        <td class="w-40">
-                                            <div class="flex items-center justify-center "> KNP </div>
-                                        </td>
                                         <td class="table-report__action w-400">
                                             <div class="flex justify-center items-center">
                                                 <a class="flex items-center mr-3" href="javascript:;"> <i
                                                         data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                                <a class="flex items-center mr-3 text-danger" href="javascript:;"
+                                                <a class="flex items-center mr-3 text-primary" href="javascript:;"
                                                     data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
                                                         data-lucide="check-square" class="w-4 h-4 mr-1"></i> Restore </a>
                                             </div>
