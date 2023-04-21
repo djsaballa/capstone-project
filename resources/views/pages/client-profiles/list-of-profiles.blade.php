@@ -2,21 +2,27 @@
 
 @section('content')
     @if (Session::has('status'))
-        <div class="mt-10" style="color: green;">
-            <ul>
-                <li>{{ Session::get('status') }}</li>
-            </ul>
+        <div class="modal-body p-0">
+            <div class="p-5 text-center">
+                <i data-lucide="check-circle-2" class="w-10 h-10 text-success mx-auto mt-3"></i>
+                <div class="modal-body text-success">
+                    {{ Session::get('status') }}
+                </div>
+            </div>
         </div>
     @endif
     @if (Session::has('error'))
-        <div class="mt-10" style="color: red;">
-            <ul>
-                <li>{{ Session::get('error') }}</li>
-            </ul>
+    <div class="modal-body p-0">
+        <div class="p-5 text-center">
+            <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
+            <div class="modal-body text-success">
+                {{ Session::get('status') }}
+            </div>
         </div>
+    </div>
     @endif
     <h2 class="intro-y text-lg font-medium mt-10">
-        List of Profiles
+        List of Client Profiles
     </h2>
     <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
@@ -50,7 +56,7 @@
         @php
             use App\Models\District;
             use App\Models\Locale;
-
+            
             $districts = District::all();
             $districts_json = $districts->toJson();
             
@@ -60,7 +66,8 @@
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-division-filter" name="list-of-profile-division-filter" onchange="loadDistricts( {{ $districts_json }} )">
+                <select class="form-select box ml-2" id="list-of-profile-division-filter"
+                    name="list-of-profile-division-filter" onchange="loadDistricts( {{ $districts_json }} )">
                     <option value="" selected disabled hidden>Select Division</option>
                     @foreach ($divisions as $division)
                         <option value="{{ $division->id }}">{{ $division->division }}</option>
@@ -69,13 +76,15 @@
             </div>
             <label for="regular-form-1" class="form-label">List of District</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-district-filter" name="list-of-profile-district-filter" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
+                <select class="form-select box ml-2" id="list-of-profile-district-filter"
+                    name="list-of-profile-district-filter" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
                     <option value="" selected disabled hidden>Select District</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of Locale</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter" disabled="true">
+                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"
+                    disabled="true">
                     <option value="" selected disabled hidden>Select Locale</option>
                 </select>
             </div>
@@ -118,7 +127,8 @@
                                 <div class="flex items-center justify-center ">{{ $client_profile->contact_number }}</div>
                             </td>
                             <td class="w-40">
-                                <div class="flex items-center justify-center ">{{ $client_profile->locale->getLocaleName($client_profile->locale_id) }}</div>
+                                <div class="flex items-center justify-center ">
+                                    {{ $client_profile->locale->getLocaleName($client_profile->locale_id) }}</div>
                             </td>
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
@@ -129,8 +139,9 @@
                                         href="{{ route('edit_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                     <button class="flex items-center mr-3 text-danger"
-                                        onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal" data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
-                                        class="w-4 h-4 mr-1"></i> Archive </button>
+                                        onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"
+                                        data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
+                                            class="w-4 h-4 mr-1"></i> Archive </button>
                                     <a class="flex items-center mr-3"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
@@ -144,7 +155,8 @@
         <!-- END: Pagination -->
         <div class="intro-y p-5 text-slate-500 grid justify-center">
             <div class="flex justify-center">
-                Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of {{ $client_profiles->total() }} items
+                Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of
+                {{ $client_profiles->total() }} items
             </div>
             <div class="flex justify-center">
                 {{ $client_profiles->links() }}
@@ -165,8 +177,11 @@
                         </div>
                         <input type="hidden" id="client-profile-id">
                         <div class="px-5 pb-8 text-center">
-                            <button type="button" class="btn btn-outline-secondary w-24 mr-1" data-tw-dismiss="modal">Cancel</button>
-                            <button type="button" id="archive-client-profile" onclick="archiveProfile( {{ $user_info->id }} )" class="btn btn-danger w-24">Archive</button>
+                            <button type="button" class="btn btn-outline-secondary w-24 mr-1"
+                                data-tw-dismiss="modal">Cancel</button>
+                            <button type="button" id="archive-client-profile" data-tw-toggle="modal"
+                                onclick="archiveProfile( {{ $user_info->id }} )"
+                                class="btn btn-danger w-24">Archive</button>
                         </div>
                     </div>
                 </div>
@@ -179,6 +194,7 @@
         function getProfileId(id) {
             $("#client-profile-id").val(id);
         }
+
         function archiveProfile(user_id) {
             var client_profile_id = $("#client-profile-id").val();
             window.location.href = "/archive-profile/" + user_id + "/" + client_profile_id;

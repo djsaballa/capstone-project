@@ -9,102 +9,98 @@
         
         $current_route = Route::currentRouteName();
     @endphp
-        <ul>
-            <li>
-                @if (str_contains($current_route, 'dashboard'))
-                    <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu side-menu--active">
-                    @else
-                        <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
-                <div class="side-menu__title">
-                    Dashboard
-                    <div class="side-menu__sub-icon transform rotate-180"> </i> </div>
-                </div>
-                </a>
-            </li>
-            <li>
-                @if (str_contains($current_route, 'profile'))
+    <ul>
+        <li>
+            @if (str_contains($current_route, 'dashboard'))
+                <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu side-menu--active">
+                @else
+                    <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu">
+            @endif
+            <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+            <div class="side-menu__title">
+                Dashboard
+                <div class="side-menu__sub-icon transform rotate-180"> </i> </div>
+            </div>
+            </a>
+        </li>
+        <li>
+            @if (str_contains($current_route, 'profile'))
+                <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu side-menu--active">
+                @elseif (str_contains($current_route, 'progress'))
                     <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu side-menu--active">
-                    @elseif (str_contains($current_route, 'progress'))
-                        <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu side-menu--active">
-                        @else
-                            <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
-                <div class="side-menu__title">
-                    List of Profiles
-                    <div class="side-menu__sub-icon "> </i> </div>
-                </div>
-                </a>
-            </li>
-            </li>
-            <li>
-                @if (str_contains($current_route, 'user'))
-                    <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu side-menu--active">
                     @else
-                        <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
-                <div class="side-menu__title">
-                    List of Users
-                    <div class="side-menu__sub-icon "> </i> </div>
-                </div>
-                </a>
-            </li>
-            <li>
-                @if (str_contains($current_route, 'inbox'))
-                    <a href="{{ route('inbox', $user_info->id) }}" class="side-menu side-menu--active">
-                    @else
-                        <a href="{{ route('inbox', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
-                <div class="side-menu__title">
-                    Inbox
-                    <div class="side-menu__sub-icon "> </i> </div>
-                </div>
-                </a>
-            </li>
-            <li>
-                @if (str_contains($current_route, 'audit_logs'))
-                    <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu side-menu--active">
-                    @else
-                        <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
-                <div class="side-menu__title">
-                    Audit Logs
-                    <div class="side-menu__sub-icon "></i> </div>
-                </div>
-                </a>
-            </li>
+                        <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu">
+            @endif
+            <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
+            <div class="side-menu__title">
+                List of Client Profiles
+                <div class="side-menu__sub-icon "> </i> </div>
+            </div>
+            </a>
+        </li>
+        </li>
+        <li>
+            @if (str_contains($current_route, 'user'))
+                <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu side-menu--active">
+                @else
+                    <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu">
+            @endif
+            <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
+            <div class="side-menu__title">
+                List of Users
+                <div class="side-menu__sub-icon "> </i> </div>
+            </div>
+            </a>
+        </li>
+        <li>
+            @if (str_contains($current_route, 'inbox'))
+                <a href="{{ route('inbox', $user_info->id) }}" class="side-menu side-menu--active">
+                @else
+                    <a href="{{ route('inbox', $user_info->id) }}" class="side-menu">
+            @endif
+            <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
+            <div class="side-menu__title">
+                Inbox
+                <div class="side-menu__sub-icon "> </i> </div>
+            </div>
+            </a>
+        </li>
+        <li>
+            @if (str_contains($current_route, 'audit_logs'))
+                <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu side-menu--active">
+                @else
+                    <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu">
+            @endif
+            <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
+            <div class="side-menu__title">
+                Audit Logs
+                <div class="side-menu__sub-icon "></i> </div>
+            </div>
+            </a>
+        </li>
 
-            <li>
-                @if (str_contains($current_route, 'archive'))
-                    <a href="{{ route('archive', $user_info->id) }}" class="side-menu side-menu--active">
-                    @else
-                        <a href="{{ route('archive', $user_info->id) }}" class="side-menu">
-                @endif
-                <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
-                <div class="side-menu__title">
-                    Archive
-                    <div class="side-menu__sub-icon "></i> </div>
-                </div>
-                </a>
-                <ul class="menu__sub-open scrollable scrollable__content py-2">
-                    <li>
-                        <a href="" class="menu menu--active">
-                            <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Overview 1 </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="menu">
-                            <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Overview 2 </div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <li>
+            <a href="javascript:;.html" class="side-menu side-menu--active">
+            <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
+            <div class="side-menu__title">
+                Archive
+                <div class="side-menu__sub-icon "><i data-lucide="chevron-down" ></i> </div>
+            </div>
+            </a>
+            <ul class="menu__sub-open">
+                <li>
+                    <a href="side-menu-light-profile-overview-1.html" class="side-menu side-menu--active">
+                        <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
+                        <div class="side-menu__title"> Client Profiles </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="side-menu-light-profile-overview-2.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
+                        <div class="side-menu__title"> Users </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </nav>
