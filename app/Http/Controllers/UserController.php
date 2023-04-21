@@ -199,6 +199,20 @@ class UserController extends Controller
         }
     }
 
+    // ARCHIVE ---------------------------------------------------------------------------------------------------------
+    public function listOfArchiveUsers($user_id)
+    {
+        $user_info = User::find($user_id);
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+        
+        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+        $client_profiles = ClientProfile::where('status', 'Archive')->paginate(10);
+
+        return view(('pages.users.list-of-archive-users'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+    }
+
     // INBOX -----------------------------------------------------------------------------------------------------------
     public function inbox($user_id)
     {

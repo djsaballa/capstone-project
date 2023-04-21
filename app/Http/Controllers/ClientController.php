@@ -52,54 +52,6 @@ class ClientController extends Controller
         return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info'));
     }
 
-    // ARCHIVE PROFILE --------------------------------------------------------------------------------------------------
-    public function archiveProfile($user_id, $client_profile_id)
-    {
-        $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
-        if ($archive) {
-            $audit_log =
-            [
-                'action_taken' => 'Archive',
-                'date' => Carbon::now(),
-                'user_id' => $user_id,
-                'client_profile_id' => $client_profile_id
-            ];
-
-            $create = History::create($audit_log);
-            if ($create) {
-                session()->flash('status', 'Client Profile has been successfully archived.');
-                return redirect()->route('list_of_profiles', $user_id);
-            }
-        } else {
-            session()->flash('error', 'An error has occurred, Client Profile has not been archived.');
-            return redirect()->route('list_of_profiles', $user_id);
-        }
-    }
-
-    // RESTORE PROFILE -------------------------------------------------------------------------------------------------
-    public function restoreProfile($user_id, $client_profile_id)
-    {
-        $restore = ClientProfile::find($client_profile_id)->update(['status' => 'Active']);
-        if ($restore) {
-            $audit_log =
-            [
-                'action_taken' => 'Restore',
-                'date' => Carbon::now(),
-                'user_id' => $user_id,
-                'client_profile_id' => $client_profile_id
-            ];
-
-            $create = History::create($audit_log);
-            if ($create) {
-                session()->flash('status', 'Client Profile has been successfully restored.');
-                return redirect()->route('archive', $user_id);
-            }
-        } else {
-            session()->flash('error', 'An error has occurred, Client Profile has not been restored.');
-            return redirect()->route('archive', $user_id);
-        }
-    }
-
     // ADD PROFILE -----------------------------------------------------------------------------------------------------
     public function addProfilePrivacy($user_id)
     {
@@ -157,7 +109,7 @@ class ClientController extends Controller
 
         $user_id = $request->userId;
 
-        return redirect()->route('add_profile_3', $user_id);
+        return redirect()->route('add_client_profile_3', $user_id);
     }
 
     public function addProfile2($user_id)
@@ -171,7 +123,7 @@ class ClientController extends Controller
     {
         $user_id = $request->userId;
 
-        return redirect()->route('add_profile_3', $user_id);
+        return redirect()->route('add_client_profile_3', $user_id);
     }
 
     public function addProfile3($user_id)
@@ -220,7 +172,7 @@ class ClientController extends Controller
         $user_id = $request->userId;
         $user_info = User::find($user_id);
 
-        return redirect()->route('add_profile_5', $user_id);
+        return redirect()->route('add_client_profile_5', $user_id);
     }
 
     public function addProfile5($user_id)
@@ -249,7 +201,7 @@ class ClientController extends Controller
         
         $user_id = $request->userId;
 
-        return redirect()->route('add_profile_6', $user_id);
+        return redirect()->route('add_client_profile_6', $user_id);
     }
 
     public function addProfile6($user_id)
@@ -313,7 +265,7 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_profile_2', [$user_id, $client_profile_id]);
+            return redirect()->route('edit_client_profile_2', [$user_id, $client_profile_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -453,7 +405,7 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_profile_4', [$user_id, $client_profile_id]);
+            return redirect()->route('edit_client_profile_4', [$user_id, $client_profile_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -500,7 +452,7 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_profile_5', [$user_id, $client_profile_id]);
+            return redirect()->route('edit_client_profile_5', [$user_id, $client_profile_id]);
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -538,16 +490,16 @@ class ClientController extends Controller
         if ($update) {
             $request->session()->flash('status', 'Client profile has been successfully edited!');
             
-            return redirect()->route('list_of_profiles', [$user_id]);
+            return redirect()->route('list_of_client_profiles', [$user_id]);
         } else {
             $request->session()->flash('status!', 'Edit was unsuccessful.');
 
-            return redirect()->route('list_of_profiles', [$user_id]);
+            return redirect()->route('list_of_client_profiles', [$user_id]);
         }
     }
 
      // ARCHIVE ---------------------------------------------------------------------------------------------------------
-     public function archive($user_id)
+     public function listOfArchiveProfiles($user_id)
      {
          $user_info = User::find($user_id);
          $divisions = Division::orderBy('division', 'ASC')->get();
@@ -557,8 +509,56 @@ class ClientController extends Controller
          $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
          $client_profiles = ClientProfile::where('status', 'Archive')->paginate(10);
  
-         return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
+
+     // ARCHIVE PROFILE --------------------------------------------------------------------------------------------------
+    public function archiveProfile($user_id, $client_profile_id)
+    {
+        $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
+        if ($archive) {
+            $audit_log =
+            [
+                'action_taken' => 'Archive',
+                'date' => Carbon::now(),
+                'user_id' => $user_id,
+                'client_profile_id' => $client_profile_id
+            ];
+
+            $create = History::create($audit_log);
+            if ($create) {
+                session()->flash('status', 'Client Profile has been successfully archived.');
+                return redirect()->route('list_of_client_profiles', $user_id);
+            }
+        } else {
+            session()->flash('error', 'An error has occurred, Client Profile has not been archived.');
+            return redirect()->route('list_of_client_profiles', $user_id);
+        }
+    }
+
+    // RESTORE PROFILE -------------------------------------------------------------------------------------------------
+    public function restoreProfile($user_id, $client_profile_id)
+    {
+        $restore = ClientProfile::find($client_profile_id)->update(['status' => 'Active']);
+        if ($restore) {
+            $audit_log =
+            [
+                'action_taken' => 'Restore',
+                'date' => Carbon::now(),
+                'user_id' => $user_id,
+                'client_profile_id' => $client_profile_id
+            ];
+
+            $create = History::create($audit_log);
+            if ($create) {
+                session()->flash('status', 'Client Profile has been successfully restored.');
+                return redirect()->route('list_of_archive_profiles', $user_id);
+            }
+        } else {
+            session()->flash('error', 'An error has occurred, Client Profile has not been restored.');
+            return redirect()->route('list_of_archive_profiles', $user_id);
+        }
+    }
  
      // FILTER PROFILES -------------------------------------------------------------------------------------------------
      public function filterLocaleProfilesArchive($user_id, $locale_id)
@@ -572,7 +572,7 @@ class ClientController extends Controller
          $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
          $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->paginate(10);
  
-         return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
      
      public function filterDistrictProfilesArchive($user_id, $district_id)
@@ -588,7 +588,7 @@ class ClientController extends Controller
          $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
          $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
  
-         return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
  
      public function filterDivisionProfilesArchive($user_id, $division_id)
@@ -603,6 +603,6 @@ class ClientController extends Controller
  
          $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
  
-         return view(('pages.archive'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
 }

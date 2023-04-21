@@ -4,24 +4,24 @@
     <div class="grid grid-cols-12 gap-6 mt-8">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                Edit Profile
+                Edit Client Profile
             </h2>
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}"
-                        class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"
+                        class="flex items-center px-3 py-2 mt-2 rounded-md">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}"
-                        class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_client_profile_2', [$user_info->id, $client_profile_info->id]) }}"
+                        class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_3', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('edit_profile_4', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_4', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="{{ route('edit_profile_5', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_5', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -71,7 +71,7 @@
                                     <tbody>
                                         @foreach ($family_compositions as $family_composition)
                                             <form></form>
-                                            <form method="POST" action="{{ route('edit_profile_2_next') }}">
+                                            <form method="POST" action="{{ route('edit_client_profile_2_next') }}">
                                                 @csrf
                                                 <tr>
                                                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
@@ -94,9 +94,9 @@
                                                             <option value="Mother">Mother</option>
                                                             <option value="Brother">Brother</option>
                                                             <option value="Sister">Sister</option>
-                                                        </select>                                                    
+                                                        </select>
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <select id="family-educ" name="familyEduc" data-search="true" class="tom-select w-full tomselected"
                                                             tabindex="-1" hidden="hidden">
                                                             <option value="{{ $family_composition->educational_attainment }}" selected="true">{{ $family_composition->educational_attainment }}</option>
@@ -105,13 +105,13 @@
                                                             <option value="Elementary Graduate">Elementary Graduate</option>
                                                         </select>
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <input id="family-occupation" name="familyOccupation" value="{{ $family_composition->occupation }}" class="form-control" >
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <input id="family-contact-number" name="familyContactNumber" value="{{ $family_composition->contact_number }}" class="form-control" >
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <button class="btn btn-primary flex items-center mr-3 " type="submit">
                                                         <i data-lucide="save" class="w-4 h-4 mr-1"></i> Save </button>
                                                     </td>
@@ -125,9 +125,9 @@
                         </div>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
                             <a class="btn btn-secondary w-24 ml-2"
-                                href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
+                                href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
                             <a class="btn btn-primary w-24 ml-2"
-                                href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}">Next</a>
+                                href="{{ route('edit_client_profile_3', [$user_info->id, $client_profile_info->id]) }}">Next</a>
                         </div>
                     </div>
                     <!-- END: Wizard Layout -->

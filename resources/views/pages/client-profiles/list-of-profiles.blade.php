@@ -26,7 +26,7 @@
     </h2>
     <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_profile_privacy', $user_info->id) }}">
+            <a href="{{ route('add_client_profile_privacy', $user_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New Profiles</button>
             </a>
             <div class="dropdown">
@@ -90,7 +90,7 @@
             </div>
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
                 <button class="btn btn-primary w-24 ml-2" onclick="filterProfiles( {{ $user_info->id }} )">Go</button>
-                <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_profiles', $user_info->id) }}">Reset</a>
+                <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
             </div>
         </div>
         <!-- END DROPDOWN -->
@@ -133,10 +133,10 @@
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center mr-3 "
-                                        href="{{ route('view_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
+                                        href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
                                     <a class="flex items-center mr-3"
-                                        href="{{ route('edit_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
+                                        href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                             data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                     <button class="flex items-center mr-3 text-danger"
                                         onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"

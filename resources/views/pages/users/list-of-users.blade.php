@@ -3,7 +3,7 @@
 @section('content')
     <!-- BEGIN: Content -->
     <h2 class="intro-y text-lg font-medium mt-10">
-        List Of Users
+        List of Users
     </h2>
     @if (Session::has('status'))
         <div class="mt-10" style="color: green;">

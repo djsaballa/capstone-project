@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex items-center mt-8">
         <h2 class="intro-y text-lg font-medium mr-auto">
-            Add Profile
+            Add Client Profile
         </h2>
     </div>
     <!-- BEGIN: Wizard Layout -->
@@ -11,7 +11,7 @@
         <div
             class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
             <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_privacy', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"><i
                             data-lucide="shield"></i></button>
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_1', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_1', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">1</button>
                     <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Personal
@@ -28,7 +28,7 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_2', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_2', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">2</button>
                     <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Family
@@ -36,7 +36,7 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_3', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_3', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">3</button>
                     <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Medical
@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_4', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_4', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">4</button>
                     <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Contact
@@ -68,7 +68,7 @@
                     <p style="color: red;">{{ $error }}</p>
                 @endforeach
             </div>
-            <form method="POST" action="{{ route('add_profile_5_next') }}">
+            <form method="POST" action="{{ route('add_client_profile_5_next') }}">
                 @csrf
                 @php
                     $old_input = session('client_profile_add');
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                    <a href="{{ route('add_profile_4', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
+                    <a href="{{ route('add_client_profile_4', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
                     <button class="btn btn-primary w-24 ml-2" type="submit">Finish</button>
                 </div>
             </form>

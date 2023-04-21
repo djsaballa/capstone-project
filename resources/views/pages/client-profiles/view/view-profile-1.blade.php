@@ -5,21 +5,21 @@
     <div class="grid grid-cols-12 gap-6 mt-8">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                View Profile
+                View Client Profile
             </h2>
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="#personal-info" class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="#personal-info" class="flex items-center px-3 py-2 mt-2 rounded-md">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
                     <a href="#family-comp" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
                     <a href="#medical-condition" class="flex items-center px-3 py-2 mt-2 rounded-md"> <i
                             class="w-4 h-4 mr-2" data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}#contact-persons"
+                    <a href="{{ route('view_client_profile_2', [$user_info->id, $client_profile_info->id]) }}#contact-persons"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Persons </a>
-                    <a href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}#background-info"
+                    <a href="{{ route('view_client_profile_2', [$user_info->id, $client_profile_info->id]) }}#background-info"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -238,7 +238,7 @@
                         <!-- END MEDICAL CONDITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-primary w-24 ml-2"
-                                href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}"> Next
+                                href="{{ route('view_client_profile_2', [$user_info->id, $client_profile_info->id]) }}"> Next
                             </a>
                         </div>
                     </div>

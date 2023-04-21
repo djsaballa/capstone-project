@@ -4,24 +4,24 @@
     <div class="grid grid-cols-12 gap-6 mt-8">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                Edit Profile
+                Edit Client Profile
             </h2>
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}"
-                        class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
+                    <a href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"
+                        class="flex items-center px-3 py-2 mt-2 rounded-md">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_2', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}"
-                        class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
+                    <a href="{{ route('edit_client_profile_3', [$user_info->id, $client_profile_info->id]) }}"
+                        class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('edit_profile_4', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_4', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="{{ route('edit_profile_5', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_5', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -49,11 +49,11 @@
                                     <li>{!! \Session::get('status') !!}</li>
                                 </ul>
                             </div>
-                        @endif                    
+                        @endif
                     </div>
                     <div class="px-5 sm:px-20 mt-5 pt-5">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
-                            <div class="intro-y box lg:mt-5"> 
+                            <div class="intro-y box lg:mt-5">
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
@@ -70,7 +70,7 @@
                                     <tbody>
                                         @foreach ($medical_conditions as $medical_condition)
                                             <form></form>
-                                            <form method="POST" action="{{ route('edit_profile_3_medcon_next') }}">
+                                            <form method="POST" action="{{ route('edit_client_profile_3_medcon_next') }}">
                                                 @csrf
                                                 <tr>
                                                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="px-5 sm:px-20 mt-5 pt-1">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
-                            <div class="intro-y box lg:mt-5"> 
+                            <div class="intro-y box lg:mt-5">
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
@@ -140,7 +140,7 @@
                                             @if ($matching_objects->first())
                                                 @foreach ($matching_objects as $matching_object)
                                                     <form> </form>
-                                                    <form method="POST" action="{{ route('edit_profile_3_operation_next') }}">
+                                                    <form method="POST" action="{{ route('edit_client_profile_3_operation_next') }}">
                                                     @csrf
                                                         <tr>
                                                             <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
@@ -175,7 +175,7 @@
                     <div class="px-5 sm:px-20 mt-5 pt-1">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
                             <div class="intro-y lg:mt-5">
-                                <form method="POST" action="{{ route('edit_profile_3_philhealth_next') }}">
+                                <form method="POST" action="{{ route('edit_client_profile_3_philhealth_next') }}">
                                     @csrf
                                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                     <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end m-5">
                                             <a class="btn btn-secondary w-24 ml-2"
-                                                href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
+                                                href="{{ route('edit_client_profile_2', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
                                             <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
                                         </div>
                                     </div>

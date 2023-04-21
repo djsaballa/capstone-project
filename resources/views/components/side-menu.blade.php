@@ -11,10 +11,10 @@
     @endphp
     <ul>
         <li>
-            @if (str_contains($current_route, 'dashboard'))
+            @if (preg_match('(dashboard)', $current_route))
                 <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu side-menu--active">
-                @else
-                    <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu">
+            @else
+                <a href="{{ route('dashboard', $user_info->id) }}" class="side-menu">
             @endif
             <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
             <div class="side-menu__title">
@@ -24,12 +24,10 @@
             </a>
         </li>
         <li>
-            @if (str_contains($current_route, 'profile'))
-                <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu side-menu--active">
-                @elseif (str_contains($current_route, 'progress'))
-                    <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu side-menu--active">
-                    @else
-                        <a href="{{ route('list_of_profiles', $user_info->id) }}" class="side-menu">
+            @if (preg_match('(client_profile|progress)', $current_route))
+                <a href="{{ route('list_of_client_profiles', $user_info->id) }}" class="side-menu side-menu--active">
+            @else
+                <a href="{{ route('list_of_client_profiles', $user_info->id) }}" class="side-menu">
             @endif
             <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
             <div class="side-menu__title">
@@ -40,10 +38,10 @@
         </li>
         </li>
         <li>
-            @if (str_contains($current_route, 'user'))
+            @if (preg_match('(list_of_users|edit_user|add_user|view_user)', $current_route))
                 <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu side-menu--active">
-                @else
-                    <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu">
+            @else
+                <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu">
             @endif
             <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
             <div class="side-menu__title">
@@ -53,10 +51,10 @@
             </a>
         </li>
         <li>
-            @if (str_contains($current_route, 'inbox'))
+            @if (preg_match('(inbox)', $current_route))
                 <a href="{{ route('inbox', $user_info->id) }}" class="side-menu side-menu--active">
-                @else
-                    <a href="{{ route('inbox', $user_info->id) }}" class="side-menu">
+            @else
+                <a href="{{ route('inbox', $user_info->id) }}" class="side-menu">
             @endif
             <div class="side-menu__icon"> <i data-lucide="inbox"></i> </div>
             <div class="side-menu__title">
@@ -66,10 +64,10 @@
             </a>
         </li>
         <li>
-            @if (str_contains($current_route, 'audit_logs'))
+            @if (preg_match('(audit_logs)', $current_route))
                 <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu side-menu--active">
-                @else
-                    <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu">
+            @else
+                <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu">
             @endif
             <div class="side-menu__icon"> <i data-lucide="clock"></i> </div>
             <div class="side-menu__title">
@@ -80,22 +78,34 @@
         </li>
 
         <li>
-            <a href="javascript:;.html" class="side-menu side-menu--active">
-            <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
-            <div class="side-menu__title">
-                Archive
-                <div class="side-menu__sub-icon "><i data-lucide="chevron-down" ></i> </div>
-            </div>
+            @if (preg_match('(archive)', $current_route))
+                <a href="javascript:;.html" class="side-menu side-menu--active">
+            @else
+                <a href="javascript:;.html" class="side-menu">
+            @endif
+                <div class="side-menu__icon"> <i data-lucide="archive"></i> </div>
+                <div class="side-menu__title">
+                    Archive
+                    <div class="side-menu__sub-icon "><i data-lucide="chevron-down" ></i> </div>
+                </div>
             </a>
             <ul class="menu__sub-open">
                 <li>
-                    <a href="side-menu-light-profile-overview-1.html" class="side-menu side-menu--active">
+                @if (preg_match('(archive_profiles)', $current_route))
+                    <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu side-menu--active">
+                @else
+                    <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu">
+                @endif
                         <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
                         <div class="side-menu__title"> Client Profiles </div>
                     </a>
                 </li>
                 <li>
-                    <a href="side-menu-light-profile-overview-2.html" class="side-menu">
+                    @if (preg_match('(archive_users)', $current_route, ))
+                        <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu side-menu--active">
+                    @else
+                        <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu">
+                    @endif
                         <div class="side-menu__icon"> <i data-lucide="user"></i> </div>
                         <div class="side-menu__title"> Users </div>
                     </a>

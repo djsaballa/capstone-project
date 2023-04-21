@@ -5,24 +5,24 @@
     <div class="grid grid-cols-12 gap-6 mt-8">
         <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
             <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                Edit Profile
+                Edit Client Profile
             </h2>
             <!-- BEGIN: File Manager Menu -->
             <div class="intro-y box p-5 mt-6">
                 <div class="mt-1">
-                    <a href="{{ route('edit_profile_1', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 rounded-md bg-primary text-white font-medium">
                         <i class="w-4 h-4 mr-2" data-lucide="user"></i> Personal Information </a>
-                    <a href="{{ route('edit_profile_2', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_2', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="users"></i> Family Composition </a>
-                    <a href="{{ route('edit_profile_3', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_3', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="thermometer"></i> Medical Condition </a>
-                    <a href="{{ route('edit_profile_4', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_4', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="phone"></i> Contact Information </a>
-                    <a href="{{ route('edit_profile_5', [$user_info->id, $client_profile_info->id]) }}"
+                    <a href="{{ route('edit_client_profile_5', [$user_info->id, $client_profile_info->id]) }}"
                         class="flex items-center px-3 py-2 mt-2 rounded-md"> <i class="w-4 h-4 mr-2"
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
@@ -44,7 +44,7 @@
                     @endforeach
                 </div>
                 <div class="p-5">
-                    <form method="POST" action="{{ route('edit_profile_1_next') }}">
+                    <form method="POST" action="{{ route('edit_client_profile_1_next') }}">
                         @csrf
                         <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                         <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>

@@ -21,7 +21,7 @@
             <div class="col-span-12 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
-                        General Report for Archive
+                        General Report for Archived Users
                     </h2>
                     <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw"
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
                             <button class="btn btn-primary w-24 ml-2" onclick="filterProfilesArchive( {{ $user_info->id }} )">Go</button>
-                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('archive', $user_info->id) }}">Reset</a>
+                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_archive_profiles', $user_info->id) }}">Reset</a>
                         </div>
                     </div>
                     <!-- END DROPDOWN -->
@@ -174,7 +174,7 @@
                                         </td>
                                         <td class="table-report__action w-400">
                                             <div class="flex justify-center items-center">
-                                                <a class="flex items-center mr-3" href="{{ route('edit_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
+                                                <a class="flex items-center mr-3" href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
                                                         data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                                 <button class="flex items-center mr-3 text-primary" href="javascript:;"
                                                     onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal" data-tw-target="#restore-confirmation-modal"> <i

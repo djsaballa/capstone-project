@@ -30,7 +30,7 @@
                                 </a>
                             </td>
                             <td class="w-40">
-                                <a href="{{ route('view_profile_1', [$user_info->id, $history->client_profile_id]) }}" class="font-medium whitespace-nowrap">
+                                <a href="{{ route('view_client_profile_1', [$user_info->id, $history->client_profile_id]) }}" class="font-medium whitespace-nowrap">
                                     {{ $history->clientProfile->getFullName($history->client_profile_id) }}
                                 </a>
                             </td>

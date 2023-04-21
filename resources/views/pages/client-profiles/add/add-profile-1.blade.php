@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex items-center mt-8">
         <h2 class="intro-y text-lg font-medium mr-auto">
-            Add Profile
+            Add Client Profile
         </h2>
     </div>
     <!-- BEGIN: Wizard Layout -->
@@ -11,7 +11,7 @@
         <div
             class="relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
             <div class="intr o-x lg:text-center flex items-center lg:block flex-1 z-10">
-                <a href="{{ route('add_profile_privacy', $user_info->id) }}">
+                <a href="{{ route('add_client_profile_privacy', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"><i
                             data-lucide="shield"></i></button>
@@ -72,7 +72,7 @@
                 @endforeach
             </div>
             <div class="p-5">
-                <form method="POST" action="{{ route('add_profile_1_next') }}">
+                <form method="POST" action="{{ route('add_client_profile_1_next') }}">
                     @csrf
                     @php
                         $old_input = session('client_profile_add');
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <a href="{{ route('add_profile_privacy', $user_info->id) }}"
+                                <a href="{{ route('add_client_profile_privacy', $user_info->id) }}"
                                     class="btn btn-secondary w-24 ml-2">Previous</a>
                                 <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
                             </div>

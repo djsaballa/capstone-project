@@ -222,7 +222,7 @@
                         <!-- END MEDICAL CONDITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-primary w-24 ml-2"
-                                href="{{ route('view_profile_2', [$user_info->id, $client_profile_info->id]) }}"> Next
+                                href="{{ route('view_client_profile_2', [$user_info->id, $client_profile_info->id]) }}"> Next
                             </a>
                         </div>
                     </div>
