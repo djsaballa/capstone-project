@@ -68,3 +68,22 @@ function filterProfiles(user_id) {
     window.location.href = "/filter-division-profiles/" + user_id + "/" + division_id;
   }
 }
+
+function filterProfilesArchive(user_id) {
+  var locale = document.getElementById('list-of-profile-locale-filter');
+  var locale_id = locale.options[locale.selectedIndex].value;
+  
+  var district = document.getElementById('list-of-profile-district-filter');
+  var district_id = district.options[district.selectedIndex].value;
+  
+  var division = document.getElementById('list-of-profile-division-filter');
+  var division_id = division.options[division.selectedIndex].value;
+  
+  if(locale_id) {
+    window.location.href = "/filter-locale-profiles-archive/" + user_id + "/" + locale_id;
+  } else if(district_id) {
+    window.location.href = "/filter-district-profiles-archive/" + user_id + "/" + district_id;
+  } else if(division_id) {
+    window.location.href = "/filter-division-profiles-archive/" + user_id + "/" + division_id;
+  }
+}

@@ -22,11 +22,6 @@ Route::controller(UserController::class)->group(function () {
 
     // DASHBOARD
     Route::get('/dashboard/{user_id}', 'dashboard')->name('dashboard');
-
-    // LOAD OPTIONS
-    Route::get('/filter-locale-profiles/{user_id}/{locale_id}', 'filterLocaleProfiles')->name('filter_locale_profiles');
-    Route::get('/filter-district-profiles/{user_id}/{district_id}', 'filterDistrictProfiles')->name('filter_district_profiles');
-    Route::get('/filter-division-profiles/{user_id}/{division_id}', 'filterDivisionProfiles')->name('filter_division_profiles');
     
     // VIEW PROGRESS REPORTS
     Route::get('/view-progress-report/{user_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
@@ -37,9 +32,6 @@ Route::controller(UserController::class)->group(function () {
 
     // AUDIT LOGS
     Route::get('/audit-logs/{user_id}', 'auditLogs')->name('audit_logs');
-
-    // ARCHIVE
-    Route::get('/archive/{user_id}', 'archive')->name('archive');
 });
 
 require __DIR__ . '/client.php';

@@ -11,9 +11,12 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/view-profile-1/{user_id}/{client_profile_id}', 'viewProfile1')->name('view_profile_1');
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', 'viewProfile2')->name('view_profile_2');
 
-  // ARCHIVE CLIENT PROFILE
-  Route::get('/archive-profile/{user_id}/{client_profile_id}', 'archiveProfile')->name('archive_profile');
+  // FILTER PROFILES
+  Route::get('/filter-locale-profiles/{user_id}/{locale_id}', 'filterLocaleProfiles')->name('filter_locale_profiles');
+  Route::get('/filter-district-profiles/{user_id}/{district_id}', 'filterDistrictProfiles')->name('filter_district_profiles');
+  Route::get('/filter-division-profiles/{user_id}/{division_id}', 'filterDivisionProfiles')->name('filter_division_profiles');
 
+  
   // ADD PROFILE
   Route::get('/add-profile-privacy/{user_id}', 'addProfilePrivacy')->name('add_profile_privacy');
   Route::get('/add-profile-1/{user_id}', 'addProfile1')->name('add_profile_1');
@@ -26,7 +29,7 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/add-profile-5/{user_id}', 'addProfile5')->name('add_profile_5');
   Route::post('/add-profile-5-next', 'addProfile5Next')->name('add_profile_5_next');
   Route::get('/add-profile-6/{user_id}', 'addProfile6')->name('add_profile_6');
-
+  
   // EDIT PROFILE
   Route::get('/edit-profile-1/{user_id}/{client_profile_id}', 'editProfile1')->name('edit_profile_1');
   Route::post('/edit-profile-1-next', 'editProfile1Next')->name('edit_profile_1_next');
@@ -40,5 +43,18 @@ Route::controller(ClientController::class)->group(function () {
   Route::post('/edit-profile-4-next', 'editProfile4Next')->name('edit_profile_4_next');
   Route::get('/edit-profile-5/{user_id}/{client_profile_id}', 'editProfile5')->name('edit_profile_5');
   Route::post('/edit-profile-5-next', 'editProfile5Next')->name('edit_profile_5_next');
+  
+  // ARCHIVE AND RESTORE CLIENT PROFILE
+  Route::get('/archive-profile/{user_id}/{client_profile_id}', 'archiveProfile')->name('archive_profile');
+  Route::get('/restore-profile/{user_id}/{client_profile_id}', 'restoreProfile')->name('restore_profile');
+
+  // ARCHIVE PROFILE
+  Route::get('/archive/{user_id}', 'archive')->name('archive');
+
+  // FILTER ARCHIVE PROFILES
+  Route::get('/filter-locale-profiles-archive/{user_id}/{locale_id}', 'filterLocaleProfilesArchive')->name('filter_locale_profiles_archive');
+  Route::get('/filter-district-profiles-archive/{user_id}/{district_id}', 'filterDistrictProfilesArchive')->name('filter_district_profiles_archive');
+  Route::get('/filter-division-profiles-archive/{user_id}/{division_id}', 'filterDivisionProfilesArchive')->name('filter_division_profiles_archive');
+  
 
 });

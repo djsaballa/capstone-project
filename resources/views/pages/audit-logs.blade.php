@@ -43,6 +43,10 @@
                                     <div class="flex items-center justify-center whitespace-nowrap text-danger">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
                                     </div>
+                                @elseif ( $history->action_taken == 'Restore' )
+                                <div class="flex items-center justify-center whitespace-nowrap text-primary">
+                                    <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
+                                </div>
                                 @endif
                             </td>
                             <td>

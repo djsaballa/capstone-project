@@ -13,15 +13,19 @@
                     <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw"
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
                 </div>
+                @php
+                    $brethren = $client_profiles->whereNotNull('baptism_date');
+                    $non_brethren = $client_profiles->whereNull('baptism_date');
+                    $ongoing = $client_profiles->where('status', 'Active');
+                @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="users" class="report-box__icon text-success"></i>
-
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">500</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($client_profiles) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Total Profiles</div>
                             </div>
                         </div>
@@ -33,7 +37,7 @@
                                     <i data-lucide="user-check" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">380</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Brethren</div>
                             </div>
                         </div>
@@ -45,7 +49,7 @@
                                     <i data-lucide="user-x" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($non_brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Non-Brethren</div>
                             </div>
                         </div>
@@ -57,7 +61,7 @@
                                     <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
 
                                 </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
                                 <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
                             </div>
                         </div>
