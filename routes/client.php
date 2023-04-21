@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ReportController;
 
 Route::controller(ClientController::class)->group(function () {
   // LIST OF PROFILES
@@ -10,6 +11,8 @@ Route::controller(ClientController::class)->group(function () {
   // VIEW PROFILE
   Route::get('/view-profile-1/{user_id}/{client_profile_id}', 'viewProfile1')->name('view_profile_1');
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', 'viewProfile2')->name('view_profile_2');
+  // VEIW PDF
+  Route::post('user/view-pdf',[ReportController::class, 'viewPDF'])->name('view_pdf');
 
   // FILTER PROFILES
   Route::get('/filter-locale-profiles/{user_id}/{locale_id}', 'filterLocaleProfiles')->name('filter_locale_profiles');

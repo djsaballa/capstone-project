@@ -13,7 +13,6 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::controller(UserController::class)->group(function () {
     // LOGIN
     Route::get('/', 'login')->name('login');
@@ -25,6 +24,7 @@ Route::controller(UserController::class)->group(function () {
     
     // VIEW PROGRESS REPORTS
     Route::get('/view-progress-report/{user_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
+    
     Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
 
     // INBOX
