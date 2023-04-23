@@ -47,7 +47,7 @@
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
                         <div data-single="true" action="/file-upload" class="dropzone">
-                            <div class="fallback"> <input name="file" type="file" /> </div>
+                            <div class="fallback"> <input name="backgroundInfo" type="file" /> </div>
                             <div class="dz-message" data-dz-message>
                                 <div class="text-lg font-medium">Drop files here or click to upload.</div>
                                 <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span

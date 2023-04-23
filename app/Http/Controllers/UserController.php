@@ -203,10 +203,36 @@ class UserController extends Controller
     public function listOfArchiveUsers($user_id)
     {
         
-        $users = User::where('status', 'Active')->paginate(10);
+        $users = User::where('status', 'Archive')->paginate(10);
         $user_info = User::find($user_id);
 
         return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));
+    }
+
+    // ARCHIVE USER ----------------------------------------------------------------------------------------------------
+    public function archiveUser($user_id, $employee_id)
+    {
+        $archive = User::find($employee_id)->update(['status' => 'Archive']);
+        if ($archive) {
+            session()->flash('status', 'User has been successfully archived.');
+            return redirect()->route('list_of_users', $user_id);
+        } else {
+            session()->flash('error', 'An error has occurred, User has not been archived.');
+            return redirect()->route('list_of_users', $user_id);
+        }
+    }
+
+    // RESTORE USER ----------------------------------------------------------------------------------------------------
+    public function restoreUser($user_id, $employee_id)
+    {
+        $restore = User::find($employee_id)->update(['status' => 'Active']);
+        if ($restore) {
+            session()->flash('status', 'User has been successfully restored.');
+            return redirect()->route('list_of_archive_users', $user_id);
+        } else {
+            session()->flash('error', 'An error has occurred, User has not been restored.');
+            return redirect()->route('list_of_archive_users', $user_id);
+        }
     }
 
     // INBOX -----------------------------------------------------------------------------------------------------------

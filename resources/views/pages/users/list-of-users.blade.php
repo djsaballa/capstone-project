@@ -79,8 +79,11 @@
                             <a href="{{ route('view_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
                             </a>
-                            <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
-                                <button class="btn btn-danger py-1 px-2 mr-2">Archive</button>
+                            <a href="javascript:;">
+                                <button class="btn btn-danger py-1 px-2 mr-2"
+                                    onclick="getUserId( {{ $user->id }} )"
+                                    data-tw-toggle="modal" data-tw-target="#archive-confirmation-modal">
+                                    Archive</button>
                             </a>
                         </div>
                     </div>
@@ -97,5 +100,38 @@
             </div>
         </div>
         <!-- END: Pagination -->
-    </div>
+        <div id="archive-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                            <div class="text-3xl mt-5">Are you sure?</div>
+                            <div class="modal-body">
+                                Do you really want to archive this User?
+                            </div>
+                        </div>
+                        <input type="hidden" id="user-id">
+                        <div class="px-5 pb-8 text-center">
+                            <button type="button" class="btn btn-outline-secondary w-24 mr-1"
+                                data-tw-dismiss="modal">Cancel</button>
+                            <button type="button" id="archive-client-profile"
+                                onclick="archiveUser( {{ $user_info->id }} )"
+                                class="btn btn-danger w-24">Archive</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function getUserId(id) {
+                $("#user-id").val(id);
+                console.log($("#user-id").val());
+            }
+
+            function archiveUser(user_id) {
+                var employee_id = $("#user-id").val();
+                window.location.href = "/archive-user/" + user_id + "/" + employee_id;
+            }
+        </script>
 @endsection

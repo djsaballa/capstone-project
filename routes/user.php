@@ -20,4 +20,8 @@ Route::controller(UserController::class)->group(function () {
 
   // LIST OF ARCHIVE USER
   Route::get('/list-of-archive-users/{user_id}', 'listOfArchiveUsers')->name('list_of_archive_users');
+
+  // ARCHIVE ADN RESTORE USER
+  Route::get('/archive-user/{user_id}/{employee_id}', 'archiveUser')->name('archive_user');
+  Route::get('/restore-user/{user_id}/{employee_id}', 'restoreUser')->name('restore_user');
 });
