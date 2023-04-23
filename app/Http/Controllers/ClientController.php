@@ -52,6 +52,50 @@ class ClientController extends Controller
         return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info'));
     }
 
+    // FILTER PROFILES-------------------------------------------------------------------------------------------------
+    public function filterLocaleProfiles($user_id, $locale_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+    
+    public function filterDistrictProfiles($user_id, $district_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+
+    public function filterDivisionProfiles($user_id, $division_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+    }
+
     // ADD PROFILE -----------------------------------------------------------------------------------------------------
     public function addProfilePrivacy($user_id)
     {
@@ -498,21 +542,21 @@ class ClientController extends Controller
         }
     }
 
-     // ARCHIVE ---------------------------------------------------------------------------------------------------------
-     public function listOfArchiveProfiles($user_id)
-     {
-         $user_info = User::find($user_id);
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
-         
-         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-         $client_profiles = ClientProfile::where('status', 'Archive')->paginate(10);
- 
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
-     }
+    // ARCHIVE ---------------------------------------------------------------------------------------------------------
+    public function listOfArchiveProfiles($user_id)
+    {
+        $user_info = User::find($user_id);
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+        
+        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+        $client_profiles = ClientProfile::where('status', 'Archive')->paginate(10);
 
-     // ARCHIVE PROFILE --------------------------------------------------------------------------------------------------
+        return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+    }
+
+    // ARCHIVE PROFILE --------------------------------------------------------------------------------------------------
     public function archiveProfile($user_id, $client_profile_id)
     {
         $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
@@ -560,49 +604,50 @@ class ClientController extends Controller
         }
     }
  
-     // FILTER PROFILES -------------------------------------------------------------------------------------------------
-     public function filterLocaleProfilesArchive($user_id, $locale_id)
-     {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-         $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->paginate(10);
- 
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
-     }
-     
-     public function filterDistrictProfilesArchive($user_id, $district_id)
-     {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
- 
-         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-         $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
- 
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
-     }
- 
-     public function filterDivisionProfilesArchive($user_id, $division_id)
-     {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
- 
-         $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
- 
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
-     }
+// FILTER PROFILES ARCHIVE-------------------------------------------------------------------------------------------------
+    public function filterLocaleProfilesArchive($user_id, $locale_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+    }
+    
+    public function filterDistrictProfilesArchive($user_id, $district_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+
+        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+    }
+
+    public function filterDivisionProfilesArchive($user_id, $division_id)
+    {
+        $user_info = User::find($user_id);
+
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+
+        $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+
+        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
+
+        return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+    }
 }
