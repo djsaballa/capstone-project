@@ -217,7 +217,7 @@
                             <div class="modal-content">
                                 <div class="modal-body p-0">
                                     <div class="p-5 text-center">
-                                        <i data-lucide="x-circle" class="w-16 h-16 text-primary mx-auto mt-3"></i>
+                                        <i data-lucide="rotate-ccw" class="w-16 h-16 text-primary mx-auto mt-3"></i>
                                         <div class="text-3xl mt-5">Are you sure?</div>
                                         <div class="modal-body">
                                             Do you really want to restore this client profile?
