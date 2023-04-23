@@ -181,10 +181,6 @@
                                         </td>
                                         <td class="table-report__action w-400">
                                             <div class="flex justify-center items-center">
-
-                                                <a class="flex items-center mr-3"
-                                                    href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}">
-                                                    <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                                 <a class="flex items-center mr-3 "
                                                     href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
