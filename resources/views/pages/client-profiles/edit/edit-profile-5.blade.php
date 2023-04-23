@@ -46,28 +46,28 @@
                             <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ $client_profile_info->background_info }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                        <form data-single="true" action="/file-upload" class="dropzone">
+                        <div data-single="true" action="/file-upload" class="dropzone">
                             <div class="fallback"> <input name="file" type="file" /> </div>
                             <div class="dz-message" data-dz-message>
                                 <div class="text-lg font-medium">Drop files here or click to upload.</div>
                                 <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
                                         class="font-medium">not</span> actually uploaded. </div>
                             </div>
-                        </form>
+                        </div>
                         <div class="mt-3">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
                             <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ $client_profile_info->action_taken }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                        <form data-single="true" action="/file-upload" class="dropzone">
+                        <div data-single="true" action="/file-upload" class="dropzone">
                             <div class="fallback"> <input name="file" type="file" /> </div>
                             <div class="dz-message" data-dz-message>
                                 <div class="text-lg font-medium">Drop files here or click to upload.</div>
                                 <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
                                         class="font-medium">not</span> actually uploaded. </div>
                             </div>
-                        </form>
+                        </div>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-secondary w-24 ml-2"
                                 href="{{ route('edit_client_profile_4', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
