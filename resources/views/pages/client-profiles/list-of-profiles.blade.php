@@ -12,14 +12,14 @@
         </div>
     @endif
     @if (Session::has('error'))
-    <div class="modal-body p-0">
-        <div class="p-5 text-center">
-            <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
-            <div class="modal-body text-success">
-                {{ Session::get('status') }}
+        <div class="modal-body p-0">
+            <div class="p-5 text-center">
+                <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
+                <div class="modal-body text-success">
+                    {{ Session::get('status') }}
+                </div>
             </div>
         </div>
-    </div>
     @endif
     <h2 class="intro-y text-lg font-medium mt-10">
         List of Client Profiles
@@ -39,10 +39,6 @@
                         <li>
                             <a href="" class="dropdown-item"> <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
                                 Print </a>
-                        </li>
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
-                                Export to Excel </a>
                         </li>
                         <li>
                             <a href="" class="dropdown-item"> <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
@@ -90,7 +86,8 @@
             </div>
             <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
                 <button class="btn btn-primary w-24 ml-2" onclick="filterProfiles( {{ $user_info->id }} )">Go</button>
-                <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
+                <a class="btn btn-secondary w-24 ml-2"
+                    href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
             </div>
         </div>
         <!-- END DROPDOWN -->
@@ -132,19 +129,19 @@
                             </td>
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
+                                    <a class="flex items-center mr-3 text-primary"
+                                        href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}">
+                                        <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
                                     <a class="flex items-center mr-3 "
-                                        href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
-                                            data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
-                                    <a class="flex items-center mr-3"
-                                        href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}"> <i
-                                            data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                    <button class="flex items-center mr-3 text-danger"
-                                        onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"
-                                        data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
-                                            class="w-4 h-4 mr-1"></i> Archive </button>
+                                        href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
+                                        <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
                                     <a class="flex items-center mr-3"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
+                                    <a class="flex items-center mr-3 text-danger"
+                                        onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"
+                                        data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
+                                            class="w-4 h-4 mr-1"></i> Archive </a>
                                 </div>
                             </td>
                         </tr>
