@@ -125,9 +125,10 @@
                                         <a href="{{ route('view_user', [$user_info->id, $user->id]) }}">
                                             <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
                                         </a>
-                                        <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
-                                            <button class="btn btn-primary py-1 px-2 mr-2">Restore</button>
-                                        </a>
+                                        <a class="btn btn-primary py-1 px-2 mr-2" href="javascript:;"
+                                                    onclick="getProfileId( {{ $user->id }} )"
+                                                    data-tw-toggle="modal" data-tw-target="#restore-confirmation-modal">
+                                                    Restore </a>
                                     </div>
                                 </div>
                             </div>
@@ -143,5 +144,28 @@
                         </div>
                     </div>
                     <!-- END: Pagination -->
+                    <div id="restore-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body p-0">
+                                    <div class="p-5 text-center">
+                                        <i data-lucide="x-circle" class="w-16 h-16 text-primary mx-auto mt-3"></i>
+                                        <div class="text-3xl mt-5">Are you sure?</div>
+                                        <div class="modal-body">
+                                            Do you really want to restore this User?
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="client-profile-id">
+                                    <div class="px-5 pb-8 text-center">
+                                        <button type="button" class="btn btn-outline-secondary w-24 mr-1"
+                                            data-tw-dismiss="modal">Cancel</button>
+                                        <button type="button" id="archive-client-profile"
+                                            onclick="restoreProfile( {{ $user_info->id }} )"
+                                            class="btn btn-primary w-24">Restore</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 @endsection
