@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
@@ -101,27 +102,35 @@ class UserController extends Controller
 
     public function addUserSave(Request $request)
     {
-        $request->validate([
-            'firstName' => 'required|string',
-            'middleName' => 'nullable|string',
-            'lastName' => 'required|string',
-            'role' => 'required',
-            'division' => 'required',
-            'district' => 'required',
-            'locale' => 'required',
-            'contactNumber' => 'required|numeric',
-        ]);
+        $request->validate(
+            [
+                'picture' => 'nullable|file|mimes:png,jpeg',
+                'firstName' => 'required|string',
+                'middleName' => 'nullable|string',
+                'lastName' => 'required|string',
+                'role' => 'required',
+                'division' => 'required',
+                'district' => 'required',
+                'locale' => 'required',
+                'contactNumber' => 'required|numeric',
+            ],
+            [
+                'picture.mimes' => 'The uploaded file must be a PNG or JPEG image.',
+            ]
+        );
 
         $user_id = $request->userId;
 
         $user_save =
         [
+            'picture' => $request->file('picture'),
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
             'username' => Str::lower($request->firstName). "" .Str::lower($request->lastName),
             'password' => Str::random(10),
             'contact_number' => $request->contactNumber,
+            'status' => 'Active',
             'role_id' => $request->role,
             'locale_id' => $request->locale,
             'district_id' => $request->district,

@@ -72,7 +72,7 @@
                 @endforeach
             </div>
             <div class="p-5">
-                <form method="POST" action="{{ route('add_client_profile_1_next') }}">
+                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">>
                     @csrf
                     @php
                         $old_input = session('client_profile_add');
@@ -252,7 +252,7 @@
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <button type="button" class="btn btn-primary w-full">Change Photo</button>
-                                            <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0">
                                         </div>
                                     </div>
                                 </div>
