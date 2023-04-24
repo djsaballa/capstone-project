@@ -132,9 +132,6 @@
                                             src="{{ asset('dist/images/profile-6.jpg') }}" style="display:block;">
                                         <img id="preview" src="#" alt="Preview image" class="rounded-md" style="display:none;">
                                     </div>
-                                    @php
-
-                                    @endphp
                                     <div class="mx-auto cursor-pointer relative mt-5">
                                         <button type="button" class="btn btn-primary w-full">Change Photo</button>
                                         <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">

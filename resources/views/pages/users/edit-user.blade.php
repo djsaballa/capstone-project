@@ -18,7 +18,7 @@
         @endforeach
         <div class="p-5">
             <div class="col-span-6 2xl:col-span-3">
-                <form method="POST" action="{{ route('edit_user_save') }}">
+                <form method="POST" action="{{ route('edit_user_save') }}" enctype="multipart/form-data">
                     @csrf
                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                     <input id="employee-id" name="employeeId" value="{{ $employee_info->id }}" hidden>
@@ -138,23 +138,17 @@
                             <div
                                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                 <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                    <img class="rounded-md" alt="Midone - HTML Admin Template"
-                                        src="{{ asset('dist/images/profile-6.jpg') }}">
-                                    <div
-                                        class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" icon-name="x"
-                                            data-lucide="x" class="lucide lucide-x w-4 h-4">
-                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                        </svg>
-                                    </div>
+                                    @if ( !empty($employee_info->picture) )
+                                        <img src="{{ asset('storage/'.$employee_info->picture) }}" id="currentPicture" alt="User Image" style="display:block;">
+                                    @else
+                                        <img class="rounded-md" alt="User Image" id="currentPicture" style="display:block;"
+                                            src="{{ asset('dist/images/profile-6.jpg') }}">
+                                    @endif
+                                    <img id="preview" src="#" alt="Preview image" class="rounded-md" style="display:none;">
                                 </div>
                                 <div class="mx-auto cursor-pointer relative mt-5">
-                                    <button type="button" class="btn btn-primary w-full">Change
-                                        Photo</button>
-                                    <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                    <button type="button" class="btn btn-primary w-full">Change Photo</button>
+                                    <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
                                 </div>
                             </div>
                         </div>
@@ -163,12 +157,28 @@
                         <a href="{{ route('list_of_users', $user_info->id ) }}" class="btn btn-secondary w-24 ml-2">Cancel</a>
                         <button class="btn btn-primary w-24 ml-2">Save</button>
                     </div>
+                </div>
+                </form>
             </div>
-            </form>
-        </div>
         <!-- END: Change Password -->
     </div>
     </div>
     </div>
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var placeholder = document.getElementById('preview');
+            var preview = document.getElementById('preview');
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                placeholder.style.display = 'none';
+                preview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
     <!-- END: Content -->
 @endsection

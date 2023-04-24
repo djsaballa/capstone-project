@@ -120,10 +120,12 @@ class UserController extends Controller
         );
 
         $user_id = $request->userId;
+        
+        $filename = $request->file('picture')->store('public');
 
         $user_save =
         [
-            'picture' => $request->file('picture'),
+            'picture' => basename($filename),
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
@@ -164,6 +166,7 @@ class UserController extends Controller
     public function editUserSave(Request $request)
     {
         $request->validate([
+            'picture' => 'nullable|file|mimes:png,jpeg',
             'firstName' => 'required|string',
             'middleName' => 'nullable|string',
             'lastName' => 'required|string',
@@ -179,8 +182,11 @@ class UserController extends Controller
         $user_id = $request->userId;
         $employee_id = $request->employeeId;
 
+        $filename = $request->file('picture')->store('public');
+
         $user_update =
         [
+            'picture' => basename($filename),
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
