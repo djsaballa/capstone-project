@@ -102,10 +102,10 @@
                                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                 <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
                                     @if ( !empty($employee_info->picture) )
-                                        <img src="{{ asset('storage/'.$employee_info->picture) }}" alt="User Image">
+                                    <img src="{{ asset('storage/'.$employee_info->picture) }}" alt="User Image">
                                     @else
-                                        <img class="rounded-md" alt="User Image"
-                                            src="{{ asset('dist/images/profile-6.jpg') }}">
+                                        <img class="rounded-md" alt="Midone - HTML Admin Template"
+                                        src="{{ asset('dist/images/profile-1.jpg') }}">
                                     @endif
                                 </div>
                             </div>
