@@ -35,7 +35,7 @@
                     <h2 class="font-medium text-base mr-auto" id="personal-info">
                         Personal Information
                     </h2>
-                    <form action="{{route('view_pdf') }}" method="post" target="__black">
+                    <form action="{{route('view_pdf',[$user_info->id, $client_profile_info->id]) }}" method="post" target="__black">
                         @csrf
                         <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
                             to PDF</button>
@@ -219,8 +219,8 @@
                         <table class="table">
                             <thead class="table-dark">
                                 <tr class="bg-primary">
-                                    <th scope="col">Hospital</th>
                                     <th scope="col">Doctor </th>
+                                    <th scope="col">Hospital</th>
                                     <th scope="col">Do you have Phil-health Card? Please
                                         Specify </th>
                                 </tr>
