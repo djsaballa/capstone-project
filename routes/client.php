@@ -13,7 +13,7 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', 'viewProfile2')->name('view_client_profile_2');
 
   // VEIW PDF
-  Route::post('user/view-pdf', [ReportController::class, 'viewPDF'])->name('view_pdf');
+  Route::post('/view-pdf/{user_id}/{client_profile_id}', [ReportController::class, 'viewPDF'])->name('view_pdf');
 
   // FILTER PROFILES
   Route::get('/filter-locale-profiles/{user_id}/{locale_id}', 'filterLocaleProfiles')->name('filter_locale_profiles');

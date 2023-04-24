@@ -3,14 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Locale;
+use App\Models\User;
+use App\Models\ClientProfile;
+use App\Models\FamilyComposition;
+use App\Models\Disease;
+use App\Models\MedicalCondition;
+use App\Models\MedicalOperation;
+use App\Models\History;
+use Carbon\Carbon;
 
 use PDF;
 class ReportController extends Controller
 {
     //PDF 
-    public function viewPDF(){
+    public function viewPDF($user_id, $client_profile_id){
 
-        $pdf = PDF::loadHTML('pdf.pdf-view-profile', $data)
+        $user_info = User::find($user_id);
+        $client_profile_info = ClientProfile::find($client_profile_id);
+        $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
+        $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
+        $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
+        $medical_operations = MedicalOperation::all();
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        $data = compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations','client_profile_info');
+
+        $pdf = PDF::loadView('pdf.pdf-view-profile', $data )
         ->setPaper('a4', 'portrait');
 
         return $pdf->stream();
