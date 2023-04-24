@@ -49,8 +49,11 @@
                 <div class="box">
                     <div class="flex flex-col lg:flex-row items-center p-5">
                         <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                            <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                src=" {{ asset('dist/images/profile-1.jpg')}}">
+                        @if ( !empty($user->picture) )
+                            <img src="{{ asset('storage/'.$user->picture) }}" class="rounded-full" alt="User Image">
+                        @else
+                            <img alt="User Image" class="rounded-full" src=" {{ asset('dist/images/profile-1.jpg')}}">
+                        @endif
                         </div>
                         <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                             <a href="{{ route('view_user', [$user_info->id, $user->id]) }}" class="font-medium">{{ $user->getFullName($user->id) }}</a>

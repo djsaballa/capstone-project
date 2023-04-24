@@ -62,8 +62,8 @@
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-division-filter"
-                    name="list-of-profile-division-filter" onchange="loadDistricts( {{ $districts_json }} )">
+                <select class="form-select box ml-2" id="division-filter"
+                    name="division-filter" onchange="loadDistricts( {{ $districts_json }} )">
                     <option value="" selected disabled hidden>Select Division</option>
                     @foreach ($divisions as $division)
                         <option value="{{ $division->id }}">{{ $division->division }}</option>
@@ -72,14 +72,14 @@
             </div>
             <label for="regular-form-1" class="form-label">List of District</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-district-filter"
-                    name="list-of-profile-district-filter" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
+                <select class="form-select box ml-2" id="district-filter"
+                    name="district-filter" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
                     <option value="" selected disabled hidden>Select District</option>
                 </select>
             </div>
             <label for="regular-form-1" class="form-label">List of Locale</label>
             <div class="flex w-full sm:w-auto mr-2">
-                <select class="form-select box ml-2" id="list-of-profile-locale-filter" name="list-of-profile-locale-filter"
+                <select class="form-select box ml-2" id="locale-filter" name="locale-filter"
                     disabled="true">
                     <option value="" selected disabled hidden>Select Locale</option>
                 </select>

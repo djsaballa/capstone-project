@@ -45,7 +45,7 @@
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">Role</label>
                                     <select id="role" name="role" data-search="true" class="tom-select w-full tomselected"
-                                        tabindex="-1" hidden="hidden">
+                                        tabindex="-1">
                                         @if ( old('role') )
                                             @php
                                                 $old_role = $roles->find( old('role') );
@@ -60,19 +60,29 @@
                                     </select>
                                 </div>
                             </div>
+                            @php
+                                    use App\Models\District;
+                                    use App\Models\Locale;
+                                    
+                                    $districts = District::all();
+                                    $districts_json = $districts->toJson();
+                                    
+                                    $locales = Locale::all();
+                                    $locales_json = $locales->toJson();
+                                @endphp
                             <div class="col-span-6 2xl:col-span-3">
                                 <div class="mt-3">
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">Division</label>
-                                    <select id="division"  name="division" data-search="true" class="tom-select w-full tomselected"
-                                        tabindex="-1" hidden="hidden">
+                                    <select id="division-filter"  name="division" data-search="true" class="w-full form-control"
+                                        tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
                                         @if ( old('division') )
                                             @php
                                                 $old_division = $divisions->find( old('division') );
                                             @endphp
                                             <option value="{{ $old_division->id }}" selected="true"> {{ $old_division->division }} </option>
                                         @else
-                                            <option value="Select Division" selected="true" disabled> Select Division</option>
+                                            <option value="0" selected disabled hidden>Select Division</option>
                                         @endif
                                         @foreach ($divisions as $division)
                                             <option value="{{ $division->id }}">{{ $division->division }}</option>
@@ -82,15 +92,15 @@
                                 <div class="mt-3">
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">District</label>
-                                    <select id="district"  name="district" data-search="true" class="tom-select w-full tomselected"
-                                        tabindex="-1" hidden="hidden">
+                                    <select id="district-filter"  name="district" data-search="true" class="w-full form-control"
+                                        tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled="true">
                                         @if ( old('district') )
                                             @php
                                                 $old_district = $districts->find( old('district') );
                                             @endphp
                                             <option value="{{ $old_district->id }}" selected="true"> {{ $old_district->district }} </option>
                                         @else
-                                            <option value="Select District" selected="true" disabled> Select District</option>
+                                            <option value="0" selected disabled hidden> Select District</option>
                                         @endif
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}" >{{ $district->district }}</option>
@@ -101,15 +111,15 @@
                                 <div class="mt-3">
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">Locale</label>
-                                    <select id="locale"  name="locale" data-search="true" class="tom-select w-full tomselected"
-                                        tabindex="-1" hidden="hidden">
+                                    <select id="locale-filter"  name="locale" data-search="true" class="w-full form-control"
+                                        tabindex="-1" disabled="true">
                                         @if ( old('locale') )
                                             @php
                                                 $old_locale = $locales->find( old('locale') );
                                             @endphp
                                             <option value="{{ $old_locale->id }}" selected="true"> {{ $old_locale->locale }} </option>
                                         @else
-                                            <option value="Select Locale" selected="true" disabled> Select Locale</option>
+                                            <option value="0" selected disabled hidden> Select Locale</option>
                                         @endif
                                         @foreach ($locales as $locale)
                                             <option value="{{ $locale->id }}">

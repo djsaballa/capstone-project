@@ -1,11 +1,11 @@
 function loadDistricts(districts_json) {
   var districts = districts_json;
   // Get the selected division ID
-  var division = document.getElementById('list-of-profile-division-filter');
+  var division = document.getElementById('division-filter');
   var division_id = division.options[division.selectedIndex].value;
 
   // Get the "District" dropdown
-  var district_dropdown = document.getElementById('list-of-profile-district-filter');
+  var district_dropdown = document.getElementById('district-filter');
   
   // Filter the districts based on the selected division
   var filtered_districts = districts.filter(function(district) {
@@ -13,7 +13,7 @@ function loadDistricts(districts_json) {
   });
   
   // Generate the options for the "District" dropdown
-  var district_options = '<option value="" selected disabled>Select District</option>';
+  var district_options = '<option value="0" selected disabled>Select District</option>';
   for (var i = 0; i < filtered_districts.length; i++) {
       var district = filtered_districts[i];
       district_options += '<option value="' + district.id + '">' + district.district + '</option>';
@@ -27,11 +27,11 @@ function loadDistricts(districts_json) {
 function loadLocales(locales_json) {
   var locales = locales_json;
   // Get the selected category ID
-  var district = document.getElementById('list-of-profile-district-filter');
+  var district = document.getElementById('district-filter');
   var district_id = district.options[district.selectedIndex].value;
 
   // Get the "Locale" dropdown
-  var locale_dropdown = document.getElementById('list-of-profile-locale-filter');
+  var locale_dropdown = document.getElementById('locale-filter');
 
   // Filter the locales based on the selected district
   var filtered_locales = locales.filter(function(locale) {
@@ -39,7 +39,7 @@ function loadLocales(locales_json) {
   });
 
   // Generate the options for the "Locale" dropdown
-  var locale_options = '<option value="" selected disabled>Select Locale</option>';
+  var locale_options = '<option value="0" selected disabled>Select Locale</option>';
   for (var i = 0; i < filtered_locales.length; i++) {
       var locale = filtered_locales[i];
       locale_options += '<option value="' + locale.id + '">' + locale.locale + '</option>';
@@ -51,13 +51,13 @@ function loadLocales(locales_json) {
 }
 
 function filterProfiles(user_id) {
-  var locale = document.getElementById('list-of-profile-locale-filter');
+  var locale = document.getElementById('locale-filter');
   var locale_id = locale.options[locale.selectedIndex].value;
   
-  var district = document.getElementById('list-of-profile-district-filter');
+  var district = document.getElementById('district-filter');
   var district_id = district.options[district.selectedIndex].value;
   
-  var division = document.getElementById('list-of-profile-division-filter');
+  var division = document.getElementById('division-filter');
   var division_id = division.options[division.selectedIndex].value;
   
   if(locale_id) {
@@ -70,13 +70,13 @@ function filterProfiles(user_id) {
 }
 
 function filterProfilesArchive(user_id) {
-  var locale = document.getElementById('list-of-profile-locale-filter');
+  var locale = document.getElementById('locale-filter');
   var locale_id = locale.options[locale.selectedIndex].value;
   
-  var district = document.getElementById('list-of-profile-district-filter');
+  var district = document.getElementById('district-filter');
   var district_id = district.options[district.selectedIndex].value;
   
-  var division = document.getElementById('list-of-profile-division-filter');
+  var division = document.getElementById('division-filter');
   var division_id = division.options[division.selectedIndex].value;
   
   if(locale_id) {

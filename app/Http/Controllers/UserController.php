@@ -121,11 +121,18 @@ class UserController extends Controller
 
         $user_id = $request->userId;
         
-        $filename = $request->file('picture')->store('public');
+        $file = $request->file('picture');
+
+        if ($file) {
+            $filename = $file->store('public');
+            $picture = basename($filename);
+        } else {
+            $picture = null;
+        }
 
         $user_save =
         [
-            'picture' => basename($filename),
+            'picture' => $picture,
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
@@ -182,11 +189,18 @@ class UserController extends Controller
         $user_id = $request->userId;
         $employee_id = $request->employeeId;
 
-        $filename = $request->file('picture')->store('public');
+        $file = $request->file('picture');
+
+        if ($file) {
+            $filename = $file->store('public');
+            $picture = basename($filename);
+        } else {
+            $picture = null;
+        }
 
         $user_update =
         [
-            'picture' => basename($filename),
+            'picture' => $picture,
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
