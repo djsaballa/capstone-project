@@ -130,8 +130,8 @@
                                         <input class="form-check-input flex-none" type="checkbox" >
                                     @endif
                                     <div class="w-6 h-6 flex-none image-fit relative ml-5">
-                                        <img alt="Midone - HTML Admin Template" class="rounded-full"
-                                            src=" {{ asset('dist/images/profile-6.jpg') }}">
+                                        <img atl="ADDFII" class="rounded-full"
+                                            src=" {{ asset('dist/images/profile-1.jpg') }}">
                                     </div>
                                     <div class="inbox__item--sender truncate ml-3">{{ $inbox->getSenderName($inbox->sender_user_id) }}</div>
                                 </div>

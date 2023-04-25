@@ -17,7 +17,7 @@
             </h2>
         </div>
         <div class="p-5">
-            <div class="flex flex-col-reverse xl:flex-row flex-col">
+            <div class="flex flex-col-reverse xl:flex-row">
                 <div class="flex-1 mt-6 xl:mt-0">
                     <div class="grid grid-cols-12 gap-x-5">
                         <div class="col-span-6 2xl:col-span-3">
@@ -104,7 +104,7 @@
                                     @if ( !empty($employee_info->picture) )
                                     <img src="{{ asset('storage/'.$employee_info->picture) }}" alt="User Image">
                                     @else
-                                        <img class="rounded-md" alt="Midone - HTML Admin Template"
+                                        <img class="rounded-md" atl="ADDFII"
                                         src="{{ asset('dist/images/profile-1.jpg') }}">
                                     @endif
                                 </div>

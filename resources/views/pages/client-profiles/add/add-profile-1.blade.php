@@ -72,7 +72,7 @@
                 @endforeach
             </div>
             <div class="p-5">
-                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">>
+                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
                     @csrf
                     @php
                         $old_input = session('client_profile_add');
@@ -143,11 +143,21 @@
 
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
+                                    @php
+                                        use App\Models\District;
+                                        use App\Models\Locale;
+                                        
+                                        $districts = District::all();
+                                        $districts_json = $districts->toJson();
+                                        
+                                        $locales = Locale::all();
+                                        $locales_json = $locales->toJson();
+                                    @endphp
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Division</label>
-                                        <select id="division" name="division" data-search="true"
-                                            class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                        <select id="division-filter" name="division" data-search="true"
+                                            class="w-full form-control" tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
                                             @if ($old_input)
                                                 @php
                                                     $old_input_division = $divisions->find( $old_input['division'] );
@@ -173,8 +183,8 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">District</label>
-                                        <select id="district" name="district" data-search="true"
-                                            class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                        <select id="district-filter" name="district" data-search="true"
+                                            class="w-full form-control" tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled>
                                             @if ($old_input)
                                                 @php
                                                     $old_input_district = $districts->find( $old_input['district'] );
@@ -201,8 +211,8 @@
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Locale</label>
-                                        <select id="locale" name="locale" data-search="true"
-                                            class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                        <select id="locale-filter" name="locale" data-search="true"
+                                            class="w-full form-control" tabindex="-1" disabled>
                                             @if ($old_input)
                                                 @php
                                                     $old_input_locale = $locales->find( $old_input['locale'] );
@@ -235,24 +245,13 @@
                                     <div
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                            <img class="rounded-md" alt="Midone - HTML Admin Template"
-                                                src="{{ asset('dist/images/profile-6.jpg') }}">
-                                            <div
-                                                class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    icon-name="x" data-lucide="x" class="lucide lucide-x w-4 h-4">
-                                                    <line x1="18" y1="6" x2="6" y2="18">
-                                                    </line>
-                                                    <line x1="6" y1="6" x2="18" y2="18">
-                                                    </line>
-                                                </svg>
-                                            </div>
+                                            <img class="rounded-md" alt="Client Image" id="placeholder"
+                                                src="{{ asset('dist/images/profile-1.jpg') }}">
+                                            <img id="preview" src="#" alt="Client Image" class="rounded-md" style="display:none;">
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <button type="button" class="btn btn-primary w-full">Change Photo</button>
-                                            <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
                                         </div>
                                     </div>
                                 </div>
@@ -273,4 +272,20 @@
                 </form>
                 <!-- END: Wizard Layout -->
             </div>
+            <script>
+                function previewImage(event) {
+                    var input = event.target;
+                    var placeholder = document.getElementById('placeholder');
+                    var preview = document.getElementById('preview');
+                    var reader = new FileReader();
+
+                    reader.onload = function() {
+                        preview.src = reader.result;
+                        placeholder.style.display = 'none';
+                        preview.style.display = 'block';
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            </script>
         @endsection

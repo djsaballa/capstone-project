@@ -60,11 +60,21 @@
                             </div>
                         </div>
                         <div class="col-span-6 2xl:col-span-3">
+                            @php
+                                use App\Models\District;
+                                use App\Models\Locale;
+                                
+                                $districts = District::all();
+                                $districts_json = $districts->toJson();
+                                
+                                $locales = Locale::all();
+                                $locales_json = $locales->toJson();
+                            @endphp
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">Division</label>
-                                <select id="division" name="division" data-search="true"
-                                    class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                <select id="division-filter" name="division" data-search="true"
+                                    class="w-full form-control" tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
                                     @if (!empty($employee_info->division_id))
                                         <option value="{{ $employee_info->division_id }}" selected="true">
                                             {{ $employee_info->getDivisionName($employee_info->division_id) }}
@@ -82,8 +92,8 @@
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">District</label>
-                                <select id="district" name="district" data-search="true"
-                                    class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                <select id="district-filter" name="district" data-search="true"
+                                    class="w-full form-control" tabindex="-1" onchange="loadLocales( {{ $locales_json }} )">
                                     @if (!empty($employee_info->district_id))
                                         <option value="{{ $employee_info->district_id }}" selected="true">
                                             {{ $employee_info->getDistrictName($employee_info->district_id) }}
@@ -102,8 +112,8 @@
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">Locale</label>
-                                <select id="locale" name="locale" data-search="true"
-                                    class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                <select id="locale-filter" name="locale" data-search="true"
+                                    class="w-full form-control" tabindex="-1">
                                     @if (!empty($employee_info->locale_id))
                                         <option value="{{ $employee_info->locale_id }}" selected="true">
                                             {{ $employee_info->getLocaleName($employee_info->locale_id) }}
@@ -142,9 +152,9 @@
                                         <img src="{{ asset('storage/'.$employee_info->picture) }}" id="currentPicture" alt="User Image" style="display:block;">
                                     @else
                                         <img class="rounded-md" alt="User Image" id="currentPicture" style="display:block;"
-                                            src="{{ asset('dist/images/profile-6.jpg') }}">
+                                            src="{{ asset('dist/images/profile-1.jpg') }}">
                                     @endif
-                                    <img id="preview" src="#" alt="Preview image" class="rounded-md" style="display:none;">
+                                    <img id="preview" src="#" alt="User image" class="rounded-md" style="display:none;">
                                 </div>
                                 <div class="mx-auto cursor-pointer relative mt-5">
                                     <button type="button" class="btn btn-primary w-full">Change Photo</button>
@@ -167,7 +177,7 @@
     <script>
         function previewImage(event) {
             var input = event.target;
-            var placeholder = document.getElementById('preview');
+            var placeholder = document.getElementById('placeholder');
             var preview = document.getElementById('preview');
             var reader = new FileReader();
 

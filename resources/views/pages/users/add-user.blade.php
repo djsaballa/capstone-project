@@ -61,15 +61,15 @@
                                 </div>
                             </div>
                             @php
-                                    use App\Models\District;
-                                    use App\Models\Locale;
-                                    
-                                    $districts = District::all();
-                                    $districts_json = $districts->toJson();
-                                    
-                                    $locales = Locale::all();
-                                    $locales_json = $locales->toJson();
-                                @endphp
+                                use App\Models\District;
+                                use App\Models\Locale;
+                                
+                                $districts = District::all();
+                                $districts_json = $districts->toJson();
+                                
+                                $locales = Locale::all();
+                                $locales_json = $locales->toJson();
+                            @endphp
                             <div class="col-span-6 2xl:col-span-3">
                                 <div class="mt-3">
                                     <label for="update-profile-form-3-tomselected" class="form-label"
@@ -82,25 +82,26 @@
                                             @endphp
                                             <option value="{{ $old_division->id }}" selected="true"> {{ $old_division->division }} </option>
                                         @else
-                                            <option value="0" selected disabled hidden>Select Division</option>
+                                            <option value="" selected disabled hidden>Select Division</option>
                                         @endif
                                         @foreach ($divisions as $division)
                                             <option value="{{ $division->id }}">{{ $division->division }}</option>
                                         @endforeach
+                                            <option value="">N/A</option>
                                     </select>
                                 </div>
                                 <div class="mt-3">
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">District</label>
                                     <select id="district-filter"  name="district" data-search="true" class="w-full form-control"
-                                        tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled="true">
+                                        tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled="false">
                                         @if ( old('district') )
                                             @php
                                                 $old_district = $districts->find( old('district') );
                                             @endphp
                                             <option value="{{ $old_district->id }}" selected="true"> {{ $old_district->district }} </option>
                                         @else
-                                            <option value="0" selected disabled hidden> Select District</option>
+                                            <option value="" selected disabled hidden> Select District</option>
                                         @endif
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}" >{{ $district->district }}</option>
@@ -112,14 +113,14 @@
                                     <label for="update-profile-form-3-tomselected" class="form-label"
                                         id="update-profile-form-3-ts-label">Locale</label>
                                     <select id="locale-filter"  name="locale" data-search="true" class="w-full form-control"
-                                        tabindex="-1" disabled="true">
+                                        tabindex="-1" disabled="false">
                                         @if ( old('locale') )
                                             @php
                                                 $old_locale = $locales->find( old('locale') );
                                             @endphp
                                             <option value="{{ $old_locale->id }}" selected="true"> {{ $old_locale->locale }} </option>
                                         @else
-                                            <option value="0" selected disabled hidden> Select Locale</option>
+                                            <option value="" selected disabled hidden> Select Locale</option>
                                         @endif
                                         @foreach ($locales as $locale)
                                             <option value="{{ $locale->id }}">
@@ -138,13 +139,13 @@
                                 <div
                                     class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                        <img id="placeholder" class="rounded-md" alt="Midone - HTML Admin Template"
-                                            src="{{ asset('dist/images/profile-6.jpg') }}" style="display:block;">
+                                        <img id="placeholder" class="rounded-md" alt="ADDFII"
+                                            src="{{ asset('dist/images/profile-1.jpg') }}" style="display:block;">
                                         <img id="preview" src="#" alt="Preview image" class="rounded-md" style="display:none;">
                                     </div>
                                     <div class="mx-auto cursor-pointer relative mt-5">
                                         <button type="button" class="btn btn-primary w-full">Change Photo</button>
-                                        <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
+                                        <input type="file" id="picture" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +162,7 @@
         <script>
             function previewImage(event) {
                 var input = event.target;
-                var placeholder = document.getElementById('preview');
+                var placeholder = document.getElementById('placeholder');
                 var preview = document.getElementById('preview');
                 var reader = new FileReader();
 

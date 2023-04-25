@@ -74,7 +74,7 @@ class UserController extends Controller
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($user_id)
     {
-        $users = User::where('status', 'Active')->paginate(10);
+        $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->paginate(10);
         $user_info = User::find($user_id);
 
         return view('pages.users.list-of-users', compact('users', 'user_info'));
@@ -136,7 +136,7 @@ class UserController extends Controller
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
-            'username' => Str::lower($request->firstName). "" .Str::lower($request->lastName),
+            'username' => Str::lower($request->firstName). "" .Str::lower($request->lastName). "" .random_int(1000, 9999),
             'password' => Str::random(10),
             'contact_number' => $request->contactNumber,
             'status' => 'Active',
@@ -232,7 +232,7 @@ class UserController extends Controller
     public function listOfArchiveUsers($user_id)
     {
         
-        $users = User::where('status', 'Archive')->paginate(10);
+        $users = User::where('status', 'Archive')->orderBy('role_id', 'ASC')->paginate(10);
         $user_info = User::find($user_id);
 
         return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));

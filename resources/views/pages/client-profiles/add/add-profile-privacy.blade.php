@@ -69,7 +69,7 @@
                     portability, to file a complaint and be entitled to damages for violation of your rights. </p>
             </div>
             <div class="form-check form-switch mt-5">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                <input class="form-check-input" type="checkbox" id="accept-switch" onclick="toggleSwitchChanged()">
                 <label class="form-check-label" for="flexSwitchCheckDefault">I Accept</label>
             </div>
             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
@@ -77,12 +77,25 @@
                     <button class="btn btn-secondary w-24 ml-2">Cancel</button>
                 </a>
                 <a href="{{ route('add_client_profile_1', $user_info->id) }}">
-                    <button class="btn btn-primary w-24 ml-2">Next</button>
+                    <button class="btn btn-primary w-24 ml-2" id="next-button" disabled>Next</button>
                 </a>
             </div>
-
         </div>
     </div>
     <!-- END: Wizard Layout -->
     </div>
+    <script>
+        function toggleSwitchChanged() {
+            const toggleSwitch = document.getElementById('accept-switch');
+            const toggleValue = toggleSwitch.checked;
+
+            var nextButton = document.getElementById('next-button');
+            
+            if(toggleValue) {
+                nextButton.disabled = false;
+            } else {
+                nextButton.disabled = true;
+            }
+        }
+    </script>
 @endsection

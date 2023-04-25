@@ -26,7 +26,7 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $client_profiles = ClientProfile::where('status', 'Active')->paginate(10);
+        $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -61,7 +61,7 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->paginate(10);
+        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -76,7 +76,7 @@ class ClientController extends Controller
 
         $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
 
-        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -91,7 +91,7 @@ class ClientController extends Controller
 
         $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
 
-        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->paginate(10);
+        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -119,6 +119,7 @@ class ClientController extends Controller
     public function addProfile1Next(Request $request)
     {
         $request->validate([
+            'picture' => 'nullable|file|mimes:png,jpeg',
             'firstName' => 'required',
             'lastName' => 'required',
             'birthDate' => 'required',
@@ -132,21 +133,45 @@ class ClientController extends Controller
             'address' => 'required',
         ]);
 
+        $file = $request->file('picture');
+
+        if ($file) {
+            $filename = $file->store('public');
+            $picture = basename($filename);
+        } else {
+            $picture = null;
+        }
+
+// | philhealth_member              | varchar(255)        | NO   |     | NULL    |                |
+// | health_card                    | varchar(255)        | YES  |     | NULL    |                |
+// | contact_person1_name           | varchar(255)        | NO   |     | NULL    |                |
+// | contact_person1_contact_number | varchar(255)        | NO   |     | NULL    |                |
+// | contact_person2_name           | varchar(255)        | NO   |     | NULL    |                |
+// | contact_person2_contact_number | varchar(255)        | NO   |     | NULL    |                |
+// | background_info                | varchar(255)        | NO   |     | NULL    |                |
+// | background_info_attachment     | blob                | YES  |     | NULL    |                |
+// | action_taken                   | varchar(255)        | NO   |     | NULL    |                |
+// | action_taken_attachment        | blob                | YES  |     | NULL    |                |
+
         $client_profile_add =
         [
+            'picture' => $picture,
+            'privacy_consent' => 1,
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
-            'birth_date' => $request->birthDate,
+            'address' => $request->address,
             'gender' => $request->gender,
             'age' => $request->age,
-            'occupation' => $request->occupation,
-            'baptism_date' => $request->baptismDate,
-            'division' => $request->division,
-            'district' => $request->district,
-            'locale' => $request->locale,
             'contact_number' => $request->contactNumber,
-            'address' => $request->address,
+            'birth_date' => $request->birthDate,
+            'occupation' => $request->occupation,
+            // height
+            // weight
+            'status' => 'Active',
+            'baptism_date' => $request->baptismDate,
+            'user_encoder_id' => $request->userId,
+            'locale_id' => $request->locale,
         ];
 
         session(['client_profile_add' => $client_profile_add]);
@@ -551,7 +576,7 @@ class ClientController extends Controller
         $locales = Locale::orderBy('locale', 'ASC')->get();
         
         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-        $client_profiles = ClientProfile::where('status', 'Archive')->paginate(10);
+        $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
 
         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
     }

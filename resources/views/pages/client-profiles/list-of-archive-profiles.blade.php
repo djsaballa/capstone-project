@@ -159,7 +159,7 @@
                                         <td class="w-40">
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
-                                                    <img alt="Midone - HTML Admin Template" class="tooltip rounded-full"
+                                                    <img atl="ADDFII" class="tooltip rounded-full"
                                                         src=" {{ asset('dist/images/preview-4.jpg') }}"
                                                         title="Uploaded at 18 April 2021">
                                                 </div>

@@ -13,14 +13,14 @@ function loadDistricts(districts_json) {
   });
   
   // Generate the options for the "District" dropdown
-  var district_options = '<option value="0" selected disabled>Select District</option>';
+  var district_options = '<option value="" selected disabled>Select District</option>';
   for (var i = 0; i < filtered_districts.length; i++) {
       var district = filtered_districts[i];
       district_options += '<option value="' + district.id + '">' + district.district + '</option>';
   }
   
   // Update the "District" dropdown with the new options
-  district_dropdown.innerHTML = district_options;
+  district_dropdown.innerHTML = (district_options += '<option value=""> N/A </option>' );
   district_dropdown.disabled = false;
 }
 
@@ -39,14 +39,14 @@ function loadLocales(locales_json) {
   });
 
   // Generate the options for the "Locale" dropdown
-  var locale_options = '<option value="0" selected disabled>Select Locale</option>';
+  var locale_options = '<option value="" selected disabled>Select Locale</option>';
   for (var i = 0; i < filtered_locales.length; i++) {
       var locale = filtered_locales[i];
       locale_options += '<option value="' + locale.id + '">' + locale.locale + '</option>';
   }
 
   // Update the "Locale" dropdown with the new options
-  locale_dropdown.innerHTML = locale_options;
+  locale_dropdown.innerHTML = (locale_options += '<option value=""> N/A </option>' );
   locale_dropdown.disabled = false;
 }
 

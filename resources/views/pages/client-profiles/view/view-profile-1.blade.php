@@ -103,7 +103,7 @@
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
                                             <img class="rounded-md" alt="sample"
-                                                src=" {{ asset('dist/images/profile-6.jpg') }}">
+                                                src=" {{ asset('dist/images/profile-1.jpg') }}">
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
