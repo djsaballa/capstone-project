@@ -138,7 +138,7 @@
                                 <div
                                     class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                        <img id="placeholder" class="rounded-md" alt="Midone - HTML Admin Template"
+                                        <img id="placeholder" class="rounded-md" atl="ADDFII"
                                             src="{{ asset('dist/images/profile-6.jpg') }}" style="display:block;">
                                         <img id="preview" src="#" alt="Preview image" class="rounded-md" style="display:none;">
                                     </div>

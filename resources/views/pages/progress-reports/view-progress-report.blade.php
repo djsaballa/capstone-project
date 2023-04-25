@@ -101,7 +101,7 @@
                                             <div
                                                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                                 <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                                    <img class="rounded-md" alt="Midone - HTML Admin Template"
+                                                    <img class="rounded-md" atl="ADDFII"
                                                         src=" {{ asset('dist/images/profile-6.jpg') }}">
                                                     <div
                                                         class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
