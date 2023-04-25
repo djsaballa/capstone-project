@@ -185,7 +185,7 @@
                                             @foreach($matching_objects as $matching_object)
                                                 <tr>
                                                     <td scope="row">{{ $matching_object->operation }}</td>
-                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>   
+                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
