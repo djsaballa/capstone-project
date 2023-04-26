@@ -110,13 +110,20 @@
                             <td class="w-40">
                                 <div class="flex">
                                     <div class="w-10 h-10 image-fit zoom-in">
-                                        <img atl="ADDFII" class="tooltip rounded-full"
-                                            src=" {{ asset('dist/images/profile-1.jpg') }}"
-                                            title="Uploaded at 18 April 2021">
+                                        @if ( !empty($client_profile->picture) )
+                                            <img alt="Client Image" class="tooltip rounded-full"
+                                                src="{{ asset('storage/'.$client_profile->picture) }}"
+                                                title="{{ $client_profile->created_at }}">
+                                        @else
+                                            <img alt="Client Image" class="tooltip rounded-full"
+                                                src="{{ asset('dist/images/profile-1.jpg') }}"
+                                                title="{{ $client_profile->created_at }}">
+                                        @endif
                                     </div>
+                                </div>
                             </td>
                             <td>
-                                <a href=""
+                                <a href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}"
                                     class="font-medium whitespace-nowrap">{{ $client_profile->getFullName($client_profile->id) }}</a>
                             </td>
                             <td class="text-center">{{ $client_profile->gender }}</td>

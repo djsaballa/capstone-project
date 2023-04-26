@@ -58,28 +58,19 @@
                     disabled>6</button>
                 <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Review</div>
             </div>
-
         </div>
-
         <form method="POST" action="{{ route('add_client_profile_2_next') }}">
             @csrf
-
             @if ($errors->any())
                 <div class="alert alert-danger">
-
                     <ul>
-
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
 
                     </ul>
-
                 </div>
             @endif
-
-
-
             @if (Session::has('success'))
                 <div class="alert alert-success text-center">
 
@@ -99,22 +90,22 @@
                         <th>Educational Attainment</th>
                         <th>Occupation</th>
                         <th>Contact Number</th>
-
                     </tr>
                     <tr>
                         <td><input type="text" name="addMoreInputFields[0][name]" placeholder="Name"
                                 class="form-control" />
                         </td>
                         <td><select id="update-profile-form-3" name="addMoreInputFields[0][relationship]" data-search="true"
-                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                class="w-full form-control" tabindex="-1">
                                 <option value="" selected="true" disabled>Select Relationship</option>
                                 <option value="Father">Father</option>
                                 <option value="Mother">Mother</option>
                                 <option value="Brother">Brother</option>
                                 <option value="Sister">Sister</option>
-                            </select></td>
+                            </select>
+                        </td>
                         <td><select id="update-profile-form-3" name="addMoreInputFields[0][educational]" data-search="true"
-                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                class="w-full form-control" tabindex="-1">
                                 <option value="Select Educational Attainment" selected="true" disabled>Select Educational
                                     Attainment</option>
                                 <option value="College Graduate">College Graduate</option>
@@ -122,18 +113,12 @@
                                 <option value="Elementary Graduate">Elementary Graduate</option>
                             </select>
                         </td>
-
-                        <td><select id="update-profile-form-3" name="addMoreInputFields[0][occupation]" data-search="true"
-                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
-                                <option value="1" selected="true">None</option>
-                                <option value="2">None</option>
-                                <option value="3">Vendor</option>
-
-                            </select></td>
+                        <td><input id="input-wizard-5" name="addMoreInputFields[0][occupation]" type="text"
+                                class="form-control" placeholder="Occupation"></td>
                         <td><input id="input-wizard-5" name="addMoreInputFields[0][contact]" type="text"
                                 class="form-control" placeholder="09123456789"></td>
                         <td><button type="button" name="add" id="dynamic-ar"
-                                class="btn btn-outline-primary">Add</button></td>
+                                class="btn btn-outline-primary">Add Row</button></td>
                     </tr>
                 </table>
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
@@ -142,30 +127,31 @@
                     <button class="btn btn-primary w-24 ml-2">Next</button>
                 </div>
             </div>
+        </form>
     </div>
-    </div>
-    </form>
     <!-- END: Wizard Layout -->
-    </div>
     <script type="text/javascript">
         var i = 0;
         $("#dynamic-ar").click(function() {
             ++i;
-            $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' +
-                i +
-                '][name]" placeholder="Name" class="form-control" /></td><td><select id="update-profile-form-3" name="addMoreInputFields[' +
-                i +
-                '][relationship]"  data-search="true" class="tom-select w-full tomselected" tabindex="-1" hidden="hidden"><option value="" selected="true" disabled>Select Relationship</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select></td><td><select id="update-profile-form-3" name="addMoreInputFields[' +
-                i +
-                '][educational]" data-search="true" class="tom-select w-full tomselected"tabindex="-1" hidden="hidden"><option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option><option value="College Graduate">College Graduate</option><option value="High School Graduate">High School Graduate</option><option value="Elementary Graduate">Elementary Graduate</option></select></td><td><select id="update-profile-form-3" name="addMoreInputFields[' +
-                i +
-                '][occupation]"   data-search="true" class="tom-select w-full tomselected"tabindex="-1" hidden="hidden"><option value="1" selected="true">None</option><option value="2">None</option><option value="3">Vendor</option></select></td><td><input id="input-wizard-5" name="addMoreInputFields[' +
-                i +
-                '][contact]"  type="text" class="form-control" placeholder="09123456789"></td><td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add Subject</button></td></tr>'
-            );
+            var table = document.getElementById('dynamicAddRemove');
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            cell1.innerHTML = '<input type="text" name="addMoreInputFields[' + i + '][name]" placeholder="Name" class="form-control" />';
+            cell2.innerHTML = '<select name="addMoreInputFields[' + i + '][relationship]" class="w-full form-control"><option value="" selected="true" disabled>Select Relationship</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>';
+            cell3.innerHTML = '<select name="addMoreInputFields[' + i + '][educational]" class="w-full form-control"><option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option><option value="College Graduate">College Graduate</option><option value="High School Graduate">High School Graduate</option><option value="Elementary Graduate">Elementary Graduate</option></select>';
+            cell4.innerHTML = '<input type="text" name="addMoreInputFields[' + i + '][occupation]" placeholder="Occupation" class="form-control" />';
+            cell5.innerHTML = '<input name="addMoreInputFields[' + i + '][contact]" type="text" class="form-control" placeholder="09123456789">';
+            cell6.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
         });
+    
         $(document).on('click', '.remove-input-field', function() {
-            $(this).parents('tr').remove();
+            $(this).closest('tr').remove();
         });
     </script>
 @endsection

@@ -126,6 +126,8 @@ class ClientController extends Controller
             'gender' => 'required',
             'age' => 'required',
             'occupation' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
             'division' => 'required',
             'district' => 'required',
             'locale' => 'required',
@@ -166,19 +168,21 @@ class ClientController extends Controller
             'contact_number' => $request->contactNumber,
             'birth_date' => $request->birthDate,
             'occupation' => $request->occupation,
-            // height
-            // weight
+            'height' => $request->height,
+            'weight' => $request->weight,
+            'division' => $request->division,
+            'district' => $request->locale,
+            'locale' => $request->locale,
             'status' => 'Active',
             'baptism_date' => $request->baptismDate,
             'user_encoder_id' => $request->userId,
-            'locale_id' => $request->locale,
         ];
 
         session(['client_profile_add' => $client_profile_add]);
 
         $user_id = $request->userId;
 
-        return redirect()->route('add_client_profile_3', $user_id);
+        return redirect()->route('add_client_profile_2', $user_id);
     }
 
     public function addProfile2($user_id)
@@ -296,6 +300,7 @@ class ClientController extends Controller
     public function editProfile1Next(Request $request)
     {
         $request->validate([
+            'picture' => 'nullable|file|mimes:png,jpeg',
             'firstName' => 'required|string',
             'middleName' => 'nullable|string',
             'lastName' => 'required|string',
@@ -314,8 +319,18 @@ class ClientController extends Controller
         $user_id = $request->userId;
         $client_profile_id = $request->clientProfileId;
 
+        $file = $request->file('picture');
+
+        if ($file) {
+            $filename = $file->store('public');
+            $picture = basename($filename);
+        } else {
+            $picture = null;
+        }
+
         $client_profile_update =
         [
+            'picture' => $picture,
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,

@@ -1,6 +1,6 @@
 /* Default colors */
 :root {
-    --color-primary: theme("colors.rgb.violet.600");
+    --color-primary: theme("colors.rgb.violet.950");
     --color-secondary: theme("colors.rgb.slate.200");
     --color-success: theme("colors.rgb.lime.500");
     --color-info: theme("colors.rgb.cyan.500");

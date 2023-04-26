@@ -102,7 +102,11 @@
                                         <input id="birth-date" name="birthDate" value="{{ old('birthDate', $old_input['birth_date'] ?? null)}}" class="form-control" type="date" />
                                         <span id="startDateSelected"></span>
                                     </div>
-
+                                    <div class="mt-3">
+                                        <label for="update-profile-form-4" class="form-label">Phone Number</label>
+                                        <input id="contact-number" name="contactNumber" type="text" class="form-control"
+                                            placeholder="09123456789" value="{{ old('contactNumber', $old_input['contact_number'] ?? null) }}">
+                                    </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
@@ -125,6 +129,16 @@
                                         </select>
                                     </div>
                                     <div class="mt-3 ">
+                                        <label for="update-profile-form-4" class="form-label">Height (cm)</label>
+                                        <input id="height" name="height" type="number" class="form-control"
+                                            placeholder="Height" value="{{ old('height', $old_input['height'] ?? null) }}">
+                                    </div>
+                                    <div class="mt-3 ">
+                                        <label for="update-profile-form-4" class="form-label">Weight (kg)</label>
+                                        <input id="weight" name="weight" type="number" class="form-control"
+                                            placeholder="Weight" value="{{ old('weight', $old_input['weight'] ?? null) }}">
+                                    </div>
+                                    <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Age</label>
                                         <input id="age" name="age" type="number" class="form-control"
                                             placeholder="Age" value="{{ old('age', $old_input['age'] ?? null) }}">
@@ -135,12 +149,6 @@
                                         <input id="occupation" name="occupation" type="text" class="form-control"
                                             placeholder="Occupation" value="{{ old('occupation', $old_input['occupation'] ?? null) }}">
                                     </div>
-                                    <div class="mt-3">
-                                        <label for="startDate">Baptism Date</label>
-                                        <input id="baptism-date" name="baptismDate" value="{{ old('baptismDate', $old_input['baptism_date'] ?? null) }}" class="form-control" type="date" />
-                                        <span id="startDateSelected"></span>
-                                    </div>
-
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     @php
@@ -236,9 +244,9 @@
                                         </select>
                                     </div>
                                     <div class="mt-3">
-                                        <label for="update-profile-form-4" class="form-label">Phone Number</label>
-                                        <input id="contact-number" name="contactNumber" type="text" class="form-control"
-                                            placeholder="09123456789" value="{{ old('contactNumber', $old_input['contact_number'] ?? null) }}">
+                                        <label for="startDate">Baptism Date</label>
+                                        <input id="baptism-date" name="baptismDate" value="{{ old('baptismDate', $old_input['baptism_date'] ?? null) }}" class="form-control" type="date" />
+                                        <span id="startDateSelected"></span>
                                     </div>
                                 </div>
                                 <div class="w-52 mx-auto xl:mr-0 xl:ml-6">

@@ -102,8 +102,11 @@
                                     <div
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                            <img class="rounded-md" alt="sample"
-                                                src=" {{ asset('dist/images/profile-1.jpg') }}">
+                                        @if ( !empty($client_profile_info->picture) )
+                                            <img src="{{ asset('storage/'.$client_profile_info->picture) }}" class="rounded-md" alt="Client Image">
+                                        @else
+                                            <img alt="Client Image" class="rounded-md" src=" {{ asset('dist/images/profile-1.jpg')}}">
+                                        @endif
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
@@ -137,7 +140,7 @@
                                     <th scope="col">Tel. Number</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody>
                                 @foreach ($family_compositions as $family_composition)
                                     <tr>
                                         <th scope="row">{{ $family_composition->getFullName($family_composition->id) }}
@@ -201,7 +204,7 @@
                                             @foreach($matching_objects as $matching_object)
                                                 <tr>
                                                     <td scope="row">{{ $matching_object->operation }}</td>
-                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>   
+                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>
                                                 </tr>
                                             @endforeach
                                         @else

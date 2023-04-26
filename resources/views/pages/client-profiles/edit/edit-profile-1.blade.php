@@ -44,7 +44,7 @@
                     @endforeach
                 </div>
                 <div class="p-5">
-                    <form method="POST" action="{{ route('edit_client_profile_1_next') }}">
+                    <form method="POST" action="{{ route('edit_client_profile_1_next') }}" enctype="multipart/form-data">
                         @csrf
                         <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                         <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
@@ -174,28 +174,17 @@
                                         <div
                                             class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                             <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                                <img class="rounded-md" alt="Midone - HTML Admin Template"
-                                                    src=" {{ asset('dist/images/profile-1.jpg') }}">
-                                                <div
-                                                    class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        icon-name="x" data-lucide="x" class="lucide lucide-x w-4 h-4">
-                                                        <line x1="18" y1="6" x2="6"
-                                                            y2="18">
-                                                        </line>
-                                                        <line x1="6" y1="6" x2="18"
-                                                            y2="18">
-                                                        </line>
-                                                    </svg>
-                                                </div>
+                                                @if ( !empty($client_profile_info->picture) )
+                                                    <img src="{{ asset('storage/'.$client_profile_info->picture) }}" id="currentPicture" alt="Client Image" style="display:block;">
+                                                @else
+                                                    <img class="rounded-md" alt="Client Image" id="currentPicture" style="display:block;"
+                                                        src="{{ asset('dist/images/profile-1.jpg') }}">
+                                                @endif
+                                                <img id="preview" src="#" alt="Client image" class="rounded-md" style="display:none;">
                                             </div>
                                             <div class="mx-auto cursor-pointer relative mt-5">
-                                                <button type="button" class="btn btn-primary w-full">Change
-                                                    Photo</button>
-                                                <input type="file"
-                                                    class="w-full h-full top-0 left-0 absolute opacity-0">
+                                                <button type="button" class="btn btn-primary w-full">Change Photo</button>
+                                                <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
                                             </div>
                                         </div>
                                     </div>
@@ -222,4 +211,20 @@
                 </div>
             </form>
             <!-- END: Content -->
+            <script>
+                function previewImage(event) {
+                    var input = event.target;
+                    var placeholder = document.getElementById('currentPicture');
+                    var preview = document.getElementById('preview');
+                    var reader = new FileReader();
+
+                    reader.onload = function() {
+                        preview.src = reader.result;
+                        placeholder.style.display = 'none';
+                        preview.style.display = 'block';
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            </script>
         @endsection
