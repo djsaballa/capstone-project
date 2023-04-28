@@ -76,6 +76,7 @@
                     $tempCP = TempClientProfile::all();
                     $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
                 @endphp
+                <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                 <div class="mt-3">
                     <label for="update-profile-form-5" class="font-medium text-base form-label">Background Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
                     <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ old('backgroundInfo', $old_input->background_info ?? null) }}</textarea>

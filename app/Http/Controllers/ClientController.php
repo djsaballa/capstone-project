@@ -101,7 +101,10 @@ class ClientController extends Controller
     public function addProfilePrivacy($user_id)
     {
         $user_info = User::find($user_id);
+        TempClientProfile::truncate();
         session()->forget('family_comp');
+        session()->forget('medical_con');
+        session()->forget('medical_op');
 
         return view('pages.client-profiles.add.add-profile-privacy', compact('user_info'));
     }
@@ -191,8 +194,6 @@ class ClientController extends Controller
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
             return redirect()->route('list_of_profiles', $user_id);
         }
-
-
     }
 
     public function addProfile2($user_id)
@@ -393,8 +394,12 @@ class ClientController extends Controller
     public function addProfile6($user_id)
     {
         $user_info = User::find($user_id);
+        $divisions = Division::orderBy('division', 'ASC')->get();
+        $districts = District::orderBy('district', 'ASC')->get();
+        $locales = Locale::orderBy('locale', 'ASC')->get();
+        $diseases = Disease::all();
 
-        return view('pages.client-profiles.add.add-profile-6', compact('user_info'));
+        return view('pages.client-profiles.add.add-profile-6', compact('user_info', 'divisions', 'districts', 'locales', 'diseases'));
     }
 
     // EDIT PROFILE ----------------------------------------------------------------------------------------------------

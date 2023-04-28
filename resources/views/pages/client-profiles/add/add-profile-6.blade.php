@@ -52,14 +52,15 @@
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button class="w-10 h-10 rounded-full btn btn-primary">5</button>
-                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Setup Background Information</div>
+                <a href="{{ route('add_client_profile_5', $user_info->id) }}">
+                    <button
+                        class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">5</button>
+                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background Information</div>
+                </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                <button
-                    class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400"
-                    disabled>6</button>
-                <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Review</div>
+                <button class="w-10 h-10 rounded-full btn btn-primary">6</button>
+                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Review</div>
             </div>
         </div>
         <div class="intro-y box lg:mt-5">
@@ -195,7 +196,7 @@
                                                     <option value="{{ $old_division->id }}" selected="true">
                                                         {{ $old_division->division }} </option>
                                                 @else
-                                                    <option value="Select Division" selected="true" disabled> Select
+                                                    <option value="Select Division" selected="true"> Select
                                                         Division</option>
                                                 @endif
                                             @endif
@@ -211,7 +212,7 @@
                                             id="update-profile-form-3-ts-label">District</label>
                                         <select id="district-filter" name="district" data-search="true"
                                             class="w-full form-control" tabindex="-1"
-                                            onchange="loadLocales( {{ $locales_json }} )" disabled>
+                                            onchange="loadLocales( {{ $locales_json }} )">
                                             @if ($old_input)
                                                 @php
                                                     $old_input_district = $districts->find($old_input->district);
@@ -311,6 +312,7 @@
                                         placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input->address ?? null) }}</textarea>
                                 </div>
                             </div>
+
                             {{-- Step 2 --}}
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -379,6 +381,7 @@
                                                 class="btn btn-outline-primary">Add Row</button></td>
                                     </tr>
                                 </table>
+
                                 {{-- Step 3 --}}
                                 <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                 @if ($errors->any())
@@ -489,12 +492,6 @@
                                         </div>
                                     </div>
                                     {{-- Step 4 --}}
-                                    @php
-                                        use App\Models\TempClientProfile;
-                                        
-                                        $tempCP = TempClientProfile::all();
-                                        $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
-                                    @endphp
                                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                     <table class="table table-bordered" id="dynamicAddRemoveOperation">
                                         <tr>
@@ -511,28 +508,22 @@
                                                 <input id="contact-person1-number" name="contactPerson1Number"
                                                     type="text" class="form-control" placeholder="09123456789"
                                                     value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
-                                </div>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input id="contact-person2" name="contactPerson2" type="text"
-                                            class="form-control" placeholder="Name"
-                                            value="{{ old('contactPerson2', $old_input->contact_person2_name ?? null) }}">
-                                    </td>
-                                    <td>
-                                        <input id="contact-person2-number" name="contactPerson2Number" type="text"
-                                            class="form-control" placeholder="09223456789"
-                                            value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
-                            </div>
-                            </tr>
-                            </table>
+                                            <td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input id="contact-person2" name="contactPerson2" type="text"
+                                                    class="form-control" placeholder="Name"
+                                                    value="{{ old('contactPerson2', $old_input->contact_person2_name ?? null) }}">
+                                            </td>
+                                            <td>
+                                                <input id="contact-person2-number" name="contactPerson2Number" type="text"
+                                                    class="form-control" placeholder="09223456789"
+                                                    value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
+                                            <td>
+                                        </tr>
+                                    </table>
                             {{-- Step 5 --}}
-                            @php
-                                use App\Models\TempClientProfile;
-                                
-                                $tempCP = TempClientProfile::all();
-                                $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
-                            @endphp
                             <div class="mt-3">
                                 <label for="update-profile-form-5" class="font-medium text-base form-label">Background
                                     Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
