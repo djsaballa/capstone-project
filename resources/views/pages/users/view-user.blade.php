@@ -104,7 +104,7 @@
                                     @if ( !empty($employee_info->picture) )
                                     <img src="{{ asset('storage/'.$employee_info->picture) }}" alt="User Image">
                                     @else
-                                        <img class="rounded-md" atl="ADDFII"
+                                        <img class="rounded-md" alt="ADDFII"
                                         src="{{ asset('dist/images/profile-1.jpg') }}">
                                     @endif
                                 </div>

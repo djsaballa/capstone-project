@@ -71,39 +71,44 @@
             <form method="POST" action="{{ route('add_client_profile_4_next') }}">
                 @csrf
                 @php
-                    $old_input = session('client_profile_add');
+                    use App\Models\TempClientProfile;
+
+                    $tempCP = TempClientProfile::all();
+                    $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
                 @endphp
                 <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                    <div class="mt-3 col-span-3 2xl:col-span-1">
-                        <label for="update-profile-form-1" class="form-label">Name</label>
-                        <input id="contact-person1" name="contactPerson1" type="text" class="form-control" placeholder="Full Name"
-                            value="{{ old('contactPerson1', $old_input['contact_person1_name'] ?? null) }}">
-                    </div>
-                    <div class="mt-3 col-span-3 2xl:col-span-1">
-                        <label for="update-profile-form-1" class="form-label">Contact Number</label>
-                        <input id="contact-person1-number" name="contactPerson1Number" type="text" class="form-control" placeholder="09123456789"
-                            value="{{ old('contactPerson2', $old_input['contact_person2_contact_number'] ?? null) }}">
-                    </div>
+                <table class="table table-bordered" id="dynamicAddRemoveOperation">
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Contact Number</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="contact-person1" name="contactPerson1" type="text" class="form-control" placeholder="Name"
+                                value="{{ old('contactPerson1', $old_input->contact_person1_name ?? null) }}">
+                        </td>
+                        <td>
+                            <input id="contact-person1-number" name="contactPerson1Number" type="text" class="form-control" placeholder="09123456789"
+                                value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
+                        </div>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="contact-person2" name="contactPerson2" type="text" class="form-control" placeholder="Name"
+                                value="{{ old('contactPerson2', $old_input->contact_person2_name ?? null) }}">
+                        </td>
+                        <td>
+                            <input id="contact-person2-number" name="contactPerson2Number" type="text" class="form-control" placeholder="09223456789"
+                                value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
+                        </div>
+                    </tr>
+                </table>
+                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                    <a href="{{ route('add_client_profile_3', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
+                    <button class="btn btn-primary w-24 ml-2">Next</button>
                 </div>
-                <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                    <div class="mt-3 col-span-3 2xl:col-span-1">
-                        <label for="update-profile-form-1" class="form-label">Name</label>
-                        <input id="contact-person2" name="contactPerson2" type="text" class="form-control" placeholder="Full Name"
-                            value="{{ old('contactPerson2', $old_input['contact_person2_name'] ?? null) }}">
-                    </div>
-                    <div class="mt-3 col-span-3 2xl:col-span-1">
-                        <label for="update-profile-form-1" class="form-label">Contact Number</label>
-                        <input id="contact-person2-number" name="contactPerson2Number" type="text" class="form-control" placeholder="09123456789"
-                            value="{{ old('contactPerson2', $old_input['contact_person2_contact_number'] ?? null) }}">
-                    </div>
-                    <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                        <a href="{{ route('add_client_profile_3', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
-                        <button class="btn btn-primary w-24 ml-2">Next</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
         <!-- END: Wizard Layout -->
     </div>
     <!-- END: Content -->

@@ -15,7 +15,7 @@
                 <div class="notification-content__title">Notifications</div>
                 <div class="cursor-pointer relative flex items-center ">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img atl="ADDFII" class="rounded-full"
+                        <img alt="ADDFII" class="rounded-full"
                             src="{{ asset('dist/images/profile-1.jpg') }}">
                         <div
                             class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img atl="ADDFII" class="rounded-full"
+                        <img alt="ADDFII" class="rounded-full"
                             src="{{ asset('dist/images/profile-1.jpg') }}">
                         <div
                             class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img atl="ADDFII" class="rounded-full"
+                        <img alt="ADDFII" class="rounded-full"
                             src="{{ asset('dist/images/profile-1.jpg') }}">
                         <div
                             class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
@@ -69,7 +69,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img atl="ADDFII" class="rounded-full"
+                        <img alt="ADDFII" class="rounded-full"
                             src="{{ asset('dist/images/profile-1.jpg') }}">
                         <div
                             class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="cursor-pointer relative flex items-center mt-5">
                     <div class="w-12 h-12 flex-none image-fit mr-1">
-                        <img atl="ADDFII" class="rounded-full"
+                        <img alt="ADDFII" class="rounded-full"
                             src="{{ asset('dist/images/profile-1.jpg')}}">
                         <div
                             class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
@@ -111,7 +111,7 @@
     <div class="intro-x dropdown w-8 h-8">
         <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in" role="button"
             aria-expanded="false" data-tw-toggle="dropdown">
-            <img atl="ADDFII" src="{{ asset('dist/images/profile-1.jpg')}}">
+            <img alt="ADDFII" src="{{ asset('dist/images/profile-1.jpg')}}">
         </div>
         <div class="dropdown-menu w-56">
             <ul class="dropdown-content bg-primary text-white">

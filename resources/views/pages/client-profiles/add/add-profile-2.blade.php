@@ -92,19 +92,23 @@
                         <th>Contact Number</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="addMoreInputFields[0][name]" placeholder="Name"
+                        <td><input type="text" name="famComp[0][name]" placeholder="Name"
                                 class="form-control" />
                         </td>
-                        <td><select id="update-profile-form-3" name="addMoreInputFields[0][relationship]" data-search="true"
-                                class="w-full form-control" tabindex="-1">
+                        <td>
+                            <select id="relationship" name="famComp[0][relationship]" data-search="true"
+                                class="w-full form-control" tabindex="-1" onchange="relationshipOther(event)">
                                 <option value="" selected="true" disabled>Select Relationship</option>
                                 <option value="Father">Father</option>
                                 <option value="Mother">Mother</option>
                                 <option value="Brother">Brother</option>
                                 <option value="Sister">Sister</option>
+                                <option value="Son">Son</option>
+                                <option value="Daughter">Daughter</option>
+                                <option value="Other">Other</option>
                             </select>
                         </td>
-                        <td><select id="update-profile-form-3" name="addMoreInputFields[0][educational]" data-search="true"
+                        <td><select id="update-profile-form-3" name="famComp[0][educational]" data-search="true"
                                 class="w-full form-control" tabindex="-1">
                                 <option value="Select Educational Attainment" selected="true" disabled>Select Educational
                                     Attainment</option>
@@ -113,9 +117,9 @@
                                 <option value="Elementary Graduate">Elementary Graduate</option>
                             </select>
                         </td>
-                        <td><input id="input-wizard-5" name="addMoreInputFields[0][occupation]" type="text"
+                        <td><input id="input-wizard-5" name="famComp[0][occupation]" type="text"
                                 class="form-control" placeholder="Occupation"></td>
-                        <td><input id="input-wizard-5" name="addMoreInputFields[0][contact]" type="text"
+                        <td><input id="input-wizard-5" name="famComp[0][contact]" type="text"
                                 class="form-control" placeholder="09123456789"></td>
                         <td><button type="button" name="add" id="dynamic-ar"
                                 class="btn btn-outline-primary">Add Row</button></td>
@@ -131,8 +135,8 @@
     </div>
     <!-- END: Wizard Layout -->
     <script type="text/javascript">
-        var i = 0;
         $("#dynamic-ar").click(function() {
+            var i = 0;
             ++i;
             var table = document.getElementById('dynamicAddRemove');
             var row = table.insertRow(-1);
@@ -142,11 +146,11 @@
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
-            cell1.innerHTML = '<input type="text" name="addMoreInputFields[' + i + '][name]" placeholder="Name" class="form-control" />';
-            cell2.innerHTML = '<select name="addMoreInputFields[' + i + '][relationship]" class="w-full form-control"><option value="" selected="true" disabled>Select Relationship</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>';
-            cell3.innerHTML = '<select name="addMoreInputFields[' + i + '][educational]" class="w-full form-control"><option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option><option value="College Graduate">College Graduate</option><option value="High School Graduate">High School Graduate</option><option value="Elementary Graduate">Elementary Graduate</option></select>';
-            cell4.innerHTML = '<input type="text" name="addMoreInputFields[' + i + '][occupation]" placeholder="Occupation" class="form-control" />';
-            cell5.innerHTML = '<input name="addMoreInputFields[' + i + '][contact]" type="text" class="form-control" placeholder="09123456789">';
+            cell1.innerHTML = '<input type="text" name="famComp[' + i + '][name]" placeholder="Name" class="form-control" />';
+            cell2.innerHTML = '<select name="famComp[' + i + '][relationship]" class="w-full form-control"><option value="" selected="true" disabled>Select Relationship</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>';
+            cell3.innerHTML = '<select name="famComp[' + i + '][educational]" class="w-full form-control"><option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option><option value="College Graduate">College Graduate</option><option value="High School Graduate">High School Graduate</option><option value="Elementary Graduate">Elementary Graduate</option></select>';
+            cell4.innerHTML = '<input type="text" name="famComp[' + i + '][occupation]" placeholder="Occupation" class="form-control" />';
+            cell5.innerHTML = '<input name="famComp[' + i + '][contact]" type="text" class="form-control" placeholder="09123456789">';
             cell6.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
         });
     

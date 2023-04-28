@@ -13,6 +13,7 @@ use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
 use App\Models\History;
+use App\Models\TempClientProfile;
 use Carbon\Carbon;
 
 class ClientController extends Controller
@@ -100,7 +101,7 @@ class ClientController extends Controller
     public function addProfilePrivacy($user_id)
     {
         $user_info = User::find($user_id);
-        session()->forget('client_profile_add');
+        session()->forget('family_comp');
 
         return view('pages.client-profiles.add.add-profile-privacy', compact('user_info'));
     }
@@ -136,10 +137,13 @@ class ClientController extends Controller
         ]);
 
         $file = $request->file('picture');
+        $fileBackup = $request->pictureBackup;
 
         if ($file) {
             $filename = $file->store('public');
             $picture = basename($filename);
+        } elseif ($fileBackup) {
+            $picture = $fileBackup;
         } else {
             $picture = null;
         }
@@ -178,11 +182,17 @@ class ClientController extends Controller
             'user_encoder_id' => $request->userId,
         ];
 
-        session(['client_profile_add' => $client_profile_add]);
-
+        $create = TempClientProfile::create($client_profile_add);
         $user_id = $request->userId;
 
-        return redirect()->route('add_client_profile_2', $user_id);
+        if ($create) {
+            return redirect()->route('add_client_profile_2', $user_id);
+        } else {
+            $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+            return redirect()->route('list_of_profiles', $user_id);
+        }
+
+
     }
 
     public function addProfile2($user_id)
@@ -194,6 +204,28 @@ class ClientController extends Controller
 
     public function addProfile2Next(Request $request)
     {
+        $request->validate(
+            [
+                'famComp.*.name' => 'required',
+                'famComp.*.relationship' => 'required',
+                'famComp.*.educational' => 'required',
+                'famComp.*.occupation' => 'required',
+                'famComp.*.contact' => 'required'
+            ],
+            [
+                'famComp.*.name.required' => 'Name is required',
+                'famComp.*.relationship.required' => 'Relationship is required',
+                'famComp.*.educational.required' => 'Educational Attainment is required',
+                'famComp.*.occupation.required' => 'Occupation is required',
+                'famComp.*.contact.required' => 'Contact Number is required',
+            ]
+        );
+
+        foreach ($request->famComp as $key => $value) {
+            $family_comp[] = $value;
+        }
+
+        session(['family_comp' => $family_comp]);
         $user_id = $request->userId;
 
         return redirect()->route('add_client_profile_3', $user_id);
@@ -202,8 +234,52 @@ class ClientController extends Controller
     public function addProfile3($user_id)
     {
         $user_info = User::find($user_id);
+        $diseases = Disease::all();
 
-        return view('pages.client-profiles.add.add-profile-3', compact('user_info'));
+        return view('pages.client-profiles.add.add-profile-3', compact('user_info', 'diseases'));
+    }
+
+    public function addProfile3Next(Request $request)
+    {
+        $request->validate(
+            [
+                'medicalCondition.*.disease' => 'required',
+                'medicalCondition.*.medicine' => 'required',
+                'medicalCondition.*.dosage' => 'required',
+                'medicalCondition.*.frequency' => 'required',
+                'medicalCondition.*.doctor' => 'required',
+                'medicalCondition.*.hospital' => 'required',
+                'medicalOperation.*.operation' => 'nullable',
+                'medicalOperation.*.date' => 'nullable',
+                'philhealth' => 'required',
+                'healthCard' => 'required',
+            ],
+            [
+                'medicalCondition.*.disease.required' => 'Illness/Disease is required',
+                'medicalCondition.*.medicine.required' => 'Medicine/Supplement is required',
+                'medicalCondition.*.dosage.required' => 'Dosage is required',
+                'medicalCondition.*.frequency.required' => 'Frequency is required',
+                'medicalCondition.*.doctor.required' => 'Doctor is required',
+                'medicalCondition.*.hospital.required' => 'Hospital is required',
+                'philhealth.required' => 'Philhealth must be filled out',
+                'healthCard.required' => 'Health Card must be filled out',
+            ]
+        );
+
+        foreach ($request->medicalCondition as $key => $value) {
+            $medical_con[] = $value;
+        }
+        
+        foreach ($request->medicalOperation as $key => $value) {
+            $medical_op[] = $value;
+        }
+
+        session(['medical_con' => $medical_con]);
+        session(['medical_op' => $medical_op]);
+
+        $user_id = $request->userId;
+
+        return redirect()->route('add_client_profile_4', $user_id);
     }
 
     public function addProfile4($user_id)
@@ -230,7 +306,7 @@ class ClientController extends Controller
             ]
         );
 
-        $new_add =
+        $tempCP =
         [
             'contact_person1_name' => $request->contactPerson1,
             'contact_person1_contact_number' => $request->contactPerson1Number,
@@ -238,14 +314,18 @@ class ClientController extends Controller
             'contact_person2_contact_number' => $request->contactPerson2Number,
         ];
 
-        $client_profile_add = session('client_profile_add');
-        $client_profile_add += $new_add;
-        session()->put('client_profile_add', $client_profile_add);
-
         $user_id = $request->userId;
-        $user_info = User::find($user_id);
 
-        return redirect()->route('add_client_profile_5', $user_id);
+        $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
+        $update = $tempCP_info->update($tempCP);
+
+        if ($update) {
+            return redirect()->route('add_client_profile_5', $user_id);
+        } else {
+            $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+            return redirect()->route('list_of_profiles', $user_id);
+        }
+
     }
 
     public function addProfile5($user_id)
@@ -259,22 +339,55 @@ class ClientController extends Controller
     {
         $request->validate([
             'backgroundInfo' => 'required',
+            'backgroundInfoAttachment' => 'nullable',
             'actionTaken' => 'required',
+            'actionTakenAttachment' => 'nullable',
         ]);
 
-        $new_add =
+        $backgroundInfoAttachment = $request->file('backgroundInfoAttachment');
+        $backgroundInfoAttachmentBackUp = $request->backgroundInfoAttachmentBackUp;
+
+        if ($backgroundInfoAttachment) {
+            $filename = $backgroundInfoAttachment->store('public');
+            $background_info_attachment = basename($filename);
+        } elseif ($backgroundInfoAttachmentBackUp) {
+            $background_info_attachment = $backgroundInfoAttachmentBackUp;
+        } else {
+            $background_info_attachment = null;
+        }
+
+        $actionTakenAttachment = $request->file('actionTakenAttachment');
+        $actionTakenAttachmentBackUp = $request->actionTakenAttachmentBackUp;
+
+        if ($actionTakenAttachment) {
+            $filename = $actionTakenAttachment->store('public');
+            $action_taken_attachment = basename($filename);
+        } elseif ($actionTakenAttachmentBackUp) {
+            $action_taken_attachment = $actionTakenAttachmentBackUp;
+        } else {
+            $action_taken_attachment = null;
+        }
+
+        $tempCP =
         [
             'background_info' => $request->backgroundInfo,
+            'background_info_attachment' => $background_info_attachment,
             'action_taken' => $request->actionTaken,
+            'action_taken_attachment' => $action_taken_attachment,
         ];
-
-        $client_profile_add = session('client_profile_add');
-        $client_profile_add += $new_add;
-        session()->put('client_profile_add', $client_profile_add);
-        
+       
         $user_id = $request->userId;
 
-        return redirect()->route('add_client_profile_6', $user_id);
+        $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
+        $update = $tempCP_info->update($tempCP);
+
+        if ($update) {
+            return redirect()->route('add_client_profile_6', $user_id);
+        } else {
+            $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+            return redirect()->route('list_of_profiles', $user_id);
+        }
+        
     }
 
     public function addProfile6($user_id)

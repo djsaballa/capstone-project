@@ -75,7 +75,10 @@
                 <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
                     @csrf
                     @php
-                        $old_input = session('client_profile_add');
+                        use App\Models\TempClientProfile;
+
+                        $tempCP = TempClientProfile::all();
+                        $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
                     @endphp
                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -85,27 +88,27 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">First Name</label>
                                         <input id="first-name" name="firstName" type="text" class="form-control"
-                                            placeholder="First Name" value="{{ old('firstName', $old_input['first_name'] ?? null) }}">
+                                            placeholder="First Name" value="{{ old('firstName', $old_input->first_name ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Middle Name</label>
                                         <input iid="middle-name" name="middleName" type="text" class="form-control"
-                                            placeholder="Middle Name" value="{{ old('middleName', $old_input['middle_name'] ?? null) }}">
+                                            placeholder="Middle Name" value="{{ old('middleName', $old_input->middle_name ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-1" class="form-label">Last Name</label>
                                         <input id="last-name" name="lastName" type="text" class="form-control"
-                                            placeholder="Last Name" value="{{ old('lastName', $old_input['last_name'] ?? null) }}">
+                                            placeholder="Last Name" value="{{ old('lastName', $old_input->last_name ?? null) }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Birthdate</label>
-                                        <input id="birth-date" name="birthDate" value="{{ old('birthDate', $old_input['birth_date'] ?? null)}}" class="form-control" type="date" />
+                                        <input id="birth-date" name="birthDate" value="{{ old('birthDate', $old_input->birth_date ?? null)}}" class="form-control" type="date" />
                                         <span id="startDateSelected"></span>
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-4" class="form-label">Phone Number</label>
                                         <input id="contact-number" name="contactNumber" type="text" class="form-control"
-                                            placeholder="09123456789" value="{{ old('contactNumber', $old_input['contact_number'] ?? null) }}">
+                                            placeholder="09123456789" value="{{ old('contactNumber', $old_input->contact_number ?? null) }}">
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
@@ -115,11 +118,11 @@
                                         <select id="gender" name="gender" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
                                             @if ($old_input)
-                                                @if ($old_input['gender'] == "Male")
-                                                    <option value="{{ $old_input['gender'] }}">{{ $old_input['gender'] }}</option>
+                                                @if ($old_input->gender == "Male")
+                                                    <option value="{{ $old_input->gender }}">{{ $old_input->gender }}</option>
                                                     <option value="Female">Female</option>
                                                 @else
-                                                    <option value="{{ $old_input['gender'] }}" selected="true">{{ $old_input['gender'] }}</option>
+                                                    <option value="{{ $old_input->gender }}" selected="true">{{ $old_input->gender }}</option>
                                                     <option value="Male" selected="true">Male</option>
                                                 @endif
                                             @else
@@ -131,23 +134,23 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Height (cm)</label>
                                         <input id="height" name="height" type="number" class="form-control"
-                                            placeholder="Height" value="{{ old('height', $old_input['height'] ?? null) }}">
+                                            placeholder="Height" value="{{ old('height', $old_input->height ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Weight (kg)</label>
                                         <input id="weight" name="weight" type="number" class="form-control"
-                                            placeholder="Weight" value="{{ old('weight', $old_input['weight'] ?? null) }}">
+                                            placeholder="Weight" value="{{ old('weight', $old_input->weight ?? null) }}">
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label">Age</label>
                                         <input id="age" name="age" type="number" class="form-control"
-                                            placeholder="Age" value="{{ old('age', $old_input['age'] ?? null) }}">
+                                            placeholder="Age" value="{{ old('age', $old_input->age ?? null) }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Occupation</label>
                                         <input id="occupation" name="occupation" type="text" class="form-control"
-                                            placeholder="Occupation" value="{{ old('occupation', $old_input['occupation'] ?? null) }}">
+                                            placeholder="Occupation" value="{{ old('occupation', $old_input->occupation ?? null) }}">
                                     </div>
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
@@ -168,7 +171,7 @@
                                             class="w-full form-control" tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
                                             @if ($old_input)
                                                 @php
-                                                    $old_input_division = $divisions->find( $old_input['division'] );
+                                                    $old_input_division = $divisions->find( $old_input->division );
                                                 @endphp
                                                 <option value="{{ $old_input_division->id }}" selected="true"> {{ $old_input_division->division }} </option>
                                             @else
@@ -195,7 +198,7 @@
                                             class="w-full form-control" tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled>
                                             @if ($old_input)
                                                 @php
-                                                    $old_input_district = $districts->find( $old_input['district'] );
+                                                    $old_input_district = $districts->find( $old_input->district );
                                                 @endphp
                                                 <option value="{{ $old_input_district->id }}" selected="true"> {{ $old_input_district->district }} </option>
                                             @else
@@ -223,7 +226,7 @@
                                             class="w-full form-control" tabindex="-1" disabled>
                                             @if ($old_input)
                                                 @php
-                                                    $old_input_locale = $locales->find( $old_input['locale'] );
+                                                    $old_input_locale = $locales->find( $old_input->locale );
                                                 @endphp
                                                 <option value="{{ $old_input_locale->id }}" selected="true"> {{ $old_input_locale->locale }} </option>
                                             @else
@@ -245,7 +248,7 @@
                                     </div>
                                     <div class="mt-3">
                                         <label for="startDate">Baptism Date</label>
-                                        <input id="baptism-date" name="baptismDate" value="{{ old('baptismDate', $old_input['baptism_date'] ?? null) }}" class="form-control" type="date" />
+                                        <input id="baptism-date" name="baptismDate" value="{{ old('baptismDate', $old_input->baptism_date ?? null) }}" class="form-control" type="date" />
                                         <span id="startDateSelected"></span>
                                     </div>
                                 </div>
@@ -253,13 +256,22 @@
                                     <div
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                            <img class="rounded-md" alt="Client Image" id="placeholder"
+                                            @if ($old_input)
+                                                @php
+                                                    $picture = $old_input->picture;
+                                                @endphp
+                                                <img class="rounded-md" alt="Client Image" id="placeholder"
+                                                src="{{ asset('storage/'.$picture) }}">
+                                            @else
+                                                <img class="rounded-md" alt="Client Image" id="placeholder"
                                                 src="{{ asset('dist/images/profile-1.jpg') }}">
+                                            @endif
                                             <img id="preview" src="#" alt="Client Image" class="rounded-md" style="display:none;">
                                         </div>
                                         <div class="mx-auto cursor-pointer relative mt-5">
                                             <button type="button" class="btn btn-primary w-full">Change Photo</button>
                                             <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
+                                            <input type="hidden" name="pictureBackup" value="{{ $old_input ? $old_input->picture : null }}">
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +279,7 @@
                             <div class="col-span-12">
                                 <div class="mt-3">
                                     <label for="update-profile-form-5" class="form-label">Address</label>
-                                    <textarea id="address" name="address" class="form-control" placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input['address'] ?? null) }}</textarea>
+                                    <textarea id="address" name="address" class="form-control" placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input->address ?? null) }}</textarea>
                                 </div>
                             </div>
                             <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">

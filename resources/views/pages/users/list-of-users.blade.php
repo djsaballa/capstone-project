@@ -12,10 +12,10 @@
             </ul>
         </div>
     @endif
-    @if (Session::has('status!'))
+    @if (Session::has('error!'))
         <div class="mt-10" style="color: green;">
             <ul>
-                <li>{{ Session::get('status') }}</li>
+                <li>{{ Session::get('error') }}</li>
             </ul>
         </div>
     @endif

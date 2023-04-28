@@ -28,6 +28,7 @@ Route::controller(ClientController::class)->group(function () {
   Route::get('/add-profile-2/{user_id}', 'addProfile2')->name('add_client_profile_2');
   Route::post('/add-profile-2-next', 'addProfile2Next')->name('add_client_profile_2_next');
   Route::get('/add-profile-3/{user_id}', 'addProfile3')->name('add_client_profile_3');
+  Route::post('/add-profile-3-next', 'addProfile3Next')->name('add_client_profile_3_next');
   Route::get('/add-profile-4/{user_id}', 'addProfile4')->name('add_client_profile_4');
   Route::post('/add-profile-4-next', 'addProfile4Next')->name('add_client_profile_4_next');
   Route::get('/add-profile-5/{user_id}', 'addProfile5')->name('add_client_profile_5');

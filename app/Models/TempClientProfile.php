@@ -12,19 +12,9 @@ use App\Models\User;
 use App\Models\Locale;
 use Carbon\Carbon;
 
-class ClientProfile extends Model
+class TempClientProfile extends Model
 {
     use HasFactory;
-
-    public static function newClientProfile($data)
-    {
-        $client_profile = new static;
-        $client_profile->fill($data);
-        if ($client_profile->save()) {
-            return $client_profile;
-        }
-        return false;
-    }
 
     protected $fillable = [
         "picture",
@@ -37,9 +27,12 @@ class ClientProfile extends Model
         "contact_number",
         "age",
         "birth_date",
-        "occupation",
         "height",
         "weight",
+        "occupation",
+        "division",
+        "district",
+        "locale",
         "baptism_date",
         "philhealth_member",
         "health_card",
@@ -57,28 +50,7 @@ class ClientProfile extends Model
         "social_worker_recommendation",
         "status",
         "user_encoder_id",
-        "locale_id"
     ];
-
-    public function familyCompositions()
-    {
-        return $this->hasMany(FamilyComposition::class);
-    }
-
-    public function medicalConditions()
-    {
-        return $this->hasMany(MedicalCondition::class);
-    }
-
-    public function progressReports()
-    {
-        return $this->hasMany(ProgressReport::class);
-    }
-
-    public function histories()
-    {
-        return $this->hasMany(History::class);
-    }
 
     public function user()
     {

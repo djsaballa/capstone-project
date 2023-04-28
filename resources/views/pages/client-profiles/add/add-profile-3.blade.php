@@ -61,105 +61,155 @@
         </div>
 
     </div>
-    <form method="GET" action="{{ route('add_client_profile_4', $user_info->id) }}">
+    <form method="POST" action="{{ route('add_client_profile_3_next') }}">
         @csrf
+        <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+
+                </ul>
+            </div>
+        @endif
+        @if (Session::has('success'))
+            <div class="alert alert-success text-center">
+
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+
+                <p>{{ Session::get('success') }}</p>
+
+            </div>
+        @endif
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <div class="font-medium text-base">Medical Condition</div>
-            <div class="grid grid-cols-10 gap-4 gap-y-5 mt-5">
-                <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label" id="update-profile-form-3-ts-label">
-                        Ano Sakit?
-                    </label>
-                    <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
-                        tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true">Option</option>
-                        <option value="2">Option 1</option>
-                        <option value="3">Option 2</option>
-                        <option value="2">Option 3</option>
-                        <option value="3">Option 4</option>
-                    </select>
-                </div>
-                <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label" id="update-profile-form-3-ts-label">
-                        Gamot na Iniinom?
-                    </label>
-                    <input id="input-wizard-1" type="text" class="form-control" placeholder="Name of Medicine">
-                </div>
-                <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label"
-                        id="update-profile-form-3-ts-label">Dosage
-                    </label>
-                    <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
-                        tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true"></option>
-                        <option value="2">10 mg</option>
-                        <option value="3">100 mg</option>
-                        <option value="3">500 mg</option>
+            <table class="table table-bordered" id="dynamicAddRemoveMedCon">
+                <tr>
+                    <th>Illness or Disease</th>
+                    <th>Medicine or Supplements</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Doctor</th>
+                    <th>Hospital</th>
+                </tr>
+                <tr>
+                    <td><select id="disease" name="medicalCondition[0][disease]" data-search="true"
+                        class="w-full form-control" tabindex="-1">
+                            <option value="" selected="true" disabled>Select Illness/Disease</option>
+                            @foreach ($diseases as $disease)
+                                <option value="{{ $disease->id }}">{{ $disease->disease }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="text" name="medicalCondition[0][medicine]" placeholder="Medicine/Supplement Name"
+                            class="form-control" />
+                    </td>
+                    <td><input type="text" name="medicalCondition[0][dosage]" placeholder="Dosage"
+                            class="form-control" />
+                    </td>
+                    <td><input id="input-wizard-5" name="medicalCondition[0][frequency]" type="text"
+                    class="form-control" placeholder="Frequency">
+                    </td>
+                    <td><input type="text" name="medicalCondition[0][doctor]" placeholder="Doctor"
+                            class="form-control" />
+                    </td>
+                    <td><input type="text" name="medicalCondition[0][hospital]" placeholder="Hospital"
+                            class="form-control" />
+                    </td>
+                    <td><button type="button" name="add" id="dynamic-ar-med-con"
+                            class="btn btn-outline-primary">Add Row</button></td>
+                </tr>
+            </table>
 
-                    </select>
-                </div>
-                <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label"
-                        id="update-profile-form-3-ts-label">Occupation</label>
-                    <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
-                        tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true">None</option>
-                        <option value="2">None</option>
-                        <option value="3">Vendor</option>
-
-                    </select>
-                </div>
-                <div class="intro-y flex items-center justify-center sm:justify-end mt-5 col-span-2 2xl:col-span-1">
-                    <button class="btn btn-primary w-50 ml-2">Add Response</button>
+            <div class="mt-10 font-medium text-base">Operations</div>
+            <table class="table table-bordered" id="dynamicAddRemoveOperation">
+                <tr>
+                    <th>Operation</th>
+                    <th>Date</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="medicalOperation[0][operation]" placeholder="Operation"
+                            class="form-control" />
+                    </td>
+                    <td><input type="date" name="medicalOperation[0][date]"
+                            class="form-control" />
+                    </td>
+                    <td><button type="button" name="add" id="dynamic-ar-operation"
+                            class="btn btn-outline-primary">Add Row</button></td>
+                </tr>
+            </table>
+            
+            <div class="flex flex-col-reverse xl:flex-row flex-col">
+                <div class="flex-1 mt-6 xl:mt-0">
+                    <div class="grid grid-cols-12 gap-x-5">
+                        <div class="col-span-6 2xl:col-span-3">
+                            <div class="mt-10 font-medium text-base">
+                                <label for="update-profile-form-1" class="form-label">Do you have a Phil-health Card?</label>
+                                <select id="philhealth" name="philhealth" data-search="true"
+                                    class="w-full form-control" tabindex="-1">
+                                    <option value="Yes" selected>Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-span-6 2xl:col-span-3">
+                            <div class="mt-10 font-medium text-base">
+                                <label for="update-profile-form-1" class="form-label">Do you have other health cards?</label>
+                                <input id="health-card" name="healthCard" type="text" class="form-control"
+                                    placeholder=" If yes, please specify. If no, write 'No'" value="{{ old('healthCard', $old_input->health_card ?? null) }}">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="grid grid-cols-10 gap-4 gap-y-5 mt-5">
-                <div class="col-span-2 2xl:col-span-1">
-                    <label for="update-profile-form-3-tomselected" class="form-label"
-                        id="update-profile-form-3-ts-label">Mga
-                        naging Operasyon?</label>
-                    <select id="update-profile-form-3" data-search="true" class="tom-select w-full tomselected"
-                        tabindex="-1" hidden="hidden">
-                        <option value="1" selected="true">Option</option>
-                        <option value="2">Option 1</option>
-                        <option value="3">Option 2</option>
-                        <option value="2">Option 3</option>
-                        <option value="3">Option 4</option>
-                    </select>
-                </div>
-                <div class="col-span-2 2xl:col-span-1 mt-3">
-                    <label for="startDate">Petsa ng Operation</label>
-                    <input id="startDate" class="form-control" type="date" />
-                    <span id="startDateSelected"></span>
-                </div>
-                <div class="intro-y flex items-center justify-center sm:justify-end mt-5 col-span-2 2xl:col-span-1">
-                    <button class="btn btn-primary w-50 ml-2">Add Response</button>
-                </div>
-            </div>
-            <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                <div class="mt-3 col-span-3 2xl:col-span-1">
-                    <label for="update-profile-form-1" class="form-label">Hospital</label>
-                    <input id="update-profile-form-1" type="text" class="form-control" placeholder="Hospital"
-                        value="Hospital">
-                </div>
-                <div class="mt-3  col-span-3 2xl:col-span-1">
-                    <label for="update-profile-form-1" class="form-label">Doctor</label>
-                    <input id="update-profile-form-1" type="text" class="form-control" placeholder="Doctor"
-                        value="Doctor">
-                </div>
-                <div class="mt-3 col-span-3 2xl:col-span-1">
-                    <label for="update-profile-form-1" class="form-label">Do you have Phil-health Card? Please
-                        Specify</label>
-                    <input id="update-profile-form-1" type="text" class="form-control" placeholder="Input here"
-                        value="Phil-health Card">
-                </div>
-                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                    <a href="{{ route('add_client_profile_2', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
-                    <button class="btn btn-primary w-24 ml-2">Next</button>
-                </div>
+            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                <a href="{{ route('add_client_profile_1', $user_info->id) }}"
+                    class="btn btn-secondary w-24">Previous</a>
+                <button class="btn btn-primary w-24 ml-2">Next</button>
             </div>
         </div>
     </form>
     <!-- END: Wizard Layout -->
     </div>
+    <script type="text/javascript">
+        $("#dynamic-ar-med-con").click(function() {
+            var j = 0;
+            ++j;
+            var table = document.getElementById('dynamicAddRemoveMedCon');
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            cell1.innerHTML = '<select id="disease" name="medicalCondition[' + j + '][disease]" data-search="true" class="w-full form-control" tabindex="-1"> <option value="" selected="true" disabled>Select Illness/Disease</option> @foreach ($diseases as $disease) <option value="{{ $disease->id }}">{{ $disease->disease }}</option> @endforeach </select>';
+            cell2.innerHTML = '<input type="text" name="medicalCondition[' + j + '][medicine]" placeholder="Medicine/Supplement Name" class="form-control" />';
+            cell3.innerHTML = '<input type="text" name="medicalCondition[' + j + '][dosage]" placeholder="Dosage" class="form-control" />';
+            cell4.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][frequency]" type="text" class="form-control" placeholder="Frequency"></td>';
+            cell5.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][doctor]" type="text" class="form-control" placeholder="Doctor"></td>';
+            cell6.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][hospital]" type="text" class="form-control" placeholder="Hospital"></td>';
+            cell7.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
+        });
+
+        $("#dynamic-ar-operation").click(function() {
+            var k = 0;
+            ++k;
+            var table = document.getElementById('dynamicAddRemoveOperation');
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = '<input type="text" name="medicalOperation[' + k + '][operation]" placeholder="Operation" class="form-control"/>';
+            cell2.innerHTML = '<input type="date" name="medicalOperation['+ k +'][date]" class="form-control" />';
+            cell3.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
+        });
+    
+        $(document).on('click', '.remove-input-field', function() {
+            $(this).closest('tr').remove();
+        });
+    </script>
 @endsection
