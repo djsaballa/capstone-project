@@ -14,7 +14,7 @@ import Dropzone from "dropzone";
         };
 
         if ($(this).data("single")) {
-            options.maxFiles = 1;
+            options.maxFiles = 5;
         }
 
         if ($(this).data("file-types")) {

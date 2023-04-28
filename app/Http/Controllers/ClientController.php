@@ -345,38 +345,48 @@ class ClientController extends Controller
             'actionTakenAttachment' => 'nullable',
         ]);
 
-        $backgroundInfoAttachment = $request->file('backgroundInfoAttachment');
+        $backgroundInfoAttachments = $request->file('backgroundInfoAttachments');
         $backgroundInfoAttachmentBackUp = $request->backgroundInfoAttachmentBackUp;
 
-        if ($backgroundInfoAttachment) {
-            $filename = $backgroundInfoAttachment->store('public');
-            $background_info_attachment = basename($filename);
+        if ($backgroundInfoAttachments) {
+            $background_info_attachments = []; 
+
+            foreach ($backgroundInfoAttachments as $backgroundInfoAttachment) {
+                $filename = $backgroundInfoAttachment->store('public');
+                $background_info_attachment = basename($filename);
+                array_push($background_info_attachments, $background_info_attachment); 
+            }
         } elseif ($backgroundInfoAttachmentBackUp) {
-            $background_info_attachment = $backgroundInfoAttachmentBackUp;
+            $background_info_attachments = $backgroundInfoAttachmentBackUp;
         } else {
-            $background_info_attachment = null;
+            $background_info_attachments = null;
         }
 
-        $actionTakenAttachment = $request->file('actionTakenAttachment');
+        $actionTakenAttachments = $request->file('actionTakenAttachments');
         $actionTakenAttachmentBackUp = $request->actionTakenAttachmentBackUp;
 
-        if ($actionTakenAttachment) {
-            $filename = $actionTakenAttachment->store('public');
-            $action_taken_attachment = basename($filename);
+        if ($actionTakenAttachments) {
+            $action_taken_attachments = []; 
+
+            foreach ($actionTakenAttachments as $actionTakenAttachment) {
+                $filename = $actionTakenAttachment->store('public');
+                $action_taken_attachment = basename($filename);
+                array_push($action_taken_attachments, $action_taken_attachment); 
+            }
         } elseif ($actionTakenAttachmentBackUp) {
-            $action_taken_attachment = $actionTakenAttachmentBackUp;
+            $action_taken_attachments = $actionTakenAttachmentBackUp;
         } else {
-            $action_taken_attachment = null;
+            $action_taken_attachments = null;
         }
 
         $tempCP =
         [
             'background_info' => $request->backgroundInfo,
-            'background_info_attachment' => $background_info_attachment,
+            'background_info_attachment' => $background_info_attachments,
             'action_taken' => $request->actionTaken,
-            'action_taken_attachment' => $action_taken_attachment,
+            'action_taken_attachment' => $action_taken_attachments,
         ];
-       
+        dd($tempCP);
         $user_id = $request->userId;
 
         $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
