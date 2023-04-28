@@ -81,7 +81,23 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+        if ($security_level_id == 2) {
+            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('locale_id', $locale_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 3) {
+            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('locale_id', $locale_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        }
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -94,9 +110,23 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
 
-        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        if ($security_level_id == 3) {
+            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+    }
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -109,9 +139,20 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
 
-        $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        if ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        }
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -816,9 +857,23 @@ class ClientController extends Controller
          $districts = District::orderBy('district', 'ASC')->get();
          $locales = Locale::orderBy('locale', 'ASC')->get();
  
-         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-         $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->paginate(10);
- 
+         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+         if ($security_level_id == 2) {
+             $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('locale_id', $locale_id)->pluck('id');
+             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+         } elseif ($security_level_id == 3) {
+             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('locale_id', $locale_id)->pluck('id');
+             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+         } elseif ($security_level_id == 4) {
+             if ($user_info->role_id == 9) {
+                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             } else {
+                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             }
+         } elseif ($security_level_id == 5) {
+             $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+         }
          return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
      
@@ -830,11 +885,23 @@ class ClientController extends Controller
          $districts = District::orderBy('district', 'ASC')->get();
          $locales = Locale::orderBy('locale', 'ASC')->get();
  
-         $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
- 
-         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-         $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
- 
+         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+         if ($security_level_id == 3) {
+             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+         } elseif ($security_level_id == 4) {
+             if ($user_info->role_id == 9) {
+                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                 $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             } else {
+                 $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             }
+         } elseif ($security_level_id == 5) {
+             $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        }
          return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
  
@@ -846,10 +913,20 @@ class ClientController extends Controller
          $districts = District::orderBy('district', 'ASC')->get();
          $locales = Locale::orderBy('locale', 'ASC')->get();
  
-         $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
- 
-         $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->paginate(10);
- 
+         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+         if ($security_level_id == 4) {
+             if ($user_info->role_id == 9) {
+                 $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             } else {
+                 $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+             }
+         } elseif ($security_level_id == 5) {
+             $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+         }
          return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
      
