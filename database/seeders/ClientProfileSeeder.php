@@ -51,7 +51,8 @@ class ClientProfileSeeder extends Seeder
                     "social_worker_recommendation" => $data['26'],
                     "status" => $data['27'],
                     "user_encoder_id" => $data['28'],
-                    "locale_id" => $data['29']
+                    "locale_id" => $data['29'],
+                    "assigned_doctor_id" => $data['30']
                 ]);
             }
             $firstline = false;

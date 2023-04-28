@@ -160,7 +160,7 @@
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
                                                     <img alt="ADDFII" class="tooltip rounded-full"
-                                                        src=" {{ asset('dist/images/preview-4.jpg') }}"
+                                                        src=" {{ asset('dist/images/preview-1.jpg') }}"
                                                         title="Uploaded at 18 April 2021">
                                                 </div>
                                             </div>

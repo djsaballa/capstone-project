@@ -52,6 +52,11 @@ class CreateClientProfilesTable extends Migration
                   ->constrained('locales')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
+            $table->foreignId('assigned_doctor_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

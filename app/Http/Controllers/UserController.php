@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Division;
@@ -34,20 +37,27 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
-        $login_info = User::where('username', '=', $request->username)->first();
+        $credentials = $request->only('username', 'password');
 
-        if (!$login_info) {
-            return back()->with('fail', 'Username not recognized');
+        if (Auth::attempt($credentials)) {
+            $user_id = Auth::user()->id;
+            return redirect()->route('dashboard', $user_id);
         } else {
-            if ($request->password != $login_info->password) {
-                return back()->with('fail', 'Incorrect password');
-            } else {
-                $user_id = $login_info->id;
-
-                return redirect(route('dashboard', $user_id));
-            }
+            return back()->withErrors(['username' => 'Invalid login credentials']);
         }
     }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
 
     // DASHBOARD -------------------------------------------------------------------------------------------------------
     public function dashboard($user_id)

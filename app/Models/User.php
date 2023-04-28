@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Role;
 use App\Models\Locale;
@@ -12,7 +13,7 @@ use App\Models\Inbox;
 use App\Models\History;
 use App\Models\ProgressReport;
 use App\Models\ClientProfile;
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
 

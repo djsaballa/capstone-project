@@ -7,6 +7,7 @@ use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\ClientProfile;
 use App\Models\FamilyComposition;
 use App\Models\Disease;
@@ -27,7 +28,25 @@ class ClientController extends Controller
         $districts = District::orderBy('district', 'ASC')->get();
         $locales = Locale::orderBy('locale', 'ASC')->get();
 
-        $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+        if ($security_level_id == 1) {
+            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 2) {
+            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 3) {
+            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        }
 
         return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
@@ -150,17 +169,6 @@ class ClientController extends Controller
         } else {
             $picture = null;
         }
-
-// | philhealth_member              | varchar(255)        | NO   |     | NULL    |                |
-// | health_card                    | varchar(255)        | YES  |     | NULL    |                |
-// | contact_person1_name           | varchar(255)        | NO   |     | NULL    |                |
-// | contact_person1_contact_number | varchar(255)        | NO   |     | NULL    |                |
-// | contact_person2_name           | varchar(255)        | NO   |     | NULL    |                |
-// | contact_person2_contact_number | varchar(255)        | NO   |     | NULL    |                |
-// | background_info                | varchar(255)        | NO   |     | NULL    |                |
-// | background_info_attachment     | blob                | YES  |     | NULL    |                |
-// | action_taken                   | varchar(255)        | NO   |     | NULL    |                |
-// | action_taken_attachment        | blob                | YES  |     | NULL    |                |
 
         $client_profile_add =
         [
@@ -340,21 +348,21 @@ class ClientController extends Controller
     {
         $request->validate([
             'backgroundInfo' => 'required',
-            'backgroundInfoAttachment' => 'nullable',
+            'backgroundInfoAttachments' => 'nullable',
             'actionTaken' => 'required',
-            'actionTakenAttachment' => 'nullable',
+            'actionTakenAttachments' => 'nullable',
         ]);
 
         $backgroundInfoAttachments = $request->file('backgroundInfoAttachments');
         $backgroundInfoAttachmentBackUp = $request->backgroundInfoAttachmentBackUp;
 
         if ($backgroundInfoAttachments) {
-            $background_info_attachments = []; 
+            $background_info_attachments = [];
 
             foreach ($backgroundInfoAttachments as $backgroundInfoAttachment) {
                 $filename = $backgroundInfoAttachment->store('public');
                 $background_info_attachment = basename($filename);
-                array_push($background_info_attachments, $background_info_attachment); 
+                array_push($background_info_attachments, $background_info_attachment);
             }
         } elseif ($backgroundInfoAttachmentBackUp) {
             $background_info_attachments = $backgroundInfoAttachmentBackUp;
@@ -366,12 +374,12 @@ class ClientController extends Controller
         $actionTakenAttachmentBackUp = $request->actionTakenAttachmentBackUp;
 
         if ($actionTakenAttachments) {
-            $action_taken_attachments = []; 
+            $action_taken_attachments = [];
 
             foreach ($actionTakenAttachments as $actionTakenAttachment) {
                 $filename = $actionTakenAttachment->store('public');
                 $action_taken_attachment = basename($filename);
-                array_push($action_taken_attachments, $action_taken_attachment); 
+                array_push($action_taken_attachments, $action_taken_attachment);
             }
         } elseif ($actionTakenAttachmentBackUp) {
             $action_taken_attachments = $actionTakenAttachmentBackUp;
@@ -386,7 +394,6 @@ class ClientController extends Controller
             'action_taken' => $request->actionTaken,
             'action_taken_attachment' => $action_taken_attachments,
         ];
-        dd($tempCP);
         $user_id = $request->userId;
 
         $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
@@ -398,7 +405,6 @@ class ClientController extends Controller
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
             return redirect()->route('list_of_profiles', $user_id);
         }
-        
     }
 
     public function addProfile6($user_id)
@@ -721,6 +727,32 @@ class ClientController extends Controller
         $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
         $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
 
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+        if ($security_level_id == 1) {
+            $client_profiles_total = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->get();
+            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 2) {
+            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+            $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 3) {
+            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+            $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $client_profiles_total = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->get();
+                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+                $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+            $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        }
+
         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
     }
 
@@ -772,7 +804,7 @@ class ClientController extends Controller
         }
     }
  
-     // FILTER PROFILES -------------------------------------------------------------------------------------------------
+     // FILTER ARCHIVE PROFILES -------------------------------------------------------------------------------------------------
      public function filterLocaleProfilesArchive($user_id, $locale_id)
      {
          $user_info = User::find($user_id);

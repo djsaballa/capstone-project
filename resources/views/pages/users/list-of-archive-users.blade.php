@@ -35,7 +35,7 @@
                         <div class="flex flex-col lg:flex-row items-center p-5">
                             <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
                                 <img alt="ADDFII" class="rounded-full"
-                                    src=" {{ asset('dist/images/profile-5.jpg') }}">
+                                    src="{{ asset('dist/images/profile-1.jpg') }}">
                             </div>
                             <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                                 <a href="" class="font-medium">{{ $user->getFullName($user->id) }}</a>

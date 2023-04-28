@@ -13,25 +13,25 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::controller(UserController::class)->group(function () {
-    // LOGIN
-    Route::get('/', 'login')->name('login');
-        // LOGIN AUTH
-        Route::post('/login-auth', 'loginAuth')->name('login_auth');
 
+// LOGIN
+Route::get('/', [UserController::class, 'login'])->name('login');
+// LOGIN AUTH
+Route::post('/login-auth', [UserController::class, 'loginAuth'])->name('login_auth');
+
+Route::middleware('auth')->group(function () {
+    // LOGOUT
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     // DASHBOARD
-    Route::get('/dashboard/{user_id}', 'dashboard')->name('dashboard');
-    
+    Route::get('/dashboard/{user_id}', [UserController::class, 'dashboard'])->name('dashboard');
     // VIEW PROGRESS REPORTS
-    Route::get('/view-progress-report/{user_id}/{client_profile_id}', 'viewProgressReport')->name('view_progress_report');
-    
-    Route::get('/progress-report-add-report', 'addProgressReport')->name('add_progress_report');
+    Route::get('/view-progress-report/{user_id}/{client_profile_id}', [UserController::class, 'viewProgressReport'])->name('view_progress_report');
 
+    Route::get('/progress-report-add-report', [UserController::class, 'addProgressReport'])->name('add_progress_report');
     // INBOX
-    Route::get('/inbox/{user_id}', 'inbox')->name('inbox');
-
+    Route::get('/inbox/{user_id}', [UserController::class, 'inbox'])->name('inbox');
     // AUDIT LOGS
-    Route::get('/audit-logs/{user_id}', 'auditLogs')->name('audit_logs');
+    Route::get('/audit-logs/{user_id}', [UserController::class, 'auditLogs'])->name('audit_logs');
 });
 
 require __DIR__ . '/client.php';
