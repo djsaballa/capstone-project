@@ -70,17 +70,13 @@
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
-
                 </ul>
             </div>
         @endif
         @if (Session::has('success'))
             <div class="alert alert-success text-center">
-
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-
                 <p>{{ Session::get('success') }}</p>
-
             </div>
         @endif
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">

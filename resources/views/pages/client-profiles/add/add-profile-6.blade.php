@@ -64,18 +64,28 @@
             </div>
         </div>
         <div class="intro-y box lg:mt-5">
-            <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+            <div class="flex items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
                 <h2 class="font-medium text-base mr-auto">
                     Personal Information
                 </h2>
             </div>
-            <div class="">
-                @foreach ($errors->all() as $error)
-                    <p style="color: red;">{{ $error }}</p>
-                @endforeach
-            </div>
-            <div class="p-5">
-                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+            @endif
+            <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
+                <div class="pb-5 pl-5 pr-5">
                     @csrf
                     @php
                         use App\Models\TempClientProfile;
@@ -84,7 +94,7 @@
                         $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
                     @endphp
                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                    <div class="flex flex-col-reverse xl:flex-row flex-col">
+                    <class="flex flex-col-reverse xl:flex-row flex-col">
                         <div class="flex-1 mt-6 xl:mt-0">
                             <div class="grid grid-cols-12 gap-x-5">
                                 <div class="col-span-6 2xl:col-span-3">
@@ -312,31 +322,13 @@
                                         placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input->address ?? null) }}</textarea>
                                 </div>
                             </div>
+                        </div>
 
-                            {{-- Step 2 --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-
-                                    </ul>
-                                </div>
-                            @endif
-                            @if (Session::has('success'))
-                                <div class="alert alert-success text-center">
-
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-
-                                    <p>{{ Session::get('success') }}</p>
-
-                                </div>
-                            @endif
-                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                                <div class="font-medium text-base">Family Composition</div>
-                                <table class="table table-bordered" id="dynamicAddRemove">
+                        {{-- Step 2 --}}
+                        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                            <div class="font-medium text-base pb-5">Family Composition</div>
+                            <div class="pt-5">
+                                <table class="table table-bordered " id="dynamicAddRemove">
                                     <tr>
                                         <th>Name</th>
                                         <th>Relationship</th>
@@ -381,118 +373,105 @@
                                                 class="btn btn-outline-primary">Add Row</button></td>
                                     </tr>
                                 </table>
+                            </div>
+                        </div>
 
-                                {{-- Step 3 --}}
-                                <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-
-                                        </ul>
-                                    </div>
-                                @endif
-                                @if (Session::has('success'))
-                                    <div class="alert alert-success text-center">
-
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-
-                                        <p>{{ Session::get('success') }}</p>
-
-                                    </div>
-                                @endif
-                                <div
-                                    class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                                    <div class="font-medium text-base">Medical Condition</div>
-                                    <table class="table table-bordered" id="dynamicAddRemoveMedCon">
-                                        <tr>
-                                            <th>Illness or Disease</th>
-                                            <th>Medicine or Supplements</th>
-                                            <th>Dosage</th>
-                                            <th>Frequency</th>
-                                            <th>Doctor</th>
-                                            <th>Hospital</th>
-                                        </tr>
-                                        <tr>
-                                            <td><select id="disease" name="medicalCondition[0][disease]"
-                                                    data-search="true" class="w-full form-control" tabindex="-1">
-                                                    <option value="" selected="true" disabled>Select Illness/Disease
+                        {{-- Step 3 --}}
+                        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                            <div class="font-medium text-base pb-5">Medical Condition</div>
+                            <div class="">
+                                <table class="table table-bordered" id="dynamicAddRemoveMedCon">
+                                    <tr>
+                                        <th>Illness or Disease</th>
+                                        <th>Medicine or Supplements</th>
+                                        <th>Dosage</th>
+                                        <th>Frequency</th>
+                                        <th>Doctor</th>
+                                        <th>Hospital</th>
+                                    </tr>
+                                    <tr>
+                                        <td><select id="disease" name="medicalCondition[0][disease]"
+                                                data-search="true" class="w-full form-control" tabindex="-1">
+                                                <option value="" selected="true" disabled>Select Illness/Disease
+                                                </option>
+                                                @foreach ($diseases as $disease)
+                                                    <option value="{{ $disease->id }}">{{ $disease->disease }}
                                                     </option>
-                                                    @foreach ($diseases as $disease)
-                                                        <option value="{{ $disease->id }}">{{ $disease->disease }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td><input type="text" name="medicalCondition[0][medicine]"
-                                                    placeholder="Medicine/Supplement Name" class="form-control" />
-                                            </td>
-                                            <td><input type="text" name="medicalCondition[0][dosage]"
-                                                    placeholder="Dosage" class="form-control" />
-                                            </td>
-                                            <td><input id="input-wizard-5" name="medicalCondition[0][frequency]"
-                                                    type="text" class="form-control" placeholder="Frequency">
-                                            </td>
-                                            <td><input type="text" name="medicalCondition[0][doctor]"
-                                                    placeholder="Doctor" class="form-control" />
-                                            </td>
-                                            <td><input type="text" name="medicalCondition[0][hospital]"
-                                                    placeholder="Hospital" class="form-control" />
-                                            </td>
-                                            <td><button type="button" name="add" id="dynamic-ar-med-con"
-                                                    class="btn btn-outline-primary">Add Row</button></td>
-                                        </tr>
-                                    </table>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td><input type="text" name="medicalCondition[0][medicine]"
+                                                placeholder="Medicine/Supplement Name" class="form-control" />
+                                        </td>
+                                        <td><input type="text" name="medicalCondition[0][dosage]"
+                                                placeholder="Dosage" class="form-control" />
+                                        </td>
+                                        <td><input id="input-wizard-5" name="medicalCondition[0][frequency]"
+                                                type="text" class="form-control" placeholder="Frequency">
+                                        </td>
+                                        <td><input type="text" name="medicalCondition[0][doctor]"
+                                                placeholder="Doctor" class="form-control" />
+                                        </td>
+                                        <td><input type="text" name="medicalCondition[0][hospital]"
+                                                placeholder="Hospital" class="form-control" />
+                                        </td>
+                                        <td><button type="button" name="add" id="dynamic-ar-med-con"
+                                                class="btn btn-outline-primary">Add Row</button></td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                    <div class="mt-10 font-medium text-base">Operations</div>
-                                    <table class="table table-bordered" id="dynamicAddRemoveOperation">
-                                        <tr>
-                                            <th>Operation</th>
-                                            <th>Date</th>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="medicalOperation[0][operation]"
-                                                    placeholder="Operation" class="form-control" />
-                                            </td>
-                                            <td><input type="date" name="medicalOperation[0][date]"
-                                                    class="form-control" />
-                                            </td>
-                                            <td><button type="button" name="add" id="dynamic-ar-operation"
-                                                    class="btn btn-outline-primary">Add Row</button></td>
-                                        </tr>
-                                    </table>
+                            <div class="mt-10 font-medium text-base pb-5">Operations</div>
+                                <div class="">
+                                <table class="table table-bordered" id="dynamicAddRemoveOperation">
+                                    <tr>
+                                        <th>Operation</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="medicalOperation[0][operation]"
+                                                placeholder="Operation" class="form-control" />
+                                        </td>
+                                        <td><input type="date" name="medicalOperation[0][date]"
+                                                class="form-control" />
+                                        </td>
+                                        <td><button type="button" name="add" id="dynamic-ar-operation"
+                                                class="btn btn-outline-primary">Add Row</button></td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                    <div class="flex flex-col-reverse xl:flex-row flex-col">
-                                        <div class="flex-1 mt-6 xl:mt-0">
-                                            <div class="grid grid-cols-12 gap-x-5">
-                                                <div class="col-span-6 2xl:col-span-3">
-                                                    <div class="mt-10 font-medium text-base">
-                                                        <label for="update-profile-form-1" class="form-label">Do you have
-                                                            a Phil-health Card?</label>
-                                                        <select id="philhealth" name="philhealth" data-search="true"
-                                                            class="w-full form-control" tabindex="-1">
-                                                            <option value="Yes" selected>Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
+                                <div class="flex flex-col-reverse xl:flex-row flex-col">
+                                    <div class="flex-1 mt-6 xl:mt-0">
+                                        <div class="grid grid-cols-12 gap-x-5">
+                                            <div class="col-span-6 2xl:col-span-3">
+                                                <div class="mt-10 font-medium text-base">
+                                                    <label for="update-profile-form-1" class="form-label">Do you have
+                                                        a Phil-health Card?</label>
+                                                    <select id="philhealth" name="philhealth" data-search="true"
+                                                        class="w-full form-control" tabindex="-1">
+                                                        <option value="Yes" selected>Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-span-6 2xl:col-span-3">
-                                                    <div class="mt-10 font-medium text-base">
-                                                        <label for="update-profile-form-1" class="form-label">Do you have
-                                                            other health cards?</label>
-                                                        <input id="health-card" name="healthCard" type="text"
-                                                            class="form-control"
-                                                            placeholder=" If yes, please specify. If no, write 'No'"
-                                                            value="{{ old('healthCard', $old_input->health_card ?? null) }}">
-                                                    </div>
+                                            </div>
+                                            <div class="col-span-6 2xl:col-span-3">
+                                                <div class="mt-10 font-medium text-base">
+                                                    <label for="update-profile-form-1" class="form-label">Do you have
+                                                        other health cards?</label>
+                                                    <input id="health-card" name="healthCard" type="text"
+                                                        class="form-control"
+                                                        placeholder=" If yes, please specify. If no, write 'No'"
+                                                        value="{{ old('healthCard', $old_input->health_card ?? null) }}">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- Step 4 --}}
-                                    <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                                </div>
+
+                                {{-- Step 4 --}}
+                                <div class="mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                                    <div class="font-medium text-base pb-5">Contact Person</div>
                                     <table class="table table-bordered" id="dynamicAddRemoveOperation">
                                         <tr>
                                             <th>Full Name</th>

@@ -63,11 +63,21 @@
         </div>
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
             <div class="font-medium text-base">Contact Persons</div>
-            <div class="">
-                @foreach ($errors->all() as $error)
-                    <p style="color: red;">{{ $error }}</p>
-                @endforeach
-            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+            @endif
             <form method="POST" action="{{ route('add_client_profile_4_next') }}">
                 @csrf
                 @php
