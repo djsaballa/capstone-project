@@ -55,37 +55,28 @@
                 <a href="{{ route('add_client_profile_5', $user_info->id) }}">
                     <button
                         class="w-10 h-10 rounded-full btn text-slate-500 bg-slate-100 dark:bg-darkmode-400 dark:border-darkmode-400">5</button>
-                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup Background Information</div>
+                    <div class="lg:w-32 text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400">Setup
+                        Background Information</div>
                 </a>
             </div>
             <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
                 <button class="w-10 h-10 rounded-full btn btn-primary">6</button>
-                <div class="lg:w-32 font-medium text-base lg:mt-3 ml-3 lg:mx-auto">Review</div>
+                <div class="lg:w-32 font-medium text-base mb-5 lg:mt-3 ml-3 lg:mx-auto">Review</div>
             </div>
         </div>
         <div class="intro-y box lg:mt-5">
-            <div class="flex items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                <h2 class="font-medium text-base mr-auto">
+            <div class="mt-5 p-5">
+                <h2 class="font-medium text-base mb-5 mr-auto">
                     Personal Information
                 </h2>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (Session::has('success'))
-                <div class="alert alert-success text-center">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                    <p>{{ Session::get('success') }}</p>
-                </div>
-            @endif
-            <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
-                <div class="pb-5 pl-5 pr-5">
+            <div class="">
+                @foreach ($errors->all() as $error)
+                    <p style="color: red;">{{ $error }}</p>
+                @endforeach
+            </div>
+            <div class="pl-5 pr-5 ">
+                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
                     @csrf
                     @php
                         use App\Models\TempClientProfile;
@@ -94,7 +85,7 @@
                         $old_input = $tempCP->where('user_encoder_id', $user_info->id)->last();
                     @endphp
                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                    <class="flex flex-col-reverse xl:flex-row flex-col">
+                    <div class="flex xl:flex-row flex-col">
                         <div class="flex-1 mt-6 xl:mt-0">
                             <div class="grid grid-cols-12 gap-x-5">
                                 <div class="col-span-6 2xl:col-span-3">
@@ -322,13 +313,31 @@
                                         placeholder="Street Address, Barangay, City, Province, Zip Code">{{ old('address', $old_input->address ?? null) }}</textarea>
                                 </div>
                             </div>
-                        </div>
 
-                        {{-- Step 2 --}}
-                        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                            <div class="font-medium text-base pb-5">Family Composition</div>
-                            <div class="pt-5">
-                                <table class="table table-bordered " id="dynamicAddRemove">
+                            {{-- Step 2 --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
+                            @endif
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-center">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+
+                                    <p>{{ Session::get('success') }}</p>
+
+                                </div>
+                            @endif
+                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                                <div class="font-medium text-base mb-5">Family Composition</div>
+                                <table class="table table-bordered" id="dynamicAddRemove">
                                     <tr>
                                         <th>Name</th>
                                         <th>Relationship</th>
@@ -374,12 +383,31 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div>
+                            {{-- Step 3 --}}
 
-                        {{-- Step 3 --}}
-                        <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                            <div class="font-medium text-base pb-5">Medical Condition</div>
-                            <div class="">
+
+                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
+                            @endif
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-center">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+
+                                    <p>{{ Session::get('success') }}</p>
+
+                                </div>
+                            @endif
+                            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                                <div class="font-medium text-base mb-5 ">Medical Condition</div>
                                 <table class="table table-bordered" id="dynamicAddRemoveMedCon">
                                     <tr>
                                         <th>Illness or Disease</th>
@@ -390,8 +418,8 @@
                                         <th>Hospital</th>
                                     </tr>
                                     <tr>
-                                        <td><select id="disease" name="medicalCondition[0][disease]"
-                                                data-search="true" class="w-full form-control" tabindex="-1">
+                                        <td><select id="disease" name="medicalCondition[0][disease]" data-search="true"
+                                                class="w-full form-control" tabindex="-1">
                                                 <option value="" selected="true" disabled>Select Illness/Disease
                                                 </option>
                                                 @foreach ($diseases as $disease)
@@ -403,14 +431,14 @@
                                         <td><input type="text" name="medicalCondition[0][medicine]"
                                                 placeholder="Medicine/Supplement Name" class="form-control" />
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][dosage]"
-                                                placeholder="Dosage" class="form-control" />
+                                        <td><input type="text" name="medicalCondition[0][dosage]" placeholder="Dosage"
+                                                class="form-control" />
                                         </td>
                                         <td><input id="input-wizard-5" name="medicalCondition[0][frequency]"
                                                 type="text" class="form-control" placeholder="Frequency">
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][doctor]"
-                                                placeholder="Doctor" class="form-control" />
+                                        <td><input type="text" name="medicalCondition[0][doctor]" placeholder="Doctor"
+                                                class="form-control" />
                                         </td>
                                         <td><input type="text" name="medicalCondition[0][hospital]"
                                                 placeholder="Hospital" class="form-control" />
@@ -419,10 +447,8 @@
                                                 class="btn btn-outline-primary">Add Row</button></td>
                                     </tr>
                                 </table>
-                            </div>
 
-                            <div class="mt-10 font-medium text-base pb-5">Operations</div>
-                                <div class="">
+                                <div class="mt-10 font-medium text-base mb-5">Operations</div>
                                 <table class="table table-bordered" id="dynamicAddRemoveOperation">
                                     <tr>
                                         <th>Operation</th>
@@ -439,13 +465,12 @@
                                                 class="btn btn-outline-primary">Add Row</button></td>
                                     </tr>
                                 </table>
-                            </div>
 
                                 <div class="flex flex-col-reverse xl:flex-row flex-col">
                                     <div class="flex-1 mt-6 xl:mt-0">
                                         <div class="grid grid-cols-12 gap-x-5">
                                             <div class="col-span-6 2xl:col-span-3">
-                                                <div class="mt-10 font-medium text-base">
+                                                <div class="mt-10 font-medium text-base mb-5">
                                                     <label for="update-profile-form-1" class="form-label">Do you have
                                                         a Phil-health Card?</label>
                                                     <select id="philhealth" name="philhealth" data-search="true"
@@ -456,7 +481,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-span-6 2xl:col-span-3">
-                                                <div class="mt-10 font-medium text-base">
+                                                <div class="mt-10 font-medium text-base mb-5">
                                                     <label for="update-profile-form-1" class="form-label">Do you have
                                                         other health cards?</label>
                                                     <input id="health-card" name="healthCard" type="text"
@@ -468,10 +493,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- Step 4 --}}
-                                <div class="mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                                    <div class="font-medium text-base pb-5">Contact Person</div>
+                            </div>
+                            {{-- Step 4 --}}
+                            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                                <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                                <div class="mt-5">
+                                    <div class="font-medium text-base mb-5">Contact Persons</div>
                                     <table class="table table-bordered" id="dynamicAddRemoveOperation">
                                         <tr>
                                             <th>Full Name</th>
@@ -496,58 +523,65 @@
                                                     value="{{ old('contactPerson2', $old_input->contact_person2_name ?? null) }}">
                                             </td>
                                             <td>
-                                                <input id="contact-person2-number" name="contactPerson2Number" type="text"
-                                                    class="form-control" placeholder="09223456789"
+                                                <input id="contact-person2-number" name="contactPerson2Number"
+                                                    type="text" class="form-control" placeholder="09223456789"
                                                     value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
                                             <td>
                                         </tr>
                                     </table>
+                                </div>
+                            </div>
                             {{-- Step 5 --}}
-                            <div class="mt-3">
-                                <label for="update-profile-form-5" class="font-medium text-base form-label">Background
-                                    Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
-                                <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ old('backgroundInfo', $old_input->background_info ?? null) }}</textarea>
-                            </div>
-                            <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                            <div data-single="true" action="/file-upload" class="dropzone">
-                                <div class="fallback">
-                                    <input id="background-info-attachment" name="backgroundInfoAttachment"
-                                        type="file" />
-                                    <input type="hidden" name="backgroundInfoAttachmentBackUp"
-                                        value="{{ $old_input ? $old_input->background_info_attachment : null }}">
+                            <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
+                                <div class="mt-5">
+                                    <label for="update-profile-form-5"
+                                        class="font-medium text-base mb-5 form-label">Background
+                                        Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
+                                    <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ old('backgroundInfo', $old_input->background_info ?? null) }}</textarea>
                                 </div>
-                                <div class="dz-message" data-dz-message>
-                                    <div class="text-lg font-medium">Drop files here or click to upload.</div>
+                                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
+                                <div data-single="true" action="/file-upload" class="dropzone">
+                                    <div class="fallback">
+                                        <input id="background-info-attachment" name="backgroundInfoAttachment"
+                                            type="file" />
+                                        <input type="hidden" name="backgroundInfoAttachmentBackUp"
+                                            value="{{ $old_input ? $old_input->background_info_attachment : null }}">
+                                    </div>
+                                    <div class="dz-message" data-dz-message>
+                                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mt-3">
-                                <label for="update-profile-form-5" class="font-medium text-base form-label mt-10">Action
-                                    Taken/ Services Rendered</label>
-                                <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ old('actionTaken', $old_input->action_taken ?? null) }}</textarea>
-                            </div>
-                            <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                            <div data-single="true" action="/file-upload" class="dropzone">
-                                <div class="fallback">
-                                    <input id="action-taken-attachment" name="actionTakenAttachment" type="file" />
-                                    <input type="hidden" name="actionTakenAttachmentBackUp"
-                                        value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
+                                <div class="mt-3">
+                                    <label for="update-profile-form-5"
+                                        class="font-medium text-base mb-5 form-label mt-10">Action
+                                        Taken/ Services Rendered</label>
+                                    <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ old('actionTaken', $old_input->action_taken ?? null) }}</textarea>
                                 </div>
-                                <div class="dz-message" data-dz-message>
-                                    <div class="text-lg font-medium">Drop files here or click to upload.</div>
+                                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
+                                <div data-single="true" action="/file-upload" class="dropzone">
+                                    <div class="fallback">
+                                        <input id="action-taken-attachment" name="actionTakenAttachment"
+                                            type="file" />
+                                        <input type="hidden" name="actionTakenAttachmentBackUp"
+                                            value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
+                                    </div>
+                                    <div class="dz-message" data-dz-message>
+                                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {{-- Button --}}
-                            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                                <a href="" class="btn btn-secondary w-24 ml-2">Previous</a>
-                                <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
+                                {{-- Button --}}
+                                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
+                                    <a href="" class="btn btn-secondary w-24 ml-2">Previous</a>
+                                    <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- END: Wizard Layout -->
             </div>
-            <script>
+            <script type="text/javascript">
                 function previewImage(event) {
                     var input = event.target;
                     var placeholder = document.getElementById('placeholder');
@@ -562,8 +596,7 @@
 
                     reader.readAsDataURL(input.files[0]);
                 }
-            </script>
-            <script type="text/javascript">
+
                 $("#dynamic-ar").click(function() {
                     var i = 0;
                     ++i;
@@ -586,6 +619,49 @@
                     cell5.innerHTML = '<input name="famComp[' + i +
                         '][contact]" type="text" class="form-control" placeholder="09123456789">';
                     cell6.innerHTML =
+                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
+                });
+
+                $("#dynamic-ar-med-con").click(function() {
+                    var j = 0;
+                    ++j;
+                    var table = document.getElementById('dynamicAddRemoveMedCon');
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    var cell7 = row.insertCell(6);
+                    cell1.innerHTML = '<select id="disease" name="medicalCondition[' + j +
+                        '][disease]" data-search="true" class="w-full form-control" tabindex="-1"> <option value="" selected="true" disabled>Select Illness/Disease</option> @foreach ($diseases as $disease) <option value="{{ $disease->id }}">{{ $disease->disease }}</option> @endforeach </select>';
+                    cell2.innerHTML = '<input type="text" name="medicalCondition[' + j +
+                        '][medicine]" placeholder="Medicine/Supplement Name" class="form-control" />';
+                    cell3.innerHTML = '<input type="text" name="medicalCondition[' + j +
+                        '][dosage]" placeholder="Dosage" class="form-control" />';
+                    cell4.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
+                        '][frequency]" type="text" class="form-control" placeholder="Frequency"></td>';
+                    cell5.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
+                        '][doctor]" type="text" class="form-control" placeholder="Doctor"></td>';
+                    cell6.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
+                        '][hospital]" type="text" class="form-control" placeholder="Hospital"></td>';
+                    cell7.innerHTML =
+                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
+                });
+
+                $("#dynamic-ar-operation").click(function() {
+                    var k = 0;
+                    ++k;
+                    var table = document.getElementById('dynamicAddRemoveOperation');
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = '<input type="text" name="medicalOperation[' + k +
+                        '][operation]" placeholder="Operation" class="form-control"/>';
+                    cell2.innerHTML = '<input type="date" name="medicalOperation[' + k + '][date]" class="form-control" />';
+                    cell3.innerHTML =
                         '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
                 });
 
