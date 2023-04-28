@@ -25,18 +25,6 @@
                     <div class="grid grid-cols-12 gap-x-5">
                         <div class="col-span-6 2xl:col-span-3">
                             <div class="mt-3">
-                                <label for="update-profile-form-1" class="form-label">Username</label>
-                                <input id="username" name="username" type="text" class="form-control"
-                                    placeholder="Username" value="{{ $employee_info->username }}">
-                            </div>
-                            <div class="mt-3">
-                                <label for="update-profile-form-1" class="form-label">Password</label>
-                                <input id="password" name="password" type="text" class="form-control"
-                                    placeholder="Password" value="{{ $employee_info->password }}">
-                            </div>
-                        </div>
-                        <div class="col-span-6 2xl:col-span-3">
-                            <div class="mt-3">
                                 <label for="update-profile-form-1" class="form-label">First Name</label>
                                 <input id="first-name" name="firstName" type="text" class="form-control"
                                     placeholder="First Name" value="{{ $employee_info->first_name }}">
@@ -159,6 +147,7 @@
                                 <div class="mx-auto cursor-pointer relative mt-5">
                                     <button type="button" class="btn btn-primary w-full">Change Photo</button>
                                     <input type="file" name="picture" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage(event)">
+                                    <input type="hidden" name="pictureBackup" value="{{ $employee_info->picture ?? null }}">
                                 </div>
                             </div>
                         </div>
@@ -177,7 +166,7 @@
     <script>
         function previewImage(event) {
             var input = event.target;
-            var placeholder = document.getElementById('placeholder');
+            var placeholder = document.getElementById('currentPicture');
             var preview = document.getElementById('preview');
             var reader = new FileReader();
 

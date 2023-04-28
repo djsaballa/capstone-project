@@ -40,8 +40,18 @@ class UserController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            $user_id = Auth::user()->id;
-            return redirect()->route('dashboard', $user_id);
+            if (Auth::user()->status == 'Active') {
+                $user_id = Auth::user()->id;
+                return redirect()->route('dashboard', $user_id);
+            } else {
+                Auth::guard('web')->logout();
+
+                $request->session()->invalidate();
+
+                $request->session()->regenerateToken();
+
+                return back()->withErrors(['username' => 'Invalid login credentials']);
+            }
         } else {
             return back()->withErrors(['username' => 'Invalid login credentials']);
         }
@@ -58,12 +68,29 @@ class UserController extends Controller
         return redirect('/');
     }
 
-
     // DASHBOARD -------------------------------------------------------------------------------------------------------
     public function dashboard($user_id)
     {
         $user_info = User::find($user_id);
-        $client_profiles = ClientProfile::all();
+        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+
+        if ($security_level_id == 1) {
+            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 2) {
+            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 3) {
+            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } elseif ($security_level_id == 4) {
+            if ($user_info->role_id == 9) {
+                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+        } elseif ($security_level_id == 5) {
+            $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        }
 
         return view('pages.dashboard', compact('user_info', 'client_profiles'));
     }
@@ -187,8 +214,6 @@ class UserController extends Controller
             'firstName' => 'required|string',
             'middleName' => 'nullable|string',
             'lastName' => 'required|string',
-            'username' => 'required|string',
-            'password' => 'required|string',
             'role' => 'required',
             'division' => 'nullable',
             'district' => 'nullable',
@@ -200,10 +225,13 @@ class UserController extends Controller
         $employee_id = $request->employeeId;
 
         $file = $request->file('picture');
+        $fileBackup = $request->pictureBackup;
 
         if ($file) {
             $filename = $file->store('public');
             $picture = basename($filename);
+        } elseif ($fileBackup) {
+            $picture = $fileBackup;
         } else {
             $picture = null;
         }
@@ -214,8 +242,6 @@ class UserController extends Controller
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
-            'username' => $request->username,
-            'password' => $request->password,
             'contact_number' => $request->contactNumber,
             'role_id' => $request->role,
             'division_id' => $request->division,

@@ -454,10 +454,13 @@ class ClientController extends Controller
         $client_profile_id = $request->clientProfileId;
 
         $file = $request->file('picture');
+        $fileBackup = $request->pictureBackup;
 
         if ($file) {
             $filename = $file->store('public');
             $picture = basename($filename);
+        } elseif ($fileBackup) {
+            $picture = $fileBackup;
         } else {
             $picture = null;
         }

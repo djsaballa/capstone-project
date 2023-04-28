@@ -22,18 +22,6 @@
                     <div class="grid grid-cols-12 gap-x-5">
                         <div class="col-span-6 2xl:col-span-3">
                             <div class="mt-3">
-                                <label for="update-profile-form-1" class="form-label">Username</label>
-                                <input id="update-profile-form-1" type="text" class="form-control"
-                                    placeholder="" value="{{ $employee_info->username }}" disabled>
-                            </div>
-                            <div class="mt-3">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="text" class="form-control mt-2" id="exampleInputPassword1"
-                                placeholder="" value="{{ $employee_info->password }}" disabled>
-                            </div>
-                        </div>
-                        <div class="col-span-6 2xl:col-span-3">
-                            <div class="mt-3">
                                 <label for="update-profile-form-1" class="form-label">First Name</label>
                                 <input id="update-profile-form-1" type="text" class="form-control" placeholder=""
                                     value="{{ $employee_info->first_name }}" disabled>
@@ -53,9 +41,7 @@
                                 <input id="update-profile-form-4" type="text" class="form-control"
                                     placeholder="" value="{{ $employee_info->contact_number }}" disabled>
                             </div>
-
                         </div>
-                        
                         <div class="col-span-6 2xl:col-span-3">
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
