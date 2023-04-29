@@ -119,27 +119,30 @@
                 </div>
                 <div class="overflow-x-auto sm:overflow-x-visible">
                     @foreach ($inboxes as $inbox)
-                    <div class="intro-y">
-                        <div
-                            class="inbox__item inbox__item--active inline-block sm:block text-slate-600 dark:text-slate-500 bg-slate-100 dark:bg-darkmode-400/70 border-b border-slate-200/60 dark:border-darkmode-400">
-                            <div class="flex px-5 py-3">
-                                <div class="w-72 flex-none flex items-center mr-5">
-                                    @if ($inbox->checked)
-                                        <input class="form-check-input flex-none" type="checkbox" checked>
-                                    @else
-                                        <input class="form-check-input flex-none" type="checkbox" >
-                                    @endif
-                                    <div class="w-6 h-6 flex-none image-fit relative ml-5">
-                                        <img alt="ADDFII" class="rounded-full"
-                                            src=" {{ asset('dist/images/profile-1.jpg') }}"
+                        <div class="intro-y">
+                            <div
+                                class="inbox__item inbox__item--active inline-block sm:block text-slate-600 dark:text-slate-500 bg-slate-100 dark:bg-darkmode-400/70 border-b border-slate-200/60 dark:border-darkmode-400">
+                                <div class="flex px-5 py-3">
+                                    <div class="w-72 flex-none flex items-center mr-5">
+                                        @if ($inbox->checked)
+                                            <input class="form-check-input flex-none" type="checkbox" checked>
+                                        @else
+                                            <input class="form-check-input flex-none" type="checkbox">
+                                        @endif
+                                        <div class="w-6 h-6 flex-none image-fit relative ml-5">
+                                            <img alt="Midone - HTML Admin Template" class="rounded-full"
+                                                src=" {{ asset('dist/images/profile-1.jpg') }}">
+                                        </div>
+                                        <div class="inbox__item--sender truncate ml-3">
+                                            {{ $inbox->getSenderName($inbox->sender_user_id) }}</div>
                                     </div>
-                                    <div class="inbox__item--sender truncate ml-3">{{ $inbox->getSenderName($inbox->sender_user_id) }}</div>
+                                    <div class="w-64 sm:w-auto truncate"> <span
+                                            class="inbox__item--highlight">{{ $inbox->content }}</div>
+                                    <div class="inbox__item--time whitespace-nowrap ml-auto pl-10">
+                                        {{ $inbox->dateFormatMdY($inbox->date_sent) }}</div>
                                 </div>
-                                <div class="w-64 sm:w-auto truncate"> <span class="inbox__item--highlight">{{ $inbox->content }}</div>
-                                <div class="inbox__item--time whitespace-nowrap ml-auto pl-10">{{ $inbox->dateFormatMdY($inbox->date_sent) }}</div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -153,6 +156,6 @@
             </div>
             <!-- END: Inbox Content -->
         </div>
-    <!-- END: Content -->
+        <!-- END: Content -->
     </div>
 @endsection
