@@ -71,9 +71,21 @@
                 </h2>
             </div>
             <div class="">
-                @foreach ($errors->all() as $error)
-                    <p style="color: red;">{{ $error }}</p>
-                @endforeach
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+            @endif
             </div>
             <div class="pl-5 pr-5 ">
                 <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
@@ -183,7 +195,7 @@
                                         <select id="division-filter" name="division" data-search="true"
                                             class="w-full form-control" tabindex="-1"
                                             onchange="loadDistricts( {{ $districts_json }} )">
-                                            @if ($old_input)
+                                            @if ($old_input->division)
                                                 @php
                                                     $old_input_division = $divisions->find($old_input->division);
                                                 @endphp
@@ -214,7 +226,7 @@
                                         <select id="district-filter" name="district" data-search="true"
                                             class="w-full form-control" tabindex="-1"
                                             onchange="loadLocales( {{ $locales_json }} )">
-                                            @if ($old_input)
+                                            @if ($old_input->district)
                                                 @php
                                                     $old_input_district = $districts->find($old_input->district);
                                                 @endphp
@@ -245,7 +257,7 @@
                                             id="update-profile-form-3-ts-label">Locale</label>
                                         <select id="locale-filter" name="locale" data-search="true"
                                             class="w-full form-control" tabindex="-1" disabled>
-                                            @if ($old_input)
+                                            @if ($old_input->locale)
                                                 @php
                                                     $old_input_locale = $locales->find($old_input->locale);
                                                 @endphp
@@ -259,7 +271,7 @@
                                                     <option value="{{ $old_locale->id }}" selected="true">
                                                         {{ $old_locale->locale }} </option>
                                                 @else
-                                                    <option value="Select Locale" selected="true" disabled> Select Locale
+                                                    <option value="Select Locale" selected="true"> Select Locale
                                                     </option>
                                                 @endif
                                             @endif
@@ -383,29 +395,9 @@
                                     </tr>
                                 </table>
                             </div>
+
                             {{-- Step 3 --}}
-
-
                             <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-
-                                    </ul>
-                                </div>
-                            @endif
-                            @if (Session::has('success'))
-                                <div class="alert alert-success text-center">
-
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-
-                                    <p>{{ Session::get('success') }}</p>
-
-                                </div>
-                            @endif
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                 <div class="font-medium text-base mb-5 ">Medical Condition</div>
                                 <table class="table table-bordered" id="dynamicAddRemoveMedCon">
@@ -494,6 +486,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             {{-- Step 4 --}}
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                 <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
@@ -531,6 +524,7 @@
                                     </table>
                                 </div>
                             </div>
+
                             {{-- Step 5 --}}
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                 <div class="mt-5">
