@@ -50,14 +50,14 @@ function loadLocales(locales_json) {
   locale_dropdown.disabled = false;
 }
 
-function filterProfiles(user_id) {
-  var locale = document.getElementById('locale-filter');
+function filter3Profiles(user_id) {
+  var locale = document.getElementById('locale-filter-3');
   var locale_id = locale.options[locale.selectedIndex].value;
   
-  var district = document.getElementById('district-filter');
+  var district = document.getElementById('district-filter-3');
   var district_id = district.options[district.selectedIndex].value;
   
-  var division = document.getElementById('division-filter');
+  var division = document.getElementById('division-filter-3');
   var division_id = division.options[division.selectedIndex].value;
   
   if(locale_id) {
@@ -66,6 +66,29 @@ function filterProfiles(user_id) {
     window.location.href = "/filter-district-profiles/" + user_id + "/" + district_id;
   } else if(division_id) {
     window.location.href = "/filter-division-profiles/" + user_id + "/" + division_id;
+  }
+}
+
+function filter2Profiles(user_id) {
+  var locale = document.getElementById('locale-filter-2');
+  var locale_id = locale.options[locale.selectedIndex].value;
+
+  var district = document.getElementById('district-filter-2');
+  var district_id = district.options[district.selectedIndex].value;
+    
+  if(locale_id) {
+    window.location.href = "/filter-locale-profiles/" + user_id + "/" + locale_id;
+  } else if(district_id) {
+    window.location.href = "/filter-district-profiles/" + user_id + "/" + district_id;
+  }
+}
+
+function filter1Profiles(user_id) {
+  var locale = document.getElementById('locale-filter-1');
+  var locale_id = locale.options[locale.selectedIndex].value;
+    
+  if(locale_id) {
+    window.location.href = "/filter-locale-profiles/" + user_id + "/" + locale_id;
   }
 }
 

@@ -22,14 +22,17 @@ Route::post('/login-auth', [UserController::class, 'loginAuth'])->name('login_au
 Route::middleware('auth')->group(function () {
     // LOGOUT
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    
     // DASHBOARD
     Route::get('/dashboard/{user_id}', [UserController::class, 'dashboard'])->name('dashboard');
+
     // VIEW PROGRESS REPORTS
     Route::get('/view-progress-report/{user_id}/{client_profile_id}', [UserController::class, 'viewProgressReport'])->name('view_progress_report');
-
     Route::get('/progress-report-add-report', [UserController::class, 'addProgressReport'])->name('add_progress_report');
+
     // INBOX
     Route::get('/inbox/{user_id}', [UserController::class, 'inbox'])->name('inbox');
+
     // AUDIT LOGS
     Route::get('/audit-logs/{user_id}', [UserController::class, 'auditLogs'])->name('audit_logs');
 });

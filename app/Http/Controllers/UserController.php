@@ -60,81 +60,120 @@ class UserController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 
     // DASHBOARD -------------------------------------------------------------------------------------------------------
     public function dashboard($user_id)
     {
-        $user_info = User::find($user_id);
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 1) {
-            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 2) {
-            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 3) {
-            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
-                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 1) {
+                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 2) {
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 3) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
                 $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
             }
-        } elseif ($security_level_id == 5) {
-            $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+    
+            return view('pages.dashboard', compact('user_info', 'client_profiles'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
-
-        return view('pages.dashboard', compact('user_info', 'client_profiles'));
+        
     }
 
     // PROGRESS REPORTS ------------------------------------------------------------------------------------------------
     public function viewProgressReport($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-
-        return view('pages.progress-reports.view-progress-report', compact('user_info', 'client_profile_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+    
+            return view('pages.progress-reports.view-progress-report', compact('user_info', 'client_profile_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
     public function addProgressReport()
     {
         return view('pages.progress-reports.add-progress-report');
+        // if (Auth::user()->id == $user_id) {
+        // } else {
+        //     Auth::guard('web')->logout();
+        //     session()->invalidate();
+        //     session()->regenerateToken();
+        //     return redirect('/');
+        // }
     }
 
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
     public function listOfUsers($user_id)
     {
-        $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->paginate(10);
-        $user_info = User::find($user_id);
-
-        return view('pages.users.list-of-users', compact('users', 'user_info'));
+        if (Auth::user()->id == $user_id) {
+            $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->paginate(10);
+            $user_info = User::find($user_id);
+    
+            return view('pages.users.list-of-users', compact('users', 'user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function viewUser($user_id, $employee_id)
     {
-        $user_info = User::find($user_id);
-        $employee_info = User::find($employee_id);
-
-        return view('pages.users.view-user', compact('user_info', 'employee_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $employee_info = User::find($employee_id);
+            
+            return view('pages.users.view-user', compact('user_info', 'employee_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addUser($user_id)
     {
-        $user_info = User::find($user_id);
-        $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-
-        return view('pages.users.add-user', compact('user_info', 'roles', 'divisions', 'districts', 'locales'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            return view('pages.users.add-user', compact('user_info', 'roles', 'divisions', 'districts', 'locales'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addUserSave(Request $request)
@@ -197,14 +236,21 @@ class UserController extends Controller
     
     public function editUser($user_id, $employee_id)
     {
-        $user_info = User::find($user_id);
-        $employee_info = User::find($employee_id);
-        $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        return view('pages.users.edit-user', compact('user_info', 'employee_info', 'roles', 'divisions', 'districts', 'locales'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $employee_info = User::find($employee_id);
+            $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            return view('pages.users.edit-user', compact('user_info', 'employee_info', 'roles', 'divisions', 'districts', 'locales'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editUserSave(Request $request)
@@ -267,54 +313,88 @@ class UserController extends Controller
     // ARCHIVE ---------------------------------------------------------------------------------------------------------
     public function listOfArchiveUsers($user_id)
     {
-        
-        $users = User::where('status', 'Archive')->orderBy('role_id', 'ASC')->paginate(10);
-        $user_info = User::find($user_id);
-
-        return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));
+        if (Auth::user()->id == $user_id) {
+            $users = User::where('status', 'Archive')->orderBy('role_id', 'ASC')->paginate(10);
+            $user_info = User::find($user_id);
+    
+            return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // ARCHIVE USER ----------------------------------------------------------------------------------------------------
     public function archiveUser($user_id, $employee_id)
     {
-        $archive = User::find($employee_id)->update(['status' => 'Archive']);
-        if ($archive) {
-            session()->flash('status', 'User has been successfully archived.');
-            return redirect()->route('list_of_users', $user_id);
+        if (Auth::user()->id == $user_id) {
+            $archive = User::find($employee_id)->update(['status' => 'Archive']);
+            if ($archive) {
+                session()->flash('status', 'User has been successfully archived.');
+                return redirect()->route('list_of_users', $user_id);
+            } else {
+                session()->flash('error', 'An error has occurred, User has not been archived.');
+                return redirect()->route('list_of_users', $user_id);
+            }
         } else {
-            session()->flash('error', 'An error has occurred, User has not been archived.');
-            return redirect()->route('list_of_users', $user_id);
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
     }
 
     // RESTORE USER ----------------------------------------------------------------------------------------------------
     public function restoreUser($user_id, $employee_id)
     {
-        $restore = User::find($employee_id)->update(['status' => 'Active']);
-        if ($restore) {
-            session()->flash('status', 'User has been successfully restored.');
-            return redirect()->route('list_of_archive_users', $user_id);
+        if (Auth::user()->id == $user_id) {
+            $restore = User::find($employee_id)->update(['status' => 'Active']);
+            if ($restore) {
+                session()->flash('status', 'User has been successfully restored.');
+                return redirect()->route('list_of_archive_users', $user_id);
+            } else {
+                session()->flash('error', 'An error has occurred, User has not been restored.');
+                return redirect()->route('list_of_archive_users', $user_id);
+            }
         } else {
-            session()->flash('error', 'An error has occurred, User has not been restored.');
-            return redirect()->route('list_of_archive_users', $user_id);
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
     }
 
     // INBOX -----------------------------------------------------------------------------------------------------------
     public function inbox($user_id)
     {
-        $user_info = User::find($user_id);
-        $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(15);
-
-        return view('pages.inbox', compact('user_info', 'inboxes'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(15);
+    
+            return view('pages.inbox', compact('user_info', 'inboxes'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // AUDIT LOGS ------------------------------------------------------------------------------------------------------
     public function auditLogs($user_id)
     {
-        $user_info = User::find($user_id);
-        $histories = History::orderBy('date', 'DESC')->paginate(10);
-
-        return view('pages.audit-logs', compact('user_info', 'histories'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $histories = History::orderBy('date', 'DESC')->paginate(10);
+    
+            return view('pages.audit-logs', compact('user_info', 'histories'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 }

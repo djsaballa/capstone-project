@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
@@ -22,162 +23,240 @@ class ClientController extends Controller
     // LIST OF PROFILES ------------------------------------------------------------------------------------------------
     public function listOfProfiles($user_id)
     {
-        $user_info = User::find($user_id);
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 1) {
+                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'client_profiles'));
+            } elseif ($security_level_id == 2) {
+                $security_locales = Locale::where('district_id', $user_info->district_id)->orderBy('locale', 'ASC')->get();
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_locales', 'client_profiles'));
+            } elseif ($security_level_id == 3) {
+                $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+            } elseif ($security_level_id == 4) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
 
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
+                if ($user_info->role_id == 9) {
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+            } elseif ($security_level_id == 5) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
 
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 1) {
-            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 2) {
-            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 3) {
-            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
-                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
                 $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
             }
-        } elseif ($security_level_id == 5) {
-            $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
-
-        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
     }
 
     // VIEW PROFILE ----------------------------------------------------------------------------------------------------
     public function viewProfile1($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-        $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
-        $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-        $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
-        $medical_operations = MedicalOperation::all();
-
-        return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+            $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
+            $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
+            $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
+            $medical_operations = MedicalOperation::all();
+    
+            return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function viewProfile2($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-
-        return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+    
+            return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // FILTER PROFILES-------------------------------------------------------------------------------------------------
     public function filterLocaleProfiles($user_id, $locale_id)
     {
-        $user_info = User::find($user_id);
-
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 2) {
-            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('locale_id', $locale_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 3) {
-            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('locale_id', $locale_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
-                $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 2) {
+                $security_locales = Locale::where('district_id', $user_info->district_id)->orderBy('locale', 'ASC')->get();
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('id', $locale_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_locales', 'client_profiles'));
+            } elseif ($security_level_id == 3) {
+                $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('id', $locale_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+            } elseif ($security_level_id == 4) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
+                if ($user_info->role_id == 9) {
+                    $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+            } elseif ($security_level_id == 5) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            }
-        } elseif ($security_level_id == 5) {
-            $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        }
 
-        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+            }
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
     
     public function filterDistrictProfiles($user_id, $district_id)
     {
-        $user_info = User::find($user_id);
-
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 3) {
-            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 3) {
+                $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
-                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+            } elseif ($security_level_id == 4) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
+                if ($user_info->role_id == 9) {
+                    $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                    
+                    return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+                } else {
+                    $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+            } elseif ($security_level_id == 5) {
+                $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+            
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
             }
-        } elseif ($security_level_id == 5) {
-            $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-    }
-
-        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function filterDivisionProfiles($user_id, $division_id)
     {
-        $user_info = User::find($user_id);
-
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
-                $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
-                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
                 $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
             }
-        } elseif ($security_level_id == 5) {
-            $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
-        }
+            $security_divisions = Division::orderBy('division', 'ASC')->get();
 
-        return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles'));
+            return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // ADD PROFILE -----------------------------------------------------------------------------------------------------
     public function addProfilePrivacy($user_id)
     {
-        $user_info = User::find($user_id);
-        TempClientProfile::truncate();
-        session()->forget('family_comp');
-        session()->forget('medical_con');
-        session()->forget('medical_op');
-
-        return view('pages.client-profiles.add.add-profile-privacy', compact('user_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            TempClientProfile::truncate();
+            session()->forget('family_comp');
+            session()->forget('medical_con');
+            session()->forget('medical_op');
+    
+            return view('pages.client-profiles.add.add-profile-privacy', compact('user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addProfile1($user_id)
     {
-        $user_info = User::find($user_id);
-
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        return view('pages.client-profiles.add.add-profile-1', compact('user_info', 'divisions', 'districts', 'locales'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            return view('pages.client-profiles.add.add-profile-1', compact('user_info', 'divisions', 'districts', 'locales'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addProfile1Next(Request $request)
@@ -283,10 +362,17 @@ class ClientController extends Controller
 
     public function addProfile3($user_id)
     {
-        $user_info = User::find($user_id);
-        $diseases = Disease::all();
-
-        return view('pages.client-profiles.add.add-profile-3', compact('user_info', 'diseases'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $diseases = Disease::all();
+    
+            return view('pages.client-profiles.add.add-profile-3', compact('user_info', 'diseases'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addProfile3Next(Request $request)
@@ -334,9 +420,16 @@ class ClientController extends Controller
 
     public function addProfile4($user_id)
     {
-        $user_info = User::find($user_id);
-
-        return view('pages.client-profiles.add.add-profile-4', compact('user_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            return view('pages.client-profiles.add.add-profile-4', compact('user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addProfile4Next(Request $request)
@@ -380,9 +473,16 @@ class ClientController extends Controller
 
     public function addProfile5($user_id)
     {
-        $user_info = User::find($user_id);
-
-        return view('pages.client-profiles.add.add-profile-5', compact('user_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            return view('pages.client-profiles.add.add-profile-5', compact('user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function addProfile5Next(Request $request)
@@ -450,26 +550,40 @@ class ClientController extends Controller
 
     public function addProfile6($user_id)
     {
-        $user_info = User::find($user_id);
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-        $diseases = Disease::all();
-
-        return view('pages.client-profiles.add.add-profile-6', compact('user_info', 'divisions', 'districts', 'locales', 'diseases'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+            $diseases = Disease::all();
+    
+            return view('pages.client-profiles.add.add-profile-6', compact('user_info', 'divisions', 'districts', 'locales', 'diseases'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // EDIT PROFILE ----------------------------------------------------------------------------------------------------
     public function editProfile1($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-
-        return view('pages.client-profiles.edit.edit-profile-1', compact('user_info', 'client_profile_info', 'divisions', 'districts', 'locales'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            return view('pages.client-profiles.edit.edit-profile-1', compact('user_info', 'client_profile_info', 'divisions', 'districts', 'locales'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editProfile1Next(Request $request)
@@ -535,11 +649,18 @@ class ClientController extends Controller
 
     public function editProfile2($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-        $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
-
-        return view('pages.client-profiles.edit.edit-profile-2', compact('user_info', 'client_profile_info', 'family_compositions'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+            $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
+    
+            return view('pages.client-profiles.edit.edit-profile-2', compact('user_info', 'client_profile_info', 'family_compositions'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editProfile2Next(Request $request)
@@ -579,14 +700,21 @@ class ClientController extends Controller
 
     public function editProfile3($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-        $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-        $medical_operations = MedicalOperation::all();
-
-        $diseases = Disease::all();
-
-        return view('pages.client-profiles.edit.edit-profile-3', compact('user_info', 'client_profile_info', 'medical_conditions', 'medical_operations', 'diseases'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+            $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
+            $medical_operations = MedicalOperation::all();
+    
+            $diseases = Disease::all();
+    
+            return view('pages.client-profiles.edit.edit-profile-3', compact('user_info', 'client_profile_info', 'medical_conditions', 'medical_operations', 'diseases'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editProfile3MedConNext(Request $request)
@@ -675,10 +803,17 @@ class ClientController extends Controller
 
     public function editProfile4($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-
-        return view('pages.client-profiles.edit.edit-profile-4', compact('user_info', 'client_profile_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+    
+            return view('pages.client-profiles.edit.edit-profile-4', compact('user_info', 'client_profile_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editProfile4Next(Request $request)
@@ -722,11 +857,18 @@ class ClientController extends Controller
 
     public function editProfile5($user_id, $client_profile_id)
     {
-        $user_info = User::find($user_id);
-        $client_profile_info = ClientProfile::find($client_profile_id);
-        $diseases = Disease::all();
-
-        return view('pages.client-profiles.edit.edit-profile-5', compact('user_info', 'client_profile_info', 'diseases'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $client_profile_info = ClientProfile::find($client_profile_id);
+            $diseases = Disease::all();
+    
+            return view('pages.client-profiles.edit.edit-profile-5', compact('user_info', 'client_profile_info', 'diseases'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     public function editProfile5Next(Request $request)
@@ -763,183 +905,232 @@ class ClientController extends Controller
     // ARCHIVE ---------------------------------------------------------------------------------------------------------
     public function listOfArchiveProfiles($user_id)
     {
-        $user_info = User::find($user_id);
-        $divisions = Division::orderBy('division', 'ASC')->get();
-        $districts = District::orderBy('district', 'ASC')->get();
-        $locales = Locale::orderBy('locale', 'ASC')->get();
-        
-        $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-        $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-
-        $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-        if ($security_level_id == 1) {
-            $client_profiles_total = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->get();
-            $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 2) {
-            $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
-            $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 3) {
-            $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
-            $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
-            $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-        } elseif ($security_level_id == 4) {
-            if ($user_info->role_id == 9) {
-                $client_profiles_total = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->get();
-                $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-            } else {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+            
+            $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+            $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 1) {
+                $client_profiles_total = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->get();
+                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 2) {
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+                $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 3) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+                $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->get();
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $client_profiles_total = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->get();
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
+                    $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
                 $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
                 $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
             }
-        } elseif ($security_level_id == 5) {
-            $client_profiles_total = ClientProfile::where('status', 'Archive')->get();
-            $client_profiles = ClientProfile::where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+    
+            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
-
-        return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
     }
 
     // ARCHIVE PROFILE --------------------------------------------------------------------------------------------------
     public function archiveProfile($user_id, $client_profile_id)
     {
-        $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
-        if ($archive) {
-            $audit_log =
-            [
-                'action_taken' => 'Archive',
-                'date' => Carbon::now(),
-                'user_id' => $user_id,
-                'client_profile_id' => $client_profile_id
-            ];
-
-            $create = History::create($audit_log);
-            if ($create) {
-                session()->flash('status', 'Client Profile has been successfully archived.');
+        if (Auth::user()->id == $user_id) {
+            $archive = ClientProfile::find($client_profile_id)->update(['status' => 'Archive']);
+            if ($archive) {
+                $audit_log =
+                [
+                    'action_taken' => 'Archive',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+    
+                $create = History::create($audit_log);
+                if ($create) {
+                    session()->flash('status', 'Client Profile has been successfully archived.');
+                    return redirect()->route('list_of_client_profiles', $user_id);
+                }
+            } else {
+                session()->flash('error', 'An error has occurred, Client Profile has not been archived.');
                 return redirect()->route('list_of_client_profiles', $user_id);
             }
         } else {
-            session()->flash('error', 'An error has occurred, Client Profile has not been archived.');
-            return redirect()->route('list_of_client_profiles', $user_id);
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
     }
 
     // RESTORE PROFILE -------------------------------------------------------------------------------------------------
     public function restoreProfile($user_id, $client_profile_id)
     {
-        $restore = ClientProfile::find($client_profile_id)->update(['status' => 'Active']);
-        if ($restore) {
-            $audit_log =
-            [
-                'action_taken' => 'Restore',
-                'date' => Carbon::now(),
-                'user_id' => $user_id,
-                'client_profile_id' => $client_profile_id
-            ];
-
-            $create = History::create($audit_log);
-            if ($create) {
-                session()->flash('status', 'Client Profile has been successfully restored.');
+        if (Auth::user()->id == $user_id) {
+            $restore = ClientProfile::find($client_profile_id)->update(['status' => 'Active']);
+            if ($restore) {
+                $audit_log =
+                [
+                    'action_taken' => 'Restore',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+    
+                $create = History::create($audit_log);
+                if ($create) {
+                    session()->flash('status', 'Client Profile has been successfully restored.');
+                    return redirect()->route('list_of_archive_profiles', $user_id);
+                }
+            } else {
+                session()->flash('error', 'An error has occurred, Client Profile has not been restored.');
                 return redirect()->route('list_of_archive_profiles', $user_id);
             }
         } else {
-            session()->flash('error', 'An error has occurred, Client Profile has not been restored.');
-            return redirect()->route('list_of_archive_profiles', $user_id);
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
     }
  
      // FILTER ARCHIVE PROFILES -------------------------------------------------------------------------------------------------
      public function filterLocaleProfilesArchive($user_id, $locale_id)
      {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-         if ($security_level_id == 2) {
-             $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('locale_id', $locale_id)->pluck('id');
-             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-         } elseif ($security_level_id == 3) {
-             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('locale_id', $locale_id)->pluck('id');
-             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-         } elseif ($security_level_id == 4) {
-             if ($user_info->role_id == 9) {
-                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             } else {
-                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             }
-         } elseif ($security_level_id == 5) {
-             $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-         }
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+   
+            if ($security_level_id == 2) {
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('locale_id', $locale_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 3) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('locale_id', $locale_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
+                $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
      }
      
      public function filterDistrictProfilesArchive($user_id, $district_id)
      {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-         if ($security_level_id == 3) {
-             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
-             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-         } elseif ($security_level_id == 4) {
-             if ($user_info->role_id == 9) {
-                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
-                 $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             } else {
-                 $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
-                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             }
-         } elseif ($security_level_id == 5) {
-             $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
-             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+   
+            if ($security_level_id == 3) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            } elseif ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
+                $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+           }
+            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
         }
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
      }
  
      public function filterDivisionProfilesArchive($user_id, $division_id)
      {
-         $user_info = User::find($user_id);
- 
-         $divisions = Division::orderBy('division', 'ASC')->get();
-         $districts = District::orderBy('district', 'ASC')->get();
-         $locales = Locale::orderBy('locale', 'ASC')->get();
- 
-         $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
-
-         if ($security_level_id == 4) {
-             if ($user_info->role_id == 9) {
-                 $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
-                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             } else {
-                 $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
-                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-             }
-         } elseif ($security_level_id == 5) {
-             $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
-             $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
-         }
-         return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+    
+            $divisions = Division::orderBy('division', 'ASC')->get();
+            $districts = District::orderBy('district', 'ASC')->get();
+            $locales = Locale::orderBy('locale', 'ASC')->get();
+    
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+   
+            if ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('assigned_doctor_id', $user_info->id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                } else {
+                    $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                    $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+                }
+            } elseif ($security_level_id == 5) {
+                $filtered_locale_id = Locale::where('division_id', $division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Archive')->orderBy('created_at', 'DESC')->paginate(10);
+            }
+            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'divisions', 'districts', 'locales', 'client_profiles', 'client_profiles_total'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
      }
      
      public function store(Request $request)
      {
-         $request->validate([
-             'addMoreInputFields.*.subject' => 'required'
-         ]);
-      
-         foreach ($request->addMoreInputFields as $key => $value) {
-             Student::create($value);
-         }
-      
-         return back()->with('success', 'New subject has been added.');
+        if (Auth::user()->id == $user_id) {
+            $request->validate([
+                'addMoreInputFields.*.subject' => 'required'
+            ]);
+         
+            foreach ($request->addMoreInputFields as $key => $value) {
+                Student::create($value);
+            }
+         
+            return back()->with('success', 'New subject has been added.');
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
      }
 }
