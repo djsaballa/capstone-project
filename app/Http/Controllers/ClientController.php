@@ -501,7 +501,7 @@ class ClientController extends Controller
             $background_info_attachments = [];
 
             foreach ($backgroundInfoAttachments as $backgroundInfoAttachment) {
-                $filename = $backgroundInfoAttachment->store('public');
+                $filename = $backgroundInfoAttachment->storeAs('images', $filename , 'public');
                 $background_info_attachment = basename($filename);
                 array_push($background_info_attachments, $background_info_attachment);
             }
@@ -518,7 +518,7 @@ class ClientController extends Controller
             $action_taken_attachments = [];
 
             foreach ($actionTakenAttachments as $actionTakenAttachment) {
-                $filename = $actionTakenAttachment->store('public');
+                $filename = $actionTakenAttachment->storeAs('images', $filename , 'public');
                 $action_taken_attachment = basename($filename);
                 array_push($action_taken_attachments, $action_taken_attachment);
             }
