@@ -185,10 +185,10 @@
                                     <a class="flex items-center mr-3 text-primary"
                                         href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                    <a class="flex items-center mr-3 "
+                                    <a class="flex items-center mr-3 text-success "
                                         href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
-                                    <a class="flex items-center mr-3"
+                                    <a class="flex items-center mr-3 text-info"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
                                     @if (

@@ -2,11 +2,11 @@
 :root {
     --color-primary: theme("colors.rgb.violet.950");
     --color-secondary: theme("colors.rgb.slate.200");
-    --color-success: theme("colors.rgb.lime.500");
+    --color-success: theme("colors.rgb.emerald.600");
     --color-info: theme("colors.rgb.cyan.500");
-    --color-warning: theme("colors.rgb.yellow.400");
-    --color-pending: theme("colors.rgb.orange.500");
-    --color-danger: theme("colors.rgb.red.600");
+    --color-warning: theme("colors.rgb.yellow.500");
+    --color-pending: theme("colors.rgb.orange.600");
+    --color-danger: theme("colors.rgb.red.700");
     --color-light: theme("colors.rgb.slate.100");
     --color-dark: theme("colors.rgb.slate.800");
     --color-slate-50: theme("colors.rgb.slate.50");
