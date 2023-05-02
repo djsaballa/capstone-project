@@ -191,10 +191,20 @@
                                     <a class="flex items-center mr-3"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
-                                    <a class="flex items-center mr-3 text-danger"
+                                    @if (
+                                            $user_info->role->id == 2 ||
+                                            $user_info->role->id == 4 ||
+                                            $user_info->role->id == 5 ||
+                                            $user_info->role->id == 6 ||
+                                            $user_info->role->id == 7 ||
+                                            $user_info->role->id == 10 ||
+                                            $user_info->role->id == 11
+                                        )
+                                        <a class="flex items-center mr-3 text-danger"
                                         onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"
                                         data-tw-target="#archive-confirmation-modal"> <i data-lucide="trash-2"
                                             class="w-4 h-4 mr-1"></i> Archive </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

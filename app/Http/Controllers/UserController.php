@@ -50,7 +50,7 @@ class UserController extends Controller
 
                 $request->session()->regenerateToken();
 
-                return back()->withErrors(['username' => 'Invalid login credentials']);
+                return back()->withErrors(['username' => 'Woop']);
             }
         } else {
             return back()->withErrors(['username' => 'Invalid login credentials']);
@@ -86,7 +86,7 @@ class UserController extends Controller
                 } else {
                     $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                 }
-            } elseif ($security_level_id == 5) {
+            } elseif ($security_level_id >= 5) {
                 $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
             }
     
@@ -162,7 +162,11 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
-            $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
+            if ($user_info->role->id == 11) {
+                $roles = Role::where('id', '!=', '11')->orWhereNull('id')->orderBy('id', 'ASC')->get();
+            } else {
+                $roles = Role::where('id', '<=', '9')->orderBy('id', 'ASC')->get();
+            }
             $divisions = Division::orderBy('division', 'ASC')->get();
             $districts = District::orderBy('district', 'ASC')->get();
             $locales = Locale::orderBy('locale', 'ASC')->get();
@@ -239,7 +243,11 @@ class UserController extends Controller
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
             $employee_info = User::find($employee_id);
-            $roles = Role::where('role', '!=', 'Admin')->orWhereNull('role')->orderBy('id', 'ASC')->get();
+            if ($user_info->role->id == 11) {
+                $roles = Role::where('id', '!=', '11')->orWhereNull('id')->orderBy('id', 'ASC')->get();
+            } else {
+                $roles = Role::where('id', '<=', '9')->orderBy('id', 'ASC')->get();
+            }
             $divisions = Division::orderBy('division', 'ASC')->get();
             $districts = District::orderBy('district', 'ASC')->get();
             $locales = Locale::orderBy('locale', 'ASC')->get();
@@ -371,7 +379,7 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
-            $inboxes = Inbox::orderBy('date_sent', 'DESC')->paginate(15);
+            $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('date_sent', 'DESC')->paginate(15);
     
             return view('pages.inbox', compact('user_info', 'inboxes'));
         } else {

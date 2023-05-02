@@ -25,6 +25,7 @@ class InboxSeeder extends Seeder
                     "content" => $data['1'],
                     "date_sent" => $data['2'],
                     "sender_user_id" => $data['3'],
+                    "receiver_user_id" => $data['4'],
                 ]);
             }
             $firstline = false;

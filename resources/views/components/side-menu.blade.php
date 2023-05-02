@@ -23,6 +23,7 @@
             </div>
             </a>
         </li>
+
         <li>
             @if (preg_match('(client_profile|progress)', $current_route))
                 <a href="{{ route('list_of_client_profiles', $user_info->id) }}" class="side-menu side-menu--active">
@@ -36,7 +37,8 @@
             </div>
             </a>
         </li>
-        </li>
+        
+        @if ($user_info->role->id >= 6)
         <li>
             @if (preg_match('(list_of_users|edit_user|add_user|view_user)', $current_route))
                 <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu side-menu--active">
@@ -50,6 +52,8 @@
             </div>
             </a>
         </li>
+        @endif
+
         <li>
             @if (preg_match('(inbox)', $current_route))
                 <a href="{{ route('inbox', $user_info->id) }}" class="side-menu side-menu--active">
@@ -63,6 +67,8 @@
             </div>
             </a>
         </li>
+
+        @if ($user_info->role->id >= 6)
         <li>
             @if (preg_match('(audit_logs)', $current_route))
                 <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu side-menu--active">
@@ -76,7 +82,9 @@
             </div>
             </a>
         </li>
+        @endif
 
+        @if ($user_info->role->id == 6 || $user_info->role->id == 10 || $user_info->role->id == 11)
         <li>
             @if (preg_match('(archive)', $current_route))
                 <a href="javascript:;.html" class="side-menu side-menu--active">
@@ -90,16 +98,17 @@
                 </div>
             </a>
             <ul class="menu__sub-open">
-                <li>
-                @if (preg_match('(archive_profiles)', $current_route))
-                    <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu side-menu--active">
-                @else
-                    <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu">
-                @endif
-                        <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
-                        <div class="side-menu__title"> Client Profiles </div>
-                    </a>
-                </li>
+                    <li>
+                    @if (preg_match('(archive_profiles)', $current_route))
+                        <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu side-menu--active">
+                    @else
+                        <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu">
+                    @endif
+                            <div class="side-menu__icon"> <i data-lucide="users"></i> </div>
+                            <div class="side-menu__title"> Client Profiles </div>
+                        </a>
+                    </li>
+                @if ($user_info->role->id == 10 || $user_info->role->id == 11)
                 <li>
                     @if (preg_match('(archive_users)', $current_route, ))
                         <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu side-menu--active">
@@ -110,7 +119,9 @@
                         <div class="side-menu__title"> Users </div>
                     </a>
                 </li>
+                @endif
             </ul>
         </li>
+        @endif
     </ul>
 </nav>

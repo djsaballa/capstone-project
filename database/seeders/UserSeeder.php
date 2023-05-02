@@ -21,6 +21,11 @@ class UserSeeder extends Seeder
         $firstline = true;
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
+                if (!empty($data['1'])) {
+                    $data1 = $data['1'];
+                 } else {
+                     $data1 = null;
+                 }
                 if (!empty($data['8'])) {
                    $data8 = $data['8'];
                 } else {
@@ -39,7 +44,7 @@ class UserSeeder extends Seeder
 
                 User::create([
                     "first_name" => $data['0'],
-                    "middle_name" => $data['1'],
+                    "middle_name" => $data1,
                     "last_name" => $data['2'],
                     "username" => $data['3'],
                     "password" => Hash::make($data['4']),

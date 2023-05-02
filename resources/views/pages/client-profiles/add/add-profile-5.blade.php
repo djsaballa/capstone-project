@@ -93,7 +93,7 @@
                 </div>
                  
                 <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                <div data-single="true" action="/file-upload" class="dropzone">
+                <div data-single="true" action="/file-upload" class="">
                     <div class="fallback">
                         <input id="background-info-attachment" name="backgroundInfoAttachments[]" type="file" multiple/>
                         <input type="hidden" name="backgroundInfoAttachmentBackUp" value="{{ $old_input ? $old_input->background_info_attachment : null }}">
@@ -107,7 +107,7 @@
                     <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ old('actionTaken', $old_input->action_taken ?? null) }}</textarea>
                 </div>
                 <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                <div data-single="true" action="/file-upload" class="dropzone">
+                <div data-single="true" action="/file-upload" class="">
                     <div class="fallback">
                         <input id="action-taken-attachment" name="actionTakenAttachments[]" type="file" multiple/>
                         <input type="hidden" name="actionTakenAttachmentBackUp" value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
