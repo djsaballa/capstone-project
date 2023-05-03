@@ -118,7 +118,7 @@ function filter1Profiles(user_id) {
   }
 }
 
-function filterProfilesArchive(user_id) {
+function filter3ProfilesArchive(user_id) {
   var locale = document.getElementById('locale-filter');
   var locale_id = locale.options[locale.selectedIndex].value;
   
@@ -135,4 +135,27 @@ function filterProfilesArchive(user_id) {
   } else if(division_id) {
     window.location.href = "/filter-division-profiles-archive/" + user_id + "/" + division_id;
   }
+}
+
+function filter2ProfilesArchive(user_id) {
+  var locale = document.getElementById('locale-filter');
+  var locale_id = locale.options[locale.selectedIndex].value;
+  
+  var district = document.getElementById('district-filter');
+  var district_id = district.options[district.selectedIndex].value;
+  
+  if(locale_id) {
+    window.location.href = "/filter-locale-profiles-archive/" + user_id + "/" + locale_id;
+  } else if(district_id) {
+    window.location.href = "/filter-district-profiles-archive/" + user_id + "/" + district_id;
+  } 
+}
+
+function filter1ProfilesArchive(user_id) {
+  var locale = document.getElementById('locale-filter');
+  var locale_id = locale.options[locale.selectedIndex].value;
+ 
+  if(locale_id) {
+    window.location.href = "/filter-locale-profiles-archive/" + user_id + "/" + locale_id;
+  } 
 }

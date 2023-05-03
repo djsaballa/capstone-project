@@ -126,7 +126,7 @@
                         <label for="regular-form-1" class="form-label">List of Division</label>
                         <div class="flex w-full sm:w-auto mr-2">
                             <select class="form-select box ml-2" id="division-filter-3"
-                                name="division-filter-3" onchange="loadDistricts( {{ $districts_json }} )">
+                                name="division-filter-3" onchange="loadDistricts3( {{ $districts_json }} )">
                                 <option value="" selected disabled hidden>Select Division</option>
                                 @foreach ($security_divisions as $security_division)
                                     <option value="{{ $security_division->id }}">{{ $security_division->division }}</option>
@@ -136,7 +136,7 @@
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
                             <select class="form-select box ml-2" id="district-filter-3"
-                                name="district-filter-3" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
+                                name="district-filter-3" disabled="true" onchange="loadLocales3( {{ $locales_json }} )">
                                 <option value="" selected disabled hidden>Select District</option>
                             </select>
                         </div>
@@ -148,7 +148,7 @@
                             </select>
                         </div>
                         <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                            <button class="btn btn-primary w-24 ml-2" onclick="filter3Profiles( {{ $user_info->id }} )">Go</button>
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter3ProfilesArchive( {{ $user_info->id }} )">Go</button>
                             <a class="btn btn-secondary w-24 ml-2"
                             href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
                         </div>
@@ -158,7 +158,7 @@
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
                             <select class="form-select box ml-2" id="district-filter-2"
-                                name="district-filter-2" onchange="loadLocales( {{ $locales_json }} )">
+                                name="district-filter-2" onchange="loadLocales2( {{ $locales_json }} )">
                                 <option value="" selected disabled hidden>Select District</option>
                                 @foreach ($security_districts as $security_district)
                                     <option value="{{ $security_district->id }}">{{ $security_district->district }}</option>
@@ -173,7 +173,7 @@
                             </select>
                         </div>
                         <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                            <button class="btn btn-primary w-24 ml-2" onclick="filter2Profiles( {{ $user_info->id }} )">Go</button>
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter2ProfilesArchive( {{ $user_info->id }} )">Go</button>
                             <a class="btn btn-secondary w-24 ml-2"
                             href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
                         </div>
@@ -190,7 +190,7 @@
                             </select>
                         </div>
                         <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                            <button class="btn btn-primary w-24 ml-2" onclick="filter1Profiles( {{ $user_info->id }} )">Go</button>
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter1ProfilesArchive( {{ $user_info->id }} )">Go</button>
                             <a class="btn btn-secondary w-24 ml-2"
                             href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
                         </div>
