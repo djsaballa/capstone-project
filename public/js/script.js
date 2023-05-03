@@ -119,13 +119,13 @@ function filter1Profiles(user_id) {
 }
 
 function filter3ProfilesArchive(user_id) {
-  var locale = document.getElementById('locale-filter');
+  var locale = document.getElementById('locale-filter-3');
   var locale_id = locale.options[locale.selectedIndex].value;
   
-  var district = document.getElementById('district-filter');
+  var district = document.getElementById('district-filter-3');
   var district_id = district.options[district.selectedIndex].value;
   
-  var division = document.getElementById('division-filter');
+  var division = document.getElementById('division-filter-3');
   var division_id = division.options[division.selectedIndex].value;
   
   if(locale_id) {
@@ -138,10 +138,10 @@ function filter3ProfilesArchive(user_id) {
 }
 
 function filter2ProfilesArchive(user_id) {
-  var locale = document.getElementById('locale-filter');
+  var locale = document.getElementById('locale-filter-2');
   var locale_id = locale.options[locale.selectedIndex].value;
   
-  var district = document.getElementById('district-filter');
+  var district = document.getElementById('district-filter-2');
   var district_id = district.options[district.selectedIndex].value;
   
   if(locale_id) {
@@ -152,7 +152,7 @@ function filter2ProfilesArchive(user_id) {
 }
 
 function filter1ProfilesArchive(user_id) {
-  var locale = document.getElementById('locale-filter');
+  var locale = document.getElementById('locale-filter-1');
   var locale_id = locale.options[locale.selectedIndex].value;
  
   if(locale_id) {
