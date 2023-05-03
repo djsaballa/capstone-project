@@ -189,11 +189,12 @@
                                                     href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report
                                                 </a>
-                                                @if ($user_info->role->id == 6 || $user_info->role->id >= 10)
+                                                @if ($user_info->role_id == 6 || $user_info->role_id >= 10)
                                                 <a class="flex items-center mr-3 text-primary" href="javascript:;"
                                                     onclick="getProfileId( {{ $client_profile->id }} )"
                                                     data-tw-toggle="modal" data-tw-target="#restore-confirmation-modal">
                                                     <i data-lucide="rotate-ccw" class="w-4 h-4 mr-1"></i> Restore </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

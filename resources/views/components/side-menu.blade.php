@@ -38,7 +38,7 @@
             </a>
         </li>
         
-        @if ($user_info->role->id >= 6)
+        @if ($user_info->role_id >= 6)
         <li>
             @if (preg_match('(list_of_users|edit_user|add_user|view_user)', $current_route))
                 <a href="{{ route('list_of_users', $user_info->id) }}" class="side-menu side-menu--active">
@@ -68,7 +68,7 @@
             </a>
         </li>
 
-        @if ($user_info->role->id >= 6)
+        @if ($user_info->role_id >= 6)
         <li>
             @if (preg_match('(audit_logs)', $current_route))
                 <a href="{{ route('audit_logs', $user_info->id) }}" class="side-menu side-menu--active">
@@ -84,7 +84,7 @@
         </li>
         @endif
 
-        @if ($user_info->role->id == 6 || $user_info->role->id == 10 || $user_info->role->id == 11)
+        @if ($user_info->role_id == 6 || $user_info->role_id == 10 || $user_info->role_id == 11)
         <li>
             @if (preg_match('(archive)', $current_route))
                 <a href="javascript:;.html" class="side-menu side-menu--active">
@@ -108,7 +108,7 @@
                             <div class="side-menu__title"> Client Profiles </div>
                         </a>
                     </li>
-                @if ($user_info->role->id == 10 || $user_info->role->id == 11)
+                @if ($user_info->role_id == 10 || $user_info->role_id == 11)
                 <li>
                     @if (preg_match('(archive_users)', $current_route, ))
                         <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu side-menu--active">

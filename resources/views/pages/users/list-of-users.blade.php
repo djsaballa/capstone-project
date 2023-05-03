@@ -20,29 +20,13 @@
         </div>
     @endif
     <div class="grid grid-cols-12 gap-6 mt-5">
+        @if ($user_info->role_id == 10 || $user_info->role_id == 11)
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <a href="{{ route('add_user', $user_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New User</button>
             </a>
-            <div class="dropdown">
-                <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-lucide="plus"></i>
-                    </span>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="users" class="w-4 h-4 mr-2"></i> Add
-                                Group </a>
-                        </li>
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="message-circle"
-                                    class="w-4 h-4 mr-2"></i> Send Message </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
+        @endif
         <!-- BEGIN: Users Layout -->
         @foreach ($users as $user)
             <div class="intro-y col-span-12 md:col-span-6">
@@ -75,10 +59,11 @@
                             @endif
                         </div>
                         <div class="flex mt-4 lg:mt-0">
-                            
+                            @if ($user_info->role_id == 10 || $user_info->role_id == 11)
                             <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
                             </a>
+                            @endif
                             <a href="{{ route('view_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
                             </a>

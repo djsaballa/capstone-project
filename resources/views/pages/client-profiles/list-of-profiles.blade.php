@@ -25,29 +25,13 @@
         List of Client Profiles
     </h2>
     <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+        @if ($user_info->role_id == 1 || $user_info->role_id == 10 || $user_info->role_id == 11)
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <a href="{{ route('add_client_profile_privacy', $user_info->id) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add New Profiles</button>
             </a>
-            <div class="dropdown">
-                <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-lucide="plus"></i>
-                    </span>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
-                                Print </a>
-                        </li>
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
-                                Export to PDF </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
+        @endif
         <!-- START DROPDOWN -->
         @php
             use App\Models\District;
@@ -182,9 +166,11 @@
                             </td>
                             <td class="table-report__action w-400">
                                 <div class="flex justify-center items-center">
+                                    @if ($user_info->role_id == 1 || $user_info->role_id == 6 || $user_info->role_id == 10 || $user_info->role_id == 11)
                                     <a class="flex items-center mr-3 text-primary"
                                         href="{{ route('edit_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                    @endif
                                     <a class="flex items-center mr-3 text-success "
                                         href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
@@ -192,13 +178,13 @@
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
                                     @if (
-                                            $user_info->role->id == 2 ||
-                                            $user_info->role->id == 4 ||
-                                            $user_info->role->id == 5 ||
-                                            $user_info->role->id == 6 ||
-                                            $user_info->role->id == 7 ||
-                                            $user_info->role->id == 10 ||
-                                            $user_info->role->id == 11
+                                            $user_info->role_id == 2 ||
+                                            $user_info->role_id == 4 ||
+                                            $user_info->role_id == 5 ||
+                                            $user_info->role_id == 6 ||
+                                            $user_info->role_id == 7 ||
+                                            $user_info->role_id == 10 ||
+                                            $user_info->role_id == 11
                                         )
                                         <a class="flex items-center mr-3 text-danger"
                                         onclick="getProfileId( {{ $client_profile->id }} )" data-tw-toggle="modal"

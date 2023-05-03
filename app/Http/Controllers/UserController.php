@@ -162,7 +162,7 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
-            if ($user_info->role->id == 11) {
+            if ($user_info->role_id == 11) {
                 $roles = Role::where('id', '!=', '11')->orWhereNull('id')->orderBy('id', 'ASC')->get();
             } else {
                 $roles = Role::where('id', '<=', '9')->orderBy('id', 'ASC')->get();
@@ -243,7 +243,7 @@ class UserController extends Controller
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
             $employee_info = User::find($employee_id);
-            if ($user_info->role->id == 11) {
+            if ($user_info->role_id == 11) {
                 $roles = Role::where('id', '!=', '11')->orWhereNull('id')->orderBy('id', 'ASC')->get();
             } else {
                 $roles = Role::where('id', '<=', '9')->orderBy('id', 'ASC')->get();

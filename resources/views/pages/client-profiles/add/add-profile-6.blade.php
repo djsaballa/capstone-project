@@ -346,7 +346,9 @@
 
                                 </div>
                             @endif
-                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                            @php
+                                $family_comps = session()->get('family_comp');
+                            @endphp
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                 <div class="font-medium text-base mb-5">Family Composition</div>
                                 <table class="table table-bordered" id="dynamicAddRemove">
@@ -397,7 +399,9 @@
                             </div>
 
                             {{-- Step 3 --}}
-                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                            @php
+                                $medical_cons = session()->get('medical_con');
+                            @endphp
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                                 <div class="font-medium text-base mb-5 ">Medical Condition</div>
                                 <table class="table table-bordered" id="dynamicAddRemoveMedCon">
@@ -440,6 +444,9 @@
                                     </tr>
                                 </table>
 
+                                @php
+                                    $medical_ops = session()->get('medical_op');
+                                @endphp
                                 <div class="mt-10 font-medium text-base mb-5">Operations</div>
                                 <table class="table table-bordered" id="dynamicAddRemoveOperation">
                                     <tr>
@@ -489,7 +496,6 @@
 
                             {{-- Step 4 --}}
                             <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
-                                <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                 <div class="mt-5">
                                     <div class="font-medium text-base mb-5">Contact Persons</div>
                                     <table class="table table-bordered" id="dynamicAddRemoveOperation">
