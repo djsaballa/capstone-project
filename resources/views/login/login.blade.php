@@ -51,10 +51,7 @@
                             <input type="password" class="intro-x login__input form-control py-3 px-4 block mt-4"
                                 placeholder="Password" name="password">
                         </div>
-                        <div class="intro-x flex justify-between text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
-                            <div class="flex items-center ">
-                                <a href="">Forgot Password?</a>
-                            </div>
+                        <div class="intro-x flex justify-end text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
                             <div class="flex items-center">
                                 <button class="btn btn-primary py-3 px-4 w-full xl:w-32 align-top"
                                 type="submit">Login</button>
