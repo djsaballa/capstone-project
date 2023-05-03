@@ -1,11 +1,11 @@
-function loadDistricts(districts_json) {
+function loadDistricts3(districts_json) {
   var districts = districts_json;
   // Get the selected division ID
-  var division = document.getElementById('division-filter');
+  var division = document.getElementById('division-filter-3');
   var division_id = division.options[division.selectedIndex].value;
 
   // Get the "District" dropdown
-  var district_dropdown = document.getElementById('district-filter');
+  var district_dropdown = document.getElementById('district-filter-3');
   
   // Filter the districts based on the selected division
   var filtered_districts = districts.filter(function(district) {
@@ -24,14 +24,40 @@ function loadDistricts(districts_json) {
   district_dropdown.disabled = false;
 }
 
-function loadLocales(locales_json) {
+function loadLocales3(locales_json) {
   var locales = locales_json;
   // Get the selected category ID
-  var district = document.getElementById('district-filter');
+  var district = document.getElementById('district-filter-3');
   var district_id = district.options[district.selectedIndex].value;
 
   // Get the "Locale" dropdown
-  var locale_dropdown = document.getElementById('locale-filter');
+  var locale_dropdown = document.getElementById('locale-filter-3');
+
+  // Filter the locales based on the selected district
+  var filtered_locales = locales.filter(function(locale) {
+      return locale.district_id == district_id;
+  });
+
+  // Generate the options for the "Locale" dropdown
+  var locale_options = '<option value="" selected disabled>Select Locale</option>';
+  for (var i = 0; i < filtered_locales.length; i++) {
+      var locale = filtered_locales[i];
+      locale_options += '<option value="' + locale.id + '">' + locale.locale + '</option>';
+  }
+
+  // Update the "Locale" dropdown with the new options
+  locale_dropdown.innerHTML = (locale_options += '<option value=""> N/A </option>' );
+  locale_dropdown.disabled = false;
+}
+
+function loadLocales2(locales_json) {
+  var locales = locales_json;
+  // Get the selected category ID
+  var district = document.getElementById('district-filter-2');
+  var district_id = district.options[district.selectedIndex].value;
+
+  // Get the "Locale" dropdown
+  var locale_dropdown = document.getElementById('locale-filter-2');
 
   // Filter the locales based on the selected district
   var filtered_locales = locales.filter(function(locale) {

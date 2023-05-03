@@ -29,6 +29,9 @@
                 @php
                     $brethren = $client_profiles_total->whereNotNull('baptism_date');
                     $non_brethren = $client_profiles_total->whereNull('baptism_date');
+                    $terminated = $client_profiles_total->where('status', 'Terminated');
+                    $expired = $client_profiles_total->where('status', 'Expired');
+                    $closed = $client_profiles_total->where('status', 'Closed');
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -74,9 +77,8 @@
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-lucide="user" class="report-box__icon text-success"></i>
-
                                         </div>
-                                        <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($terminated) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Terminated Cases</div>
                                     </div>
                                 </div>
@@ -86,9 +88,19 @@
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-lucide="user" class="report-box__icon text-success"></i>
-
                                         </div>
-                                        <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($expired) }}</div>
+                                        <div class="text-base text-slate-500 mt-1">Expired Cases</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                                <div class="report-box zoom-in">
+                                    <div class="box p-5">
+                                        <div class="flex">
+                                            <i data-lucide="user" class="report-box__icon text-success"></i>
+                                        </div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($closed) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Closed Cases</div>
                                     </div>
                                 </div>
@@ -106,39 +118,83 @@
                         
                         $locales = Locale::all();
                         $locales_json = $locales->toJson();
+
+                        $security_level = $user_info->getSecurityLevel($user_info->role_id);
                     @endphp
                     <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
+                    @if ($security_level  >= 4)
                         <label for="regular-form-1" class="form-label">List of Division</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-division-filter"
-                                name="list-of-profile-division-filter" onchange="loadDistricts( {{ $districts_json }} )">
+                            <select class="form-select box ml-2" id="division-filter-3"
+                                name="division-filter-3" onchange="loadDistricts( {{ $districts_json }} )">
                                 <option value="" selected disabled hidden>Select Division</option>
-                                @foreach ($divisions as $division)
-                                    <option value="{{ $division->id }}">{{ $division->division }}</option>
+                                @foreach ($security_divisions as $security_division)
+                                    <option value="{{ $security_division->id }}">{{ $security_division->division }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-district-filter"
-                                name="list-of-profile-district-filter" disabled="true"
-                                onchange="loadLocales( {{ $locales_json }} )">
+                            <select class="form-select box ml-2" id="district-filter-3"
+                                name="district-filter-3" disabled="true" onchange="loadLocales( {{ $locales_json }} )">
                                 <option value="" selected disabled hidden>Select District</option>
                             </select>
                         </div>
                         <label for="regular-form-1" class="form-label">List of Locale</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            <select class="form-select box ml-2" id="list-of-profile-locale-filter"
-                                name="list-of-profile-locale-filter" disabled="true">
+                            <select class="form-select box ml-2" id="locale-filter-3" name="locale-filter-3"
+                                disabled="true">
                                 <option value="" selected disabled hidden>Select Locale</option>
                             </select>
                         </div>
                         <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                            <button class="btn btn-primary w-24 ml-2"
-                                onclick="filterProfilesArchive( {{ $user_info->id }} )">Go</button>
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter3Profiles( {{ $user_info->id }} )">Go</button>
                             <a class="btn btn-secondary w-24 ml-2"
-                                href="{{ route('list_of_archive_profiles', $user_info->id) }}">Reset</a>
+                            href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
                         </div>
+                    @endif
+
+                    @if ($security_level  == 3)
+                        <label for="regular-form-1" class="form-label">List of District</label>
+                        <div class="flex w-full sm:w-auto mr-2">
+                            <select class="form-select box ml-2" id="district-filter-2"
+                                name="district-filter-2" onchange="loadLocales( {{ $locales_json }} )">
+                                <option value="" selected disabled hidden>Select District</option>
+                                @foreach ($security_districts as $security_district)
+                                    <option value="{{ $security_district->id }}">{{ $security_district->district }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label for="regular-form-1" class="form-label">List of Locale</label>
+                        <div class="flex w-full sm:w-auto mr-2">
+                            <select class="form-select box ml-2" id="locale-filter-2" name="locale-filter-2"
+                                disabled="true">
+                                <option value="" selected disabled hidden>Select Locale</option>
+                            </select>
+                        </div>
+                        <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter2Profiles( {{ $user_info->id }} )">Go</button>
+                            <a class="btn btn-secondary w-24 ml-2"
+                            href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
+                        </div>
+                    @endif
+                    
+                    @if ($security_level  == 2)
+                        <label for="regular-form-1" class="form-label">List of Locale</label>
+                        <div class="flex w-full sm:w-auto mr-2">
+                            <select class="form-select box ml-2" id="locale-filter-1" name="locale-filter">
+                                <option value="" selected disabled hidden>Select Locale</option>
+                                @foreach ($security_locales as $security_locale)
+                                    <option value="{{ $security_locale->id }}">{{ $security_locale->locale }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
+                            <button class="btn btn-primary w-24 ml-2" onclick="filter1Profiles( {{ $user_info->id }} )">Go</button>
+                            <a class="btn btn-secondary w-24 ml-2"
+                            href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
+                        </div>
+                    @endif
                     </div>
                     <!-- END DROPDOWN -->
                     <!-- BEGIN: Data List -->
@@ -159,9 +215,11 @@
                                         <td class="w-40">
                                             <div class="flex">
                                                 <div class="w-10 h-10 image-fit zoom-in">
-                                                    <img alt="ADDFII" class="tooltip rounded-full"
-                                                        src=" {{ asset('dist/images/preview-1.jpg') }}"
-                                                        title="Uploaded at 18 April 2021">
+                                                    @if ( !empty($client_profile->picture) )
+                                                        <img src="{{ asset('storage/'.$client_profile->picture) }}" class="rounded-full" alt="Client Image">
+                                                    @else
+                                                        <img alt="Client Image" class="rounded-full" src=" {{ asset('dist/images/profile-1.jpg')}}">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
@@ -180,13 +238,13 @@
                                             </div>
                                         </td>
                                         <td class="table-report__action w-400">
-                                            <div class="flex justify-center items-center">
+                                            <div class="flex justify-center items-center text-success">
                                                 <a class="flex items-center mr-3 "
-                                                    href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
+                                                    href="{{ route('view_archive_profile_1', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
 
-                                                <a class="flex items-center mr-3"
-                                                    href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
+                                                <a class="flex items-center mr-3 text-info"
+                                                    href="{{ route('view_archive_report', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report
                                                 </a>
                                                 @if ($user_info->role_id == 6 || $user_info->role_id >= 10)

@@ -21,6 +21,9 @@ Route::middleware('auth')->group(function () {
   // LIST OF ARCHIVE USER
   Route::get('/list-of-archive-users/{user_id}', [UserController::class, 'listOfArchiveUsers'])->name('list_of_archive_users');
 
+  // VIEW ARCHIVE USER
+  Route::get('/view-archive-user/{user_id}/{employee_id}', [UserController::class, 'viewArchiveUser'])->name('view_archive_user');
+
   // ARCHIVE ADN RESTORE USER
   Route::get('/archive-user/{user_id}/{employee_id}', [UserController::class, 'archiveUser'])->name('archive_user');
   Route::get('/restore-user/{user_id}/{employee_id}', [UserController::class, 'restoreUser'])->name('restore_user');

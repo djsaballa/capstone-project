@@ -51,6 +51,10 @@ Route::middleware('auth')->group(function () {
   // LIST OF ARCHIVE PROFILE
   Route::get('/list-of-archive-profiles/{user_id}', [ClientController::class, 'listOfArchiveProfiles'])->name('list_of_archive_profiles');
 
+  // VIEW ARCHIVE PROFILE
+  Route::get('/view-archive-profile-1/{user_id}/{client_profile_id}', [ClientController::class, 'viewArchiveProfile1'])->name('view_archive_profile_1');
+  Route::get('/view-archive-profile-2/{user_id}/{client_profile_id}', [ClientController::class, 'viewArchiveProfile2'])->name('view_archive_profile_2');
+
   // ARCHIVE AND RESTORE CLIENT PROFILE
   Route::get('/archive-profile/{user_id}/{client_profile_id}', [ClientController::class, 'archiveProfile'])->name('archive_profile');
   Route::get('/restore-profile/{user_id}/{client_profile_id}', [ClientController::class, 'restoreProfile'])->name('restore_profile');

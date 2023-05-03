@@ -5,11 +5,6 @@
         <h2 class="intro-y text-lg font-medium mr-auto">
             View User
         </h2>
-        @if ($user_info->role_id == 10 || $user_info->role_id == 11)
-            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                <a href="{{ route('edit_user', [$user_info->id, $employee_info->id]) }}" class="btn btn-primary w-24 ml-2">Edit</a>
-            </div>
-        @endif
     </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box lg:mt-5">
@@ -99,7 +94,7 @@
                             </div>
                         </div>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <a href="{{ route('list_of_users', [$user_info->id]) }}" class="btn btn-primary w-24 ml-2">Return</a>
+                            <a href="{{ route('list_of_archive_users', [$user_info->id]) }}" class="btn btn-primary w-24 ml-2">Return</a>
                         </div>
                     </div>
                 </div>

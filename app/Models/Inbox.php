@@ -22,10 +22,10 @@ class Inbox extends Model
     }
 
     protected $fillable = [
-        "checked",
         "content",
         "date_sent",
         "sender_user_id",
+        "receiver_user_id",
     ];
 
     public function user()
@@ -46,6 +46,14 @@ class Inbox extends Model
         $lastName = $sender_info->last_name;
 
         return $firstName . " " . $middleName . " " . $lastName;
+    }
+
+    public function getSenderPicture($sender_employee_id)
+    {
+        $sender_info = User::find($sender_employee_id);
+        $sender_picture = $sender_info->picture;
+        
+        return $sender_picture;
     }
 
     public function dateFormatMdY($date)

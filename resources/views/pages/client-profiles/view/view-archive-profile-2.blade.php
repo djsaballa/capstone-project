@@ -98,8 +98,8 @@
                         </form>
                         <!-- END FAMILY COMPOSITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>
-                            <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_client_profiles', $user_info->id) }}"> Return To List </a>
+                            <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_archive_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>
+                            <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_archive_profiles', $user_info->id) }}"> Return To List </a>
                         </div>
                     </div>
                 </div>

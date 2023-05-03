@@ -73,21 +73,21 @@ class UserController extends Controller
             $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
     
             if ($security_level_id == 1) {
-                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->orderBy('created_at', 'DESC')->get();
             } elseif ($security_level_id == 2) {
                 $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
-                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->orderBy('created_at', 'DESC')->get();
             } elseif ($security_level_id == 3) {
                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
-                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->orderBy('created_at', 'DESC')->get();
             } elseif ($security_level_id == 4) {
                 if ($user_info->role_id == 9) {
-                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->orderBy('created_at', 'DESC')->get();
                 } else {
-                    $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                    $client_profiles = ClientProfile::orderBy('created_at', 'DESC')->get();
                 }
             } elseif ($security_level_id >= 5) {
-                $client_profiles = ClientProfile::where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
+                $client_profiles = ClientProfile::orderBy('created_at', 'DESC')->get();
             }
     
             return view('pages.dashboard', compact('user_info', 'client_profiles'));
@@ -98,33 +98,6 @@ class UserController extends Controller
             return redirect('/');
         }
         
-    }
-
-    // PROGRESS REPORTS ------------------------------------------------------------------------------------------------
-    public function viewProgressReport($user_id, $client_profile_id)
-    {
-        if (Auth::user()->id == $user_id) {
-            $user_info = User::find($user_id);
-            $client_profile_info = ClientProfile::find($client_profile_id);
-    
-            return view('pages.progress-reports.view-progress-report', compact('user_info', 'client_profile_info'));
-        } else {
-            Auth::guard('web')->logout();
-            session()->invalidate();
-            session()->regenerateToken();
-            return redirect('/');
-        }
-    }
-    public function addProgressReport()
-    {
-        return view('pages.progress-reports.add-progress-report');
-        // if (Auth::user()->id == $user_id) {
-        // } else {
-        //     Auth::guard('web')->logout();
-        //     session()->invalidate();
-        //     session()->regenerateToken();
-        //     return redirect('/');
-        // }
     }
 
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
@@ -326,6 +299,21 @@ class UserController extends Controller
             $user_info = User::find($user_id);
     
             return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
+    }
+
+    public function viewArchiveUser($user_id, $employee_id)
+    {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $employee_info = User::find($employee_id);
+            
+            return view('pages.users.view-archive-user', compact('user_info', 'employee_info'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();

@@ -17,6 +17,9 @@
                     $brethren = $client_profiles->whereNotNull('baptism_date');
                     $non_brethren = $client_profiles->whereNull('baptism_date');
                     $ongoing = $client_profiles->where('status', 'Active');
+                    $terminated = $client_profiles->where('status', 'Terminated');
+                    $expired = $client_profiles->where('status', 'Expired');
+                    $closed = $client_profiles->where('status', 'Closed');
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -59,7 +62,6 @@
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
-
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
                                 <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
@@ -73,9 +75,8 @@
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-lucide="file-x" class="report-box__icon text-success"></i>
-
                                         </div>
-                                        <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($terminated) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Terminated Cases</div>
                                     </div>
                                 </div>
@@ -84,10 +85,20 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="x-circle" class="report-box__icon text-success"></i>
-
+                                            <i data-lucide="skull" class="report-box__icon text-success"></i>
                                         </div>
-                                        <div class="text-3xl font-medium leading-8 mt-6">120</div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($expired) }}</div>
+                                        <div class="text-base text-slate-500 mt-1">Expired Cases</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                                <div class="report-box zoom-in">
+                                    <div class="box p-5">
+                                        <div class="flex">
+                                            <i data-lucide="x-circle" class="report-box__icon text-success"></i>
+                                        </div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($closed) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Closed Cases</div>
                                     </div>
                                 </div>

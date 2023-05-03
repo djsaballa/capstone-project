@@ -26,7 +26,6 @@
                                                         class="ml-1">{{ $client_profile_info->middle_name }}<span
                                                             class="ml-1">{{ $client_profile_info->last_name }}</span></span></span></label>
                                         </div>
-
                                     </div>
                                     <div class="col-span-6 2xl:col-span-3">
                                         <div class="mt-3 ">
@@ -54,7 +53,6 @@
                                                 id="update-profile-form-3-ts-label">District:<span
                                                     class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span></label>
                                         </div>
-
                                         <div class="mt-3">
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">Locale:<span
@@ -73,20 +71,11 @@
                                         <div
                                             class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                             <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                                <img class="rounded-md" alt="ADDFII"
-                                                    src=" {{ asset('dist/images/profile-1.jpg') }}">
-                                                <div
-                                                    class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        icon-name="x" data-lucide="x" class="lucide lucide-x w-4 h-4">
-                                                        <line x1="18" y1="6" x2="6" y2="18">
-                                                        </line>
-                                                        <line x1="6" y1="6" x2="18" y2="18">
-                                                        </line>
-                                                    </svg>
-                                                </div>
+                                            @if ( !empty($client_profile_info->picture) )
+                                                <img src="{{ asset('storage/'.$client_profile_info->picture) }}" class="rounded-md" alt="Client Image">
+                                            @else
+                                                <img alt="Client Image" class="rounded-md" src=" {{ asset('dist/images/profile-1.jpg')}}">
+                                            @endif
                                             </div>
                                         </div>
                                     </div>
@@ -94,34 +83,6 @@
                             </div>
                             <!-- END PERSONAL INFO -->
                         </div>
-                        <!-- START FAMILY COMPOSITION -->
-                        <div class="intro-y box lg:mt-5">
-                            <table class="table">
-                                <thead class="table-dark">
-                                    <tr class="bg-primary">
-                                        <th scope="col">Date & Time</th>
-                                        <th scope="col">Means Of Contact</th>
-                                        <th scope="col">Case Notes</th>
-                                        <th scope="col">Remarks</th>
-                                        <th scope="col">Attachment</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($family_compositions as $family_composition)
-                                        <tr>
-                                            <th scope="row">
-                                                {{ $family_composition->getFullName($family_composition->id) }}
-                                            </th>
-                                            <td>{{ $family_composition->relationship }}</td>
-                                            <td>{{ $family_composition->educational_attainment }}</td>
-                                            <td>{{ $family_composition->occupation }}</td>
-                                            <td>{{ $family_composition->contact_number }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- END FAMILY COMPOSITION -->
                     </div>
                 </div>
             </div>

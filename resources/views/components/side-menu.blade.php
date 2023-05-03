@@ -99,7 +99,7 @@
             </a>
             <ul class="menu__sub-open">
                     <li>
-                    @if (preg_match('(archive_profiles)', $current_route))
+                    @if (preg_match('(archive_profile|archive_report)', $current_route))
                         <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu side-menu--active">
                     @else
                         <a href="{{ route('list_of_archive_profiles', $user_info->id) }}" class="side-menu">
@@ -110,7 +110,7 @@
                     </li>
                 @if ($user_info->role_id == 10 || $user_info->role_id == 11)
                 <li>
-                    @if (preg_match('(archive_users)', $current_route, ))
+                    @if (preg_match('(archive_user)', $current_route, ))
                         <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu side-menu--active">
                     @else
                         <a href="{{ route('list_of_archive_users', $user_info->id) }}" class="side-menu">

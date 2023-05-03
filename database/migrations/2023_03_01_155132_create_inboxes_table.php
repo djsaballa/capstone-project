@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('inboxes', function (Blueprint $table) {
             $table->id();
-            $table->boolean('checked');
             $table->string('content');
             $table->date('date_sent');
             $table->foreignId('sender_user_id')

@@ -21,11 +21,10 @@ class InboxSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
                 Inbox::create([
-                    "checked" => $data['0'],
-                    "content" => $data['1'],
-                    "date_sent" => $data['2'],
-                    "sender_user_id" => $data['3'],
-                    "receiver_user_id" => $data['4'],
+                    "content" => $data['0'],
+                    "date_sent" => $data['1'],
+                    "sender_user_id" => $data['2'],
+                    "receiver_user_id" => $data['3'],
                 ]);
             }
             $firstline = false;
