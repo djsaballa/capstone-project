@@ -16,9 +16,9 @@ Route::middleware('auth')->group(function () {
   Route::post('/view-pdf/{user_id}/{client_profile_id}', [ReportController::class, 'viewPDF'])->name('view_pdf');
 
   // FILTER PROFILES
-  Route::get('/filter-locale-profiles/{user_id}/{locale_id}', [ClientController::class, 'filterLocaleProfiles'])->name('filter_locale_profiles');
-  Route::get('/filter-district-profiles/{user_id}/{district_id}', [ClientController::class, 'filterDistrictProfiles'])->name('filter_district_profiles');
-  Route::get('/filter-division-profiles/{user_id}/{division_id}', [ClientController::class, 'filterDivisionProfiles'])->name('filter_division_profiles');
+  Route::get('/filter-locale-profiles/{user_id}/{locale_id}', [ClientController::class, 'filterLocaleProfiles'])->name('filter_locale_client_profiles');
+  Route::get('/filter-district-profiles/{user_id}/{district_id}', [ClientController::class, 'filterDistrictProfiles'])->name('filter_district_client_profiles');
+  Route::get('/filter-division-profiles/{user_id}/{division_id}', [ClientController::class, 'filterDivisionProfiles'])->name('filter_division_client_profiles');
   
   // ADD PROFILE
   Route::get('/add-profile-privacy/{user_id}', [ClientController::class, 'addProfilePrivacy'])->name('add_client_profile_privacy');
@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/restore-profile/{user_id}/{client_profile_id}', [ClientController::class, 'restoreProfile'])->name('restore_profile');
 
   // FILTER ARCHIVE PROFILES
-  Route::get('/filter-locale-profiles-archive/{user_id}/{locale_id}', [ClientController::class, 'filterLocaleProfilesArchive'])->name('filter_locale_profiles_archive');
-  Route::get('/filter-district-profiles-archive/{user_id}/{district_id}', [ClientController::class, 'filterDistrictProfilesArchive'])->name('filter_district_profiles_archive');
-  Route::get('/filter-division-profiles-archive/{user_id}/{division_id}', [ClientController::class, 'filterDivisionProfilesArchive'])->name('filter_division_profiles_archive');
+  Route::get('/filter-locale-profiles-archive/{user_id}/{locale_id}', [ClientController::class, 'filterLocaleProfilesArchive'])->name('filter_locale_archive_profiles');
+  Route::get('/filter-district-profiles-archive/{user_id}/{district_id}', [ClientController::class, 'filterDistrictProfilesArchive'])->name('filter_district_archive_profiles');
+  Route::get('/filter-division-profiles-archive/{user_id}/{division_id}', [ClientController::class, 'filterDivisionProfilesArchive'])->name('filter_division_archive_profiles');
 });
