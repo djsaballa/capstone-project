@@ -103,6 +103,41 @@ class ClientController extends Controller
         }
     }
 
+    // ADD REMARK------------------------------------------------------------------------------------------------------
+    public function addRemark(Request $request)
+    {
+        $request->validate([
+            'remarks' => 'required',
+        ]);
+
+        $user_id = $request->userId;
+        $user_info = User::find($user_id);
+        $client_profile_id = $request->clientProfileId;
+        $client_profile_info = ClientProfile::find($client_profile_id);
+        $remark = $request->remarks;
+
+        if ($user_info->role_id == 2) {
+            $update = ['locale_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
+        } elseif ($user_info->role_id == 4) {
+            $update = ['district_servant_remark' => $remark];
+        } elseif ($user_info->role_id == 5) {
+            $update = ['division_servant_remark' => $remark];
+        } elseif ($user_info->role_id == 6) {
+            $update = ['social_worker_recommendation' => $remark];
+        }
+
+        $cp_update = $client_profile_info->update($update);
+
+        if ($cp_update) {
+            $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+            $request->session()->flash('success', 'Remark has been successfully added!');
+
+            return redirect()->route($previous_route, [$user_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'Add Remark was unsuccessful.');
+        }
+    }
+
     // FILTER PROFILES-------------------------------------------------------------------------------------------------
     public function filterLocaleProfiles($user_id, $locale_id)
     {
@@ -461,7 +496,6 @@ class ClientController extends Controller
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
             return redirect()->route('list_of_profiles', $user_id);
         }
-
     }
 
     public function addProfile5($user_id)

@@ -12,6 +12,9 @@ Route::middleware('auth')->group(function () {
   Route::get('/view-profile-1/{user_id}/{client_profile_id}', [ClientController::class, 'viewProfile1'])->name('view_client_profile_1');
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', [ClientController::class, 'viewProfile2'])->name('view_client_profile_2');
 
+  //  ADD REMARK
+  Route::post('/add-remark', [ClientController::class, 'addRemark'])->name('add_remark');
+
   // VEIW PDF
   Route::post('/view-pdf/{user_id}/{client_profile_id}', [ReportController::class, 'viewPDF'])->name('view_pdf');
 

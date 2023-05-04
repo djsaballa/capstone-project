@@ -28,6 +28,20 @@
      
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <!-- BEGIN: Wizard Layout -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (Session::has('success'))
+                <div class="alert alert-success text-center text-white">
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+            @endif
             <div class="intro-y box lg:mt-5">
                 <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                     <h2 class="font-medium text-base mr-auto" id="contact-persons">
