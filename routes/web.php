@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
 
     // AUDIT LOGS
     Route::get('/audit-logs/{user_id}', [UserController::class, 'auditLogs'])->name('audit_logs');
+
+    // SMS
+    Route::post('/send-sms', 'SemaphoreController@sendSms');
 });
 
 require __DIR__ . '/user.php';

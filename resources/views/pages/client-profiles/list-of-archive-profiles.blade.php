@@ -207,6 +207,7 @@
                                     <th class="text-center whitespace-nowrap">GENDER</th>
                                     <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
                                     <th class="text-center whitespace-nowrap">LOCALE</th>
+                                    <th class="text-center whitespace-nowrap">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -235,6 +236,11 @@
                                         <td class="w-40">
                                             <div class="flex items-center justify-center ">
                                                 {{ $client_profile->locale->getLocaleName($client_profile->locale_id) }}
+                                            </div>
+                                        </td>
+                                        <td class="w-40">
+                                            <div class="flex items-center justify-center ">
+                                                {{ $client_profile->status }}
                                             </div>
                                         </td>
                                         <td class="table-report__action w-400">

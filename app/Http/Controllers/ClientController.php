@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+Use App\Http\Controllers\SempahoreController;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
@@ -996,6 +997,9 @@ class ClientController extends Controller
     
                 $create = History::create($audit_log);
                 if ($create) {
+                    $sempahore = new SemaphoreController();
+                    $response = $sempahore->sendSms('+639338712073', 'Hello World');
+                    dd($response);
                     session()->flash('status', 'Client Profile has been successfully archived.');
                     return redirect()->route('list_of_client_profiles', $user_id);
                 }
