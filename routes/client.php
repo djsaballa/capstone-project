@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/view-archive-profile-2/{user_id}/{client_profile_id}', [ClientController::class, 'viewArchiveProfile2'])->name('view_archive_profile_2');
 
   // ARCHIVE AND RESTORE CLIENT PROFILE
-  Route::get('/archive-profile/{user_id}/{client_profile_id}', [ClientController::class, 'archiveProfile'])->name('archive_profile');
+  Route::get('/archive-profile/{user_id}/{client_profile_id}/{reason}', [ClientController::class, 'archiveProfile'])->name('archive_profile');
   Route::get('/restore-profile/{user_id}/{client_profile_id}', [ClientController::class, 'restoreProfile'])->name('restore_profile');
 
   // FILTER ARCHIVE PROFILES

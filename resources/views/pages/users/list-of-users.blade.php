@@ -6,17 +6,23 @@
         List of Users
     </h2>
     @if (Session::has('status'))
-        <div class="mt-10" style="color: green;">
-            <ul>
-                <li>{{ Session::get('status') }}</li>
-            </ul>
+        <div class="modal-body p-0">
+            <div class="p-5 text-center">
+                <i data-lucide="check-circle-2" class="w-10 h-10 text-success mx-auto mt-3"></i>
+                <div class="modal-body text-success">
+                    {{ Session::get('status') }}
+                </div>
+            </div>
         </div>
     @endif
-    @if (Session::has('error!'))
-        <div class="mt-10" style="color: green;">
-            <ul>
-                <li>{{ Session::get('error') }}</li>
-            </ul>
+    @if (Session::has('error'))
+        <div class="modal-body p-0">
+            <div class="p-5 text-center">
+                <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
+                <div class="modal-body text-success">
+                    {{ Session::get('status') }}
+                </div>
+            </div>
         </div>
     @endif
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -73,6 +79,11 @@
                                     data-tw-toggle="modal" data-tw-target="#archive-confirmation-modal">
                                     Archive</button>
                             </a>
+                            @if ($user_info->role_id == 10 || $user_info->role_id == 11)
+                            <a href="{{ route('change_password', [$user_info->id, $user->id]) }}">
+                                <button class="btn btn-warning py-1 px-2 mr-2">Change Password</button>
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>

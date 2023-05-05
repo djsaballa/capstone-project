@@ -116,6 +116,48 @@ class UserController extends Controller
         }
     }
 
+    // CHANGE PASSWORD -------------------------------------------------------------------------------------------------
+    public function changePassword($user_id, $employee_id)
+    {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $employee_info = User::find($employee_id);
+            
+            return view('pages.users.change-password', compact('user_info', 'employee_info'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
+    }
+    
+    public function savePassword($user_id, $employee_id, $new_password)
+    {
+        if (Auth::user()->id == $user_id) {
+            $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->paginate(10);
+            $user_info = User::find($user_id);
+            $employee_info = User::find($employee_id);
+
+            $update = $employee_info->update([ 'password' => Hash::make($new_password) ]);
+
+            if ($update) {
+                session()->flash('status', 'Password has been successfully changed!');
+                return view('pages.users.list-of-users', compact('users', 'user_info'));
+            } else {
+                session()->flash('error', 'An error has occurred and the password has not been changed.');
+                return view('pages.users.list-of-users', compact('users', 'user_info'));
+            }
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
+    }
+
+
+    // VIEW USER -------------------------------------------------------------------------------------------------------
     public function viewUser($user_id, $employee_id)
     {
         if (Auth::user()->id == $user_id) {
@@ -131,6 +173,7 @@ class UserController extends Controller
         }
     }
 
+    // ADD USER --------------------------------------------------------------------------------------------------------
     public function addUser($user_id)
     {
         if (Auth::user()->id == $user_id) {
@@ -183,6 +226,8 @@ class UserController extends Controller
             $picture = null;
         }
 
+        $password = Str::random(10);
+
         $user_save =
         [
             'picture' => $picture,
@@ -190,7 +235,7 @@ class UserController extends Controller
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
             'username' => Str::lower($request->firstName). "" .Str::lower($request->lastName). "" .random_int(1000, 9999),
-            'password' => Str::random(10),
+            'password' => Hash::make($password),
             'contact_number' => $request->contactNumber,
             'status' => 'Active',
             'role_id' => $request->role,
@@ -210,7 +255,8 @@ class UserController extends Controller
             return redirect()->route('list_of_users', [$user_id]);
         }
     }
-    
+
+    // EDIT USER -------------------------------------------------------------------------------------------------------
     public function editUser($user_id, $employee_id)
     {
         if (Auth::user()->id == $user_id) {
@@ -295,7 +341,7 @@ class UserController extends Controller
     public function listOfArchiveUsers($user_id)
     {
         if (Auth::user()->id == $user_id) {
-            $users = User::where('status', 'Archive')->orderBy('role_id', 'ASC')->paginate(10);
+            $users = User::where('status', 'Archive')->orderBy('updated_at', 'DESC')->paginate(10);
             $user_info = User::find($user_id);
     
             return view(('pages.users.list-of-archive-users'),  compact('users', 'user_info'));

@@ -249,7 +249,7 @@
                                                     href="{{ route('view_archive_profile_1', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
 
-                                                <a class="flex items-center mr-3 text-info"
+                                                <a class="flex items-center mr-3 text-dark"
                                                     href="{{ route('view_archive_report', [$user_info->id, $client_profile->id]) }}">
                                                     <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report
                                                 </a>

@@ -174,7 +174,7 @@
                                     <a class="flex items-center mr-3 text-success "
                                         href="{{ route('view_client_profile_1', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> View</a>
-                                    <a class="flex items-center mr-3 text-info"
+                                    <a class="flex items-center mr-3 text-dark"
                                         href="{{ route('view_progress_report', [$user_info->id, $client_profile->id]) }}">
                                         <i data-lucide="file-check-2" class="w-4 h-4 mr-1"></i> View Report </a>
                                     @if (
@@ -218,16 +218,24 @@
                             <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
                             <div class="text-3xl mt-5">Are you sure?</div>
                             <div class="modal-body">
-                                Do you really want to archive this client profile?
+                                Do you really want to archive this client profile? If yes, please choose below the reason for archiving this client profile.
                             </div>
                         </div>
                         <input type="hidden" id="client-profile-id">
                         <div class="px-5 pb-8 text-center">
-                            <button type="button" class="btn btn-outline-secondary w-24 mr-1"
-                                data-tw-dismiss="modal">Cancel</button>
                             <button type="button" id="archive-client-profile" data-tw-toggle="modal"
-                                onclick="archiveProfile( {{ $user_info->id }} )"
-                                class="btn btn-danger w-24">Archive</button>
+                                onclick="archiveProfile( {{ $user_info->id }}, 'Terminated' )"
+                                class="btn btn-danger w-24">Terminated</button>
+                            <button type="button" id="archive-client-profile" data-tw-toggle="modal"
+                                onclick="archiveProfile( {{ $user_info->id }}, 'Closed' )"
+                                class="btn btn-warning w-24">Closed</button>
+                            <button type="button" id="archive-client-profile" data-tw-toggle="modal"
+                                onclick="archiveProfile( {{ $user_info->id }}, 'Expired' )"
+                                class="btn btn-dark w-24">Expired</button>
+                        </div>
+                        <div class="px-5 pb-8 text-center">
+                            <button type="button" class="btn btn-outline-secondary w-24 mr-1"
+                            data-tw-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -241,9 +249,9 @@
             $("#client-profile-id").val(id);
         }
 
-        function archiveProfile(user_id) {
+        function archiveProfile(user_id, reason) {
             var client_profile_id = $("#client-profile-id").val();
-            window.location.href = "/archive-profile/" + user_id + "/" + client_profile_id;
+            window.location.href = "/archive-profile/" + user_id + "/" + client_profile_id + "/" + reason;
         }
     </script>
 @endsection
