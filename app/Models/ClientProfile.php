@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\FamilyComposition;
 use App\Models\MedicalCondition;
+use App\Models\MedicalCategory;
 use App\Models\ProgressReport;
 use App\Models\History;
 use App\Models\User;
@@ -57,7 +58,9 @@ class ClientProfile extends Model
         "social_worker_recommendation",
         "status",
         "user_encoder_id",
-        "locale_id"
+        "locale_id",
+        "assigned_doctor_id",
+        "medical_category_id"
     ];
 
     public function familyCompositions()
@@ -88,6 +91,11 @@ class ClientProfile extends Model
     public function locale()
     {
         return $this->belongsTo(Locale::class);
+    }
+
+    public function medicalCategory()
+    {
+        return $this->belongsTo(MedicalCategory::class);
     }
 
     public function getId()

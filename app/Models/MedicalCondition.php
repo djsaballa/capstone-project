@@ -35,7 +35,6 @@ class MedicalCondition extends Model
         "doctor",
         "client_profile_id",
         "disease_id",
-        "medical_category_id"
     ];
 
     public function clientProfile()

@@ -21,6 +21,12 @@ class ClientProfileSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 
+                if (!empty($data['31'])) {
+                    $data31 = $data['31'];
+                 } else {
+                     $data1 = null;
+                 }
+
                 ClientProfile::create([
                     "privacy_consent" => $data['0'],
                     "first_name" => $data['1'],
@@ -52,7 +58,8 @@ class ClientProfileSeeder extends Seeder
                     "status" => $data['27'],
                     "user_encoder_id" => $data['28'],
                     "locale_id" => $data['29'],
-                    "assigned_doctor_id" => $data['30']
+                    "assigned_doctor_id" => $data['30'],
+                    "medical_category_id" => $data31,
                 ]);
             }
             $firstline = false;

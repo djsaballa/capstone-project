@@ -81,7 +81,7 @@
                                 Background Information
                             </h2>
                         </div>
-                        <div class="mt-3">
+                        <div class="m-3">
                             <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
                                 PASYENTE,
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
@@ -96,7 +96,7 @@
                                         class="font-medium">not</span> actually uploaded. </div>
                             </div>
                         </form>
-                        <div class="mt-3">
+                        <div class="m-3">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
                             <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>

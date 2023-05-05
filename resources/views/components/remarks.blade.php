@@ -38,7 +38,7 @@
     @elseif (preg_match('(archive)', $current_route))
     <div class="mt-3">
         <h2 class="text-lg font-medium truncate mr-5"> REMARKS</h2>
-        <textarea class="form-control" id="FormControlTextarea1" rows="25"></textarea>
+        <textarea class="form-control" id="FormControlTextarea1" rows="25" disabled></textarea>
     </div>
     @endif
 </div>

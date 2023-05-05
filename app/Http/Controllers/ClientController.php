@@ -76,10 +76,9 @@ class ClientController extends Controller
             $client_profile_info = ClientProfile::find($client_profile_id);
             $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
             $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-            $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
-            $medical_operations = MedicalOperation::all();
+            $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
     
-            return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
+            return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
@@ -988,10 +987,9 @@ class ClientController extends Controller
              $client_profile_info = ClientProfile::find($client_profile_id);
              $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
              $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-             $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
-             $medical_operations = MedicalOperation::all();
+             $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
      
-             return view('pages.client-profiles.view.view-archive-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations'));
+             return view('pages.client-profiles.view.view-archive-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations'));
          } else {
              Auth::guard('web')->logout();
              session()->invalidate();
@@ -1032,8 +1030,7 @@ class ClientController extends Controller
                 $create = History::create($audit_log);
                 if ($create) {
                     $sempahore = new SemaphoreController();
-                    $response = $sempahore->sendSms('+639338712073', 'Hello World');
-                    dd($response);
+                    $response = $sempahore->sendSms('09150913370', 'Etoh yung sms skl hahhaha');
                     session()->flash('status', 'Client Profile has been successfully archived.');
                     return redirect()->route('list_of_client_profiles', $user_id);
                 }

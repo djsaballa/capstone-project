@@ -23,7 +23,7 @@ class MedicalOperationSeeder extends Seeder
                 MedicalOperation::create([
                     "operation" => $data['0'],
                     "date" => $data['1'],
-                    "medical_condition_id" => $data['2'],
+                    "client_profile_id" => $data['2'],
                 ]);
             }
             $firstline = false;

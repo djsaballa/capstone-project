@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MedicalCondition;
+use App\Models\ClientProfile;
+use Carbon\Carbon;
 
 class MedicalOperation extends Model
 {
@@ -23,12 +24,12 @@ class MedicalOperation extends Model
     protected $fillable = [
         "operation",
         "date",
-        "medical_condition_id",
+        "client_profile_id",
     ];
 
-    public function medicalCondition()
+    public function clientProfile()
     {
-        return $this->belongsTo(MedicalCondition::class);
+        return $this->belongsTo(ClientProfile::class);
     }
 
     public function getId()
@@ -41,5 +42,12 @@ class MedicalOperation extends Model
         $operations = MedicalOperation::where('medical_condition_id', '=', $medical_condition_id);
 
         return $operations;
+    }
+
+    public function dateFormatMdY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
+
+        return $formattedDate;
     }
 }

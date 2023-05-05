@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('operation')->nullable();
             $table->string('date')->nullable();
-            $table->foreignId('medical_condition_id')
-                  ->constrained('medical_conditions')
+            $table->foreignId('client_profile_id')
+                  ->constrained('client_profiles')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();

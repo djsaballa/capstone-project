@@ -29,7 +29,6 @@ class MedicalConditionSeeder extends Seeder
                     "hospital" => $data['5'],
                     "client_profile_id" => $data['6'],
                     "disease_id" => $data['7'],
-                    "medical_category_id" => $data['8'],
                 ]);
             }
             $firstline = false;

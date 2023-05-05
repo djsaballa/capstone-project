@@ -141,6 +141,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if($medical_conditions->first())
                                 @foreach ($family_compositions as $family_composition)
                                     <tr>
                                         <th scope="row">{{ $family_composition->getFullName($family_composition->id) }}
@@ -151,6 +152,15 @@
                                         <td>{{ $family_composition->contact_number }}</td>
                                     </tr>
                                 @endforeach
+                            @else
+                                    <tr>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                    </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -173,6 +183,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if($medical_conditions->first())
                                 @foreach ($medical_conditions as $medical_condition)
                                     <tr>
                                         <th scope="row">
@@ -184,6 +195,15 @@
                                         <td>{{ $medical_condition->frequency }}</td>
                                     </tr>
                                 @endforeach
+                            @else
+                                    <tr>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                        <th>None</th>
+                                    </tr>
+                            @endif
                             </tbody>
                         </table>
                         <div class="mt-3 ">
@@ -195,25 +215,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($medical_conditions as $medical_condition)
-                                        @php
-                                            $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
-                                        @endphp
-
-                                        @if($matching_objects->first())
-                                            @foreach($matching_objects as $matching_object)
-                                                <tr>
-                                                    <td scope="row">{{ $matching_object->operation }}</td>
-                                                    <td scope="row">{{ $medical_condition->dateFormatMdY($matching_object->date) }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <th scope="row">None</th>
-                                                <th scope="row">None</th>
-                                            </tr>
-                                        @endif
-                                    @endforeach
+                                    @if($medical_operations->first())
+                                        @foreach ($medical_operations as $medical_operation)
+                                        <tr>
+                                            <td>{{ $medical_operation->operation }}</td>
+                                            <td>{{ $medical_operation->dateFormatMdY($medical_operation->date) }}</td>
+                                        </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <th>None</th>
+                                            <th>None</th>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -224,8 +238,6 @@
                                 <tr class="bg-primary">
                                     <th scope="col">Doctor </th>
                                     <th scope="col">Hospital</th>
-                                    <th scope="col">Do you have Phil-health Card? Please
-                                        Specify </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -237,6 +249,14 @@
                                  @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-6 ml-3">
+                            <label for="update-profile-form-1" class="form-label font-medium">Philhealth Member:</label>
+                                <span  class="ml-3">{{ $client_profile_info->philhealth_member }}</span>
+                        </div>
+                        <div class="mt-2 ml-3">
+                            <label for="update-profile-form-1" class="form-label font-medium">Other Health Cards:</label>
+                                <span  class="ml-3">{{ $client_profile_info->health_card }}</span>
+                        </div>
                     </div>
                         <!-- END MEDICAL CONDITION -->
                     <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">

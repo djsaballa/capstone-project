@@ -21,7 +21,6 @@ class SemaphoreController extends Controller
                 'apikey' => 'ebab0d8bf81a1e039f7b28c6d79445a4',
                 'number' => $phone,
                 'message' => $message,
-                'sendername' => 'ADDFII'
             ],
         ]);
 
