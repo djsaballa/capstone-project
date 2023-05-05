@@ -33,6 +33,7 @@
         </div>
 
         @vite('resources/js/app.js')
+        @vite('resources/js/ckeditor-classic.js')
     </div>
 </body>
 <script>
