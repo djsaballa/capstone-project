@@ -200,13 +200,19 @@
         </div>
         <!-- END: Pagination -->
         <div class="intro-y p-5 text-slate-500 grid justify-center">
-            <div class="flex justify-center">
-                Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of
-                {{ $client_profiles->total() }} items
-            </div>
-            <div class="flex justify-center">
-                {{ $client_profiles->links() }}
-            </div>
+            @if ($client_profiles->firstItem())
+                <div class="flex justify-center">
+                    Showing {{ $client_profiles->firstItem() }} to {{ $client_profiles->lastItem() }} of
+                    {{ $client_profiles->total() }} items
+                </div>
+                <div class="flex justify-center">
+                    {{ $client_profiles->links() }}
+                </div>
+            @else
+                <div class="flex justify-center">
+                    Showing {{ $client_profiles->total() }} items
+                </div>
+            @endif
         </div>
         <!-- END: Pagination -->
         <!-- BEGIN: Archive Confirmation Modal -->

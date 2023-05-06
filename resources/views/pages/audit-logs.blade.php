@@ -59,12 +59,18 @@
             </table>
             <!-- BEGIN: Pagination -->
         <div class="intro-y p-5 text-slate-500 grid justify-center">
-            <div class="flex justify-center">
-                Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
-            </div>
-            <div class="flex justify-center">
-                {{ $histories->links() }}
-            </div>
+            @if ($histories->firstItem())
+                <div class="flex justify-center">
+                    Showing {{ $histories->firstItem() }} to {{ $histories->lastItem() }} of {{ $histories->total() }} items
+                </div>
+                <div class="flex justify-center">
+                    {{ $histories->links() }}
+                </div>
+            @else
+                <div class="flex justify-center">
+                    Showing {{ $histories->total() }} items
+                </div>
+            @endif
         </div>
         <!-- END: Pagination -->
         </div>

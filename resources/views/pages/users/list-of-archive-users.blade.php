@@ -72,12 +72,18 @@
             @endforeach
             <!-- BEGIN: Pagination -->
             <div class="intro-y col-span-12 p-5 text-slate-500 grid justify-center">
+                @if ($users->firstItem())
+                    <div class="flex justify-center">
+                        Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} items
+                    </div>
+                    <div class="flex justify-center">
+                        {{ $users->links() }}
+                    </div>
+                @else
                 <div class="flex justify-center">
-                    Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} items
+                    Showing {{ $users->total() }} items
                 </div>
-                <div class="flex justify-center">
-                    {{ $users->links() }}
-                </div>
+            @endif
             </div>
             <!-- END: Pagination -->
             <div id="restore-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">

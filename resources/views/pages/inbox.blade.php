@@ -82,12 +82,18 @@
                 </div>
             </div>
             <div class="intro-y p-5 text-slate-500 grid justify-center">
-                <div class="flex justify-center">
-                    Showing {{ $inboxes->firstItem() }} to {{ $inboxes->lastItem() }} of {{ $inboxes->total() }} items
-                </div>
-                <div class="flex justify-center">
-                    {{ $inboxes->links() }}
-                </div>
+                @if ($inboxes->firstItem())
+                    <div class="flex justify-center">
+                        Showing {{ $inboxes->firstItem() }} to {{ $inboxes->lastItem() }} of {{ $inboxes->total() }} items
+                    </div>
+                    <div class="flex justify-center">
+                        {{ $inboxes->links() }}
+                    </div>
+                @else
+                    <div class="flex justify-center">
+                        Showing {{ $inboxes->total() }} items
+                    </div>
+                @endif
             </div>
             <!-- END: Inbox Content -->
         </div>
