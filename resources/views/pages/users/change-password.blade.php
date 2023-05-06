@@ -13,11 +13,9 @@
         <div class="p-5">
             <div class="mt-3">
                 <label for="change-password-form-2" class="form-label">New Password</label>
-
                 <!-- One Line lang Sana yung input at generate password button -->
-
                 <div>
-                    <input id="new-password" type="text" class="form-control" disabled>
+                    <input id="new-password" type="text" class="" disabled>
                     <button class="btn btn-dark mt-4" onclick="generatePassword()">Generate New Password</button>
                 </div>
             </div>
