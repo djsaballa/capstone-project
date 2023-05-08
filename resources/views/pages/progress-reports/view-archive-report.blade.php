@@ -86,12 +86,13 @@
                                 </div>
                                 <!-- END PERSONAL INFO -->
                             </div>
-                            <!-- START FAMILY COMPOSITION -->
+                            <!-- START -->
                             <div class="intro-y box lg:mt-5">
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
-                                            <th scope="col">Date & Time</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date</th>
                                             <th scope="col">Means Of Contact</th>
                                             <th scope="col">Case Notes</th>
                                             <th scope="col">Remarks</th>
@@ -109,7 +110,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- END FAMILY COMPOSITION -->
+                            <!-- END -->
                         </div>
                     </div>
                 </div>
