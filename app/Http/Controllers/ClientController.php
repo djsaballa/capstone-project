@@ -129,7 +129,7 @@ class ClientController extends Controller
 
         if ($cp_update) {
             $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-            $request->session()->flash('success', 'Remark has been successfully added!');
+            $request->session()->flash('status', 'Remark has been successfully added!');
 
             return redirect()->route($previous_route, [$user_id, $client_profile_id]);
         } else {
@@ -922,7 +922,7 @@ class ClientController extends Controller
             
             return redirect()->route('list_of_client_profiles', [$user_id]);
         } else {
-            $request->session()->flash('status!', 'Edit was unsuccessful.');
+            $request->session()->flash('error', 'Edit was unsuccessful.');
 
             return redirect()->route('list_of_client_profiles', [$user_id]);
         }
@@ -1215,7 +1215,7 @@ class ClientController extends Controller
                 Student::create($value);
             }
          
-            return back()->with('success', 'New subject has been added.');
+            return back()->with('status', 'New subject has been added.');
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();

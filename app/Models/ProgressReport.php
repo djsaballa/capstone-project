@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\ClientProfile;
-use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 class ProgressReport extends Model
 {
@@ -23,19 +23,14 @@ class ProgressReport extends Model
     }
 
     protected $fillable = [
-        "date_time",
-        "assignee_id",
-        "assignee_contact_number",
+        "date",
+        "name",
+        "contact_number",
         "case_note",
-        "remark",
+        "remarks",
         "attachment",
         "client_profile_id",
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function clientProfile()
     {
@@ -46,4 +41,12 @@ class ProgressReport extends Model
     {
         return $this->id;
     }
+
+    public function dateFormatMdY($date)
+    {
+        $formattedDate = Carbon::parse($date)->format("M. d, Y");
+
+        return $formattedDate;
+    }
+
 }

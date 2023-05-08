@@ -22,9 +22,9 @@ class ProgressReportSeeder extends Seeder
             if (!$firstline) {
 
                 ProgressReport::create([
-                    "date_time" => $data['0'],
-                    "assignee_user_id" => $data['1'],
-                    "assignee_contact_number" => $data['2'],
+                    "date" => $data['0'],
+                    "name" => $data['1'],
+                    "contact_number" => $data['2'],
                     "case_note" => $data['3'],
                     "remarks" => $data['4'],
                     "attachment" => $data['5'],

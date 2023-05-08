@@ -20,6 +20,7 @@ use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
 use App\Models\Inbox;
 use App\Models\History;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -250,7 +251,7 @@ class UserController extends Controller
             
             return redirect()->route('list_of_users', [$user_id]);
         } else {
-            $request->session()->flash('status!', 'User creation was unsuccessful.');
+            $request->session()->flash('error', 'User creation was unsuccessful.');
 
             return redirect()->route('list_of_users', [$user_id]);
         }
@@ -331,7 +332,7 @@ class UserController extends Controller
             
             return redirect()->route('list_of_users', [$user_id]);
         } else {
-            $request->session()->flash('status!', 'User update was unsuccessful.');
+            $request->session()->flash('error', 'User update was unsuccessful.');
 
             return redirect()->route('list_of_users', [$user_id]);
         }
@@ -413,14 +414,44 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
-            $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('date_sent', 'DESC')->paginate(15);
+            $users = User::all();
+            $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(15);
     
-            return view('pages.inbox', compact('user_info', 'inboxes'));
+            return view('pages.inbox', compact('user_info', 'inboxes', 'users'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
             session()->regenerateToken();
             return redirect('/');
+        }
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            'receiver' => 'required',
+            'content' => 'required',
+        ]);
+
+        $user_id = $request->userId;
+
+        $inbox_add = [
+            'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+            'sender_user_id' => $user_id,
+            'receiver_user_id' => $request->receiver,
+            'content' => $request->content
+        ];
+
+        $create = Inbox::create($inbox_add);
+
+        if ($create) {
+            $request->session()->flash('status', 'Message has been sent!');
+            
+            return redirect()->route('inbox', [$user_id]);
+        } else {
+            $request->session()->flash('error', 'An error has occurred and the message has not been sent.');
+            
+            return redirect()->route('inbox', [$user_id]);
         }
     }
 

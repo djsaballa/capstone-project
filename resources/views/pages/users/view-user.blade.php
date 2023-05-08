@@ -98,8 +98,11 @@
                                 </div>
                             </div>
                         </div>
+                        @php
+                            $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+                        @endphp
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
-                            <a href="{{ route('list_of_users', [$user_info->id]) }}" class="btn btn-primary w-24 ml-2">Return</a>
+                            <a href="{{ route($previous_route, [$user_info->id]) }}" class="btn btn-primary w-24 ml-2">Return</a>
                         </div>
                     </div>
                 </div>

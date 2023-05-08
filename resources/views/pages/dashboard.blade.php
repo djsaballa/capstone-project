@@ -14,6 +14,7 @@
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
                 </div>
                 @php
+                    $archived = $client_profiles->whereIn('status', ['Terminated', 'Closed', 'Expired']);
                     $brethren = $client_profiles->whereNotNull('baptism_date');
                     $non_brethren = $client_profiles->whereNull('baptism_date');
                     $ongoing = $client_profiles->where('status', 'Active');
@@ -37,8 +38,18 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
+                                    <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
+                                </div>
+                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($archived) }}</div>
+                                <div class="text-base text-slate-500 mt-1">Total Archive Profiles</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                        <div class="report-box zoom-in">
+                            <div class="box p-5">
+                                <div class="flex">
                                     <i data-lucide="user-check" class="report-box__icon text-success"></i>
-
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">{{ count($brethren) }}</div>
                                 <div class="text-base text-slate-500 mt-1">Brethren</div>
@@ -57,19 +68,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
-                            <div class="box p-5">
-                                <div class="flex">
-                                    <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
-                                </div>
-                                <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
-                                <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-span-12 mt-8">
                         <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                                <div class="report-box zoom-in">
+                                    <div class="box p-5">
+                                        <div class="flex">
+                                            <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
+                                        </div>
+                                        <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
+                                        <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
@@ -165,7 +176,6 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Ages
                             </h2>
-                            <a href="" class="ml-auto text-primary truncate">Show More</a>
                         </div>
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">
@@ -199,7 +209,6 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Diseases per Category
                             </h2>
-                            <a href="" class="ml-auto text-primary truncate">Show More</a>
                         </div>
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">

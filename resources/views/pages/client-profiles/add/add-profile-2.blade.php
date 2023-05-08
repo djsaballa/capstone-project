@@ -70,9 +70,9 @@
                     </ul>
                 </div>
             @endif
-            @if (Session::has('success'))
+            @if (Session::has('status'))
                 <div class="alert alert-success text-center text-white">
-                    <p>{{ Session::get('success') }}</p>
+                    <p>{{ Session::get('status') }}</p>
                 </div>
             @endif
             <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>

@@ -13,12 +13,32 @@
                 <h2 class="intro-y text-lg font-medium mr-auto mt-2">
                     Progress Report
                 </h2>
+                @if (Session::has('status'))
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <i data-lucide="check-circle-2" class="w-10 h-10 text-success mx-auto mt-3"></i>
+                            <div class="modal-body text-success">
+                                {{ Session::get('status') }}
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if (Session::has('error'))
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
+                            <div class="modal-body text-success">
+                                {{ Session::get('error') }}
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
                     <!-- BEGIN: Wizard Layout -->
                     <div class="intro-y box lg:mt-5">
                         <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                             <h2 class="font-medium text-base mr-auto" id="personal-info">
-                                Personal Information
+                                Client Personal Information
                             </h2>
                         </div>
                         <div class="p-5">
@@ -48,10 +68,13 @@
                                                     Number: </label>
                                                 <span class="ml-3">{{ $client_profile_info->contact_number }}</span>
                                             </div>
+                                            <div class="mt-3">
+                                                <label for="startDate" class="form-label font-medium">Birth Date:</label>
+                                                <span class="ml-3">{{ $client_profile_info->birth_date }}</span>
+                                            </div>
                                         </div>
 
                                         <div class="col-span-6 2xl:col-span-3">
-
                                             <div class="mt-3 ">
                                                 <label for="update-profile-form-3-tomselected"
                                                     class="form-label font-medium"
@@ -66,7 +89,6 @@
                                                 <span
                                                     class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span>
                                             </div>
-
                                             <div class="mt-3">
                                                 <label for="update-profile-form-3-tomselected"
                                                     class="form-label font-medium"
@@ -78,12 +100,25 @@
                                                 <label for="startDate" class="form-label font-medium">Baptism Date:</label>
                                                 <span class="ml-3">{{ $client_profile_info->baptism_date }}</span>
                                             </div>
+                                        </div>
+
+                                        @php
+                                            $assigned_doctor_info = $client_profile_info->getAssignedDoctorInfo($client_profile_info->assigned_doctor_id);
+                                        @endphp
+                                        <div class="col-span-6 2xl:col-span-3">
                                             <div class="mt-3">
-                                                <label for="startDate" class="form-label font-medium">Birth Date:</label>
-                                                <span class="ml-3">{{ $client_profile_info->birth_date }}</span>
+                                                <label for="update-profile-form-3-tomselected"
+                                                    class="form-label font-medium"
+                                                    id="update-profile-form-3-ts-label">Assigned Doctor:</label>
+                                                <span
+                                                    class="ml-3">{{ $assigned_doctor_info->getFullName($assigned_doctor_info->id) }}</span>
+                                            </div>
+                                            <div class="mt-3">
+                                                <label for="startDate" class="form-label font-medium">Assigned Doctor's Contact Number:</label>
+                                                <span class="ml-3">{{ $assigned_doctor_info->contact_number }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-span-6 2xl:col-span-3"></div>
+
                                         <div class="w-52 mx-auto xl:mr-0 xl:ml-6 mt-5">
                                             <div
                                                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
@@ -116,14 +151,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($progress_reports as $progress_report)
                                         <tr>
-                                            <th scope="row">12/12/2020</th>
-                                            <td>Pedro Kawali</td>
-                                            <td>09123456789</td>
-                                            <td>lorem ipsum</td>
-                                            <td>lorem ipsum</td>
-                                            <td>attachment</td>
+                                            <th scope="row">{{ $progress_report->dateFormatMdY($progress_report->date) }}</th>
+                                            <td>{{ $progress_report->name }}</td>
+                                            <td>{{ $progress_report->contact_number }}</td>
+                                            <td>{{ $progress_report->case_note }}</td>
+                                            <td>{{ $progress_report->remarks }}</td>
+                                            <td>
+                                                @if ( !empty($progress_report->attachment) )
+                                                <a href="{{ asset('storage/'.$progress_report->attachment) }}" target="_blank" >
+                                                    <button class="btn btn-primary">
+                                                        View Attachment
+                                                    </button>
+                                                </a>
+                                                @else
+                                                    No Uploaded Attachment
+                                                @endif
+                                            </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

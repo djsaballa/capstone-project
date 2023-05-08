@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
     // INBOX
     Route::get('/inbox/{user_id}', [UserController::class, 'inbox'])->name('inbox');
+    Route::post('/send-message', [UserController::class, 'sendMessage'])->name('send_message');
 
     // AUDIT LOGS
     Route::get('/audit-logs/{user_id}', [UserController::class, 'auditLogs'])->name('audit_logs');

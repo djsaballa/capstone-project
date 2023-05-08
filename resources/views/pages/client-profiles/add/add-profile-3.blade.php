@@ -73,9 +73,9 @@
                 </ul>
             </div>
         @endif
-        @if (Session::has('success'))
+        @if (Session::has('status'))
             <div class="alert alert-success text-center text-white">
-                <p>{{ Session::get('success') }}</p>
+                <p>{{ Session::get('status') }}</p>
             </div>
         @endif
         <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">

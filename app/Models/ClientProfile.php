@@ -112,6 +112,13 @@ class ClientProfile extends Model
 
         return $firstName . " " . $middleName . " " . $lastName;
     }
+    
+    public static function getAssignedDoctorInfo($assigned_doctor_id)
+    {
+        $assigned_doctor_info = User::find($assigned_doctor_id);
+        
+        return $assigned_doctor_info;
+    }
 
     public function dateFormatMdY($date)
     {
