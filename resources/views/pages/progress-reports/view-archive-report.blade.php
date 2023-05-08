@@ -22,51 +22,60 @@
                                     <div class="grid grid-cols-12 gap-x-5">
                                         <div class="col-span-6 2xl:col-span-3">
                                             <div class="mt-3 ">
-                                                <label for="update-profile-form-1" class="form-label">
-                                                    Name:<span class="ml-3">{{ $client_profile_info->first_name }}<span
-                                                            class="ml-1">{{ $client_profile_info->middle_name }}<span
-                                                                class="ml-1">{{ $client_profile_info->last_name }}</span></span></span></label>
+                                                <label for="update-profile-form-1" class="form-label font-medium">
+                                                    Name:</label>
+                                                <span
+                                                    class="ml-3">{{ $client_profile_info->getFullName($client_profile_info->id) }}</span>
                                             </div>
                                             <div class="mt-3 ">
-                                                <label for="update-profile-form-3-tomselected" class="form-label"
-                                                    id="update-profile-form-3-ts-label">Gender:<span
-                                                        class="ml-3">{{ $client_profile_info->gender }}</span></label>
+                                                <label for="update-profile-form-3-tomselected"
+                                                    class="form-label font-medium"
+                                                    id="update-profile-form-3-ts-label">Gender:</label>
+                                                <span class="ml-3">{{ $client_profile_info->gender }}</span>
                                             </div>
                                             <div class="mt-3 ">
-                                                <label for="update-profile-form-4" class="form-label">Age:<span
-                                                        class="ml-3">{{ $client_profile_info->age }}</span></label>
+                                                <label for="update-profile-form-4"
+                                                    class="form-label font-medium">Age:</label>
+                                                <span class="ml-3">{{ $client_profile_info->age }}</span>
                                             </div>
                                             <div class="mt-3">
-                                                <label for="update-profile-form-4" class="form-label">Contact
-                                                    Number: {{ $client_profile_info->contact_number }}</label>
+                                                <label for="update-profile-form-4" class="form-label font-medium">Contact
+                                                    Number: </label>
+                                                <span class="ml-3">{{ $client_profile_info->contact_number }}</span>
                                             </div>
                                         </div>
 
                                         <div class="col-span-6 2xl:col-span-3">
 
                                             <div class="mt-3 ">
-                                                <label for="update-profile-form-3-tomselected" class="form-label"
-                                                    id="update-profile-form-3-ts-label">Division:<span
-                                                        class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span></label>
+                                                <label for="update-profile-form-3-tomselected"
+                                                    class="form-label font-medium"
+                                                    id="update-profile-form-3-ts-label">Division:</label>
+                                                <span
+                                                    class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span>
                                             </div>
                                             <div class="mt-3 ">
-                                                <label for="update-profile-form-3-tomselected" class="form-label"
-                                                    id="update-profile-form-3-ts-label">District:<span
-                                                        class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span></label>
+                                                <label for="update-profile-form-3-tomselected"
+                                                    class="form-label font-medium"
+                                                    id="update-profile-form-3-ts-label">District:</label>
+                                                <span
+                                                    class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span>
                                             </div>
 
                                             <div class="mt-3">
-                                                <label for="update-profile-form-3-tomselected" class="form-label"
-                                                    id="update-profile-form-3-ts-label">Locale:<span
-                                                        class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span></label>
+                                                <label for="update-profile-form-3-tomselected"
+                                                    class="form-label font-medium"
+                                                    id="update-profile-form-3-ts-label">Locale:</label>
+                                                <span
+                                                    class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span>
                                             </div>
                                             <div class="mt-3">
-                                                <label for="startDate">Baptism Date:<span
-                                                        class="ml-3">{{ $client_profile_info->baptism_date }}</span></label>
+                                                <label for="startDate" class="form-label font-medium">Baptism Date:</label>
+                                                <span class="ml-3">{{ $client_profile_info->baptism_date }}</span>
                                             </div>
                                             <div class="mt-3">
-                                                <label for="startDate">Birth Date:<span
-                                                        class="ml-3">{{ $client_profile_info->birth_date }}</span></label>
+                                                <label for="startDate" class="form-label font-medium">Birth Date:</label>
+                                                <span class="ml-3">{{ $client_profile_info->birth_date }}</span>
                                             </div>
                                         </div>
                                         <div class="col-span-6 2xl:col-span-3"></div>
@@ -74,11 +83,13 @@
                                             <div
                                                 class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                                 <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                                @if ( !empty($client_profile_info->picture) )
-                                                    <img src="{{ asset('storage/'.$client_profile_info->picture) }}" class="rounded-md" alt="Client Image">
-                                                @else
-                                                    <img alt="Client Image" class="rounded-md" src=" {{ asset('dist/images/profile-1.jpg')}}">
-                                                @endif
+                                                    @if (!empty($client_profile_info->picture))
+                                                        <img src="{{ asset('storage/' . $client_profile_info->picture) }}"
+                                                            class="rounded-md" alt="Client Image">
+                                                    @else
+                                                        <img alt="Client Image" class="rounded-md"
+                                                            src=" {{ asset('dist/images/profile-1.jpg') }}">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

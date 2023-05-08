@@ -21,51 +21,55 @@
                                 <div class="grid grid-cols-12 gap-x-5">
                                     <div class="col-span-6 2xl:col-span-3">
                                         <div class="mt-3 ">
-                                            <label for="update-profile-form-1" class="form-label">
-                                                Name:<span class="ml-3">{{ $client_profile_info->first_name }}<span
-                                                        class="ml-1">{{ $client_profile_info->middle_name }}<span
-                                                            class="ml-1">{{ $client_profile_info->last_name }}</span></span></span></label>
+                                            <label for="update-profile-form-1" class="form-label font-medium">
+                                                Name:</label>
+                                            <span
+                                                class="ml-3">{{ $client_profile_info->getFullName($client_profile_info->id) }}</span>
                                         </div>
                                         <div class="mt-3 ">
-                                            <label for="update-profile-form-3-tomselected" class="form-label"
-                                                id="update-profile-form-3-ts-label">Gender:<span
-                                                    class="ml-3">{{ $client_profile_info->gender }}</span></label>
+                                            <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                                id="update-profile-form-3-ts-label">Gender:</label>
+                                            <span class="ml-3">{{ $client_profile_info->gender }}</span>
                                         </div>
                                         <div class="mt-3 ">
-                                            <label for="update-profile-form-4" class="form-label">Age:<span
-                                                    class="ml-3">{{ $client_profile_info->age }}</span></label>
+                                            <label for="update-profile-form-4" class="form-label font-medium">Age:</label>
+                                            <span class="ml-3">{{ $client_profile_info->age }}</span>
                                         </div>
                                         <div class="mt-3">
-                                            <label for="update-profile-form-4" class="form-label">Contact
-                                                Number: {{ $client_profile_info->contact_number }}</label>
+                                            <label for="update-profile-form-4" class="form-label font-medium">Contact
+                                                Number: </label>
+                                            <span class="ml-3">{{ $client_profile_info->contact_number }}</span>
                                         </div>
                                     </div>
 
                                     <div class="col-span-6 2xl:col-span-3">
 
                                         <div class="mt-3 ">
-                                            <label for="update-profile-form-3-tomselected" class="form-label"
-                                                id="update-profile-form-3-ts-label">Division:<span
-                                                    class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span></label>
+                                            <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                                id="update-profile-form-3-ts-label">Division:</label>
+                                            <span
+                                                class="ml-3">{{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}</span>
                                         </div>
                                         <div class="mt-3 ">
-                                            <label for="update-profile-form-3-tomselected" class="form-label"
-                                                id="update-profile-form-3-ts-label">District:<span
-                                                    class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span></label>
+                                            <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                                id="update-profile-form-3-ts-label">District:</label>
+                                            <span
+                                                class="ml-3">{{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}</span>
                                         </div>
 
                                         <div class="mt-3">
-                                            <label for="update-profile-form-3-tomselected" class="form-label"
-                                                id="update-profile-form-3-ts-label">Locale:<span
-                                                    class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span></label>
+                                            <label for="update-profile-form-3-tomselected" class="form-label font-medium"
+                                                id="update-profile-form-3-ts-label">Locale:</label>
+                                            <span
+                                                class="ml-3">{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</span>
                                         </div>
                                         <div class="mt-3">
-                                            <label for="startDate">Baptism Date:<span
-                                                    class="ml-3">{{ $client_profile_info->baptism_date }}</span></label>
+                                            <label for="startDate" class="form-label font-medium">Baptism Date:</label>
+                                            <span class="ml-3">{{ $client_profile_info->baptism_date }}</span>
                                         </div>
                                         <div class="mt-3">
-                                            <label for="startDate">Birth Date:<span
-                                                    class="ml-3">{{ $client_profile_info->birth_date }}</span></label>
+                                            <label for="startDate" class="form-label font-medium">Birth Date:</label>
+                                            <span class="ml-3">{{ $client_profile_info->birth_date }}</span>
                                         </div>
                                     </div>
                                     <div class="col-span-6 2xl:col-span-3"></div>
@@ -85,30 +89,35 @@
                                     </div>
                                     <div class="intro-y col-span-12 lg:col-span-8 mt-5">
                                         <div>
-                                            <label for="regular-form-1" class="form-label">Date</label><input type="text"
-                                                class="datepicker form-control block mx-auto" data-single-mode="true">
+                                            <label for="regular-form-1" class="form-label font-medium">Date</label><input
+                                                type="text" class="datepicker form-control block mx-auto"
+                                                data-single-mode="true">
                                         </div>
-                                           
-                                        <div class="mt-3"> <label for="regular-form-2" class="form-label">Name</label>
+
+                                        <div class="mt-3"> <label for="regular-form-2"
+                                                class="form-label font-medium">Name</label>
                                             <input id="regular-form-2" type="text" class="form-control" placeholder=" ">
                                         </div>
-                                        <div class="mt-3"> <label for="regular-form-3" class="form-label">Means Of
+                                        <div class="mt-3"> <label for="regular-form-3"
+                                                class="form-label font-medium">Means Of
                                                 Contact</label> <input id="regular-form-3" type="text"
                                                 class="form-control" placeholder=" ">
                                         </div>
-                                        <div class="mt-3"> <label for="regular-form-4" class="form-label">Case
+                                        <div class="mt-3"> <label for="regular-form-4" class="form-label font-medium">Case
                                                 Notes</label>
                                             <textarea id="" name="" class="form-control" placeholder=""></textarea>
                                         </div>
-                                        <div class="mt-3"> <label for="regular-form-5" class="form-label">Remarks</label>
+                                        <div class="mt-3"> <label for="regular-form-5"
+                                                class="form-label font-medium">Remarks</label>
                                             <textarea id="" name="" class="form-control" placeholder=""></textarea>
                                         </div>
                                         <div class="mt-3"> <label for="regular-form-5"
-                                                class="form-label">Attachment</label>
+                                                class="form-label font-medium">Attachment</label>
                                             <input class="form-control" type="file" id="formFileMultiple" multiple />
                                         </div>
-                                        <div class="mt-5"> 
-                                        <button class="btn btn-primary w-24 ml-2" type="submit">Submit</button>
+                                        <div class="mt-5">
+                                            <button class="btn btn-secodary w-24 ml-2" type="cancel">Cancel</button>
+                                            <button class="btn btn-primary w-24 ml-2" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>
