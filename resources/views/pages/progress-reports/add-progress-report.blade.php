@@ -84,13 +84,13 @@
                                         </div>
                                     </div>
                                     <div class="intro-y col-span-12 lg:col-span-8 mt-5">
-                                       
-                                        <div class="mt-3"> <label for="regular-form-2" class="form-label">Name</label>
-                                            <input id="regular-form-2" type="text" class="form-control" placeholder=" ">
-                                        </div>
                                         <div>
                                             <label for="regular-form-1" class="form-label">Date</label><input type="text"
                                                 class="datepicker form-control block mx-auto" data-single-mode="true">
+                                        </div>
+                                           
+                                        <div class="mt-3"> <label for="regular-form-2" class="form-label">Name</label>
+                                            <input id="regular-form-2" type="text" class="form-control" placeholder=" ">
                                         </div>
                                         <div class="mt-3"> <label for="regular-form-3" class="form-label">Means Of
                                                 Contact</label> <input id="regular-form-3" type="text"

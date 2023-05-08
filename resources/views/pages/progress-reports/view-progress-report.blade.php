@@ -96,8 +96,8 @@
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
-                                            <th scope="col">Name</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Means Of Contact</th>
                                             <th scope="col">Case Notes</th>
                                             <th scope="col">Remarks</th>
@@ -107,9 +107,10 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">12/12/2020</th>
+                                            <td>Pedro Kawali</td>
                                             <td>09123456789</td>
                                             <td>lorem ipsum</td>
-                                            <td> lorem ipsum</td>
+                                            <td>lorem ipsum</td>
                                             <td>attachment</td>
                                         </tr>
                                     </tbody>
