@@ -7,20 +7,6 @@
             <a href="{{ route('add_progress_report', [$user_info->id, $client_profile_info->id]) }}">
                 <button class="btn btn-primary shadow-md mr-2">Add Report</button>
             </a>
-            <div class="dropdown">
-                <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-lucide="plus"></i>
-                    </span>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
-                                Export to PDF </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
@@ -110,7 +96,8 @@
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
-                                            <th scope="col">Date & Time</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Date</th>
                                             <th scope="col">Means Of Contact</th>
                                             <th scope="col">Case Notes</th>
                                             <th scope="col">Remarks</th>
