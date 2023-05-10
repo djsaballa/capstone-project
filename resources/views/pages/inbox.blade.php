@@ -117,9 +117,7 @@
                                                         src=" {{ asset('dist/images/profile-1.jpg') }}">
                                                 @endif
                                             </div>
-                                            <a href="{{ route('view_user', [$user_info->id, $inbox->sender_user_id]) }}">
-                                                <div class="inbox__item--sender truncate ml-3"> {{ $inbox->getSenderName($inbox->sender_user_id) }}</div>
-                                            </a>
+                                            <div class="inbox__item--sender truncate ml-3"> {{ $inbox->getSenderName($inbox->sender_user_id) }}</div>
                                         </div>
                                         <div class="w-64 sm:w-auto truncate"> <span
                                                 class="inbox__item--highlight">{{ $inbox->content }}</div>
