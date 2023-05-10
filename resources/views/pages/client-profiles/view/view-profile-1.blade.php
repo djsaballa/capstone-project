@@ -25,6 +25,7 @@
                             data-lucide="file-text"></i> Background Information </a>
                 </div>
             </div>
+            @include('components.doctor-remarks')
             @include('components.remarks')
             <!-- END: File Manager Menu -->
         </div>
