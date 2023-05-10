@@ -426,6 +426,22 @@ class UserController extends Controller
         }
     }
 
+    public function viewInbox($user_id)
+    {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $users = User::all();
+            $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(15);
+    
+            return view('pages.view-inbox', compact('user_info', 'inboxes', 'users'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
+    }
+
     public function sendMessage(Request $request)
     {
         $request->validate([

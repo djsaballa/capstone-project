@@ -101,7 +101,7 @@
                                 class="inbox__item--highlight">Message</div>
                     </div>
                 </div>
-                <div class="overflow-x-auto sm:overflow-x-visible">
+                <div onclick="window.location='{{ route('view_inbox', $user_info->id) }}'" class="overflow-x-auto sm:overflow-x-visible">
                     @if ($inboxes->first())
                         @foreach ($inboxes as $inbox)
                             <div class="intro-y">
