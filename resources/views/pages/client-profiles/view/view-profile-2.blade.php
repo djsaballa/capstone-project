@@ -23,6 +23,7 @@
                 </div>
             </div>
             <!-- END: File Manager Menu -->
+            @include('components.doctor-remarks')
             @include('components.remarks')
         </div>
      
