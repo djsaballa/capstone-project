@@ -101,16 +101,16 @@
                                 class="inbox__item--highlight">Message</div>
                     </div>
                 </div>
-                <div onclick="window.location='{{ route('view_inbox', $user_info->id) }}'" class="overflow-x-auto sm:overflow-x-visible">
+                <div class="overflow-x-auto sm:overflow-x-visible">
                     @if ($inboxes->first())
                         @foreach ($inboxes as $inbox)
-                            <div class="intro-y">
+                            <div class="intro-y" onclick="window.location='{{ route('view_inbox', [$user_info->id, $inbox->id]) }}'">
                                 <div class="inbox__item inbox__item--active inline-block sm:block text-slate-600 dark:text-slate-500 bg-slate-100 dark:bg-darkmode-400/70 border-b border-slate-200/60 dark:border-darkmode-400">
                                     <div class="flex px-5 py-3">
                                         <div class="w-72 flex-none flex items-center mr-5">
                                             <div class="w-6 h-6 flex-none image-fit relative ml-5">
                                                 @if (!empty($inbox->getSenderPicture($inbox->sender_user_id)))
-                                                    <img src="{{ asset('storage/' . $inbox->user->getPicture($inbox->sender_user_id)) }}"
+                                                    <img src="{{ asset('storage/' . $inbox->getSenderPicture($inbox->sender_user_id)) }}"
                                                         class="rounded-md" alt="Client Image">
                                                 @else
                                                     <img alt="Client Image" class="rounded-md"

@@ -417,7 +417,7 @@ class UserController extends Controller
             $users = User::all();
             $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(15);
     
-            return view('pages.inbox', compact('user_info', 'inboxes', 'users'));
+            return view('pages.inboxes.inbox', compact('user_info', 'inboxes', 'users'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
@@ -426,14 +426,13 @@ class UserController extends Controller
         }
     }
 
-    public function viewInbox($user_id)
+    public function viewInbox($user_id, $inbox_id)
     {
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
-            $users = User::all();
-            $inboxes = Inbox::where('receiver_user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(15);
+            $inbox_info = Inbox::find($inbox_id);
     
-            return view('pages.view-inbox', compact('user_info', 'inboxes', 'users'));
+            return view('pages.inboxes.view-inbox', compact('user_info', 'inbox_info'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
