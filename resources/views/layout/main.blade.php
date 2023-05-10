@@ -17,7 +17,7 @@
 
 <!-- END: Head -->
 
-<body class="login">>
+<body class="login">
     @yield('content')
     @vite('resources/js/app.js')
 </body>

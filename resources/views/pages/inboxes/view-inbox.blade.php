@@ -25,7 +25,7 @@
                         <a href="{{ route('view_user', [$user_info->id, $inbox_info->sender_user_id]) }}" class="font-medium">{{ $inbox_info->getSenderName($inbox_info->sender_user_id) }}</a>
                         <div class="text-xs text-slate-400 ml-auto">{{ $inbox_info->dateFormatMdY($inbox_info->date_sent) }}</div>
                     </div>
-                    <div class="w-full text-slate-500 mt-2">
+                    <div class="w-full text-slate-500 mt-2 p-3 ">
                         {{ $inbox_info->content}}
                     </div>
                 </div>
