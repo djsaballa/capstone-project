@@ -74,7 +74,7 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
+                                            <i data-lucide="refresh-cw" class="report-box__icon text-primary"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($ongoing) }}</div>
                                         <div class="text-base text-slate-500 mt-1">On-Going Cases</div>
@@ -85,7 +85,7 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="file-x" class="report-box__icon text-success"></i>
+                                            <i data-lucide="file-x" class="report-box__icon text-pending"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($terminated) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Terminated Cases</div>
@@ -96,7 +96,7 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="skull" class="report-box__icon text-success"></i>
+                                            <i data-lucide="skull" class="report-box__icon text-warning"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($expired) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Expired Cases</div>
@@ -107,7 +107,7 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="x-circle" class="report-box__icon text-success"></i>
+                                            <i data-lucide="x-circle" class="report-box__icon text-danger"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($closed) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Closed Cases</div>
