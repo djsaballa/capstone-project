@@ -151,26 +151,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($progress_reports as $progress_report)
-                                        <tr>
-                                            <th scope="row">{{ $progress_report->dateFormatMdY($progress_report->date) }}</th>
-                                            <td>{{ $progress_report->name }}</td>
-                                            <td>{{ $progress_report->contact_number }}</td>
-                                            <td>{{ $progress_report->case_note }}</td>
-                                            <td>{{ $progress_report->remarks }}</td>
-                                            <td>
-                                                @if ( !empty($progress_report->attachment) )
-                                                <a href="{{ asset('storage/'.$progress_report->attachment) }}" target="_blank" >
-                                                    <button class="btn btn-primary">
-                                                        View Attachment
-                                                    </button>
-                                                </a>
-                                                @else
-                                                    No Uploaded Attachment
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                        @if ($progress_reports->first())
+                                            @foreach ($progress_reports as $progress_report)
+                                            <tr>
+                                                <th scope="row">{{ $progress_report->dateFormatMdY($progress_report->date) }}</th>
+                                                <td>{{ $progress_report->name }}</td>
+                                                <td>{{ $progress_report->contact_number }}</td>
+                                                <td>{{ $progress_report->case_note }}</td>
+                                                <td>{{ $progress_report->remarks }}</td>
+                                                <td>
+                                                    @if ( !empty($progress_report->attachment) )
+                                                    <a href="{{ asset('storage/'.$progress_report->attachment) }}" target="_blank" >
+                                                        <button class="btn btn-primary">
+                                                            View Attachment
+                                                        </button>
+                                                    </a>
+                                                    @else
+                                                        No Uploaded Attachment
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <th>None</th>
+                                                <th>None</th>
+                                                <th>None</th>
+                                                <th>None</th>
+                                                <th>None</th>
+                                                <th>None</th>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

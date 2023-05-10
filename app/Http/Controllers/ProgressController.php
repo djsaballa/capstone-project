@@ -104,8 +104,9 @@ class ProgressController extends Controller
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
             $client_profile_info = ClientProfile::find($client_profile_id);
+            $progress_reports = ProgressReport::where('client_profile_id', $client_profile_id)->orderBy('created_at', 'DESC')->get();
     
-            return view('pages.progress-reports.view-archive-report', compact('user_info', 'client_profile_info'));
+            return view('pages.progress-reports.view-archive-report', compact('user_info', 'client_profile_info', 'progress_reports'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
