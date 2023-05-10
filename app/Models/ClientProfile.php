@@ -120,6 +120,14 @@ class ClientProfile extends Model
         return $assigned_doctor_info;
     }
 
+    public function getMedicalCategoryName($medical_category_id)
+    {
+        $medical_category = MedicalCategory::find($medical_category_id);
+        $medical_category_name = $medical_category->medical_category;
+
+        return $medical_category_name;
+    }
+
     public function dateFormatMdY($date)
     {
         $formattedDate = Carbon::parse($date)->format("M. d, Y");

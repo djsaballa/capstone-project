@@ -46,15 +46,13 @@ class UserController extends Controller
                 return redirect()->route('dashboard', $user_id);
             } else {
                 Auth::guard('web')->logout();
-
                 $request->session()->invalidate();
-
                 $request->session()->regenerateToken();
 
-                return back()->withErrors(['username' => 'Woop']);
+                return back()->with('error', 'Invalid login credentials.');
             }
         } else {
-            return back()->withErrors(['username' => 'Invalid login credentials']);
+            return back()->with('error', 'Invalid login credentials.');
         }
     }
 

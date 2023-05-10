@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MedicalCondition;
+use App\Models\ClientProfile;
 
 class MedicalCategory extends Model
 {
@@ -25,9 +25,9 @@ class MedicalCategory extends Model
         "priority_level"
     ];
 
-    public function medicalConditions()
+    public function clientProfile()
     {
-        return $this->hasMany(MedicalCondition::class);
+        return $this->hasMany(ClientProfile::class);
     }
 
     public function getId()

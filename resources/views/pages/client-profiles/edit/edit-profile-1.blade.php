@@ -40,7 +40,13 @@
                 </div>
                 <div class="">
                     @foreach ($errors->all() as $error)
-                        <p style="color: red;">{{ $error }}</p>
+                        <div class="m-1">
+                            <div class="text-center">
+                                <div class="text-danger">
+                                {{ $error }}
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </div>
                 <div class="p-5">

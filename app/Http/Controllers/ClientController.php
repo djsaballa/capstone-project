@@ -15,6 +15,7 @@ use App\Models\FamilyComposition;
 use App\Models\Disease;
 use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
+use App\Models\MedicalCategory;
 use App\Models\History;
 use App\Models\TempClientProfile;
 use Carbon\Carbon;
@@ -74,11 +75,13 @@ class ClientController extends Controller
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
             $client_profile_info = ClientProfile::find($client_profile_id);
+            $doctors = User::whereIn('role_id', [8, 9])->get();
+            $medical_categories = MedicalCategory::all();
             $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
             $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
             $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
     
-            return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations'));
+            return view('pages.client-profiles.view.view-profile-1', compact('user_info', 'client_profile_info', 'doctors', 'medical_categories', 'family_compositions', 'medical_conditions', 'medical_operations'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
@@ -92,13 +95,46 @@ class ClientController extends Controller
         if (Auth::user()->id == $user_id) {
             $user_info = User::find($user_id);
             $client_profile_info = ClientProfile::find($client_profile_id);
+            $doctors = User::whereIn('role_id', [8, 9])->get();
+            $medical_categories = MedicalCategory::all();
     
-            return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info'));
+            return view('pages.client-profiles.view.view-profile-2', compact('user_info', 'client_profile_info', 'doctors', 'medical_categories'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
             session()->regenerateToken();
             return redirect('/');
+        }
+    }
+
+    // ASSIGN DOCTOR AND ADD MEDICAL CATEGORY--------------------------------------------------------------------------
+    public function assignDoc_AddMedCategory(Request $request)
+    {
+        $request->validate([
+            'assignDoctor' => 'required',
+            'medicalCategory' => 'required',
+        ]);
+
+        $user_id = $request->userId;
+        $user_info = User::find($user_id);
+        $client_profile_id = $request->clientProfileId;
+        $client_profile_info = ClientProfile::find($client_profile_id);
+
+        $update =
+        [
+            'assigned_doctor_id' => $request->assignDoctor,
+            'medical_category_id' => $request->medicalCategory
+        ];
+
+        $cp_update = $client_profile_info->update($update);
+
+        if ($cp_update) {
+            $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+            $request->session()->flash('status', 'Doctor and Medical Category have been successfully saved!');
+
+            return redirect()->route($previous_route, [$user_id, $client_profile_id]);
+        } else {
+            return back()->withErrors('message', 'An error has occurred, Doctor and Medical were not saved.');
         }
     }
 
@@ -133,7 +169,7 @@ class ClientController extends Controller
 
             return redirect()->route($previous_route, [$user_id, $client_profile_id]);
         } else {
-            return back()->withErrors('message', 'Add Remark was unsuccessful.');
+            return back()->withErrors('message', 'An error has occured, Add Remark was unsuccessful.');
         }
     }
 

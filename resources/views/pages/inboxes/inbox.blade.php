@@ -10,7 +10,7 @@
             <div class="modal-body p-0">
                 <div class="p-5 text-center">
                     <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
-                    <div class="modal-body text-success">
+                    <div class="modal-body text-danger">
                         {{ Session::get('error') }}
                     </div>
                 </div>

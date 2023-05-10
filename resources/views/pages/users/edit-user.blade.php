@@ -13,9 +13,15 @@
                 Update User Profile
             </h2>
         </div>
-        @foreach ($errors->all() as $error)
-            <p style="color: red;">{{ $error }}</p>
-        @endforeach
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="p-5">
             <div class="col-span-6 2xl:col-span-3">
                 <form method="POST" action="{{ route('edit_user_save') }}" enctype="multipart/form-data">

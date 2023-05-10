@@ -13,6 +13,9 @@ Route::middleware('auth')->group(function () {
   Route::get('/view-profile-2/{user_id}/{client_profile_id}', [ClientController::class, 'viewProfile2'])->name('view_client_profile_2');
 
   //  ADD REMARK
+  Route::post('/assign-doc-add-med-category', [ClientController::class, 'assignDoc_AddMedCategory'])->name('assign_doc_add_med_category');
+
+  //  ASSIGN DOCTOR AND ADD MEDICAL CATEGORY
   Route::post('/add-remark', [ClientController::class, 'addRemark'])->name('add_remark');
 
   // VEIW PDF

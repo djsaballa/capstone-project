@@ -14,9 +14,15 @@
             </h2>
         </div>
         <div class="intro-y">
-            @foreach ($errors->all() as $error)
-                <p style="color: red;">{{ $error }}</p>
-            @endforeach
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         </div>
         <div class="p-5">
             <div class="flex flex-col-reverse xl:flex-row flex-col">

@@ -38,11 +38,15 @@
                 <div class="intro-y box lg:mt-5">
                     <div class="px-5 sm:px-20 mt-10 pt-10 border-t border-slate-200/60 dark:border-darkmode-400">
                         <div class="font-medium text-base">Contact Persons</div>
-                        <div class="">
-                            @foreach ($errors->all() as $error)
-                                <p style="color: red;">{{ $error }}</p>
-                            @endforeach
-                        </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
                             <div class="mt-3 col-span-3 2xl:col-span-1">
                                 <label for="update-profile-form-1" class="form-label">Name</label>

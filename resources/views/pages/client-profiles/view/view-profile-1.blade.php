@@ -41,6 +41,11 @@
                     </ul>
                 </div>
             @endif
+            @if (Session::has('error'))
+                <div class="alert alert-danger">
+                    <pack>{{ Session::get('error') }}</pack>
+                </div>
+            @endif
             @if (Session::has('status'))
                 <div class="alert alert-success text-center text-white">
                     <p>{{ Session::get('status') }}</p>

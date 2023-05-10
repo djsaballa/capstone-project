@@ -26,23 +26,26 @@
             <!-- BEGIN: Login Form -->
             <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
                 <div
-                    class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-                    <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                    <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left mb-5">
                         Log In
                     </h2>
-                    <p class="error intro-x text-center" style="color: red;">
-                        @error('username')
-                            {{ $message }}
-                        @enderror
-                    </p>
-                    <p class="error intro-x text-center" style="color: red;">
-                        @error('password')
-                            {{ $message }}
-                        @enderror
-                    </p>
-                    <p class="error intro-x text-center" style="color: red;">{{ Session::get('fail') }}</p>
                     <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your
                         account. Manage all your accounts in one place</div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger">
+                            <pack>{{ Session::get('error') }}</pack>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login_auth') }}">
                         @csrf
                         <div class="intro-x mt-8">

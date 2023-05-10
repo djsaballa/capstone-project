@@ -1,5 +1,5 @@
 <nav class="side-nav">
-    <a href="" class="intro-x flex items-center pl-5 pt-4">
+    <a href="{{ route('dashboard', $user_info->id) }}" class="intro-x flex items-center pl-5 pt-4">
         <img alt="ADDFII" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
         <span class="hidden xl:block text-white text-lg ml-3"> ADDFII </span>
     </a>

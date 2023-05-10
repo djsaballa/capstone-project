@@ -39,18 +39,20 @@
                             Medical Condition
                         </h2>
                     </div>
-                    <div class="">
-                        @foreach ($errors->all() as $error)
-                            <p style="color: red;">{{ $error }}</p>
-                        @endforeach
-                        @if (\Session::has('status'))
-                            <div style="color: green;">
-                                <ul>
-                                    <li>{!! \Session::get('status') !!}</li>
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
+                    @if (Session::has('status'))
+                        <div class="alert alert-success text-center text-white">
+                            <p>{{ Session::get('status') }}</p>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="px-5 sm:px-20 mt-5 pt-5">
                         <div class="grid grid-cols-20 gap-4 gap-y-5 mt-5">
                             <div class="intro-y box lg:mt-5">
