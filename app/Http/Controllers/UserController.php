@@ -21,6 +21,7 @@ use App\Models\MedicalOperation;
 use App\Models\Inbox;
 use App\Models\History;
 use Carbon\Carbon;
+use DB;
 
 class UserController extends Controller
 {
@@ -88,7 +89,7 @@ class UserController extends Controller
             } elseif ($security_level_id >= 5) {
                 $client_profiles = ClientProfile::orderBy('created_at', 'DESC')->get();
             }
-    
+
             return view('pages.dashboard', compact('user_info', 'client_profiles'));
         } else {
             Auth::guard('web')->logout();

@@ -8,47 +8,27 @@ import Chart from "chart.js/auto";
     // Chart
     if ($("#report-line-chart").length) {
         let ctx = $("#report-line-chart")[0].getContext("2d");
+        let days = document.getElementById('days');
+        let i = 0;
+        let labels = [];
+        while (i < days.value) {
+            labels.push(i);
+            i++;
+        }
+        let rowsByDay = document.getElementById('rowsByDay');
+        let rowsByDayValue = rowsByDay.value;
+        const array = rowsByDayValue.split(', ');
+        const numbers = array.map(Number);
         let myChart = new Chart(ctx, {
             type: "line",
             data: {
-                labels: [
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                ],
+                labels: labels,
                 datasets: [
                     {
-                        label: "# of Votes",
-                        data: [
-                            0, 200, 250, 200, 700, 550, 650, 1050, 950, 1100,
-                            900, 1200,
-                        ],
+                        label: "# of Client Profiles",
+                        data: numbers,
                         borderWidth: 2,
                         borderColor: colors.primary(0.8),
-                        backgroundColor: "transparent",
-                        pointBorderColor: "transparent",
-                        tension: 0.4,
-                    },
-                    {
-                        label: "# of Votes",
-                        data: [
-                            0, 300, 400, 560, 320, 600, 720, 850, 690, 805,
-                            1200, 1010,
-                        ],
-                        borderWidth: 2,
-                        borderDash: [2, 2],
-                        borderColor: $("html").hasClass("dark")
-                            ? colors.slate["400"](0.6)
-                            : colors.slate["400"](),
                         backgroundColor: "transparent",
                         pointBorderColor: "transparent",
                         tension: 0.4,
@@ -82,7 +62,7 @@ import Chart from "chart.js/auto";
                             },
                             color: colors.slate["500"](0.8),
                             callback: function (value, index, values) {
-                                return "$" + value;
+                                return value;
                             },
                         },
                         grid: {
@@ -98,28 +78,38 @@ import Chart from "chart.js/auto";
         });
     }
 
+
+
     if ($("#report-pie-chart").length) {
         let ctx = $("#report-pie-chart")[0].getContext("2d");
+        let data1 = document.getElementById('data1')
+        let data2 = document.getElementById('data2')
+        let data3 = document.getElementById('data3')
+        let data4 = document.getElementById('data4')
+        let data = [data1.value, data2.value, data3.value, data4.value]
         let myPieChart = new Chart(ctx, {
             type: "pie",
             data: {
                 labels: [
-                    "31 - 50 Years old",
-                    ">= 50 Years old",
-                    "17 - 30 Years old",
+                    "Under 15 Year Old",
+                    "15 - 47 Years Old",
+                    "48 - 64 Years Old",
+                    "Older 64 Years Old",
                 ],
                 datasets: [
                     {
-                        data: [15, 10, 65],
+                        data: data,
                         backgroundColor: [
+                            colors.primary(0.9),
+                            colors.danger(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
-                            colors.primary(0.9),
                         ],
                         hoverBackgroundColor: [
+                            colors.primary(0.9),
+                            colors.danger(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
-                            colors.primary(0.9),
                         ],
                         borderWidth: 5,
                         borderColor: $("html").hasClass("dark")
@@ -141,26 +131,34 @@ import Chart from "chart.js/auto";
 
     if ($("#report-donut-chart").length) {
         let ctx = $("#report-donut-chart")[0].getContext("2d");
+        let data5 = document.getElementById('data5')
+        let data6 = document.getElementById('data6')
+        let data7 = document.getElementById('data7')
+        let data8 = document.getElementById('data8')
+        let data = [data5.value, data6.value, data7.value, data8.value]
         let myDoughnutChart = new Chart(ctx, {
             type: "doughnut",
             data: {
                 labels: [
-                    "31 - 50 Years old",
-                    ">= 50 Years old",
-                    "17 - 30 Years old",
+                    "Terminal",
+                    "Surgical",
+                    "Chronic",
+                    "With Illness",
                 ],
                 datasets: [
                     {
-                        data: [15, 10, 65],
+                        data: data,
                         backgroundColor: [
+                            colors.primary(0.9),
+                            colors.danger(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
-                            colors.primary(0.9),
                         ],
                         hoverBackgroundColor: [
+                            colors.primary(0.9),
+                            colors.danger(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
-                            colors.primary(0.9),
                         ],
                         borderWidth: 5,
                         borderColor: $("html").hasClass("dark")

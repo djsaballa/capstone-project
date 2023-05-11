@@ -14,6 +14,8 @@
                             class="w-4 h-4 mr-3"></i> Reload Data </a>
                 </div>
                 @php
+                    use Carbon\Carbon;
+                    
                     $archived = $client_profiles->whereIn('status', ['Terminated', 'Closed', 'Expired']);
                     $brethren = $client_profiles->whereNotNull('baptism_date');
                     $non_brethren = $client_profiles->whereNull('baptism_date');
@@ -21,6 +23,16 @@
                     $terminated = $client_profiles->where('status', 'Terminated');
                     $expired = $client_profiles->where('status', 'Expired');
                     $closed = $client_profiles->where('status', 'Closed');
+                    
+                    foreach ($client_profiles as $client_profile) {
+                        $dates[] =+ Carbon::parse($client_profile->created_at)->format('Ym');
+                    }
+                    foreach ($client_profiles as $client_profile) {
+                        $ages[] =+ Carbon::parse($client_profile->birth_date)->age;
+                    }
+                    foreach ($client_profiles as $client_profile) {
+                        $categories[] =+ $client_profile->medical_category_id;
+                    }
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
@@ -121,8 +133,48 @@
                     <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Profiling
+                                Client Profiling Chart
                             </h2>
+                            @php
+                                $thisMonthProfiles = count(
+                                    array_filter($dates, function ($date) {
+                                        $now = Carbon::now();
+                                        $thisMonth = $now->format('Ym');
+                                        return $date == $thisMonth;
+                                    }),
+                                );
+
+                                $lastMonthProfiles = count(
+                                    array_filter($dates, function ($date) {
+                                        $now = Carbon::now();
+                                        $lastMonth = $now->subMonth()->format('Ym');
+                                        return $date == $lastMonth;
+                                    }),
+                                );
+
+                                $now = Carbon::now();
+                                $thisYear = $now->format('Y');
+                                $thisMonth = $now->format('m');
+                                $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
+
+                                foreach ($client_profiles as $client_profile) {
+                                    $times[] = Carbon::parse($client_profile->created_at)->format("Y-m-d");
+                                };
+
+
+                                for ($day = 1; $day <= $daysInMonth; $day++) {
+                                    $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
+                                    $rowsByDay[$day] = count(
+                                        array_filter($times, function ($time) use ($date) {
+                                            return $time == $date;
+                                        })
+                                    );
+                                };
+
+                                $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
+                            @endphp
+                            <input id="days" value="{{ $daysInMonth }}" hidden>
+                            <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                             <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
                                 <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
                                 <input type="text" class="datepicker form-control sm:w-56 box pl-10">
@@ -133,32 +185,18 @@
                                 <div class="flex">
                                     <div>
                                         <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
-                                            500</div>
+                                            {{ $thisMonthProfiles }}
+                                        </div>
                                         <div class="mt-0.5 text-slate-500">This Month</div>
                                     </div>
                                     <div
                                         class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
                                     </div>
                                     <div>
-                                        <div class="text-slate-500 text-lg xl:text-xl font-medium">300
+                                        <div class="text-slate-500 text-lg xl:text-xl font-medium">
+                                            {{ $lastMonthProfiles }}
                                         </div>
                                         <div class="mt-0.5 text-slate-500">Last Month</div>
-                                    </div>
-                                </div>
-                                <div class="dropdown md:ml-auto mt-5 md:mt-0">
-                                    <button class="dropdown-toggle btn btn-outline-secondary font-normal"
-                                        aria-expanded="false" data-tw-toggle="dropdown"> Filter by Category
-                                        <i data-lucide="chevron-down" class="w-4 h-4 ml-2"></i> </button>
-                                    <div class="dropdown-menu w-40">
-                                        <ul class="dropdown-content overflow-y-auto h-32">
-                                            <li><a href="" class="dropdown-item">All Profiles</a></li>
-                                            <li><a href="" class="dropdown-item">Brethren</a></li>
-                                            <li><a href="" class="dropdown-item">Non-Brethren</a></li>
-                                            <li><a href="" class="dropdown-item">On-Going Cases</a></li>
-                                            <li><a href="" class="dropdown-item">Terminated Cases</a></li>
-                                            <li><a href="" class="dropdown-item">Closed Cases</a></li>
-                                            <li><a href="" class="dropdown-item">Expired Cases</a></li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -178,36 +216,89 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $data1 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age < 15;
+                                    }),
+                                );
+                                $data2 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age >= 15 && $age <= 47;
+                                    }),
+                                );
+                                $data3 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age >= 48 && $age <= 64;
+                                    }),
+                                );
+                                $data4 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age > 64;
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     <canvas id="report-pie-chart"></canvas>
                                 </div>
                             </div>
+                            <input id="data1" value="{{ $data1 }}" hidden>
+                            <input id="data2" value="{{ $data2 }}" hidden>
+                            <input id="data3" value="{{ $data3 }}" hidden>
+                            <input id="data4" value="{{ $data4 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">17 - 30 Years old</span> <span
-                                        class="font-medium ml-auto">62%</span>
+                                    <span class="truncate">Under 15 Year Old</span> <span
+                                        class="font-medium ml-auto">{{ round(($data1 / count($client_profiles)) * 100) }}%</span>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
+                                    <span class="truncate">15 - 47 Years Old</span> <span
+                                        class="font-medium ml-auto">{{ round(($data2 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                    <span class="truncate">31 - 50 Years old</span> <span
-                                        class="font-medium ml-auto">33%</span>
+                                    <span class="truncate">48 - 64 Years Old</span> <span
+                                        class="font-medium ml-auto">{{ round(($data3 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                    <span class="truncate">>= 50 Years old</span> <span
-                                        class="font-medium ml-auto">10%</span>
+                                    <span class="truncate">Older 64 Years Old</span> <span
+                                        class="font-medium ml-auto">{{ round(($data4 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END: Client Ages -->
                     <!-- BEGIN: Diseases per Category-->
+                    @php
+                        $data5 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 4;
+                            }),
+                        );
+                        $data6 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 3;
+                            }),
+                        );
+                        $data7 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 2;
+                            }),
+                        );
+                        $data8 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 1;
+                            }),
+                        );
+                    @endphp
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Diseases per Category
+                                Diseases per Medical Category
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
@@ -216,27 +307,33 @@
                                     <canvas id="report-donut-chart"></canvas>
                                 </div>
                             </div>
+                            <input id="data5" value="{{ $data5 }}" hidden>
+                            <input id="data6" value="{{ $data6 }}" hidden>
+                            <input id="data7" value="{{ $data7 }}" hidden>
+                            <input id="data8" value="{{ $data8 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Terminal</span> <span class="font-medium ml-auto">62%</span>
+                                    <span class="truncate">Terminal</span> <span class="font-medium ml-auto">{{ round(($data5 / count($client_profiles)) * 100) }}%</span>
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
+                                    <span class="truncate">Surgical</span> <span class="font-medium ml-auto">{{ round(($data6 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                    <span class="truncate">Cronic</span> <span class="font-medium ml-auto">33%</span>
+                                    <span class="truncate">Chronic</span> <span class="font-medium ml-auto">{{ round(($data7 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                    <span class="truncate">Terminal</span> <span class="font-medium ml-auto">10%</span>
+                                    <span class="truncate">With Illness</span> <span class="font-medium ml-auto">{{ round(($data8 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- END: Diseases per Categorys -->
+                    <!-- END: Diseases per Categories -->
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 @endsection
