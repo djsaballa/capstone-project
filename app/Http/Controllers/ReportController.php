@@ -25,15 +25,13 @@ class ReportController extends Controller
         $client_profile_info = ClientProfile::find($client_profile_id);
         $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
         $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-        $medical_conditions_ids = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get('id');
-        $medical_operations = MedicalOperation::all();
-        $client_profile_info = ClientProfile::find($client_profile_id);
+        $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
 
-        $data = compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_conditions_ids', 'medical_operations','client_profile_info');
+        $data = compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations');
 
         $pdf = PDF::loadView('pdf.pdf-view-profile', $data )
         ->setPaper('a4', 'portrait');
 
-        return $pdf->stream();
+        return $pdf->stream('ADDFI SSIS.pdf');
     }
 }
