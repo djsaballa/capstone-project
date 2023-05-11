@@ -68,7 +68,7 @@
                                         class="font-medium">not</span> actually uploaded. </div>
                             </div>
                         </div>
-                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 pb-5">
                             <a class="btn btn-secondary w-24 ml-2"
                                 href="{{ route('edit_client_profile_4', [$user_info->id, $client_profile_info->id]) }}">Previous</a>
                             <button type="submit" class="btn btn-primary w-24 ml-2">Finish</button>

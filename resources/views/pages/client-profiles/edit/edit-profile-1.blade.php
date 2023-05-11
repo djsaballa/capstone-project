@@ -221,7 +221,7 @@
                                             data-lucide="trash" class="w-4 h-4 mr-1"></i>
                                         Archive Profile </a>
                                 </div>
-                                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 ">
                                     <button class="btn btn-primary w-24 ml-2">Next</button>
                                 </div>
                             </div>
