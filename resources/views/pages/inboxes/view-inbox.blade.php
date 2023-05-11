@@ -18,20 +18,27 @@
                     @else
                         <img alt="Client Image" class="rounded-md" src=" {{ asset('dist/images/profile-1.jpg') }}">
                     @endif
-                    <div class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
+                    <div
+                        class="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600">
+                    </div>
                 </div>
                 <div class="ml-2 overflow-hidden">
                     <div class="flex items-center">
-                        <a href="{{ route('view_user', [$user_info->id, $inbox_info->sender_user_id]) }}" class="font-medium">{{ $inbox_info->getSenderName($inbox_info->sender_user_id) }}</a>
-                        <div class="text-xs text-slate-400 ml-auto">{{ $inbox_info->dateFormatMdY($inbox_info->date_sent) }}</div>
+                        <a href="{{ route('view_user', [$user_info->id, $inbox_info->sender_user_id]) }}"
+                            class="font-medium">{{ $inbox_info->getSenderName($inbox_info->sender_user_id) }}</a>
+                        <div class="text-xs text-slate-400 ml-auto">{{ $inbox_info->dateFormatMdY($inbox_info->date_sent) }}
+                        </div>
                     </div>
-                    <div class="w-full text-slate-500 mt-2 p-3 ">
-                        {{ $inbox_info->content}}
+                    <div class="w-90 text-slate-500 mt-2 p-5 ">
+                        {{ $inbox_info->content }}
                     </div>
                 </div>
             </div>
             <!-- END: Chat Default -->
             <!-- END: Inbox Content -->
+        </div>
+        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+            <a href="{{ route('inbox', $user_info->id) }}" class="btn btn-primary w-20" >Return</a>
         </div>
         <!-- END: Content -->
     </div>
