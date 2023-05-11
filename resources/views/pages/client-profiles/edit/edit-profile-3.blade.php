@@ -74,6 +74,8 @@
                                             <form></form>
                                             <form method="POST" action="{{ route('edit_client_profile_3_medcon_next') }}">
                                                 @csrf
+                                                <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                                                <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                                                 <tr>
                                                     <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                                                     <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
@@ -110,7 +112,7 @@
                                                     <td>
                                                         <input id="medical-doctor" name="medicalDoctor" value="{{ $medical_condition->doctor }}" class="form-control">
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <button class="btn btn-primary flex items-center mr-3 " type="submit">
                                                         <i data-lucide="save" class="w-4 h-4 mr-1"></i> Save </button>
                                                     </td>
@@ -134,41 +136,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($medical_conditions as $medical_condition)
-                                            @php
-                                                $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
-                                            @endphp
-        
-                                            @if ($matching_objects->first())
-                                                @foreach ($matching_objects as $matching_object)
-                                                    <form> </form>
-                                                    <form method="POST" action="{{ route('edit_client_profile_3_operation_next') }}">
-                                                    @csrf
-                                                        <tr>
-                                                            <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
-                                                            <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
-                                                            <input id="operation-id" name="operationId" value="{{$matching_object->id }}" hidden>
-                                                            <td>
-                                                                <input id="operation" name="operation" value="{{ $matching_object->operation }}" class="form-control">
-                                                            </td>
-                                                            <td>
-                                                                <input id="operation-date" name="operationDate" value="{{ $matching_object->date }}" class="form-control" type="date" />
-                                                            </td>
-                                                            <td>
-                                                                <button class="btn btn-primary flex items-center mr-3 " type="submit">
-                                                                <i data-lucide="save" class="w-4 h-4 mr-1"></i> Save </button>
-                                                            </td>
-                                                        </tr>
-                                                    </form>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td>None</td>
-                                                    <td>None</td>
-                                                    <td>None</td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
+                                        @if ($medical_operations->first())
+                                            @foreach ($medical_operations as $medical_operation)
+                                                <form> </form>
+                                                <form method="POST" action="{{ route('edit_client_profile_3_operation_next') }}">
+                                                @csrf
+                                                    <tr>
+                                                        <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                                                        <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
+                                                        <input id="operation-id" name="operationId" value="{{$medical_operation->id }}" hidden>
+                                                        <td>
+                                                            <input id="operation" name="operation" value="{{ $medical_operation->operation }}" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input id="operation-date" name="operationDate" value="{{ $medical_operation->date }}" class="form-control" type="date" />
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-primary flex items-center mr-3 " type="submit">
+                                                            <i data-lucide="save" class="w-4 h-4 mr-1"></i> Save </button>
+                                                        </td>
+                                                    </tr>
+                                                </form>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td>None</td>
+                                                <td>None</td>
+                                                <td>None</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

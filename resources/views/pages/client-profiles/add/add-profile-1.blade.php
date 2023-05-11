@@ -176,8 +176,8 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Division</label>
-                                        <select id="division-filter" name="division" data-search="true"
-                                            class="w-full form-control" tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
+                                        <select id="division-filter-3" name="division" data-search="true"
+                                            class="w-full form-control" tabindex="-1" onchange="loadDistricts3( {{ $districts_json }} )">
                                             @if ($old_input)
                                                 @php
                                                     $old_input_division = $divisions->find( $old_input->division );
@@ -203,8 +203,8 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">District</label>
-                                        <select id="district-filter" name="district" data-search="true"
-                                            class="w-full form-control" tabindex="-1" onchange="loadLocales( {{ $locales_json }} )" disabled>
+                                        <select id="district-filter-3" name="district" data-search="true"
+                                            class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )" disabled>
                                             @if ($old_input)
                                                 @php
                                                     $old_input_district = $districts->find( $old_input->district );
@@ -231,7 +231,7 @@
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Locale</label>
-                                        <select id="locale-filter" name="locale" data-search="true"
+                                        <select id="locale-filter-3" name="locale" data-search="true"
                                             class="w-full form-control" tabindex="-1" disabled>
                                             @if ($old_input)
                                                 @php

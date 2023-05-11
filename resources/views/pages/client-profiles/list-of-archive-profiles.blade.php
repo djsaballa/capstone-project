@@ -2,17 +2,13 @@
 
 @section('content')
     @if (Session::has('status'))
-        <div class="mt-10" style="color: green;">
-            <ul>
-                <li>{{ Session::get('status') }}</li>
-            </ul>
+        <div class="alert alert-success text-center text-white">
+            <p>{{ Session::get('status') }}</p>
         </div>
     @endif
     @if (Session::has('error'))
-        <div class="mt-10" style="color: red;">
-            <ul>
-                <li>{{ Session::get('error') }}</li>
-            </ul>
+        <div class="alert alert-danger">
+            <p>{{ Session::get('error') }}</p>
         </div>
     @endif
     <div class="col-span-12 2xl:col-span-9">

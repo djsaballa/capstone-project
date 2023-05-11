@@ -12,7 +12,7 @@
     @endif
     @if (Session::has('error'))
         <div class="alert alert-danger">
-            <pack>{{ Session::get('error') }}</pack>
+            <p>{{ Session::get('error') }}</p>
         </div>
     @endif
     <div class="grid grid-cols-12 gap-6 mt-5">

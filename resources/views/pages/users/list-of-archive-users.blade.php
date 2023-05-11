@@ -8,7 +8,7 @@
     @endif
     @if (Session::has('error'))
         <div class="alert alert-danger">
-            <pack>{{ Session::get('error') }}</pack>
+            <p>{{ Session::get('error') }}</p>
         </div>
     @endif
     <div class="col-span-12 2xl:col-span-9">

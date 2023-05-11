@@ -38,17 +38,20 @@
                         Personal Information
                     </h2>
                 </div>
-                <div class="">
-                    @foreach ($errors->all() as $error)
-                        <div class="m-1">
-                            <div class="text-center">
-                                <div class="text-danger">
-                                {{ $error }}
-                                </div>
+                @foreach ($errors->all() as $error)
+                    <div class="m-1">
+                        <div class="text-center">
+                            <div class="text-danger">
+                            {{ $error }}
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        <p>{{ Session::get('error') }}</p>
+                    </div>
+                @endif
                 <div class="p-5">
                     <form method="POST" action="{{ route('edit_client_profile_1_next') }}" enctype="multipart/form-data">
                         @csrf
@@ -119,11 +122,21 @@
                                         </div>
                                     </div>
                                     <div class="col-span-6 2xl:col-span-3">
+                                        @php
+                                            use App\Models\District;
+                                            use App\Models\Locale;
+                                            
+                                            $districts = District::all();
+                                            $districts_json = $districts->toJson();
+                                            
+                                            $locales = Locale::all();
+                                            $locales_json = $locales->toJson();
+                                        @endphp
                                         <div class="mt-3 ">
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">Division</label>
-                                            <select id="division" name="division" data-search="true"
-                                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                            <select id="division-filter-3" name="division" data-search="true"
+                                                class="w-full form-control" tabindex="-1" onchange="loadDistricts3( {{ $districts_json }} )">
                                                 <option
                                                     value="{{ $client_profile_info->locale->division->getId() }}"
                                                     selected="true">
@@ -138,8 +151,8 @@
                                         <div class="mt-3 ">
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">District</label>
-                                            <select id="district" name="district" data-search="true"
-                                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                            <select id="district-filter-3" name="district" data-search="true"
+                                                class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )" disabled>
                                                 <option
                                                     value="{{ $client_profile_info->locale->district->getId() }}"
                                                     selected="true">
@@ -155,8 +168,8 @@
                                         <div class="mt-3">
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">Locale</label>
-                                            <select id="locale" name="locale" data-search="true"
-                                                class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
+                                            <select id="locale-filter-3" name="locale" data-search="true"
+                                                class="w-full form-control" tabindex="-1" disabled>
                                                 <option
                                                     value="{{ $client_profile_info->locale->getId() }}"
                                                     selected="true">

@@ -8,7 +8,7 @@
     @endif
     @if (Session::has('error'))
         <div class="alert alert-danger">
-            <pack>{{ Session::get('error') }}</pack>
+            <p>{{ Session::get('error') }}</p>
         </div>
     @endif
     <h2 class="intro-y text-lg font-medium mt-10">
@@ -221,13 +221,13 @@
                         <div class="px-5 pb-8 text-center">
                             <button type="button" id="archive-client-profile" data-tw-toggle="modal"
                                 onclick="archiveProfile( {{ $user_info->id }}, 'Terminated' )"
-                                class="btn btn-danger w-24">Terminated</button>
+                                class="btn btn-pending w-24">Terminated</button>
+                            <button type="button" id="archive-client-profile" data-tw-toggle="modal"
+                            onclick="archiveProfile( {{ $user_info->id }}, 'Expired' )"
+                            class="btn btn-warning w-24">Expired</button>
                             <button type="button" id="archive-client-profile" data-tw-toggle="modal"
                                 onclick="archiveProfile( {{ $user_info->id }}, 'Closed' )"
-                                class="btn btn-warning w-24">Closed</button>
-                            <button type="button" id="archive-client-profile" data-tw-toggle="modal"
-                                onclick="archiveProfile( {{ $user_info->id }}, 'Expired' )"
-                                class="btn btn-dark w-24">Expired</button>
+                                class="btn btn-danger w-24">Closed</button>
                         </div>
                         <div class="px-5 pb-8 text-center">
                             <button type="button" class="btn btn-outline-secondary w-24 mr-1"

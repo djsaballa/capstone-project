@@ -699,11 +699,30 @@ class ClientController extends Controller
         ];
 
         $client_profile_info = ClientProfile::find($client_profile_id);
-
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_client_profile_2', [$user_id, $client_profile_id]);
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return redirect()->route('edit_client_profile_2', [$user_id, $client_profile_id]);
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return redirect()->route('edit_client_profile_2', [$user_id, $client_profile_id]);
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -737,6 +756,8 @@ class ClientController extends Controller
             'familyContactNumber' => 'required|numeric',
         ]);
 
+        $user_id = $request->userId;
+        $client_profile_id = $request->clientProfileId;
         $fam_comp_id = $request->famCompId;
 
         $fam_comp_update =
@@ -754,7 +775,27 @@ class ClientController extends Controller
         $update = $fam_comp_info->update($fam_comp_update);
 
         if ($update) {
-            return back()->with(['status' => 'Family Composition has been saved.']);;
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return back()->with(['status' => 'Family Composition has been saved.']);;
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return back()->with(['status' => 'Family Composition has been saved.']);;
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -766,7 +807,7 @@ class ClientController extends Controller
             $user_info = User::find($user_id);
             $client_profile_info = ClientProfile::find($client_profile_id);
             $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
-            $medical_operations = MedicalOperation::all();
+            $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
     
             $diseases = Disease::all();
     
@@ -790,6 +831,8 @@ class ClientController extends Controller
             'medicalDoctor' => 'required',
         ]);
 
+        $user_id = $request->userId;
+        $client_profile_id = $request->clientProfileId;
         $med_con_id = $request->medConId;
 
         $med_con_update =
@@ -806,7 +849,27 @@ class ClientController extends Controller
         $update = $med_con_info->update($med_con_update);
 
         if ($update) {
-            return back()->with(['status' => 'Medical Condition has been saved.']);;
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return back()->with(['status' => 'Medical Condition has been saved.']);;
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return back()->with(['status' => 'Medical Condition has been saved.']);;
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -819,6 +882,8 @@ class ClientController extends Controller
             'operationDate' => 'required',
         ]);
 
+        $user_id = $request->userId;
+        $client_profile_id = $request->clientProfileId;
         $medical_operation_id = $request->operationId;
 
         $medical_operation_update =
@@ -831,7 +896,27 @@ class ClientController extends Controller
         $update = $medical_operation_info->update($medical_operation_update);
 
         if ($update) {
-            return back()->with(['status' => 'Operation has been saved.']);;
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return back()->with(['status' => 'Operation has been saved.']);;
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return back()->with(['status' => 'Operation has been saved.']);;
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -857,7 +942,27 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_client_profile_4', [$user_id, $client_profile_id]);
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return redirect()->route('edit_client_profile_4', [$user_id, $client_profile_id]);
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return redirect()->route('edit_client_profile_4', [$user_id, $client_profile_id]);
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -911,7 +1016,27 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            return redirect()->route('edit_client_profile_5', [$user_id, $client_profile_id]);
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    return redirect()->route('edit_client_profile_5', [$user_id, $client_profile_id]);
+                } else {
+                    return back()->withErrors('message', 'Edit was unsuccessful.');
+                }
+            } else {
+                return redirect()->route('edit_client_profile_5', [$user_id, $client_profile_id]);
+            }
         } else {
             return back()->withErrors('message', 'Edit was unsuccessful.');
         }
@@ -954,12 +1079,32 @@ class ClientController extends Controller
         $update = $client_profile_info->update($client_profile_update);
 
         if ($update) {
-            $request->session()->flash('status', 'Client profile has been successfully edited!');
-            
-            return redirect()->route('list_of_client_profiles', [$user_id]);
+            $histories = History::all();
+            $histories_last = $histories->last();
+
+            if (($histories_last->user_id == $user_id && $histories_last->client_profile_id == $client_profile_id && $histories_last->action_taken != 'Edit') || ($histories_last->user_id == $user_id && $histories_last->client_profile_id != $client_profile_id) || ($histories_last->user_id != $user_id)) {
+                $audit_log =
+                [
+                    'action_taken' => 'Edit',
+                    'date' => Carbon::now(),
+                    'user_id' => $user_id,
+                    'client_profile_id' => $client_profile_id
+                ];
+
+                $create = History::create($audit_log);
+                if ($create) {
+                    $request->session()->flash('status', 'Client profile has been successfully edited!');
+                    return redirect()->route('list_of_client_profiles', [$user_id]);
+                } else {
+                    $request->session()->flash('error', 'Edit was unsuccessful.');
+                    return redirect()->route('list_of_client_profiles', [$user_id]);
+                }
+            } else {
+                $request->session()->flash('status', 'Client profile has been successfully edited!');
+                return redirect()->route('list_of_client_profiles', [$user_id]);
+            }
         } else {
             $request->session()->flash('error', 'Edit was unsuccessful.');
-
             return redirect()->route('list_of_client_profiles', [$user_id]);
         }
     }
@@ -1057,7 +1202,7 @@ class ClientController extends Controller
             if ($archive) {
                 $audit_log =
                 [
-                    'action_taken' => 'Archive',
+                    'action_taken' => $reason,
                     'date' => Carbon::now(),
                     'user_id' => $user_id,
                     'client_profile_id' => $client_profile_id

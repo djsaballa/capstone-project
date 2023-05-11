@@ -36,15 +36,23 @@
                             </td>
                             <td class="text-center">
                                 @if ( $history->action_taken == 'Edit')
-                                    <div class="flex items-center justify-center whitespace-nowrap ">
+                                    <div class="flex items-center justify-center whitespace-nowrap text-primary">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
                                     </div>
-                                @elseif ( $history->action_taken == 'Archive' )
+                                @elseif ( $history->action_taken == 'Terminated' )
+                                    <div class="flex items-center justify-center whitespace-nowrap text-pending">
+                                        <i data-lucide="x-square" class="w-4 h-4 mr-2"></i> Archive - {{ $history->action_taken }}
+                                    </div>
+                                @elseif ( $history->action_taken == 'Expired' )
+                                    <div class="flex items-center justify-center whitespace-nowrap text-warning">
+                                        <i data-lucide="x-square" class="w-4 h-4 mr-2"></i> Archive - {{ $history->action_taken }}
+                                    </div>
+                                @elseif ( $history->action_taken == 'Closed' )
                                     <div class="flex items-center justify-center whitespace-nowrap text-danger">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
+                                        <i data-lucide="x-square" class="w-4 h-4 mr-2"></i> Archive - {{ $history->action_taken }}
                                     </div>
                                 @elseif ( $history->action_taken == 'Restore' )
-                                <div class="flex items-center justify-center whitespace-nowrap text-primary">
+                                <div class="flex items-center justify-center whitespace-nowrap text-info">
                                     <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $history->action_taken }}
                                 </div>
                                 @endif
