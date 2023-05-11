@@ -4,12 +4,16 @@
 <head>
     <style>
         * {
-            font-family: Arial;
+            font-family: sans-serif;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
+        }
+
+        td.personal {
+            border: none;
         }
 
         td,
@@ -23,20 +27,56 @@
         p {
             font-size: 10;
         }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 33%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 
 <body>
-    <h2>Client's Profile</h2>
-    <p>LOCALE: </p>
-    <p>NAME: </p>
-    <p>ADDRESS:</p>
-    <p>AGE, GENDER: </p>
-    <p>BIRTHDATE:</p>
-    <p>OCCUPATION:</p>
-    <p>HEIGHT:</p>
-    <p>WEIGHT:</p>
-    <p>BAPTISM DATE:</p>
+    <h2>CLIENT'S PROFILE</h2>
+
+    <table>
+        <tr>
+            <td class="personal">
+                <p>LOCALE:</p>
+                <p>NAME:</p>
+                <p>ADDRESS:</p>
+                <p>AGE:</p>
+                <p>GENDER:</p>
+                <p>BIRTHDATE:</p>
+                <p>OCCUPATION:</p>
+                <p>HEIGHT:</p>
+                <p>WEIGHT:</p>
+                <p>BAPTISM DATE:</p>
+            </td>
+            <td class="personal">
+                <p>{{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}</p>
+                <p>{{ $client_profile_info->getFullName($client_profile_info->id) }}</p>
+                <p>{{ $client_profile_info->address }}</p>
+                <p>{{ $client_profile_info->age }}</p>
+                <p>{{ $client_profile_info->gender }}</p>
+                <p>{{ $client_profile_info->dateFormatMdY($client_profile_info->birth_date) }}</p>
+                <p>{{ $client_profile_info->occupation }}</p>
+                <p>{{ $client_profile_info->weight }}</p>
+                <p>{{ $client_profile_info->height }}</p>
+                <p>{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</p>
+            </td>
+            <td class="personal">
+            </td>
+        </tr>
+    </table>
+
+
 
     <h5>FAMILY COMPOSITION</h5>
     <table>
@@ -85,6 +125,7 @@
             <th>MGA NAGING OPERASYON</th>
             <th>PETSA</th>
         </tr>
+
         @foreach ($medical_conditions as $medical_condition)
             @php
                 $matching_objects = $medical_operations->where('medical_condition_id', $medical_condition->id);
@@ -99,8 +140,8 @@
                 @endforeach
             @else
                 <tr>
-                    <th>None</th>
-                    <th>None</th>
+                    <td>None</td>
+                    <td>None</td>
                 </tr>
             @endif
         @endforeach
@@ -120,6 +161,8 @@
                 <tr>
                     <td>{{ $medical_condition->hospital }}</td>
                     <td>{{ $medical_condition->doctor }}</td>
+                    <td></td>
+
                 </tr>
             @endforeach
         </tbody>
@@ -142,50 +185,53 @@
             </tr>
         </table>
     </div>
-    <h5>BACKGROUND INFO (KALAGAYAN NG PASYENTE, PAMILYA, FINANSYAL EMOSYONAL, PHYSICAL): ISULAT
+    <h5>BACKGROUND INFO (KALAGAYAN NG PASYENTE, PAMILYA, FINANSYAL EMOSYONAL, PHYSICAL):
     </h5>
-    <textarea name="message" rows="10" cols="30">{{ $client_profile_info->background_info }}</textarea>
+    <textarea name="message" >{{ $client_profile_info->background_info }}</textarea>
 
-    <h5>ACTION TAKEN/ SERVICES RENDERED: ISULAT
+    <h5>ACTION TAKEN/ SERVICES RENDERED:
     </h5>
-    <textarea name="message" rows="10" cols="30">{{ $client_profile_info->action_taken }}</textarea>
+    <textarea name="message" >{{ $client_profile_info->action_taken }}</textarea>
     <table style="margin-top: 2rem">
         <tr>
-            <th>ELDERS' RECOMMENDATION: ISULAT</th>
+            <th>LOCALE SERVANT'S REMARKS</th>
+
+        </tr>
+        <tr>
+            <td>{{ $client_profile_info->locale_servant_remark }}</td>
+
+        </tr>
+
+    </table>
+    <table style="margin-top: 2rem">
+        <tr>
+
             <th>DISTRICT SERVANT'S REMARKS</th>
+
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Assigned Locale Servant: </td>
-            <td>Assisgned District Servant: </td>
+            <td>{{ $client_profile_info->district_servant_remark }}</td>
         </tr>
     </table>
     <table style="margin-top: 2rem">
         <tr>
-            <th>SOCIAL WORKER'S RECOMMENDATION: ISULAT</th>
+            <th>DIVISION SERVANT'S REMARKS</th>
+
         </tr>
         <tr>
-            <td></td>
+            <td>{{ $client_profile_info->division_servant_remark }}</td>
+
         </tr>
     </table>
-    <p>Prepared by:</p>
-    <p>Noted by:</p>
-    <p>Signature over Printed Name</p>
-    <p>Social Worker /Social work Assistant in Charge</p>
-    <p>Signature over Printed Name</p>
-    <p>KNP</p>
-    <p>Signature over Printed Name</p>
+    <table style="margin-top: 2rem">
+        <tr>
+
+            <th>SOCIAL WORKER'S RECOMMENDATION</th>
+        </tr>
+        <tr>
+            <td>{{ $client_profile_info->social_worker_recommendation }}</td>
+        </tr>
+    </table>
 </body>
 
 </html>

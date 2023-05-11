@@ -43,7 +43,7 @@
             @endif
             @if (Session::has('error'))
                 <div class="alert alert-danger">
-                    <pack>{{ Session::get('error') }}</pack>
+                    <p>{{ Session::get('error') }}</p>
                 </div>
             @endif
             @if (Session::has('status'))
@@ -83,6 +83,10 @@
                                     <div class="mt-3">
                                         <label class="form-label font-medium" for="startDate">Birthdate:</label><span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->birth_date) }}</span>
                                     </div>
+                                    <div class="mt-3">
+                                        <label class="form-label font-medium" for="startDate">Baptism Date:</label><span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</span>
+                                    </div>
+                                   
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
@@ -92,13 +96,18 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label font-medium">Age:</label><span class="ml-3">{{ $client_profile_info->age }}</span>
                                     </div>
+                                    <div class="mt-3 ">
+                                        <label for="update-profile-form-4" class="form-label font-medium">Height:</label><span class="ml-3">{{ $client_profile_info->height}}</span>
+                                    </div>
+                                    <div class="mt-3 ">
+                                        <label for="update-profile-form-4" class="form-label font-medium">Weight:</label><span class="ml-3">{{ $client_profile_info->weight }}</span>
+                                    </div>
+                                    
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label font-medium"
                                             id="update-profile-form-3-ts-label">Occupation:</label><span class="ml-3">{{ $client_profile_info->occupation }}</span>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="form-label font-medium" for="startDate">Baptism Date:</label><span class="ml-3">{{ $client_profile_info->dateFormatMdY($client_profile_info->baptism_date) }}</span>
-                                    </div>
+                                    
                                 </div>
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3">

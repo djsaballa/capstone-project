@@ -40,7 +40,7 @@
             @endif
             @if (Session::has('error'))
                 <div class="alert alert-danger">
-                    <pack>{{ Session::get('error') }}</pack>
+                    <p>{{ Session::get('error') }}</p>
                 </div>
             @endif
             @if (Session::has('status'))
