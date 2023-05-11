@@ -47,32 +47,34 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Name</label>
-                                <input id="contact-person1" name="contactPerson1" type="text" class="form-control"
-                                    placeholder="Full Name" value="{{ $client_profile_info->contact_person1_name }}">
-                            </div>
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Contact Number</label>
-                                <input id="contact-person1" name="contactPerson1Number" type="text" class="form-control"
-                                    placeholder="Input here"
-                                    value="{{ $client_profile_info->contact_person1_contact_number }}">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Name</label>
-                                <input id="contact-person2" name="contactPerson2" type="text" class="form-control"
-                                    placeholder="Full Name" value="{{ $client_profile_info->contact_person2_name }}">
-                            </div>
-                            <div class="mt-3 col-span-3 2xl:col-span-1">
-                                <label for="update-profile-form-1" class="form-label">Contact Number</label>
-                                <input id="contact-person2" name="contactPerson2Number" type="text" class="form-control"
-                                    placeholder="Input here"
-                                    value="{{ $client_profile_info->contact_person2_contact_number }}">
-                            </div>
-                            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
+                        <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
+                        <table class="table table-bordered" id="dynamicAddRemoveOperation">
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Contact Number</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="contact-person1" name="contactPerson1" type="text" class="form-control" placeholder="Name"
+                                        value="{{ $client_profile_info->contact_person1_name }}">
+                                </td>
+                                <td>
+                                    <input id="contact-person1-number" name="contactPerson1Number" type="text" class="form-control" placeholder="09123456789"
+                                        value="{{ $client_profile_info->contact_person1_contact_number }}">
+                                </div>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="contact-person2" name="contactPerson2" type="text" class="form-control" placeholder="Name"
+                                        value="{{ $client_profile_info->contact_person2_name }}">
+                                </td>
+                                <td>
+                                    <input id="contact-person2-number" name="contactPerson2Number" type="text" class="form-control" placeholder="09223456789"
+                                        value="{{ $client_profile_info->contact_person2_contact_number }}">
+                                </div>
+                            </tr>
+                        </table>
+                            <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 pb-5">
                                 <a href="{{ route('edit_client_profile_3', [$user_info->id, $client_profile_info->id]) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
                                 <button type="submit" class="btn btn-primary w-24 ml-2">Next</button>
                             </div>
