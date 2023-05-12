@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/add-profile-5/{user_id}', [ClientController::class, 'addProfile5'])->name('add_client_profile_5');
   Route::post('/add-profile-5-next', [ClientController::class, 'addProfile5Next'])->name('add_client_profile_5_next');
   Route::get('/add-profile-6/{user_id}', [ClientController::class, 'addProfile6'])->name('add_client_profile_6');
+  Route::post('/add-profile-6-save', [ClientController::class, 'addProfile6Save'])->name('add_client_profile_6_save');
   
   // EDIT PROFILE
   Route::get('/edit-profile-1/{user_id}/{client_profile_id}', [ClientController::class, 'editProfile1'])->name('edit_client_profile_1');

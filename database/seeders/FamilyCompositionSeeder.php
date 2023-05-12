@@ -21,14 +21,12 @@ class FamilyCompositionSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
                 FamilyComposition::create([
-                    "first_name" => $data['0'],
-                    "middle_name" => $data['1'],
-                    "last_name" => $data['2'],
-                    "relationship" => $data['3'],
-                    "educational_attainment" => $data['4'],
-                    "occupation" => $data['5'],
-                    "contact_number" => $data['6'],
-                    "client_profile_id" => $data['7'],
+                    "name" => $data['0'],
+                    "relationship" => $data['1'],
+                    "educational_attainment" => $data['2'],
+                    "occupation" => $data['3'],
+                    "contact_number" => $data['4'],
+                    "client_profile_id" => $data['5'],
                 ]);
             }
             $firstline = false;

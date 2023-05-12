@@ -93,31 +93,33 @@
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
                             <textarea id="update-profile-form-5" class="form-control" value="Input text here" disabled>{{ $client_profile_info->background_info }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
-                        <form data-single="true" action="/file-upload" class="dropzone">
-                            <div class="fallback"> <input name="file" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
-                            </div>
-                        </form>
-                        <div class="m-3">
+                        <label for="update-profile-form-5" class="form-label font-medium m-3 mt-2">File Uploaded: </label>
+                        @if ( !empty($client_profile_info->background_info_attachment) )
+                            <a href="{{ asset('storage/'.$client_profile_info->background_info_attachment) }}" target="_blank" >
+                                <button class="btn btn-primary">
+                                        View Attachment
+                                </button>
+                            </a>
+                        @else
+                            No Uploaded Attachment
+                        @endif
+                        <div class="m-3 mt-10">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
                             <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
-                        <form data-single="true" action="/file-upload" class="dropzone" >
-                            <div class="fallback"> <input name="file" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
-                            </div>
-                        </form>
+                        <label for="update-profile-form-5" class="form-label font-medium m-3 mt-2">File Uploaded:</label>
+                        @if ( !empty($client_profile_info->action_taken_attachment) )
+                            <a href="{{ asset('storage/'.$client_profile_info->action_taken_attachment) }}" target="_blank" >
+                                <button class="btn btn-primary">
+                                        View Attachment
+                                </button>
+                            </a>
+                        @else
+                            No Uploaded Attachment
+                        @endif
                         <!-- END FAMILY COMPOSITION -->
-                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                        <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end p-5">
                             <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>
                             <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_client_profiles', $user_info->id) }}"> Return To List </a>
                         </div>

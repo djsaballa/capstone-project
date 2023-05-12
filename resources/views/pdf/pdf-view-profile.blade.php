@@ -96,15 +96,26 @@
             <th>OCCUPATION</th>
             <th>TEL/CEL. NO.</th>
         </tr>
-        @foreach ($family_compositions as $family_composition)
+        @if ($family_compositions->first())
+            @foreach ($family_compositions as $family_composition)
+                <tr>
+                    <td scope="row">{{ $family_composition->name }}
+                    </td>
+                    <td>{{ $family_composition->relationship }}</td>
+                    <td>{{ $family_composition->educational_attainment }}</td>
+                    <td>{{ $family_composition->occupation }}</td>
+                    <td>{{ $family_composition->contact_number }}</td>
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td>{{ $family_composition->getFullName($family_composition->id) }}</td>
-                <td>{{ $family_composition->relationship }}</td>
-                <td>{{ $family_composition->educational_attainment }}</td>
-                <td>{{ $family_composition->occupation }}</td>
-                <td>{{ $family_composition->contact_number }}</td>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
             </tr>
-        @endforeach
+        @endif
     </table>
 
     <h5>MEDICAL CONDITION/KALAGAYANG MEDIKAL:</h5>
@@ -116,16 +127,27 @@
             <th>DOSAGE?</th>
             <th>GAANO KADALAS INUMIN?</th>
         </tr>
-        @foreach ($family_compositions as $family_composition)
+        @if($medical_conditions->first())
+            @foreach ($medical_conditions as $medical_condition)
+                <tr>
+                    <th scope="row">
+                        {{ $medical_condition->disease->getName($medical_condition->disease_id) }}</th>
+                    <th scope="row">
+                        {{ $medical_condition->dateFormatMdY($medical_condition->since_when) }}</th>
+                    <td>{{ $medical_condition->medicine_supplements }}</td>
+                    <td>{{ $medical_condition->dosage }}</td>
+                    <td>{{ $medical_condition->frequency }}</td>
+                </tr>
+            @endforeach
+        @else
             <tr>
-                <td scope="row">{{ $family_composition->getFullName($family_composition->id) }}
-                </td>
-                <td>{{ $family_composition->relationship }}</td>
-                <td>{{ $family_composition->educational_attainment }}</td>
-                <td>{{ $family_composition->occupation }}</td>
-                <td>{{ $family_composition->contact_number }}</td>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
+                <th>None</th>
             </tr>
-        @endforeach
+        @endif
     </table>
 
     <h5>ALLERGIES-(SA PAGKAIN,GAMOT,BAGAY,ETC.)</h5>
@@ -157,12 +179,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($medical_conditions as $medical_condition)
+            @if ($medical_conditions->first())
+                @foreach ($medical_conditions as $medical_condition)
+                    <tr>
+                        <td>{{ $medical_condition->hospital }}</td>
+                        <td>{{ $medical_condition->doctor }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <td>{{ $medical_condition->hospital }}</td>
-                    <td>{{ $medical_condition->doctor }}</td>
+                    <th>None</th>
+                    <th>None</th>
                 </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
     <div style="margin-top: 1rem ">

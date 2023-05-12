@@ -383,7 +383,7 @@ class ClientController extends Controller
             return redirect()->route('add_client_profile_2', $user_id);
         } else {
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
-            return redirect()->route('list_of_profiles', $user_id);
+            return redirect()->route('list_of_client_profiles', $user_id);
         }
     }
 
@@ -476,9 +476,25 @@ class ClientController extends Controller
         session(['medical_con' => $medical_con]);
         session(['medical_op' => $medical_op]);
 
+        $tempCP =
+        [
+            'philhealth_member' => $request->philhealth,
+            'health_card' => $request->healthCard,
+        ];
+
         $user_id = $request->userId;
 
-        return redirect()->route('add_client_profile_4', $user_id);
+        $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
+        $update = $tempCP_info->update($tempCP);
+
+        if ($update) {
+            return redirect()->route('add_client_profile_4', $user_id);
+        } else {
+            $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+            return redirect()->route('list_of_client_profiles', $user_id);
+        }
+
+
     }
 
     public function addProfile4($user_id)
@@ -529,7 +545,7 @@ class ClientController extends Controller
             return redirect()->route('add_client_profile_5', $user_id);
         } else {
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
-            return redirect()->route('list_of_profiles', $user_id);
+            return redirect()->route('list_of_client_profiles', $user_id);
         }
     }
 
@@ -560,43 +576,34 @@ class ClientController extends Controller
         $backgroundInfoAttachmentBackUp = $request->backgroundInfoAttachmentBackUp;
 
         if ($backgroundInfoAttachments) {
-            $background_info_attachments = [];
-
-            foreach ($backgroundInfoAttachments as $backgroundInfoAttachment) {
-                $filename = $backgroundInfoAttachment->storeAs('images', $filename , 'public');
-                $background_info_attachment = basename($filename);
-                array_push($background_info_attachments, $background_info_attachment);
-            }
+            $filename1 = $backgroundInfoAttachments->store('public');
+            $background_info_attachment = basename($filename1);
         } elseif ($backgroundInfoAttachmentBackUp) {
-            $background_info_attachments = $backgroundInfoAttachmentBackUp;
+            $background_info_attachment = $backgroundInfoAttachmentBackUp;
         } else {
-            $background_info_attachments = null;
+            $background_info_attachment = null;
         }
 
         $actionTakenAttachments = $request->file('actionTakenAttachments');
         $actionTakenAttachmentBackUp = $request->actionTakenAttachmentBackUp;
 
         if ($actionTakenAttachments) {
-            $action_taken_attachments = [];
-
-            foreach ($actionTakenAttachments as $actionTakenAttachment) {
-                $filename = $actionTakenAttachment->storeAs('images', $filename , 'public');
-                $action_taken_attachment = basename($filename);
-                array_push($action_taken_attachments, $action_taken_attachment);
-            }
+            $filename2 = $actionTakenAttachments->store('public');
+            $action_taken_attachment = basename($filename2);
         } elseif ($actionTakenAttachmentBackUp) {
-            $action_taken_attachments = $actionTakenAttachmentBackUp;
+            $action_taken_attachment = $actionTakenAttachmentBackUp;
         } else {
-            $action_taken_attachments = null;
+            $action_taken_attachment = null;
         }
 
         $tempCP =
         [
             'background_info' => $request->backgroundInfo,
-            'background_info_attachment' => $background_info_attachments,
+            'background_info_attachment' => $background_info_attachment,
             'action_taken' => $request->actionTaken,
-            'action_taken_attachment' => $action_taken_attachments,
+            'action_taken_attachment' => $action_taken_attachment,
         ];
+
         $user_id = $request->userId;
 
         $tempCP_info = TempClientProfile::where('user_encoder_id', $user_id)->orderBy('created_at', 'DESC')->first();
@@ -606,7 +613,7 @@ class ClientController extends Controller
             return redirect()->route('add_client_profile_6', $user_id);
         } else {
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
-            return redirect()->route('list_of_profiles', $user_id);
+            return redirect()->route('list_of_client_profiles', $user_id);
         }
     }
 
@@ -625,6 +632,164 @@ class ClientController extends Controller
             session()->invalidate();
             session()->regenerateToken();
             return redirect('/');
+        }
+    }
+
+    public function addProfile6Save(Request $request)
+    {
+        $request->validate([
+            'picture' => 'nullable|file|mimes:png,jpeg',
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'birthDate' => 'required',
+            'gender' => 'required',
+            'age' => 'required',
+            'occupation' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
+            'division' => 'required',
+            'district' => 'required',
+            'locale' => 'required',
+            'contactNumber' => 'required|numeric',
+            'address' => 'required',
+            'famComp.*.name' => 'required',
+            'famComp.*.relationship' => 'required',
+            'famComp.*.educational' => 'required',
+            'famComp.*.occupation' => 'required',
+            'famComp.*.contact' => 'required',
+            'medicalCondition.*.disease' => 'required',
+            'medicalCondition.*.medicine' => 'required',
+            'medicalCondition.*.dosage' => 'required',
+            'medicalCondition.*.frequency' => 'required',
+            'medicalCondition.*.doctor' => 'required',
+            'medicalCondition.*.hospital' => 'required',
+            'medicalOperation.*.operation' => 'nullable',
+            'medicalOperation.*.date' => 'nullable',
+            'philhealth' => 'required',
+            'healthCard' => 'required',
+            'contactPerson1' => 'required',
+            'contactPerson1Number' => 'required',
+            'contactPerson2' => 'required',
+            'contactPerson2Number' => 'required',
+            'backgroundInfo' => 'required',
+            'backgroundInfoAttachments' => 'nullable',
+            'actionTaken' => 'required',
+            'actionTakenAttachments' => 'nullable',
+        ]);
+
+        $user_id = $request->userId;
+
+        $file = $request->file('picture');
+        $fileBackup = $request->pictureBackup;
+        if ($file) {
+            $filename = $file->store('public');
+            $picture = basename($filename);
+        } elseif ($fileBackup) {
+            $picture = $fileBackup;
+        } else {
+            $picture = null;
+        }
+
+        $backgroundInfoAttachments = $request->backgroundInfoAttachments;
+        if ($backgroundInfoAttachments) {
+            $background_info_attachment = $backgroundInfoAttachments;
+        } else {
+            $background_info_attachment = null;
+        }
+
+        $actionTakenAttachments = $request->actionTakenAttachments;
+        if ($actionTakenAttachments) {
+            $action_taken_attachment = $actionTakenAttachments;
+        } else {
+            $action_taken_attachment = null;
+        }
+
+
+        $create_profile = [
+            'picture' => $picture,
+            'privacy_consent' => 1,
+            'first_name' => $request->firstName,
+            'middle_name' => $request->middleName,
+            'last_name' => $request->lastName,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'contact_number' => $request->contactNumber,
+            'birth_date' => $request->birthDate,
+            'occupation' => $request->occupation,
+            'height' => $request->height,
+            'weight' => $request->weight,
+            'baptism_date' => $request->baptismDate,
+            'philhealth_member' => $request->philhealth,
+            'health_card' => $request->healthCard,
+            'contact_person1_name' => $request->contactPerson1,
+            'contact_person1_contact_number' => $request->contactPerson1Number,
+            'contact_person2_name' => $request->contactPerson2,
+            'contact_person2_contact_number' => $request->contactPerson2Number,
+            'background_info' => $request->backgroundInfo,
+            'background_info_attachment' => $background_info_attachment,
+            'action_taken' => $request->actionTaken,
+            'action_taken_attachment' => $action_taken_attachment,
+            'status' => 'Active',
+            'user_encoder_id' => $user_id,
+            'locale_id' => $request->locale,
+        ];
+
+        foreach ($request->famComp as $key => $value) {
+            $family_comps[] = $value;
+        }
+
+        foreach ($request->medicalCondition as $key => $value) {
+            $medical_cons[] = $value;
+        }
+        
+        foreach ($request->medicalOperation as $key => $value) {
+            $medical_ops[] = $value;
+        }
+
+        $create = ClientProfile::create($create_profile);
+        if ($create) {
+            if (!empty($family_comps)) {
+                foreach ($family_comps as $index => $family_comp) {
+                    FamilyComposition::create([
+                        'name' => $family_comp['name'],
+                        'relationship' => $family_comp['relationship'],
+                        'educational_attainment' => $family_comp['educational'],
+                        'occupation' => $family_comp['occupation'],
+                        'contact_number' => $family_comp['contact'],
+                        'client_profile_id' => $create->id
+                    ]);
+                }
+            }
+            if (!empty($medical_cons)) {
+                foreach ($medical_cons as $index => $medical_con) {
+                    MedicalCondition::create([
+                        'since_when' => $medical_con['when'],
+                        'medicine_supplements' => $medical_con['medicine'],
+                        'dosage' => $medical_con['dosage'],
+                        'frequency' => $medical_con['frequency'],
+                        'hospital' => $medical_con['hospital'],
+                        'doctor' => $medical_con['doctor'],
+                        'disease_id' => $medical_con['disease'],
+                        'client_profile_id' => $create->id
+                    ]);
+                }
+            }
+            if (!empty($medical_ops)) {
+                foreach ($medical_ops as $index => $medical_op) {
+                    MedicalOperation::create([
+                        'operation' => $medical_op['operation'],
+                        'date' => $medical_op['date'],
+                        'client_profile_id' => $create->id
+                    ]);
+                }
+            }
+
+            $request->session()->flash('status', 'Client Profile has been created!');
+            return redirect()->route('list_of_client_profiles', $user_id);
+        } else {
+            $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+            return redirect()->route('list_of_client_profiles', $user_id);
         }
     }
 
@@ -747,9 +912,7 @@ class ClientController extends Controller
     public function editProfile2Next(Request $request)
     {
         $request->validate([
-            'familyFirstName' => 'required|string',
-            'familyMiddleName' => 'nullable|string',
-            'familyLastName' => 'required|string',
+            'familyName' => 'required|string',
             'familyRelationship' => 'required',
             'familyEduc' => 'required',
             'familyOccupation' => 'required|string',
@@ -762,9 +925,7 @@ class ClientController extends Controller
 
         $fam_comp_update =
         [
-            'first_name' => $request->familyFirstName,
-            'middle_name' => $request->familyMiddleName,
-            'last_name' => $request->familyLastName,
+            'name' => $request->familyName,
             'relationship' => $request->familyRelationship,
             'educational_attainment' => $request->familyEduc,
             'occupation' => $request->familyOccupation,

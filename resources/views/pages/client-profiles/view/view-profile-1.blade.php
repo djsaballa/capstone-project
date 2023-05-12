@@ -171,10 +171,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @if($medical_conditions->first())
+                            @if($family_compositions->first())
                                 @foreach ($family_compositions as $family_composition)
                                     <tr>
-                                        <th scope="row">{{ $family_composition->getFullName($family_composition->id) }}
+                                        <th scope="row">{{ $family_composition->name }}
                                         </th>
                                         <td>{{ $family_composition->relationship }}</td>
                                         <td>{{ $family_composition->educational_attainment }}</td>

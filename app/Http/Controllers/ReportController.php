@@ -18,7 +18,7 @@ use Carbon\Carbon;
 use PDF;
 class ReportController extends Controller
 {
-    //PDF 
+    //PDF
     public function viewPDF($user_id, $client_profile_id){
 
         $user_info = User::find($user_id);

@@ -152,7 +152,7 @@
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">District</label>
                                             <select id="district-filter-3" name="district" data-search="true"
-                                                class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )" disabled>
+                                                class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )" >
                                                 <option
                                                     value="{{ $client_profile_info->locale->district->getId() }}"
                                                     selected="true">
@@ -169,7 +169,7 @@
                                             <label for="update-profile-form-3-tomselected" class="form-label"
                                                 id="update-profile-form-3-ts-label">Locale</label>
                                             <select id="locale-filter-3" name="locale" data-search="true"
-                                                class="w-full form-control" tabindex="-1" disabled>
+                                                class="w-full form-control" tabindex="-1" >
                                                 <option
                                                     value="{{ $client_profile_info->locale->getId() }}"
                                                     selected="true">

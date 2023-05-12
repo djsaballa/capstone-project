@@ -83,6 +83,7 @@
             <table class="table table-bordered" id="dynamicAddRemoveMedCon">
                 <tr>
                     <th>Illness or Disease</th>
+                    <th>Since When</th>
                     <th>Medicine or Supplements</th>
                     <th>Dosage</th>
                     <th>Frequency</th>
@@ -97,6 +98,9 @@
                                 <option value="{{ $disease->id }}">{{ $disease->disease }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td><input type="date" name="medicalCondition[0][when]"
+                            class="form-control" />
                     </td>
                     <td><input type="text" name="medicalCondition[0][medicine]" placeholder="Medicine/Supplement Name"
                             class="form-control" />
@@ -181,13 +185,15 @@
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
             var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
             cell1.innerHTML = '<select id="disease" name="medicalCondition[' + j + '][disease]" data-search="true" class="w-full form-control" tabindex="-1"> <option value="" selected="true" disabled>Select Illness/Disease</option> @foreach ($diseases as $disease) <option value="{{ $disease->id }}">{{ $disease->disease }}</option> @endforeach </select>';
-            cell2.innerHTML = '<input type="text" name="medicalCondition[' + j + '][medicine]" placeholder="Medicine/Supplement Name" class="form-control" />';
-            cell3.innerHTML = '<input type="text" name="medicalCondition[' + j + '][dosage]" placeholder="Dosage" class="form-control" />';
-            cell4.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][frequency]" type="text" class="form-control" placeholder="Frequency"></td>';
-            cell5.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][doctor]" type="text" class="form-control" placeholder="Doctor"></td>';
-            cell6.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][hospital]" type="text" class="form-control" placeholder="Hospital"></td>';
-            cell7.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
+            cell2.innerHTML = '<input type="date" name="medicalCondition[' + j + '][when]" class="form-control" />';
+            cell3.innerHTML = '<input type="text" name="medicalCondition[' + j + '][medicine]" placeholder="Medicine/Supplement Name" class="form-control" />';
+            cell4.innerHTML = '<input type="text" name="medicalCondition[' + j + '][dosage]" placeholder="Dosage" class="form-control" />';
+            cell5.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][frequency]" type="text" class="form-control" placeholder="Frequency"></td>';
+            cell6.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][doctor]" type="text" class="form-control" placeholder="Doctor"></td>';
+            cell7.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j + '][hospital]" type="text" class="form-control" placeholder="Hospital"></td>';
+            cell8.innerHTML = '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
         });
 
         $("#dynamic-ar-operation").click(function() {

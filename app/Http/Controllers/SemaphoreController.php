@@ -18,7 +18,7 @@ class SemaphoreController extends Controller
 
         $response = $client->post('messages', [
             'json' => [
-                'apikey' => 'ebab0d8bf81a1e039f7b28c6d79445a4',
+                'apikey' => env('SEMAPHORE_KEY'),
                 'number' => $phone,
                 'message' => $message,
             ],

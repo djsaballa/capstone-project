@@ -60,9 +60,7 @@
                                 <table class="table">
                                     <thead class="table-dark">
                                         <tr class="bg-primary">
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Middle Name</th>
-                                            <th scope="col">Last Name</th>
+                                            <th scope="col">Full Name</th>
                                             <th scope="col">Relationship</th>
                                             <th scope="col">Educational Attainment</th>
                                             <th scope="col">Occupation</th>
@@ -80,13 +78,7 @@
                                                     <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
                                                     <input id="fam-comp-id" name="famCompId" value="{{$family_composition->id }}" hidden>
                                                     <td>
-                                                        <input id="family-first-name" name="familyFirstName" value="{{ $family_composition->first_name }}" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <input id="family-middle-name" name="familyMiddleName" value="{{ $family_composition->middle_name }}" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <input id="family-last-name" name="familyLastName" value="{{ $family_composition->last_name }}" class="form-control">
+                                                        <input id="family-first-name" name="familyName" value="{{ $family_composition->name }}" class="form-control">
                                                     </td>
                                                     <td>
                                                         <select id="family-relationship" name="familyRelationship" data-search="true" class="tom-select w-full tomselected"

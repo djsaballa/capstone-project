@@ -43,7 +43,7 @@ class TempClientProfile extends Model
         "background_info",
         "background_info_attachment",
         "action_taken",
-        "action_taken_attachement",
+        "action_taken_attachment",
         "locale_servant_remark",
         "district_servant_remark",
         "division_servant_remark",

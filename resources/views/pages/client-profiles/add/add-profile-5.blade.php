@@ -90,31 +90,17 @@
                     <label for="update-profile-form-5" class="font-medium text-base form-label">Background Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
                     <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ old('backgroundInfo', $old_input->background_info ?? null) }}</textarea>
                 </div>
-                 
-                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                <div data-single="true" action="/file-upload" class="">
-                    <div class="fallback">
-                        <input id="background-info-attachment" name="backgroundInfoAttachments[]" type="file" multiple/>
-                        <input type="hidden" name="backgroundInfoAttachmentBackUp" value="{{ $old_input ? $old_input->background_info_attachment : null }}">
-                    </div>
-                    <div class="dz-message" data-dz-message>
-                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                    </div>
-                </div>
-                <div class="mt-3">
+                <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                <input id="background-info-attachment" name="backgroundInfoAttachments" type="file" single/>
+                <input type="hidden" name="backgroundInfoAttachmentBackUp" value="{{ $old_input ? $old_input->background_info_attachment : null }}">
+
+                <div class="m-3 mt-10">
                     <label for="update-profile-form-5" class="font-medium text-base form-label mt-10">Action Taken/ Services Rendered</label>
                     <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ old('actionTaken', $old_input->action_taken ?? null) }}</textarea>
                 </div>
-                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                <div data-single="true" action="/file-upload" class="">
-                    <div class="fallback">
-                        <input id="action-taken-attachment" name="actionTakenAttachments[]" type="file" multiple/>
-                        <input type="hidden" name="actionTakenAttachmentBackUp" value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
-                    </div>
-                    <div class="dz-message" data-dz-message>
-                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                    </div>
-                </div>
+                <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                <input id="action-taken-attachment" name="actionTakenAttachments" type="file" single/>
+                <input type="hidden" name="actionTakenAttachmentBackUp" value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                     <a href="{{ route('add_client_profile_4', $user_info->id) }}" class="btn btn-secondary w-24 ml-2">Previous</a>
                     <button class="btn btn-primary w-24 ml-2" type="submit">Finish</button>

@@ -65,12 +65,6 @@
             </div>
         </div>
         <div class="intro-y box lg:mt-5">
-            <div class="mt-5 p-5">
-                <h2 class="font-medium text-base mb-5 mr-auto">
-                    Personal Information
-                </h2>
-            </div>
-            <div class="">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -85,9 +79,13 @@
                     <p>{{ Session::get('status') }}</p>
                 </div>
             @endif
+            <div class="mt-5 p-5">
+                <h2 class="font-medium text-base mb-5 mr-auto">
+                    Personal Information
+                </h2>
             </div>
             <div class="pl-5 pr-5 ">
-                <form method="POST" action="{{ route('add_client_profile_1_next') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('add_client_profile_6_save') }}" enctype="multipart/form-data">
                     @csrf
                     @php
                         use App\Models\TempClientProfile;
@@ -191,7 +189,7 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Division</label>
-                                        <select id="division-filter" name="division" data-search="true"
+                                        <select id="division-filter-3" name="division" data-search="true"
                                             class="w-full form-control" tabindex="-1"
                                             onchange="loadDistricts( {{ $districts_json }} )">
                                             @if ($old_input->division)
@@ -222,7 +220,7 @@
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">District</label>
-                                        <select id="district-filter" name="district" data-search="true"
+                                        <select id="district-filter-3" name="district" data-search="true"
                                             class="w-full form-control" tabindex="-1"
                                             onchange="loadLocales( {{ $locales_json }} )">
                                             @if ($old_input->district)
@@ -254,8 +252,8 @@
                                     <div class="mt-3">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
                                             id="update-profile-form-3-ts-label">Locale</label>
-                                        <select id="locale-filter" name="locale" data-search="true"
-                                            class="w-full form-control" tabindex="-1" disabled>
+                                        <select id="locale-filter-3" name="locale" data-search="true"
+                                            class="w-full form-control" tabindex="-1">
                                             @if ($old_input->locale)
                                                 @php
                                                     $old_input_locale = $locales->find($old_input->locale);
@@ -339,15 +337,17 @@
                                         <th>Occupation</th>
                                         <th>Contact Number</th>
                                     </tr>
+                                    @foreach ($family_comps as $index => $family_comp)
                                     <tr>
-                                        <td><input type="text" name="famComp[0][name]" placeholder="Name"
-                                                class="form-control" />
+                                        <td><input type="text" name="famComp[{{ $index }}][name]" placeholder="Name"
+                                                class="form-control" value="{{ $family_comp['name'] }}"/>
                                         </td>
                                         <td>
-                                            <select id="relationship" name="famComp[0][relationship]" data-search="true"
+                                            <select id="relationship" name="famComp[{{ $index }}][relationship]" data-search="true"
                                                 class="w-full form-control" tabindex="-1"
                                                 onchange="relationshipOther(event)">
-                                                <option value="" selected="true" disabled>Select Relationship
+                                                <option value="{{ $family_comp['relationship'] }}" selected="true">
+                                                    {{ $family_comp['educational'] }}
                                                 </option>
                                                 <option value="Father">Father</option>
                                                 <option value="Mother">Mother</option>
@@ -358,23 +358,22 @@
                                                 <option value="Other">Other</option>
                                             </select>
                                         </td>
-                                        <td><select id="update-profile-form-3" name="famComp[0][educational]"
+                                        <td><select id="update-profile-form-3" name="famComp[{{ $index }}][educational]"
                                                 data-search="true" class="w-full form-control" tabindex="-1">
-                                                <option value="Select Educational Attainment" selected="true" disabled>
-                                                    Select Educational
-                                                    Attainment</option>
+                                                <option value="{{ $family_comp['educational'] }}" selected="true">
+                                                    {{ $family_comp['educational'] }}
+                                                </option>
                                                 <option value="College Graduate">College Graduate</option>
                                                 <option value="High School Graduate">High School Graduate</option>
                                                 <option value="Elementary Graduate">Elementary Graduate</option>
                                             </select>
                                         </td>
-                                        <td><input id="input-wizard-5" name="famComp[0][occupation]" type="text"
-                                                class="form-control" placeholder="Occupation"></td>
-                                        <td><input id="input-wizard-5" name="famComp[0][contact]" type="text"
-                                                class="form-control" placeholder="09123456789"></td>
-                                        <td><button type="button" name="add" id="dynamic-ar"
-                                                class="btn btn-outline-primary">Add Row</button></td>
+                                        <td><input id="input-wizard-5" name="famComp[{{ $index }}][occupation]" type="text"
+                                                class="form-control" placeholder="Occupation" value="{{ $family_comp['occupation'] }}"></td>
+                                        <td><input id="input-wizard-5" name="famComp[{{ $index }}][contact]" type="text"
+                                                class="form-control" placeholder="09123456789" value="{{ $family_comp['contact'] }}"></td>
                                     </tr>
+                                    @endforeach
                                 </table>
                             </div>
 
@@ -387,16 +386,22 @@
                                 <table class="table table-bordered" id="dynamicAddRemoveMedCon">
                                     <tr>
                                         <th>Illness or Disease</th>
+                                        <th>Since When</th>
                                         <th>Medicine or Supplements</th>
                                         <th>Dosage</th>
                                         <th>Frequency</th>
                                         <th>Doctor</th>
                                         <th>Hospital</th>
                                     </tr>
+                                    @foreach ($medical_cons as $index => $medical_con)
+                                    @php
+                                        $disease_info = $diseases->find($medical_con['disease']);
+                                    @endphp
                                     <tr>
-                                        <td><select id="disease" name="medicalCondition[0][disease]" data-search="true"
+                                        <td><select id="disease" name="medicalCondition[{{ $index }}][disease]" data-search="true"
                                                 class="w-full form-control" tabindex="-1">
-                                                <option value="" selected="true" disabled>Select Illness/Disease
+                                                <option value="{{ $medical_con['disease'] }}" selected="true">
+                                                    {{ $disease_info->disease }}
                                                 </option>
                                                 @foreach ($diseases as $disease)
                                                     <option value="{{ $disease->id }}">{{ $disease->disease }}
@@ -404,24 +409,25 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][medicine]"
-                                                placeholder="Medicine/Supplement Name" class="form-control" />
+                                        <td><input type="date" name="medicalCondition[{{ $index }}][when]"class="form-control" value="{{ $medical_con['when'] }}"/>
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][dosage]" placeholder="Dosage"
-                                                class="form-control" />
+                                        <td><input type="text" name="medicalCondition[{{ $index }}][medicine]"
+                                                placeholder="Medicine/Supplement Name" class="form-control" value="{{ $medical_con['medicine'] }}"/>
                                         </td>
-                                        <td><input id="input-wizard-5" name="medicalCondition[0][frequency]"
-                                                type="text" class="form-control" placeholder="Frequency">
+                                        <td><input type="text" name="medicalCondition[{{ $index }}][dosage]" placeholder="Dosage"
+                                                class="form-control" value="{{ $medical_con['dosage'] }}"/>
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][doctor]" placeholder="Doctor"
-                                                class="form-control" />
+                                        <td><input id="input-wizard-5" name="medicalCondition[{{ $index }}][frequency]"
+                                                type="text" class="form-control" placeholder="Frequency" value="{{ $medical_con['frequency'] }}">
                                         </td>
-                                        <td><input type="text" name="medicalCondition[0][hospital]"
-                                                placeholder="Hospital" class="form-control" />
+                                        <td><input type="text" name="medicalCondition[{{ $index }}][doctor]" placeholder="Doctor"
+                                                class="form-control" value="{{ $medical_con['doctor'] }}"/>
                                         </td>
-                                        <td><button type="button" name="add" id="dynamic-ar-med-con"
-                                                class="btn btn-outline-primary">Add Row</button></td>
+                                        <td><input type="text" name="medicalCondition[{{ $index }}][hospital]"
+                                                placeholder="Hospital" class="form-control" value="{{ $medical_con['hospital'] }}"/>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </table>
 
                                 @php
@@ -433,16 +439,16 @@
                                         <th>Operation</th>
                                         <th>Date</th>
                                     </tr>
+                                    @foreach ($medical_ops as $index => $medical_op)
                                     <tr>
-                                        <td><input type="text" name="medicalOperation[0][operation]"
-                                                placeholder="Operation" class="form-control" />
+                                        <td><input type="text" name="medicalOperation[{{ $index }}][operation]"
+                                                placeholder="Operation" class="form-control" value="{{ $medical_op['operation'] }}">
                                         </td>
-                                        <td><input type="date" name="medicalOperation[0][date]"
-                                                class="form-control" />
+                                        <td><input type="date" name="medicalOperation[{{ $index }}][date]"
+                                                class="form-control" value="{{ $medical_op['date'] }}"/>
                                         </td>
-                                        <td><button type="button" name="add" id="dynamic-ar-operation"
-                                                class="btn btn-outline-primary">Add Row</button></td>
                                     </tr>
+                                    @endforeach
                                 </table>
 
                                 <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -454,7 +460,10 @@
                                                         a Phil-health Card?</label>
                                                     <select id="philhealth" name="philhealth" data-search="true"
                                                         class="w-full form-control" tabindex="-1">
-                                                        <option value="Yes" selected>Yes</option>
+                                                        @if ($old_input->philhealth_member)
+                                                            <option value="{{ $old_input->philhealth_member }}" selected>{{ $old_input->philhealth_member }}</option>
+                                                        @endif
+                                                        <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
                                                 </div>
@@ -493,7 +502,7 @@
                                                 <input id="contact-person1-number" name="contactPerson1Number"
                                                     type="text" class="form-control" placeholder="09123456789"
                                                     value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
-                                            <td>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -505,7 +514,7 @@
                                                 <input id="contact-person2-number" name="contactPerson2Number"
                                                     type="text" class="form-control" placeholder="09223456789"
                                                     value="{{ old('contactPerson2', $old_input->contact_person2_contact_number ?? null) }}">
-                                            <td>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -519,41 +528,36 @@
                                         Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
                                     <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ old('backgroundInfo', $old_input->background_info ?? null) }}</textarea>
                                 </div>
-                                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                                <div data-single="true" action="/file-upload" class="dropzone">
-                                    <div class="fallback">
-                                        <input id="background-info-attachment" name="backgroundInfoAttachment"
-                                            type="file" />
-                                        <input type="hidden" name="backgroundInfoAttachmentBackUp"
-                                            value="{{ $old_input ? $old_input->background_info_attachment : null }}">
-                                    </div>
-                                    <div class="dz-message" data-dz-message>
-                                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                    </div>
-                                </div>
-                                <div class="mt-3">
+                                <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                                @if ( !empty($old_input->background_info_attachment) )
+                                    <input id="background-info-attachment" name="backgroundInfoAttachments" value="{{ $old_input->background_info_attachment }}" type="hidden"/>
+                                    <a href="{{ asset('storage/'.$old_input->background_info_attachment) }}" target="_blank" class="btn btn-primary mt-2">
+                                        View Attachment
+                                    </a>
+                                @else
+                                    No Uploaded Attachment
+                                @endif
+
+                                <div class="m-3 mt-10">
                                     <label for="update-profile-form-5"
                                         class="font-medium text-base mb-5 form-label mt-10">Action
                                         Taken/ Services Rendered</label>
                                     <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ old('actionTaken', $old_input->action_taken ?? null) }}</textarea>
                                 </div>
-                                <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                                <div data-single="true" action="/file-upload" class="dropzone">
-                                    <div class="fallback">
-                                        <input id="action-taken-attachment" name="actionTakenAttachment"
-                                            type="file" />
-                                        <input type="hidden" name="actionTakenAttachmentBackUp"
-                                            value="{{ $old_input ? $old_input->action_taken_attachment : null }}">
-                                    </div>
-                                    <div class="dz-message" data-dz-message>
-                                        <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                    </div>
-                                </div>
+                                <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                                @if ( !empty($old_input->action_taken_attachment) )
+                                    <input id="background-info-attachment" name="actionTakenAttachments" value="{{ $old_input->action_taken_attachment }}" type="hidden"/>
+                                    <a href="{{ asset('storage/'.$old_input->action_taken_attachment) }}" target="_blank" class="btn btn-primary mt-2">
+                                        View Attachment
+                                    </a>
+                                @else
+                                    No Uploaded Attachment
+                                @endif
 
                                 {{-- Button --}}
                                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 mb-5">
                                     <a href="" class="btn btn-secondary w-24 ml-2">Previous</a>
-                                    <button class="btn btn-primary w-24 ml-2" type="submit">Next</button>
+                                    <button class="btn btn-primary w-24 ml-2" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -576,77 +580,5 @@
 
                     reader.readAsDataURL(input.files[0]);
                 }
-
-                $("#dynamic-ar").click(function() {
-                    var i = 0;
-                    ++i;
-                    var table = document.getElementById('dynamicAddRemove');
-                    var row = table.insertRow(-1);
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-                    var cell4 = row.insertCell(3);
-                    var cell5 = row.insertCell(4);
-                    var cell6 = row.insertCell(5);
-                    cell1.innerHTML = '<input type="text" name="famComp[' + i +
-                        '][name]" placeholder="Name" class="form-control" />';
-                    cell2.innerHTML = '<select name="famComp[' + i +
-                        '][relationship]" class="w-full form-control"><option value="" selected="true" disabled>Select Relationship</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>';
-                    cell3.innerHTML = '<select name="famComp[' + i +
-                        '][educational]" class="w-full form-control"><option value="Select Educational Attainment" selected="true" disabled>Select Educational Attainment</option><option value="College Graduate">College Graduate</option><option value="High School Graduate">High School Graduate</option><option value="Elementary Graduate">Elementary Graduate</option></select>';
-                    cell4.innerHTML = '<input type="text" name="famComp[' + i +
-                        '][occupation]" placeholder="Occupation" class="form-control" />';
-                    cell5.innerHTML = '<input name="famComp[' + i +
-                        '][contact]" type="text" class="form-control" placeholder="09123456789">';
-                    cell6.innerHTML =
-                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
-                });
-
-                $("#dynamic-ar-med-con").click(function() {
-                    var j = 0;
-                    ++j;
-                    var table = document.getElementById('dynamicAddRemoveMedCon');
-                    var row = table.insertRow(-1);
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-                    var cell4 = row.insertCell(3);
-                    var cell5 = row.insertCell(4);
-                    var cell6 = row.insertCell(5);
-                    var cell7 = row.insertCell(6);
-                    cell1.innerHTML = '<select id="disease" name="medicalCondition[' + j +
-                        '][disease]" data-search="true" class="w-full form-control" tabindex="-1"> <option value="" selected="true" disabled>Select Illness/Disease</option> @foreach ($diseases as $disease) <option value="{{ $disease->id }}">{{ $disease->disease }}</option> @endforeach </select>';
-                    cell2.innerHTML = '<input type="text" name="medicalCondition[' + j +
-                        '][medicine]" placeholder="Medicine/Supplement Name" class="form-control" />';
-                    cell3.innerHTML = '<input type="text" name="medicalCondition[' + j +
-                        '][dosage]" placeholder="Dosage" class="form-control" />';
-                    cell4.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
-                        '][frequency]" type="text" class="form-control" placeholder="Frequency"></td>';
-                    cell5.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
-                        '][doctor]" type="text" class="form-control" placeholder="Doctor"></td>';
-                    cell6.innerHTML = '<input id="input-wizard-5" name="medicalCondition[' + j +
-                        '][hospital]" type="text" class="form-control" placeholder="Hospital"></td>';
-                    cell7.innerHTML =
-                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
-                });
-
-                $("#dynamic-ar-operation").click(function() {
-                    var k = 0;
-                    ++k;
-                    var table = document.getElementById('dynamicAddRemoveOperation');
-                    var row = table.insertRow(-1);
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-                    cell1.innerHTML = '<input type="text" name="medicalOperation[' + k +
-                        '][operation]" placeholder="Operation" class="form-control"/>';
-                    cell2.innerHTML = '<input type="date" name="medicalOperation[' + k + '][date]" class="form-control" />';
-                    cell3.innerHTML =
-                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>';
-                });
-
-                $(document).on('click', '.remove-input-field', function() {
-                    $(this).closest('tr').remove();
-                });
             </script>
         @endsection

@@ -28,7 +28,7 @@ class MedicalCondition extends Model
     protected $fillable = [
         "sickness",
         "since_when",
-        "medicine_supplement",
+        "medicine_supplements",
         "dosage",
         "frequency",
         "hospital",
