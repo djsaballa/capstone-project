@@ -133,7 +133,7 @@
                     <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Client Profiling Chart
+                                Client Profiles Chart
                             </h2>
                             @php
                                 $thisMonthProfiles = count(
@@ -141,14 +141,6 @@
                                         $now = Carbon::now();
                                         $thisMonth = $now->format('Ym');
                                         return $date == $thisMonth;
-                                    }),
-                                );
-
-                                $lastMonthProfiles = count(
-                                    array_filter($dates, function ($date) {
-                                        $now = Carbon::now();
-                                        $lastMonth = $now->subMonth()->format('Ym');
-                                        return $date == $lastMonth;
                                     }),
                                 );
 
@@ -193,10 +185,7 @@
                                         class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
                                     </div>
                                     <div>
-                                        <div class="text-slate-500 text-lg xl:text-xl font-medium">
-                                            {{ $lastMonthProfiles }}
-                                        </div>
-                                        <div class="mt-0.5 text-slate-500">Last Month</div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month of {{ $now->monthName; }}</div>
                                     </div>
                                 </div>
                             </div>

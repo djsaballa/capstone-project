@@ -1,6 +1,6 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app.21c9027b.js",
+    "file": "assets/app.bde24c69.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
@@ -54,7 +54,7 @@
     "file": "assets/_commonjsHelpers.d2428edb.js"
   },
   "resources/css/app.css": {
-    "file": "assets/app.7cd8c26d.css",
+    "file": "assets/app.c45426fe.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }
