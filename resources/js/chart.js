@@ -99,15 +99,15 @@ import Chart from "chart.js/auto";
                 datasets: [
                     {
                         data: data,
-                        backgroundColor: [
-                            colors.primary(0.9),
+                        backgroundColor: [                         
                             colors.danger(0.9),
+                            colors.primary(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
                         ],
                         hoverBackgroundColor: [
-                            colors.primary(0.9),
                             colors.danger(0.9),
+                            colors.primary(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
                         ],
@@ -148,15 +148,15 @@ import Chart from "chart.js/auto";
                 datasets: [
                     {
                         data: data,
-                        backgroundColor: [
-                            colors.primary(0.9),
+                        backgroundColor: [    
                             colors.danger(0.9),
+                            colors.primary(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
                         ],
                         hoverBackgroundColor: [
-                            colors.primary(0.9),
                             colors.danger(0.9),
+                            colors.primary(0.9),
                             colors.pending(0.9),
                             colors.warning(0.9),
                         ],

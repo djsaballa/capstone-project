@@ -249,12 +249,12 @@
                             <input id="data4" value="{{ $data4 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Under 15 Year Old</span> <span
                                         class="font-medium ml-auto">{{ round(($data1 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">15 - 47 Years Old</span> <span
                                         class="font-medium ml-auto">{{ round(($data2 / count($client_profiles)) * 100) }}%</span>
                                 </div>
@@ -313,11 +313,11 @@
                             <input id="data8" value="{{ $data8 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Terminal</span> <span class="font-medium ml-auto">{{ round(($data5 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">Surgical</span> <span class="font-medium ml-auto">{{ round(($data6 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
