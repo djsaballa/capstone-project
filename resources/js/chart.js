@@ -17,8 +17,8 @@ import Chart from "chart.js/auto";
         }
         let rowsByDay = document.getElementById('rowsByDay');
         let rowsByDayValue = rowsByDay.value;
-        const array = rowsByDayValue.split(', ');
-        const numbers = array.map(Number);
+        const profilesArray = rowsByDayValue.split(', ');
+        const profiles = profilesArray.map(Number);
         let myChart = new Chart(ctx, {
             type: "line",
             data: {
@@ -26,7 +26,7 @@ import Chart from "chart.js/auto";
                 datasets: [
                     {
                         label: "# of Client Profiles",
-                        data: numbers,
+                        data: profiles,
                         borderWidth: 2,
                         borderColor: colors.primary(0.8),
                         backgroundColor: "transparent",

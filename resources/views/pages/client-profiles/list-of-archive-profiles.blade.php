@@ -34,10 +34,10 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
-                                    <i data-lucide="user" class="report-box__icon text-success"></i>
+                                    <i data-lucide="archive" class="report-box__icon text-success"></i>
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">{{ count($client_profiles_total) }}</div>
-                                <div class="text-base text-slate-500 mt-1">Total Profiles</div>
+                                <div class="text-base text-slate-500 mt-1">Total Archived Profiles</div>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
-                                    <i data-lucide="user" class="report-box__icon text-success"></i>
+                                    <i data-lucide="user-check" class="report-box__icon text-success"></i>
 
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">
@@ -58,7 +58,7 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
-                                    <i data-lucide="user" class="report-box__icon text-success"></i>
+                                    <i data-lucide="user-x" class="report-box__icon text-success"></i>
 
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">{{ count($non_brethren) }}</div>

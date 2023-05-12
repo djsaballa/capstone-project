@@ -50,10 +50,10 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
-                                    <i data-lucide="refresh-cw" class="report-box__icon text-success"></i>
+                                    <i data-lucide="archive" class="report-box__icon text-success"></i>
                                 </div>
                                 <div class="text-3xl font-medium leading-8 mt-6">{{ count($archived) }}</div>
-                                <div class="text-base text-slate-500 mt-1">Total Archive Profiles</div>
+                                <div class="text-base text-slate-500 mt-1">Total Archived Profiles</div>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,6 @@
                                 foreach ($client_profiles as $client_profile) {
                                     $times[] = Carbon::parse($client_profile->created_at)->format("Y-m-d");
                                 };
-
 
                                 for ($day = 1; $day <= $daysInMonth; $day++) {
                                     $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
@@ -287,7 +286,7 @@
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Diseases per Medical Category
+                                Profiles by Medical Category
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
