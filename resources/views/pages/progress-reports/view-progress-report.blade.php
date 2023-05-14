@@ -10,6 +10,16 @@
         </div>
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
+                 @if (Session::has('status'))
+                    <div class="alert alert-success text-center text-white">
+                        <p>{{ Session::get('status') }}</p>
+                    </div>
+                @endif
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        <p>{{ Session::get('error') }}</p>
+                    </div>
+                @endif
                 <h2 class="intro-y text-lg font-medium mr-auto mt-2">
                     Progress Report
                 </h2>
@@ -106,17 +116,31 @@
                                             $assigned_doctor_info = $client_profile_info->getAssignedDoctorInfo($client_profile_info->assigned_doctor_id);
                                         @endphp
                                         <div class="col-span-6 2xl:col-span-3">
-                                            <div class="mt-3">
-                                                <label for="update-profile-form-3-tomselected"
-                                                    class="form-label font-medium"
-                                                    id="update-profile-form-3-ts-label">Assigned Doctor:</label>
-                                                <span
-                                                    class="ml-3">{{ $assigned_doctor_info->getFullName($assigned_doctor_info->id) }}</span>
-                                            </div>
-                                            <div class="mt-3">
-                                                <label for="startDate" class="form-label font-medium">Assigned Doctor's Contact Number:</label>
-                                                <span class="ml-3">{{ $assigned_doctor_info->contact_number }}</span>
-                                            </div>
+                                            @if (!empty($assigned_doctor_info))
+                                                <div class="mt-3">
+                                                    <label for="update-profile-form-3-tomselected"
+                                                        class="form-label font-medium"
+                                                        id="update-profile-form-3-ts-label">Assigned Doctor:</label>
+                                                    <span
+                                                        class="ml-3">{{ $assigned_doctor_info->getFullName($assigned_doctor_info->id) }}</span>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="startDate" class="form-label font-medium">Assigned Doctor's Contact Number:</label>
+                                                    <span class="ml-3">{{ $assigned_doctor_info->contact_number }}</span>
+                                                </div>
+                                            @else
+                                                <div class="mt-3">
+                                                    <label for="update-profile-form-3-tomselected"
+                                                        class="form-label font-medium"
+                                                        id="update-profile-form-3-ts-label">Assigned Doctor:</label>
+                                                    <span
+                                                        class="ml-3">TBA</span>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="startDate" class="form-label font-medium">Assigned Doctor's Contact Number:</label>
+                                                    <span class="ml-3">TBA</span>
+                                                </div>
+                                            @endif
                                         </div>
 
                                         <div class="w-52 mx-auto xl:mr-0 xl:ml-6 mt-5">

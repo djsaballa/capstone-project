@@ -104,7 +104,7 @@ class UserController extends Controller
     public function listOfUsers($user_id)
     {
         if (Auth::user()->id == $user_id) {
-            $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->paginate(10);
+            $users = User::where('status', 'Active')->orderBy('role_id', 'ASC')->orderBy('last_name', 'ASC')->paginate(10);
             $user_info = User::find($user_id);
     
             return view('pages.users.list-of-users', compact('users', 'user_info'));
@@ -205,9 +205,9 @@ class UserController extends Controller
                 'middleName' => 'nullable|string',
                 'lastName' => 'required|string',
                 'role' => 'required',
-                'division' => 'required',
-                'district' => 'required',
-                'locale' => 'required',
+                'division' => 'nullable',
+                'district' => 'nullable',
+                'locale' => 'nullable',
                 'contactNumber' => 'required|numeric',
             ],
             [
@@ -226,6 +226,10 @@ class UserController extends Controller
             $picture = null;
         }
 
+        do {
+            $username = Str::lower($request->firstName). "" .Str::lower($request->lastName). "" .random_int(1000, 9999);
+        } while (!empty(User::where('username', $username)->first()));
+
         $password = Str::random(10);
 
         $user_save =
@@ -234,7 +238,7 @@ class UserController extends Controller
             'first_name' => $request->firstName,
             'middle_name' => $request->middleName,
             'last_name' => $request->lastName,
-            'username' => Str::lower($request->firstName). "" .Str::lower($request->lastName). "" .random_int(1000, 9999),
+            'username' => $username,
             'password' => Hash::make($password),
             'contact_number' => $request->contactNumber,
             'status' => 'Active',

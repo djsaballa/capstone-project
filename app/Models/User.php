@@ -87,6 +87,16 @@ class User extends Authenticatable
         return $firstName . " " . $middleName . " " . $lastName;
     }
 
+    public static function getLFName($user_id)
+    {
+        $user = User::find($user_id);
+        $firstName = $user->first_name;
+        $middleName = $user->middle_name;
+        $lastName = $user->last_name;
+
+        return $lastName . ", ". $firstName . " " . $middleName;
+    }
+
     public static function getRoleName($role_id)
     {
         return Role::getRoleName($role_id);

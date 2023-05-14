@@ -36,7 +36,7 @@
                         @endif
                         </div>
                         <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                            <a href="{{ route('view_user', [$user_info->id, $user->id]) }}" class="font-medium">{{ $user->getFullName($user->id) }}</a>
+                            <a href="{{ route('view_user', [$user_info->id, $user->id]) }}" class="font-medium">{{ $user->getLFName($user->id) }}</a>
                             @if ($user->getSecurityLevel($user->role_id) == 1)
                                 <div class="text-slate-500 text-xs mt-0.5">
                                     {{ $user->getLocaleName($user->locale_id) . ' - ' . $user->getRoleName($user->role_id) }}

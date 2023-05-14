@@ -81,8 +81,13 @@
                             </div>
                         </div>
                         <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
+                            <div class="mt-3">
+                                <label for="update-profile-form-4" class="form-label">Username</label>
+                                <input id="update-profile-form-4" type="text" class="form-control"
+                                    placeholder="" value="{{ $employee_info->username }}" disabled>
+                            </div>
                             <div
-                                class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                    class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5 mt-8">
                                 <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
                                     @if ( !empty($employee_info->picture) )
                                     <img src="{{ asset('storage/'.$employee_info->picture) }}" alt="User Image">
