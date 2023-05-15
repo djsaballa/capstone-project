@@ -10,8 +10,9 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         General Report
                     </h2>
-                    <a href="" class="ml-auto flex items-center text-primary"> <i data-lucide="refresh-ccw"
-                            class="w-4 h-4 mr-3"></i> Reload Data </a>
+                    <button class="btn btn-primary shadow-md ml-auto flex items-center ">
+                        <i class="w-4 h-4 mr-2" data-lucide="file"></i> Generate Monthly Report
+                    </button>
                 </div>
                 @php
                     use Carbon\Carbon;
@@ -35,6 +36,9 @@
                     }
                     foreach ($client_profiles as $client_profile) {
                         $age_genders[] = ['age' => Carbon::parse($client_profile->birth_date)->age, 'gender' => $client_profile->gender];
+                    }
+                    foreach ($client_profiles as $client_profile) {
+                        $genders[] = ['gender' => $client_profile->gender];
                     }
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -132,47 +136,139 @@
                         </div>
                     </div>
                     <!-- END: General Report -->
-                    <!-- BEGIN: Profiling Report -->
+                    @php
+                        $thisMonthProfiles = count(
+                            array_filter($dates, function ($date) {
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $date == $thisMonth;
+                            }),
+                        );
+                        
+                        $now = Carbon::now('Asia/Manila');
+                        $thisYear = $now->format('Y');
+                        $thisMonth = $now->format('m');
+                        $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
+                        
+                        foreach ($client_profiles as $client_profile) {
+                            $times[] = Carbon::parse($client_profile->created_at)->format('Y-m-d');
+                        }
+                        
+                        for ($day = 1; $day <= $daysInMonth; $day++) {
+                            $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
+                            $rowsByDay[$day] = count(
+                                array_filter($times, function ($time) use ($date) {
+                                    return $time == $date;
+                                }),
+                            );
+                        }
+                        
+                        $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
+
+                        $data1 = count(
+                            array_filter($ages, function ($age) {
+                                return $age < 13;
+                            }),
+                        );
+                        $data2 = count(
+                            array_filter($ages, function ($age) {
+                                return $age >= 13 && $age <= 18;
+                            }),
+                        );
+                        $data3 = count(
+                            array_filter($ages, function ($age) {
+                                return $age >= 19 && $age <= 60;
+                            }),
+                        );
+                        $data4 = count(
+                            array_filter($ages, function ($age) {
+                                return $age > 60;
+                            }),
+                        );
+
+                        $data5 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 4;
+                            }),
+                        );
+                        $data6 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 3;
+                            }),
+                        );
+                        $data7 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 2;
+                            }),
+                        );
+                        $data8 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 1;
+                            }),
+                        );
+
+                        $data9 = count(
+                            array_filter($genders, function ($gender) {
+                                return $gender['gender'] == 'Male';
+                            }),
+                        );
+                        $data10 = count(
+                            array_filter($genders, function ($gender) {
+                                return $gender['gender'] == 'Female';
+                            }),
+                        );
+                        
+                        $dataM1 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male';
+                            }),
+                        );
+                        $dataF1 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female';
+                            }),
+                        );
+                        $dataM2 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
+                            }),
+                        );
+                        $dataF2 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
+                            }),
+                        );
+                        $dataM3 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
+                            }),
+                        );
+                        $dataF3 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
+                            }),
+                        );
+                        $dataM4 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male';
+                            }),
+                        );
+                        $dataF4 = count(
+                            array_filter($age_genders, function ($age_gender) {
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female';
+                            }),
+                        );
+                    @endphp
+                    <!-- BEGIN: Total Client Profiles Graph -->
                     <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
                             <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i> 
+                                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
                                 <input type="text" class="datepicker form-control sm:w-56 box pl-10">
-                                <button class="btn btn-primary shadow-md ml-3 "> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
-                                    to PDF</button>
                             </div>
-                            @php
-                                $thisMonthProfiles = count(
-                                    array_filter($dates, function ($date) {
-                                        $now = Carbon::now();
-                                        $thisMonth = $now->format('Ym');
-                                        return $date == $thisMonth;
-                                    }),
-                                );
-                                
-                                $now = Carbon::now('Asia/Manila');
-                                $thisYear = $now->format('Y');
-                                $thisMonth = $now->format('m');
-                                $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
-                                
-                                foreach ($client_profiles as $client_profile) {
-                                    $times[] = Carbon::parse($client_profile->created_at)->format('Y-m-d');
-                                }
-                                
-                                for ($day = 1; $day <= $daysInMonth; $day++) {
-                                    $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
-                                    $rowsByDay[$day] = count(
-                                        array_filter($times, function ($time) use ($date) {
-                                            return $time == $date;
-                                        }),
-                                    );
-                                }
-                                
-                                $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
-                            @endphp
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
@@ -195,14 +291,14 @@
                                 </div>
                             </div>
                             <div class="report-chart">
-                                <div class="h-[275px]">
+                                <div class="h-[310px]">
                                     <canvas id="report-line-chart" class="mt-6 -mb-6"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- END: Profiling Report -->
-                    <!-- BEGIN: By Age Group -->
+                    <!-- END: Total Client Profiles Graph -->
+                    <!-- BEGIN: By Age Group Chart -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
@@ -210,28 +306,6 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
-                            @php
-                                $data1 = count(
-                                    array_filter($ages, function ($age) {
-                                        return $age < 13;
-                                    }),
-                                );
-                                $data2 = count(
-                                    array_filter($ages, function ($age) {
-                                        return $age >= 13 && $age <= 18;
-                                    }),
-                                );
-                                $data3 = count(
-                                    array_filter($ages, function ($age) {
-                                        return $age >= 19 && $age <= 60;
-                                    }),
-                                );
-                                $data4 = count(
-                                    array_filter($ages, function ($age) {
-                                        return $age > 60;
-                                    }),
-                                );
-                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     <canvas id="report-pie-chart"></canvas>
@@ -265,30 +339,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END: By Age Group -->
-                    <!-- BEGIN: By Medical Category-->
-                    @php
-                        $data5 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 4;
-                            }),
-                        );
-                        $data6 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 3;
-                            }),
-                        );
-                        $data7 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 2;
-                            }),
-                        );
-                        $data8 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 1;
-                            }),
-                        );
-                    @endphp
+                    <!-- END: By Age Group Chart -->
+                    <!-- BEGIN: By Medical Category Chart -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
@@ -329,14 +381,22 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END: By Medical Category -->
-                    <!-- BEGIN: Ages Report -->
-                    <div class="col-span-12 lg:col-span-12 mt-8">
+                    <!-- END: By Medical Category Chart -->
+                    <!-- BEGIN: By Age Group and Gender Graph -->
+                    <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Profiles by Gender & Age Group
                             </h2>
                         </div>
+                        <input id="dataM1" value="{{ $dataM1 }}" hidden>
+                        <input id="dataF1" value="{{ $dataF1 }}" hidden>
+                        <input id="dataM2" value="{{ $dataM2 }}" hidden>
+                        <input id="dataF2" value="{{ $dataF2 }}" hidden>
+                        <input id="dataM3" value="{{ $dataM3 }}" hidden>
+                        <input id="dataF3" value="{{ $dataF3 }}" hidden>
+                        <input id="dataM4" value="{{ $dataM4 }}" hidden>
+                        <input id="dataF4" value="{{ $dataF4 }}" hidden>
                         <div class="intro-y box p-5 mt-12 sm:mt-5">
                             <div class="flex flex-col md:flex-row md:items-center">
                                 <div class="flex">
@@ -357,238 +417,72 @@
                             </div>
                             <div class="report-chart">
                                 <div class="h-[300px]">
-                                    <canvas id="vertical-bar-chart-widget" class="mt-6 -mb-6"></canvas>
+                                    <canvas id="vertical-bar-chart-widget"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- END: Ages Report -->
-                    <!-- BEGIN: By Age Group and Gender  -->
-                    <!-- Below 13  -->
+                    <!-- END: Age Group and Gender Graph -->
+                    <!-- BEGIN: By Gender Chart -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
-                            <h2 class="text-lg font-medium mr-5">
-                                Profiles by Gender in "Under 13 Year Old" Age Group
+                            <h2 class="text-lg font-medium truncate mr-5">
+                                Profiles by Gender
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
-                            @php
-                                $dataM1 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male';
-                                    }),
-                                );
-                                $dataF1 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female';
-                                    }),
-                                );
-                            @endphp
                             <div class="mt-3">
-                                <div class="h-[213px]">
-                                    @if ($data1 == 0)
-                                        <div class="intro-y flex text-center pt-20">
-                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                        </div>
-                                    @else
-                                        <canvas id="report-pie-chart-gender1"></canvas>
-                                    @endif
+                                <div class="h-[250px]">
+                                    <canvas id="report-donut-chart-gender"></canvas>
                                 </div>
                             </div>
-                            <input id="dataM1" value="{{ $dataM1 }}" hidden>
-                            <input id="dataF1" value="{{ $dataF1 }}" hidden>
+                            <input id="dataM" value="{{ $data9 }}" hidden>
+                            <input id="dataF" value="{{ $data10 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
-                                <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Male</span>
-                                    @if ($data1 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataM1 / $data1) * 100) }}%</span>
-                                    @endif
-                                </div>
                                 <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <span class="truncate">Male</span> <span
+                                        class="font-medium ml-auto">{{ round(($data9 / count($client_profiles)) * 100) }}%</span>
+                                </div>
+                                <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Female</span>
-                                    @if ($data1 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataF1 / $data1) * 100) }}%</span>
-                                    @endif
+                                    <span class="truncate">Female</span> <span
+                                        class="font-medium ml-auto">{{ round(($data10 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- 13 to 18  -->
+                    <!-- END: By Gender Chart -->
+                    <!-- BEGIN: By Member Chart -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
-                            <h2 class="text-lg font-medium mr-5">
-                                Profiles by Gender in "13 to 18 Years Old" Age Group
+                            <h2 class="text-lg font-medium truncate mr-5">
+                                Profiles by Member
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
-                            @php
-                                $dataM2 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
-                                    }),
-                                );
-                                $dataF2 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
-                                    }),
-                                );
-                            @endphp
                             <div class="mt-3">
-                                <div class="h-[213px]">
-                                    @if ($data2 == 0)
-                                        <div class="intro-y flex text-center pt-20">
-                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                        </div>
-                                    @else
-                                        <canvas id="report-pie-chart-gender2"></canvas>
-                                    @endif
+                                <div class="h-[250px]">
+                                    <canvas id="report-pie-chart-member"></canvas>
                                 </div>
                             </div>
-                            <input id="dataM2" value="{{ $dataM2 }}" hidden>
-                            <input id="dataF2" value="{{ $dataF2 }}" hidden>
+                            <input id="data11" value="{{ count($brethren) }}" hidden>
+                            <input id="data12" value="{{ count($non_brethren) }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
-                                <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Male</span>
-                                    @if ($data2 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataM2 / $data2) * 100) }}%</span>
-                                    @endif
-                                </div>
                                 <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <span class="truncate">Brethren</span> <span
+                                        class="font-medium ml-auto">{{ round((count($brethren) / count($client_profiles)) * 100) }}%</span>
+                                </div>
+                                <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Female</span>
-                                    @if ($data2 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataF2 / $data2) * 100) }}%</span>
-                                    @endif
+                                    <span class="truncate">Non-Brethren</span> <span
+                                        class="font-medium ml-auto">{{ round((count($non_brethren) / count($client_profiles)) * 100) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- 19 to 60  -->
-                    <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
-                        <div class="intro-y flex items-center h-10">
-                            <h2 class="text-lg font-medium mr-5">
-                                Profiles by Gender in "19 to 60 Years Old" Age Group
-                            </h2>
-                        </div>
-                        <div class="intro-y box p-5 mt-5">
-                            @php
-                                $dataM3 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
-                                    }),
-                                );
-                                $dataF3 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
-                                    }),
-                                );
-                            @endphp
-                            <div class="mt-3">
-                                <div class="h-[213px]">
-                                    @if ($data3 == 0)
-                                        <div class="intro-y flex text-center pt-20">
-                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                        </div>
-                                    @else
-                                        <canvas id="report-pie-chart-gender3"></canvas>
-                                    @endif
-                                </div>
-                            </div>
-                            <input id="dataM3" value="{{ $dataM3 }}" hidden>
-                            <input id="dataF3" value="{{ $dataF3 }}" hidden>
-                            <div class="w-52 sm:w-auto mx-auto mt-8">
-                                <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Male</span>
-                                    @if ($data3 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataM3 / $data3) * 100) }}%</span>
-                                    @endif
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Female</span>
-                                    @if ($data3 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataF3 / $data3) * 100) }}%</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Over 60  -->
-                    <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
-                        <div class="intro-y flex items-center h-10">
-                            <h2 class="text-lg font-medium mr-5">
-                                Profiles by Gender in "Over 60 Years Old" Age Group
-                            </h2>
-                        </div>
-                        <div class="intro-y box p-5 mt-5">
-                            @php
-                                $dataM4 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male';
-                                    }),
-                                );
-                                $dataF4 = count(
-                                    array_filter($age_genders, function ($age_gender) {
-                                        return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female';
-                                    }),
-                                );
-                            @endphp
-                            <div class="mt-3">
-                                <div class="h-[213px]">
-                                    @if ($data4 == 0)
-                                        <div class="intro-y flex text-center pt-20">
-                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                        </div>
-                                    @else
-                                        <canvas id="report-pie-chart-gender4"></canvas>
-                                    @endif
-                                </div>
-                            </div>
-                            <input id="dataM4" value="{{ $dataM4 }}" hidden>
-                            <input id="dataF4" value="{{ $dataF4 }}" hidden>
-                            <div class="w-52 sm:w-auto mx-auto mt-8">
-                                <div class="flex items-center mt-4">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Male</span>
-                                    @if ($data4 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataM4 / $data4) * 100) }}%</span>
-                                    @endif
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Female</span>
-                                    @if ($data4 == 0)
-                                        <span class="font-medium ml-auto">0%</span>
-                                    @else
-                                        <span class="font-medium ml-auto">{{ round(($dataF4 / $data4) * 100) }}%</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END: Client Ages -->
-
+                    <!-- END: By Brethren and Non-Brethren Chart -->
                 </div>
             </div>
         </div>
