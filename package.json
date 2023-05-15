@@ -1,11 +1,8 @@
 {
     "private": true,
     "scripts": {
-        "build": "vite build",
-        "watch": "vite",
-        "dev": "run-p watch:laravel watch:vite",
-        "watch:laravel": "php artisan serve",
-        "watch:vite": "vite"
+        "dev": "vite build && vite",
+        "build": "vite build"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-balloon": "^29.1.0",

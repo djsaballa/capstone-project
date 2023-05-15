@@ -146,25 +146,25 @@
                                         return $date == $thisMonth;
                                     }),
                                 );
-
+                                
                                 $now = Carbon::now('Asia/Manila');
                                 $thisYear = $now->format('Y');
                                 $thisMonth = $now->format('m');
                                 $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
-
+                                
                                 foreach ($client_profiles as $client_profile) {
-                                    $times[] = Carbon::parse($client_profile->created_at)->format("Y-m-d");
-                                };
-
+                                    $times[] = Carbon::parse($client_profile->created_at)->format('Y-m-d');
+                                }
+                                
                                 for ($day = 1; $day <= $daysInMonth; $day++) {
                                     $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
                                     $rowsByDay[$day] = count(
                                         array_filter($times, function ($time) use ($date) {
                                             return $time == $date;
-                                        })
+                                        }),
                                     );
-                                };
-
+                                }
+                                
                                 $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
                             @endphp
                             <input id="days" value="{{ $daysInMonth }}" hidden>
@@ -183,7 +183,8 @@
                                         class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
                                     </div>
                                     <div>
-                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month of {{ $now->monthName; }}</div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month
+                                            of {{ $now->monthName }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -195,6 +196,39 @@
                         </div>
                     </div>
                     <!-- END: Profiling Report -->
+                    <!-- BEGIN: Ages Report -->
+                    <div class="col-span-12 lg:col-span-6 mt-8">
+                        <div class="intro-y block sm:flex items-center h-10">
+                            <h2 class="text-lg font-medium truncate mr-5">
+                                Profiles by Gender & Age Group
+                            </h2>
+                        </div>
+                        <div class="intro-y box p-5 mt-12 sm:mt-5">
+                            <div class="flex flex-col md:flex-row md:items-center">
+                                <div class="flex">
+                                    <div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
+                                            {{ $thisMonthProfiles }}
+                                        </div>
+                                        <div class="mt-0.5 text-slate-500">This Month</div>
+                                    </div>
+                                    <div
+                                        class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
+                                    </div>
+                                    <div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month
+                                            of {{ $now->monthName }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="report-chart">
+                                <div class="h-[275px]">
+                                    <canvas id="vertical-bar-chart-widget" class="mt-6 -mb-6"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Ages Report -->
                     <!-- BEGIN: By Age Group -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
@@ -301,26 +335,30 @@
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Terminal</span> <span class="font-medium ml-auto">{{ round(($data5 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Terminal</span> <span
+                                        class="font-medium ml-auto">{{ round(($data5 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Surgical</span> <span class="font-medium ml-auto">{{ round(($data6 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Surgical</span> <span
+                                        class="font-medium ml-auto">{{ round(($data6 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                    <span class="truncate">Chronic</span> <span class="font-medium ml-auto">{{ round(($data7 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Chronic</span> <span
+                                        class="font-medium ml-auto">{{ round(($data7 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                    <span class="truncate">With Illness</span> <span class="font-medium ml-auto">{{ round(($data8 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">With Illness</span> <span
+                                        class="font-medium ml-auto">{{ round(($data8 / count($client_profiles)) * 100) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END: By Medical Category -->
                     <!-- BEGIN: By Age Group and Gender  -->
-                        <!-- Below 13  -->
+                    <!-- Below 13  -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
@@ -343,11 +381,11 @@
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data1 == 0)
-                                    <div class="intro-y flex text-center pt-20">
-                                        <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                    </div>
+                                        <div class="intro-y flex text-center pt-20">
+                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
+                                        </div>
                                     @else
-                                    <canvas id="report-pie-chart-gender1"></canvas>
+                                        <canvas id="report-pie-chart-gender1"></canvas>
                                     @endif
                                 </div>
                             </div>
@@ -358,25 +396,25 @@
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">Male</span>
                                     @if ($data1 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataM1 / $data1) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataM1 / $data1) * 100) }}%</span>
                                     @endif
                                 </div>
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Female</span>
                                     @if ($data1 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataF1 / $data1) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataF1 / $data1) * 100) }}%</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                        <!-- 13 to 18  -->
+                    <!-- 13 to 18  -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
@@ -387,23 +425,23 @@
                             @php
                                 $dataM2 = count(
                                     array_filter($age_genders, function ($age_gender) {
-                                        return ($age_gender['age'] >= 13 && $age_gender['age'] <= 18) && $age_gender['gender'] == 'Male';
+                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
                                     }),
                                 );
                                 $dataF2 = count(
                                     array_filter($age_genders, function ($age_gender) {
-                                        return ($age_gender['age'] >= 13 && $age_gender['age'] <= 18) && $age_gender['gender'] == 'Female';
+                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
                                     }),
                                 );
                             @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data2 == 0)
-                                    <div class="intro-y flex text-center pt-20">
-                                        <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                    </div>
+                                        <div class="intro-y flex text-center pt-20">
+                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
+                                        </div>
                                     @else
-                                    <canvas id="report-pie-chart-gender2"></canvas>
+                                        <canvas id="report-pie-chart-gender2"></canvas>
                                     @endif
                                 </div>
                             </div>
@@ -414,25 +452,25 @@
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">Male</span>
                                     @if ($data2 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataM2 / $data2) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataM2 / $data2) * 100) }}%</span>
                                     @endif
                                 </div>
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Female</span>
                                     @if ($data2 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataF2 / $data2) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataF2 / $data2) * 100) }}%</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                        <!-- 19 to 60  -->
+                    <!-- 19 to 60  -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
@@ -443,23 +481,23 @@
                             @php
                                 $dataM3 = count(
                                     array_filter($age_genders, function ($age_gender) {
-                                        return ($age_gender['age'] >= 19 && $age_gender['age'] <= 60) && $age_gender['gender'] == 'Male';
+                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
                                     }),
                                 );
                                 $dataF3 = count(
                                     array_filter($age_genders, function ($age_gender) {
-                                        return ($age_gender['age'] >= 19 && $age_gender['age'] <= 60) && $age_gender['gender'] == 'Female';
+                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
                                     }),
                                 );
                             @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data3 == 0)
-                                    <div class="intro-y flex text-center pt-20">
-                                        <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                    </div>
+                                        <div class="intro-y flex text-center pt-20">
+                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
+                                        </div>
                                     @else
-                                    <canvas id="report-pie-chart-gender3"></canvas>
+                                        <canvas id="report-pie-chart-gender3"></canvas>
                                     @endif
                                 </div>
                             </div>
@@ -470,25 +508,25 @@
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">Male</span>
                                     @if ($data3 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataM3 / $data3) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataM3 / $data3) * 100) }}%</span>
                                     @endif
                                 </div>
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Female</span>
                                     @if ($data3 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataF3 / $data3) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataF3 / $data3) * 100) }}%</span>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                        <!-- Over 60  -->
+
+                    <!-- Over 60  -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
@@ -511,11 +549,11 @@
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data4 == 0)
-                                    <div class="intro-y flex text-center pt-20">
-                                        <span class="font-medium text-lg">No Clients within this Age Group</span>
-                                    </div>
+                                        <div class="intro-y flex text-center pt-20">
+                                            <span class="font-medium text-lg">No Clients within this Age Group</span>
+                                        </div>
                                     @else
-                                    <canvas id="report-pie-chart-gender4"></canvas>
+                                        <canvas id="report-pie-chart-gender4"></canvas>
                                     @endif
                                 </div>
                             </div>
@@ -526,18 +564,18 @@
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
                                     <span class="truncate">Male</span>
                                     @if ($data4 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataM4 / $data4) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataM4 / $data4) * 100) }}%</span>
                                     @endif
                                 </div>
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
                                     <span class="truncate">Female</span>
                                     @if ($data4 == 0)
-                                    <span class="font-medium ml-auto">0%</span>
+                                        <span class="font-medium ml-auto">0%</span>
                                     @else
-                                    <span class="font-medium ml-auto">{{ round(($dataF4 / $data4) * 100) }}%</span>
+                                        <span class="font-medium ml-auto">{{ round(($dataF4 / $data4) * 100) }}%</span>
                                     @endif
                                 </div>
                             </div>
