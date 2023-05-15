@@ -254,8 +254,6 @@ import Chart from "chart.js/auto";
     
     if ($("#report-pie-chart-gender4").length) {
         let ctx = $("#report-pie-chart-gender4")[0].getContext("2d");
-        let dataM4 = document.getElementById('dataM4')
-        let dataF4 = document.getElementById('dataF4')
         let data = [dataF4.value, dataM4.value]
         let myPieChart = new Chart(ctx, {
             type: "pie",
@@ -346,39 +344,43 @@ import Chart from "chart.js/auto";
 // Chart widget page
 if ($("#vertical-bar-chart-widget").length) {
     let ctx = $("#vertical-bar-chart-widget")[0].getContext("2d");
+    let dataM1 = document.getElementById('dataM1')
+    let dataF1 = document.getElementById('dataF1')
+    let dataM2 = document.getElementById('dataM2')
+    let dataF2 = document.getElementById('dataF2')
+    let dataM3 = document.getElementById('dataM3')
+    let dataF3 = document.getElementById('dataF3')
+    let dataM4 = document.getElementById('dataM4')
+    let dataF4 = document.getElementById('dataF4')
+    let dataMale = [dataM1.value, dataM2.value, dataM3.value, dataM4.value]
+    let dataFemale = [dataF1.value, dataF2.value, dataF3.value, dataF4.value]
     let myChart = new Chart(ctx, {
         type: "bar",
         data: {
             labels: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
+                "Under 13 Year Old",
+                "13 - 18 Years Old",
+                "19 - 60 Years Old",
+                "Older 60 Years Old",
             ],
             datasets: [
                 {
-                    label: "Html Template",
+                    label: "Male",
                     barPercentage: 0.5,
                     barThickness: 6,
                     maxBarThickness: 8,
                     minBarLength: 2,
-                    data: [0, 200, 250, 200, 500, 450, 850, 1050],
+                    data: dataMale,
                     backgroundColor: colors.primary(),
                 },
                 {
-                    label: "VueJs Template",
+                    label: "Female",
                     barPercentage: 0.5,
                     barThickness: 6,
                     maxBarThickness: 8,
                     minBarLength: 2,
-                    data: [0, 300, 400, 560, 320, 600, 720, 850],
-                    backgroundColor: $("html").hasClass("dark")
-                        ? colors.darkmode["200"]()
-                        : colors.slate["300"](),
+                    data: dataFemale,
+                    backgroundColor: colors.danger(),
                 },
             ],
         },
@@ -411,7 +413,7 @@ if ($("#vertical-bar-chart-widget").length) {
                         },
                         color: colors.slate["500"](0.8),
                         callback: function (value, index, values) {
-                            return "$" + value;
+                            return value;
                         },
                     },
                     grid: {
