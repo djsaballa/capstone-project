@@ -133,122 +133,46 @@
                     </div>
                     <!-- END: General Report -->
                     <!-- BEGIN: Profiling Report -->
-                    @php
-                        $thisMonthProfiles = count(
-                            array_filter($dates, function ($date) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $date == $thisMonth;
-                            }),
-                        );
-                        
-                        $now = Carbon::now('Asia/Manila');
-                        $thisYear = $now->format('Y');
-                        $thisMonth = $now->format('m');
-                        $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
-                        
-                        foreach ($client_profiles as $client_profile) {
-                            $times[] = Carbon::parse($client_profile->created_at)->format('Y-m-d');
-                        }
-                        
-                        for ($day = 1; $day <= $daysInMonth; $day++) {
-                            $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
-                            $rowsByDay[$day] = count(
-                                array_filter($times, function ($time) use ($date) {
-                                    return $time == $date;
-                                }),
-                            );
-                        }
-                        $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
-
-                        $data1 = count(
-                            array_filter($ages, function ($age) {
-                                return $age < 13;
-                            }),
-                        );
-                        $data2 = count(
-                            array_filter($ages, function ($age) {
-                                return $age >= 13 && $age <= 18;
-                            }),
-                        );
-                        $data3 = count(
-                            array_filter($ages, function ($age) {
-                                return $age >= 19 && $age <= 60;
-                            }),
-                        );
-                        $data4 = count(
-                            array_filter($ages, function ($age) {
-                                return $age > 60;
-                            }),
-                        );
-
-                        $data5 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 4;
-                            }),
-                        );
-                        $data6 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 3;
-                            }),
-                        );
-                        $data7 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 2;
-                            }),
-                        );
-                        $data8 = count(
-                            array_filter($categories, function ($category) {
-                                return $category == 1;
-                            }),
-                        );
-
-                        $dataM1 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male';
-                            }),
-                        );
-                        $dataF1 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female';
-                            }),
-                        );
-                        $dataM2 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
-                            }),
-                        );
-                        $dataF2 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
-                            }),
-                        );
-                        $dataM3 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
-                            }),
-                        );
-                        $dataF3 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
-                            }),
-                        );
-                        $dataM4 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male';
-                            }),
-                        );
-                        $dataF4 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female';
-                            }),
-                        );
-                    @endphp
                     <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
+                            <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i> 
+                                <input type="text" class="datepicker form-control sm:w-56 box pl-10">
+                                <button class="btn btn-primary shadow-md ml-3 "> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
+                                    to PDF</button>
+                            </div>
+                            @php
+                                $thisMonthProfiles = count(
+                                    array_filter($dates, function ($date) {
+                                        $now = Carbon::now();
+                                        $thisMonth = $now->format('Ym');
+                                        return $date == $thisMonth;
+                                    }),
+                                );
+                                
+                                $now = Carbon::now('Asia/Manila');
+                                $thisYear = $now->format('Y');
+                                $thisMonth = $now->format('m');
+                                $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
+                                
+                                foreach ($client_profiles as $client_profile) {
+                                    $times[] = Carbon::parse($client_profile->created_at)->format('Y-m-d');
+                                }
+                                
+                                for ($day = 1; $day <= $daysInMonth; $day++) {
+                                    $date = sprintf('%s-%02d-%02d', $thisYear, $thisMonth, $day);
+                                    $rowsByDay[$day] = count(
+                                        array_filter($times, function ($time) use ($date) {
+                                            return $time == $date;
+                                        }),
+                                    );
+                                }
+                                
+                                $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
+                            @endphp
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
@@ -286,6 +210,28 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $data1 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age < 13;
+                                    }),
+                                );
+                                $data2 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age >= 13 && $age <= 18;
+                                    }),
+                                );
+                                $data3 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age >= 19 && $age <= 60;
+                                    }),
+                                );
+                                $data4 = count(
+                                    array_filter($ages, function ($age) {
+                                        return $age > 60;
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     <canvas id="report-pie-chart"></canvas>
@@ -321,6 +267,28 @@
                     </div>
                     <!-- END: By Age Group -->
                     <!-- BEGIN: By Medical Category-->
+                    @php
+                        $data5 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 4;
+                            }),
+                        );
+                        $data6 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 3;
+                            }),
+                        );
+                        $data7 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 2;
+                            }),
+                        );
+                        $data8 = count(
+                            array_filter($categories, function ($category) {
+                                return $category == 1;
+                            }),
+                        );
+                    @endphp
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
@@ -362,8 +330,8 @@
                         </div>
                     </div>
                     <!-- END: By Medical Category -->
-                    <!-- BEGIN: By By Age Group and Gender Graph -->
-                    <div class="col-span-12 lg:col-span-6 mt-8">
+                    <!-- BEGIN: Ages Report -->
+                    <div class="col-span-12 lg:col-span-12 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Profiles by Gender & Age Group
@@ -388,14 +356,14 @@
                                 </div>
                             </div>
                             <div class="report-chart">
-                                <div class="h-[275px]">
+                                <div class="h-[300px]">
                                     <canvas id="vertical-bar-chart-widget" class="mt-6 -mb-6"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- END: By Age Group and Gender Graph -->
-                    <!-- BEGIN: By Age Group and Gender Chart -->
+                    <!-- END: Ages Report -->
+                    <!-- BEGIN: By Age Group and Gender  -->
                     <!-- Below 13  -->
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
@@ -404,6 +372,18 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $dataM1 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male';
+                                    }),
+                                );
+                                $dataF1 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female';
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data1 == 0)
@@ -448,6 +428,18 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $dataM2 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
+                                    }),
+                                );
+                                $dataF2 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data2 == 0)
@@ -492,6 +484,18 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $dataM3 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
+                                    }),
+                                );
+                                $dataF3 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data3 == 0)
@@ -536,6 +540,18 @@
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">
+                            @php
+                                $dataM4 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male';
+                                    }),
+                                );
+                                $dataF4 = count(
+                                    array_filter($age_genders, function ($age_gender) {
+                                        return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female';
+                                    }),
+                                );
+                            @endphp
                             <div class="mt-3">
                                 <div class="h-[213px]">
                                     @if ($data4 == 0)
@@ -571,7 +587,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END: By Age Group and Gender Chart -->
+                    <!-- END: Client Ages -->
 
                 </div>
             </div>
