@@ -29,16 +29,16 @@
                         $dates[] = Carbon::parse($client_profile->created_at)->format('Ym');
                     }
                     foreach ($client_profiles as $client_profile) {
-                        $ages[] = Carbon::parse($client_profile->birth_date)->age;
+                        $ages[] = ['age' => Carbon::parse($client_profile->birth_date)->age, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
                     }
                     foreach ($client_profiles as $client_profile) {
-                        $categories[] = $client_profile->medical_category_id;
+                        $categories[] = ['category' => $client_profile->medical_category_id, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
                     }
                     foreach ($client_profiles as $client_profile) {
-                        $age_genders[] = ['age' => Carbon::parse($client_profile->birth_date)->age, 'gender' => $client_profile->gender];
+                        $age_genders[] = ['age' => Carbon::parse($client_profile->birth_date)->age, 'gender' => $client_profile->gender, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
                     }
                     foreach ($client_profiles as $client_profile) {
-                        $genders[] = ['gender' => $client_profile->gender];
+                        $genders[] = ['gender' => $client_profile->gender, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
                     }
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -167,95 +167,131 @@
 
                         $data1 = count(
                             array_filter($ages, function ($age) {
-                                return $age < 13;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age['age'] < 13 && $age['date'] == $thisMonth;
                             }),
                         );
                         $data2 = count(
                             array_filter($ages, function ($age) {
-                                return $age >= 13 && $age <= 18;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age['age'] >= 13 && $age['age'] <= 18 && $age['date'] == $thisMonth;
                             }),
                         );
                         $data3 = count(
                             array_filter($ages, function ($age) {
-                                return $age >= 19 && $age <= 60;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age['age'] >= 19 && $age['age'] <= 60 && $age['date'] == $thisMonth;
                             }),
                         );
                         $data4 = count(
                             array_filter($ages, function ($age) {
-                                return $age > 60;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age['age'] > 60 && $age['date'] == $thisMonth;
                             }),
                         );
 
                         $data5 = count(
                             array_filter($categories, function ($category) {
-                                return $category == 4;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $category['category'] == 4 && $category['date'] == $thisMonth;
                             }),
                         );
                         $data6 = count(
                             array_filter($categories, function ($category) {
-                                return $category == 3;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $category['category'] == 3 && $category['date'] == $thisMonth;
                             }),
                         );
                         $data7 = count(
                             array_filter($categories, function ($category) {
-                                return $category == 2;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $category['category'] == 2 && $category['date'] == $thisMonth;
                             }),
                         );
                         $data8 = count(
                             array_filter($categories, function ($category) {
-                                return $category == 1;
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $category['category'] == 1 && $category['date'] == $thisMonth;
                             }),
                         );
 
                         $data9 = count(
                             array_filter($genders, function ($gender) {
-                                return $gender['gender'] == 'Male';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $gender['gender'] == 'Male' && $gender['date'] == $thisMonth;
                             }),
                         );
                         $data10 = count(
                             array_filter($genders, function ($gender) {
-                                return $gender['gender'] == 'Female';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $gender['gender'] == 'Female' && $gender['date'] == $thisMonth;
                             }),
                         );
                         
                         $dataM1 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataF1 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataM2 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataF2 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataM3 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataF3 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataM4 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                         $dataF4 = count(
                             array_filter($age_genders, function ($age_gender) {
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female';
+                                $now = Carbon::now();
+                                $thisMonth = $now->format('Ym');
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
                             }),
                         );
                     @endphp
