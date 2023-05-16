@@ -265,10 +265,10 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
-                            <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                            <!-- <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
                                 <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
                                 <input type="text" class="datepicker form-control sm:w-56 box pl-10">
-                            </div>
+                            </div> -->
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
