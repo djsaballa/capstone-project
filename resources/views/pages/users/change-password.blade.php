@@ -32,7 +32,8 @@
                         <i data-lucide="check-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
                         <div class="text-3xl mt-5">Are you sure?</div>
                         <div class="modal-body">
-                            Are you sure you want to change the password? If yes, please keep a record of the new password for the respective user.                       </div>
+                            Are you sure you want to change the password of this user?
+                        </div>
                         </div>
                         <input type="hidden" id="user-id" value="{{ $user_info->id }}">
                         <input type="hidden" id="employee-id" value="{{ $employee_info->id }}">

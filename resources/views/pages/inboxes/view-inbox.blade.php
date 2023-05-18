@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="w-90 text-slate-500 mt-2 p-5 ">
-                        {{ $inbox_info->content }}
+                        {!! nl2br($inbox_info->content) !!}
                     </div>
                 </div>
             </div>

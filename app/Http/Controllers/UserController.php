@@ -142,8 +142,24 @@ class UserController extends Controller
             $update = $employee_info->update([ 'password' => Hash::make($new_password) ]);
 
             if ($update) {
-                session()->flash('status', 'Password has been successfully changed!');
-                return view('pages.users.list-of-users', compact('users', 'user_info'));
+                $content = '~~~~~~~~~~~~~~~~~~~~~~These are the new credentials of the user you have just edited~~~~~~~~~~~~~~~~~~~~~~ <br> Username: ' . $employee_info->username . '<br> Password: ' . $new_password;
+                $inbox_add = [
+                    'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                    'sender_user_id' => $user_id,
+                    'receiver_user_id' => $user_id,
+                    'content' => $content
+                ];
+        
+                $sendUserInfo = Inbox::create($inbox_add);
+
+                if ($sendUserInfo) {
+                    session()->flash('status', 'Password has been successfully changed!');
+                    return view('pages.users.list-of-users', compact('users', 'user_info'));
+    
+                } else {
+                    session()->flash('error', 'An error has occurred and the password has not been changed.');
+                    return view('pages.users.list-of-users', compact('users', 'user_info'));
+                    }
             } else {
                 session()->flash('error', 'An error has occurred and the password has not been changed.');
                 return view('pages.users.list-of-users', compact('users', 'user_info'));
@@ -250,9 +266,25 @@ class UserController extends Controller
 
         $create = User::create($user_save);
         if ($create) {
-            $request->session()->flash('status', 'User has been successfully added!');
-            
-            return redirect()->route('list_of_users', [$user_id]);
+            $content = '~~~~~~~~~~~~~~~~~~~~~~~These are the credentials of the user you have just created~~~~~~~~~~~~~~~~~~~~~~~ <br> Username: ' . $username . '<br> Password: ' . $password;
+            $inbox_add = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $user_id,
+                'content' => $content
+            ];
+    
+            $sendUserInfo = Inbox::create($inbox_add);
+
+            if ($sendUserInfo) {
+                $request->session()->flash('status', 'User has been successfully added!');
+                return redirect()->route('list_of_users', [$user_id]);
+
+            } else {
+                $request->session()->flash('error', 'User creation was unsuccessful.');
+    
+                return redirect()->route('list_of_users', [$user_id]);
+            }
         } else {
             $request->session()->flash('error', 'User creation was unsuccessful.');
 
