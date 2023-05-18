@@ -34,4 +34,15 @@ class ReportController extends Controller
 
         return $pdf->stream('ADDFI SSIS.pdf');
     }
+    public function generatePDF(){
+
+
+        $data = [
+            // Data to pass to the view
+        ];
+        
+        $pdf = PDF::loadView('pdf.pdf-generate-report', $data);
+        $pdf->setPaper('letter', 'landscape');
+        return $pdf->stream('ADDFI SSIS.pdf');
+    }
 }

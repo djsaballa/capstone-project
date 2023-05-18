@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     // DASHBOARD
     Route::get('/dashboard/{user_id}', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/generate-pdf}', [ReportController::class, 'generatePDF'])->name('generate_pdf');
 
     // INBOX
     Route::get('/inbox/{user_id}', [UserController::class, 'inbox'])->name('inbox');
