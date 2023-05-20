@@ -523,8 +523,9 @@
                     </div>
                     <!-- END: By Brethren and Non-Brethren Chart -->
                     <!-- BEGIN: By Age Group and Gender  -->
+
                         <!-- Below 13  -->
-                        <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
+                        <!-- <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
                                 Profiles by Gender in "Under 13 Year Old" Age Group
@@ -565,9 +566,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                         <!-- 13 to 18  -->
-                    <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
+                    <!-- <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
                                 Profiles by Gender in "13 to 18 Years Old" Age Group
@@ -608,9 +610,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                         <!-- 19 to 60  -->
-                    <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
+                    <!-- <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
                                 Profiles by Gender in "19 to 60 Years Old" Age Group
@@ -651,10 +654,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                         <!-- Over 60  -->
-                    <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
+                    <!-- <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium mr-5">
                                 Profiles by Gender in "Over 60 Years Old" Age Group
@@ -695,7 +698,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                     <!-- END: By Age Group and Gender -->
                 </div>
             </div>
