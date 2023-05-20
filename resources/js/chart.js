@@ -350,4 +350,168 @@ import Chart from "chart.js/auto";
             },
         });
     }
+
+    if ($("#report-pie-chart-gender1").length) {
+        let ctx = $("#report-pie-chart-gender1")[0].getContext("2d");
+        let dataM1 = document.getElementById('dataM1')
+        let dataF1 = document.getElementById('dataF1')
+        let data = [dataF1.value, dataM1.value]
+        let myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [
+                    "Female",
+                    "Male",
+                ],
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [                         
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        hoverBackgroundColor: [
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        borderWidth: 5,
+                        borderColor: $("html").hasClass("dark")
+                            ? colors.darkmode[700]()
+                            : colors.white,
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    }
+
+    if ($("#report-pie-chart-gender2").length) {
+        let ctx = $("#report-pie-chart-gender2")[0].getContext("2d");
+        let dataM2 = document.getElementById('dataM2')
+        let dataF2 = document.getElementById('dataF2')
+        let data = [dataF2.value, dataM2.value]
+        let myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [
+                    "Female",
+                    "Male",
+                ],
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [                         
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        hoverBackgroundColor: [
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        borderWidth: 5,
+                        borderColor: $("html").hasClass("dark")
+                            ? colors.darkmode[700]()
+                            : colors.white,
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    }
+
+    if ($("#report-pie-chart-gender3").length) {
+        let ctx = $("#report-pie-chart-gender3")[0].getContext("2d");
+        let dataM3 = document.getElementById('dataM3')
+        let dataF3 = document.getElementById('dataF3')
+        let data = [dataF3.value, dataM3.value]
+        let myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [
+                    "Female",
+                    "Male",
+                ],
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [                         
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        hoverBackgroundColor: [
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        borderWidth: 5,
+                        borderColor: $("html").hasClass("dark")
+                            ? colors.darkmode[700]()
+                            : colors.white,
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    }
+    
+    if ($("#report-pie-chart-gender4").length) {
+        let ctx = $("#report-pie-chart-gender4")[0].getContext("2d");
+        let dataM4 = document.getElementById('dataM4')
+        let dataF4 = document.getElementById('dataF4')
+        let data = [dataF4.value, dataM4.value]
+        let myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [
+                    "Female",
+                    "Male",
+                ],
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [                         
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        hoverBackgroundColor: [
+                            colors.danger(0.9),
+                            colors.primary(0.9),
+                        ],
+                        borderWidth: 5,
+                        borderColor: $("html").hasClass("dark")
+                            ? colors.darkmode[700]()
+                            : colors.white,
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    }
 })();
