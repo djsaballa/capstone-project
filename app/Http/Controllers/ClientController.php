@@ -402,7 +402,7 @@ class ClientController extends Controller
                 'famComp.*.relationship' => 'required',
                 'famComp.*.educational' => 'required',
                 'famComp.*.occupation' => 'required',
-                'famComp.*.contact' => 'required'
+                'famComp.*.contact' => 'required|numeric'
             ],
             [
                 'famComp.*.name.required' => 'Name is required',
@@ -516,9 +516,9 @@ class ClientController extends Controller
         $request->validate(
             [
                 'contactPerson1' => 'required',
-                'contactPerson1Number' => 'required',
+                'contactPerson1Number' => 'required|numeric',
                 'contactPerson2' => 'required',
-                'contactPerson2Number' => 'required',
+                'contactPerson2Number' => 'required|numeric',
             ],
             [
                 'contactPerson1.required' => 'Name is required',
@@ -656,7 +656,7 @@ class ClientController extends Controller
             'famComp.*.relationship' => 'required',
             'famComp.*.educational' => 'required',
             'famComp.*.occupation' => 'required',
-            'famComp.*.contact' => 'required',
+            'famComp.*.contact' => 'required|numeric',
             'medicalCondition.*.disease' => 'required',
             'medicalCondition.*.medicine' => 'required',
             'medicalCondition.*.dosage' => 'required',
@@ -668,9 +668,9 @@ class ClientController extends Controller
             'philhealth' => 'required',
             'healthCard' => 'required',
             'contactPerson1' => 'required',
-            'contactPerson1Number' => 'required',
+            'contactPerson1Number' => 'required|numeric',
             'contactPerson2' => 'required',
-            'contactPerson2Number' => 'required',
+            'contactPerson2Number' => 'required|numeric',
             'backgroundInfo' => 'required',
             'backgroundInfoAttachments' => 'nullable',
             'actionTaken' => 'required',
