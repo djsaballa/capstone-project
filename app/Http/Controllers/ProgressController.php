@@ -57,7 +57,7 @@ class ProgressController extends Controller
         $request->validate([
             'date' => 'required',
             'name' => 'required',
-            'contactNumber' => 'required',
+            'contactNumber' => 'required|numeric',
             'notes' => 'required',
             'remarks' => 'required',
         ]);

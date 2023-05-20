@@ -10,7 +10,10 @@
         </div>
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
             <div class="col-span-12 lg:col-span-3 2xl:col-span-2">
-                 @if (Session::has('status'))
+                <h2 class="intro-y text-lg font-medium mr-auto mt-2">
+                    Progress Report
+                </h2>
+                @if (Session::has('status'))
                     <div class="alert alert-success text-center text-white">
                         <p>{{ Session::get('status') }}</p>
                     </div>
@@ -18,29 +21,6 @@
                 @if (Session::has('error'))
                     <div class="alert alert-danger">
                         <p>{{ Session::get('error') }}</p>
-                    </div>
-                @endif
-                <h2 class="intro-y text-lg font-medium mr-auto mt-2">
-                    Progress Report
-                </h2>
-                @if (Session::has('status'))
-                    <div class="modal-body p-0">
-                        <div class="p-5 text-center">
-                            <i data-lucide="check-circle-2" class="w-10 h-10 text-success mx-auto mt-3"></i>
-                            <div class="modal-body text-success">
-                                {{ Session::get('status') }}
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if (Session::has('error'))
-                    <div class="modal-body p-0">
-                        <div class="p-5 text-center">
-                            <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
-                            <div class="modal-body text-danger">
-                                {{ Session::get('error') }}
-                            </div>
-                        </div>
                     </div>
                 @endif
                 <div class="col-span-12 lg:col-span-9 2xl:col-span-10">

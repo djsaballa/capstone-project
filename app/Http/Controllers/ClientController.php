@@ -824,7 +824,7 @@ class ClientController extends Controller
             'gender' => 'required',
             'age' => 'required',
             'occupation' => 'required',
-            'baptismDate' => 'required',
+            'baptismDate' => 'nullable',
             'division' => 'required',
             'district' => 'required',
             'locale' => 'required',
