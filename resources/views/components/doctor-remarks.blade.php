@@ -6,7 +6,7 @@
     <label for="update-profile-form-3-tomselected" class="form-label font-medium mt-3" id="update-profile-form-3-ts-label">
       Assigned Doctor:
     </label>
-    @if ($user_info->role_id == 9 || $user_info->role_id == 11)
+    @if ($user_info->role_id == 8 || $user_info->role_id == 11)
       <select class="form-select" name="assignDoctor" aria-label="Default select example">
         @if ($client_profile_info->assigned_doctor_id == null)
           <option selected disabled>Assign a Doctor</option>
@@ -22,7 +22,7 @@
         @if ($client_profile_info->assigned_doctor_id == null)
           <option selected disabled>None</option>
         @else
-          <option value="{{ $client_profile_info->assigned_doctor_id }}">{{ $doctor->getFullName($client_profile_info->assigned_doctor_id) }}</option>
+          <option value="{{ $client_profile_info->assigned_doctor_id }}">{{ $user_info->getFullName($client_profile_info->assigned_doctor_id) }}</option>
         @endif
       </select>
     @endif
@@ -30,7 +30,7 @@
       <label for="update-profile-form-3-tomselected" class="form-label font-medium mt-5" id="update-profile-form-3-ts-label">
         Medical Category:
       </label>
-      @if ($user_info->role_id == 9 || $user_info->role_id == 11)
+      @if ($user_info->role_id == 8 || $user_info->role_id == 11)
         <select class="form-select" name="medicalCategory" aria-label="Default select example">
           @if ($client_profile_info->medical_category_id == null)
             <option selected disabled>Assign a Doctor</option>
@@ -50,7 +50,7 @@
           @endif
         </select>
       @endif
-      @if ($user_info->role_id == 9 || $user_info->role_id == 11)
+      @if ($user_info->role_id == 8 || $user_info->role_id == 11)
         <button class="btn btn-primary w-24 mt-5">Save</button>
       @endif
   </form>

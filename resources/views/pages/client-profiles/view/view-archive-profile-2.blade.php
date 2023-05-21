@@ -23,6 +23,7 @@
                 </div>
             </div>
             <!-- END: File Manager Menu -->
+            @include('components.doctor-remarks')
             @include('components.remarks')
         </div>
      
@@ -33,8 +34,11 @@
                     <h2 class="font-medium text-base mr-auto" id="contact-persons">
                         Contact Persons
                     </h2>
-                    <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
-                        to PDF</button>
+                    <form action="{{route('view_pdf',[$user_info->id, $client_profile_info->id]) }}" method="post" target="__black">
+                        @csrf
+                        <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
+                            to PDF</button>
+                    </form>
                 </div>
                 <div class="p-5">
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -67,35 +71,37 @@
                                 Background Information
                             </h2>
                         </div>
-                        <div class="mt-3">
+                        <div class="m-3">
                             <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
                                 PASYENTE,
                                 PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
                             <textarea id="update-profile-form-5" class="form-control" value="Input text here" disabled>{{ $client_profile_info->background_info }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
-                        <form data-single="true" action="/file-upload" class="dropzone">
-                            <div class="fallback"> <input name="file" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
-                            </div>
-                        </form>
-                        <div class="mt-3">
+                        <label for="update-profile-form-5" class="form-label font-medium m-3 mt-2">File Uploaded: </label>
+                        @if ( !empty($client_profile_info->background_info_attachment) )
+                            <a href="{{ asset('storage/'.$client_profile_info->background_info_attachment) }}" target="_blank" >
+                                <button class="btn btn-primary">
+                                        View Attachment
+                                </button>
+                            </a>
+                        @else
+                            No Uploaded Attachment
+                        @endif
+                        <div class="m-3 mt-10">
                             <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
                                 RENDERED</label>
                             <textarea id="update-profile-form-5" class="form-control" placeholder="Input text here" disabled>{{ $client_profile_info->action_taken }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Uploaded</label>
-                        <form data-single="true" action="/file-upload" class="dropzone" >
-                            <div class="fallback"> <input name="file" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
-                            </div>
-                        </form>
+                        <label for="update-profile-form-5" class="form-label font-medium m-3 mt-2">File Uploaded:</label>
+                        @if ( !empty($client_profile_info->action_taken_attachment) )
+                            <a href="{{ asset('storage/'.$client_profile_info->action_taken_attachment) }}" target="_blank" >
+                                <button class="btn btn-primary">
+                                        View Attachment
+                                </button>
+                            </a>
+                        @else
+                            No Uploaded Attachment
+                        @endif
                         <!-- END FAMILY COMPOSITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
                             <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_archive_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>

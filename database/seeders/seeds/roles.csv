@@ -2,8 +2,8 @@ role,security_level_id
 Locale Secretary,1
 Locale Servant,1
 Locale Deacon,1
-District Servant,2
-Division Servant,3
+Zone Servant,2
+District Servant,3
 Social Worker,3
 KNP,4
 Doctor-Coordinator,4

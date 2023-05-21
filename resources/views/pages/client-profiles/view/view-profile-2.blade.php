@@ -53,8 +53,11 @@
                     <h2 class="font-medium text-base mr-auto" id="contact-persons">
                         Contact Persons
                     </h2>
-                    <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
-                        to PDF</button>
+                    <form action="{{route('view_pdf',[$user_info->id, $client_profile_info->id]) }}" method="post" target="__black">
+                        @csrf
+                        <button class="btn btn-primary shadow-md mr-2"> <i class="w-4 h-4 mr-2" data-lucide="file"></i> Export
+                            to PDF</button>
+                    </form>
                 </div>
                 <div class="p-5">
                     <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -78,9 +81,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- END PERSONAL INFO -->
                     </div>
-                    <!-- START FAMILY COMPOSITION -->
                     <div class="intro-y box lg:mt-5">
                         <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                             <h2 class="font-medium text-base mr-auto" id="personal-info">
@@ -118,7 +119,6 @@
                         @else
                             No Uploaded Attachment
                         @endif
-                        <!-- END FAMILY COMPOSITION -->
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end p-5">
                             <a class="btn btn-secondary w-24 ml-2" href="{{ route('view_client_profile_1', [$user_info->id, $client_profile_info->id]) }}"> Back </a>
                             <a class="btn btn-primary w-100 ml-2" href="{{ route('list_of_client_profiles', $user_info->id) }}"> Return To List </a>

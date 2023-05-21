@@ -26,8 +26,15 @@ class ReportController extends Controller
         $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
         $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
         $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
+        $date = Carbon::now()->format("M. d, Y");
 
-        $data = compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations');
+        if (!empty($client_profile_info->picture)) {
+            $image = public_path('storage/'.$client_profile_info->picture);
+        } else {
+            $image = public_path('dist/images/profile-1.jpg');
+        }
+
+        $data = compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations', 'date', 'image');
 
         $pdf = PDF::loadView('pdf.pdf-view-profile', $data )
         ->setPaper('a4', 'portrait');

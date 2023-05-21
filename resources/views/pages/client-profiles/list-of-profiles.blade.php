@@ -36,6 +36,7 @@
             $security_level = $user_info->getSecurityLevel($user_info->role_id);
         @endphp
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
+
         @if ($security_level  >= 4)
             <label for="regular-form-1" class="form-label">List of Division</label>
             <div class="flex w-full sm:w-auto mr-2">
@@ -109,6 +110,7 @@
                 href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
             </div>
         @endif
+
         </div>
         <!-- END DROPDOWN -->
         <!-- BEGIN: Data List -->

@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-span-12 lg:col-span-9 2xl:col-span-10">
-            <form method="POST" action="{{ route('edit_client_profile_5_next') }}">
+            <form method="POST" action="{{ route('edit_client_profile_5_next') }}" enctype="multipart/form-data">
                 @csrf
                 <input id="user-id" name="userId" value="{{ $user_info->id }}" hidden>
                 <input id="client-profile-id" name="clientProfileId" value="{{$client_profile_info->id }}" hidden>
@@ -40,32 +40,50 @@
 
                         <div class="font-medium text-base">Background Information</div>
                         <div class="mt-3">
-                            <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
-                                PASYENTE,
-                                PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
+                            <label for="update-profile-form-5" class="font-medium text-base form-label">Background Information (Kalagayan ng Pasyente, Pamilya, Finansya, Emosyonal, Physical)</label>
                             <textarea id="background-info" name="backgroundInfo" class="form-control" placeholder="Input text here">{{ $client_profile_info->background_info }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                        <div data-single="true" action="/file-upload" class="dropzone">
-                            <div class="fallback"> <input name="backgroundInfo" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
+                        <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                        <div class="w-52 m-3">
+                            <div
+                                class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-3">
+                                <div class="h-40 relative image-fit mx-auto">
+                                    @if ( !empty($client_profile_info->background_info_attachment) )
+                                        <img src="{{ asset('storage/'.$client_profile_info->background_info_attachment) }}" id="currentPictureBG" alt="Background Info File" style="display:block;">
+                                    @else
+                                        <p class="text-center font-medium pt-20" alt="Background Info File" id="currentPictureBG" style="display:block;">No File Uploaded</p>
+                                    @endif
+                                    <img id="previewBG" src="#" alt="Background Info File" class="rounded-md" style="display:none;">
+                                </div>
+                                <div class="mx-auto cursor-pointer relative mt-5">
+                                    <button type="button" class="btn btn-primary w-full">Change File</button>
+                                    <input type="file" name="pictureBG" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage1(event)">
+                                    <input type="hidden" name="pictureBGBackup" value="{{ $client_profile_info->picture ?? null }}">
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <label for="update-profile-form-5" class="form-label">ACTION TAKEN/ SERVICES
-                                RENDERED</label>
+
+                        <div class="m-3 mt-10">
+                            <label for="update-profile-form-5" class="font-medium text-base form-label mt-10">Action Taken/ Services Rendered</label>
                             <textarea id="action-taken" name="actionTaken" class="form-control" placeholder="Input text here">{{ $client_profile_info->action_taken }}</textarea>
                         </div>
-                        <label for="update-profile-form-5" class="form-label mt-10">File Upload</label>
-                        <div data-single="true" action="/file-upload" class="dropzone">
-                            <div class="fallback"> <input name="file" type="file" /> </div>
-                            <div class="dz-message" data-dz-message>
-                                <div class="text-lg font-medium">Drop files here or click to upload.</div>
-                                <div class="text-slate-500"> This is just a demo dropzone. Selected files are <span
-                                        class="font-medium">not</span> actually uploaded. </div>
+                        <label for="update-profile-form-5" class="font-medium form-label m-3 mt-2">File Uploaded:</label>
+                        <div class="w-52 m-3">
+                            <div
+                                class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-3">
+                                <div class="h-40 relative image-fit mx-auto">
+                                    @if ( !empty($client_profile_info->action_taken_attachment) )
+                                        <img src="{{ asset('storage/'.$client_profile_info->action_taken_attachment) }}" id="currentPictureBG" alt="Action Taken File" style="display:block;">
+                                    @else
+                                        <p class="text-center font-medium pt-20" alt="Action Taken File" id="currentPictureAT" style="display:block;">No File Uploaded</p>
+                                    @endif
+                                    <img id="previewAT" src="#" alt="Action Taken File" class="rounded-md" style="display:none;">
+                                </div>
+                                <div class="mx-auto cursor-pointer relative mt-5">
+                                    <button type="button" class="btn btn-primary w-full">Change File</button>
+                                    <input type="file" name="pictureAT" class="w-full h-full top-0 left-0 absolute opacity-0" onchange="previewImage2(event)">
+                                    <input type="hidden" name="pictureATBackup" value="{{ $client_profile_info->picture ?? null }}">
+                                </div>
                             </div>
                         </div>
                         <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 pb-5">
@@ -79,5 +97,35 @@
         </div>
     </div>
     </form>
+    <script>
+        function previewImage1(event) {
+            var input = event.target;
+            var placeholder = document.getElementById('currentPictureBG');
+            var preview = document.getElementById('previewBG');
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                placeholder.style.display = 'none';
+                preview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        function previewImage2(event) {
+            var input = event.target;
+            var placeholder = document.getElementById('currentPictureAT');
+            var preview = document.getElementById('previewAT');
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                placeholder.style.display = 'none';
+                preview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
     <!-- END: Content -->
 @endsection

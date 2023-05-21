@@ -186,13 +186,13 @@ class ClientController extends Controller
                 $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->where('id', $locale_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                 
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_locales', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_locales', 'client_profiles', 'locale_id'));
             } elseif ($security_level_id == 3) {
                 $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('id', $locale_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
             
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'locale_id'));
             } elseif ($security_level_id == 4) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 if ($user_info->role_id == 9) {
@@ -200,12 +200,12 @@ class ClientController extends Controller
                 } else {
                     $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                 }
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'locale_id'));
             } elseif ($security_level_id >= 5) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
 
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'locale_id'));
             }
         } else {
             Auth::guard('web')->logout();
@@ -227,25 +227,25 @@ class ClientController extends Controller
                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                 
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'district_id'));
             } elseif ($security_level_id == 4) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 if ($user_info->role_id == 9) {
                     $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
                     $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                     
-                    return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles'));
+                    return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'district_id'));
                 } else {
                     $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                     $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                 }
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'district_id'));
             } elseif ($security_level_id >= 5) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
             
-                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+                return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'district_id'));
             }
         } else {
             Auth::guard('web')->logout();
@@ -276,7 +276,7 @@ class ClientController extends Controller
             }
             $security_divisions = Division::orderBy('division', 'ASC')->get();
 
-            return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles'));
+            return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'division_id'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();
@@ -1223,16 +1223,43 @@ class ClientController extends Controller
     {
         $request->validate([
             'backgroundInfo' => 'required',
+            'pictureBG' => 'nullable',
             'actionTaken' => 'required',
+            'pictureAT' => 'nullable',
         ]);
-
         $user_id = $request->userId;
         $client_profile_id = $request->clientProfileId;
+
+        $backgroundInfoAttachments = $request->file('pictureBG');
+        $backgroundInfoAttachmentBackUp = $request->pictureBGBackup;
+
+        if ($backgroundInfoAttachments) {
+            $filename1 = $backgroundInfoAttachments->store('public');
+            $background_info_attachment = basename($filename1);
+        } elseif ($backgroundInfoAttachmentBackUp) {
+            $background_info_attachment = $backgroundInfoAttachmentBackUp;
+        } else {
+            $background_info_attachment = null;
+        }
+
+        $actionTakenAttachments = $request->file('pictureAT');
+        $actionTakenAttachmentBackUp = $request->pictureATBackup;
+
+        if ($actionTakenAttachments) {
+            $filename2 = $actionTakenAttachments->store('public');
+            $action_taken_attachment = basename($filename2);
+        } elseif ($actionTakenAttachmentBackUp) {
+            $action_taken_attachment = $actionTakenAttachmentBackUp;
+        } else {
+            $action_taken_attachment = null;
+        }
 
         $client_profile_update =
         [
             'background_info' => $request->backgroundInfo,
+            'background_info_attachment' => $background_info_attachment,
             'action_taken' => $request->actionTaken,
+            'action_taken_attachment' => $action_taken_attachment,
         ];
 
         $client_profile_info = ClientProfile::find($client_profile_id);
@@ -1327,11 +1354,13 @@ class ClientController extends Controller
          if (Auth::user()->id == $user_id) {
              $user_info = User::find($user_id);
              $client_profile_info = ClientProfile::find($client_profile_id);
+             $doctors = User::whereIn('role_id', [8, 9])->get();
+             $medical_categories = MedicalCategory::all();
              $family_compositions = FamilyComposition::where('client_profile_id', '=', $client_profile_id)->get();
              $medical_conditions = MedicalCondition::where('client_profile_id', '=', $client_profile_id)->get();
              $medical_operations = MedicalOperation::where('client_profile_id', '=', $client_profile_id)->get();
      
-             return view('pages.client-profiles.view.view-archive-profile-1', compact('user_info', 'client_profile_info', 'family_compositions', 'medical_conditions', 'medical_operations'));
+             return view('pages.client-profiles.view.view-archive-profile-1', compact('user_info', 'client_profile_info', 'doctors', 'medical_categories', 'family_compositions', 'medical_conditions', 'medical_operations'));
          } else {
              Auth::guard('web')->logout();
              session()->invalidate();
@@ -1342,11 +1371,13 @@ class ClientController extends Controller
  
      public function viewArchiveProfile2($user_id, $client_profile_id)
      {
-         if (Auth::user()->id == $user_id) {
-             $user_info = User::find($user_id);
-             $client_profile_info = ClientProfile::find($client_profile_id);
-     
-             return view('pages.client-profiles.view.view-archive-profile-2', compact('user_info', 'client_profile_info'));
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $doctors = User::whereIn('role_id', [8, 9])->get();
+            $medical_categories = MedicalCategory::all();
+            $client_profile_info = ClientProfile::find($client_profile_id);
+    
+            return view('pages.client-profiles.view.view-archive-profile-2', compact('user_info', 'doctors', 'medical_categories', 'client_profile_info'));
          } else {
              Auth::guard('web')->logout();
              session()->invalidate();
