@@ -143,8 +143,7 @@
                                                     {{ $client_profile_info->locale->getDivisionName($client_profile_info->locale_id) }}
                                                 </option>
                                                 @foreach ($divisions as $division)
-                                                    <option value="{{ $division->id }}">{{ $division->division }}
-                                                    </option>
+                                                    <option value="{{ $division->id }}">{{ $division->division }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -158,9 +157,11 @@
                                                     selected="true">
                                                     {{ $client_profile_info->locale->getDistrictName($client_profile_info->locale_id) }}
                                                 </option>
-                                                @foreach ($districts as $district)
-                                                    <option value="{{ $district->id }}">{{ $district->district }}
-                                                    </option>
+                                                @php
+                                                    $filtered_districts = $districts->where('division_id', $client_profile_info->locale->division->getId())
+                                                @endphp
+                                                @foreach ($filtered_districts as $filtered_district)
+                                                    <option value="{{ $filtered_district->id }}">{{ $filtered_district->district }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -175,8 +176,11 @@
                                                     selected="true">
                                                     {{ $client_profile_info->locale->getLocaleName($client_profile_info->locale_id) }}
                                                 </option>
-                                                @foreach ($locales as $locale)
-                                                    <option value="{{ $locale->id }}">{{ $locale->locale }}</option>
+                                                @php
+                                                    $filtered_locales = $locales->where('district_id', $client_profile_info->locale->district->getId())
+                                                @endphp
+                                                @foreach ($filtered_locales as $filtered_locale)
+                                                    <option value="{{ $filtered_locale->id }}">{{ $filtered_locale->locale }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -214,12 +218,6 @@
                                         <label for="update-profile-form-5" class="form-label">Address</label>
                                         <textarea id="address" name="address" class="form-control" placeholder="Address">{{ $client_profile_info->address }}</textarea>
                                     </div>
-                                </div>
-                                <div class="mt-3">
-                                    <a class="flex items-center mr-3 text-danger" href="javascript:;"
-                                        data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i
-                                            data-lucide="trash" class="w-4 h-4 mr-1"></i>
-                                        Archive Profile </a>
                                 </div>
                                 <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5 ">
                                     <button class="btn btn-primary w-24 ml-2">Next</button>

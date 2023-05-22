@@ -231,10 +231,10 @@ class ClientController extends Controller
             } elseif ($security_level_id == 4) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 if ($user_info->role_id == 9) {
-                    $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('district_id', $district_id)->pluck('id');
+                    $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                     $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
                     
-                    return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'district_id'));
+                    return view(('pages.client-profiles.list-of-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'district_id'));
                 } else {
                     $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                     $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->where('status', 'Active')->orderBy('created_at', 'DESC')->paginate(10);
@@ -1465,7 +1465,7 @@ class ClientController extends Controller
                 $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_user_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
                 
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_locales', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_locales', 'client_profiles', 'client_profiles_total', 'locale_id'));
             } elseif ($security_level_id == 3) {
                 $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
                 $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->where('id', $locale_id)->pluck('id');
@@ -1473,7 +1473,7 @@ class ClientController extends Controller
                 $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_user_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
             
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total', 'locale_id'));
             } elseif ($security_level_id == 4) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 if ($user_info->role_id == 9) {
@@ -1483,13 +1483,13 @@ class ClientController extends Controller
                     $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                     $client_profiles = ClientProfile::where('locale_id', $locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
                 }
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total', 'locale_id'));
             } elseif ($security_level_id >= 5) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::where('locale_id', $locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
 
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total', 'locale_id'));
             }
         } else {
             Auth::guard('web')->logout();
@@ -1513,7 +1513,7 @@ class ClientController extends Controller
                 $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_user_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
                 
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total', 'district_id'));
             } elseif ($security_level_id == 4) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 if ($user_info->role_id == 9) {
@@ -1521,20 +1521,20 @@ class ClientController extends Controller
                     $client_profiles_total = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                     $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
                     
-                    return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total'));
+                    return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_districts', 'client_profiles', 'client_profiles_total', 'district_id'));
                 } else {
                     $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                     $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                     $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
                 }
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total', 'district_id'));
             } elseif ($security_level_id >= 5) {
                 $security_divisions = Division::orderBy('division', 'ASC')->get();
                 $filtered_locale_id = Locale::where('district_id', $district_id)->pluck('id');
                 $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->orderBy('updated_at', 'DESC')->paginate(10);
             
-                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total'));
+                return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total', 'district_id'));
             }
         } else {
             Auth::guard('web')->logout();
@@ -1568,7 +1568,7 @@ class ClientController extends Controller
             }
             $security_divisions = Division::orderBy('division', 'ASC')->get();
 
-            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total'));
+            return view(('pages.client-profiles.list-of-archive-profiles'), compact('user_info', 'security_divisions', 'client_profiles', 'client_profiles_total', 'division_id'));
         } else {
             Auth::guard('web')->logout();
             session()->invalidate();

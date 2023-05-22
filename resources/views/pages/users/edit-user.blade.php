@@ -67,8 +67,8 @@
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">Division</label>
-                                <select id="division-filter" name="division" data-search="true"
-                                    class="w-full form-control" tabindex="-1" onchange="loadDistricts( {{ $districts_json }} )">
+                                <select id="division-filter-3" name="division" data-search="true"
+                                    class="w-full form-control" tabindex="-1" onchange="loadDistricts3( {{ $districts_json }} )">
                                     @if (!empty($employee_info->division_id))
                                         <option value="{{ $employee_info->division_id }}" selected="true">
                                             {{ $employee_info->getDivisionName($employee_info->division_id) }}
@@ -86,41 +86,40 @@
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">District</label>
-                                <select id="district-filter" name="district" data-search="true"
-                                    class="w-full form-control" tabindex="-1" onchange="loadLocales( {{ $locales_json }} )">
                                     @if (!empty($employee_info->district_id))
-                                        <option value="{{ $employee_info->district_id }}" selected="true">
-                                            {{ $employee_info->getDistrictName($employee_info->district_id) }}
-                                        </option>
+                                        @php
+                                            $filtered_districts = $districts->where('division_id', $employee_info->division_id)
+                                        @endphp
+                                        <select id="district-filter-3" name="district" data-search="true" class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )">
+                                            <option value="{{ $employee_info->district_id }}" selected="true">{{ $employee_info->getDistrictName($employee_info->district_id) }}</option>
+                                        @foreach ($filtered_districts as $filtered_district)
+                                            <option value="{{ $filtered_district->id }}">{{ $filtered_district->district }}</option>
+                                        @endforeach
                                     @else
-                                        <option value="Select District" selected="true" disabled>
-                                            Select District</option>
+                                        <select id="district-filter-3" name="district" data-search="true" class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )" disabled>
+                                            <option value="Select District" selected="true" disabled>Select District</option>
                                     @endif
-                                    @foreach ($districts as $district)
-                                        <option value="{{ $district->id }}">{{ $district->district }}
-                                        </option>
-                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="mt-3">
                                 <label for="update-profile-form-3-tomselected" class="form-label"
                                     id="update-profile-form-3-ts-label">Locale</label>
-                                <select id="locale-filter" name="locale" data-search="true"
-                                    class="w-full form-control" tabindex="-1">
                                     @if (!empty($employee_info->locale_id))
-                                        <option value="{{ $employee_info->locale_id }}" selected="true">
-                                            {{ $employee_info->getLocaleName($employee_info->locale_id) }}
-                                        </option>
+                                    @php
+                                        $filtered_locales = $locales->where('district_id', $employee_info->district_id)
+                                    @endphp
+                                        <select id="locale-filter-3" name="locale" data-search="true" class="w-full form-control" tabindex="-1">
+                                            <option value="{{ $employee_info->locale_id }}" selected="true">
+                                                {{ $employee_info->getLocaleName($employee_info->locale_id) }}
+                                            </option>
+                                        @foreach ($filtered_locales as $filtered_locale)
+                                            <option value="{{ $filtered_locale->id }}">{{ $filtered_locale->locale }}</option>
+                                        @endforeach
                                     @else
-                                        <option value="Select Locale" selected="true" disabled> Select
-                                            Locale</option>
+                                        <select id="locale-filter-3" name="locale" data-search="true" class="w-full form-control" tabindex="-1" disbaled>
+                                            <option value="Select Locale" selected="true" disabled> Select Locale</option>
                                     @endif
-                                    @foreach ($locales as $locale)
-                                        <option value="{{ $locale->id }}">
-                                            {{ $locale->locale }}
-                                        </option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="mt-3">
