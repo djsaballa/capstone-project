@@ -253,18 +253,7 @@
                     @if ($security_level  == 3)
                         <label for="regular-form-1" class="form-label">List of District</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            @if (isset($division_id))
-                                <select class="form-select box ml-2" id="district-filter-2"
-                                    name="district-filter-2" onchange="loadLocales2( {{ $locales_json }} )">
-                                    @php
-                                        $list_districts = $districts->where('division_id', $division_id);
-                                    @endphp
-                                        <option value="" disabled selected>Select District</option>
-                                        @foreach ($list_districts as $list_district)
-                                            <option value="{{ $list_district->id }}">{{ $list_district->district }}</option>
-                                        @endforeach
-                                </select>
-                            @elseif (isset($district_id))
+                            @if (isset($district_id))
                                 <select class="form-select box ml-2" id="district-filter-2"
                                     name="district-filter-2" onchange="loadLocales2( {{ $locales_json }} )">
                                     @php
@@ -338,17 +327,7 @@
                     @if ($security_level  == 2)
                         <label for="regular-form-1" class="form-label">List of Locale</label>
                         <div class="flex w-full sm:w-auto mr-2">
-                            @if (isset($district_id))
-                                <select class="form-select box ml-2" id="locale-filter-1" name="locale-filter-1">
-                                    @php
-                                        $list_locales = $locales->where('district_id', $district_id);
-                                    @endphp
-                                        <option value="" disabled selected>Select Locale</option>
-                                        @foreach ($list_locales as $list_locale)
-                                            <option value="{{ $list_locale->id }}">{{ $list_locale->locale }}</option>
-                                        @endforeach
-                                </select>
-                            @elseif (isset($locale_id))
+                            @if (isset($locale_id))
                                 <select class="form-select box ml-2" id="locale-filter-1" name="locale-filter-1">
                                     @php
                                         $selected_locale3 = $locales->find($locale_id);
