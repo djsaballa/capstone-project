@@ -142,7 +142,13 @@ class UserController extends Controller
             $update = $employee_info->update([ 'password' => Hash::make($new_password) ]);
 
             if ($update) {
-                $content = '~~~~~~~~~~~~~~~~~~~~~~These are the new credentials of the user you have just edited~~~~~~~~~~~~~~~~~~~~~~ <br> Username: ' . $employee_info->username . '<br> Password: ' . $new_password;
+                $content =
+                "
+                    ~~~~~~~~~~~~~~~~~~~~~~These are the new credentials of the user you have just edited~~~~~~~~~~~~~~~~~~~~~~
+                    
+                    Username: " . $employee_info->username . "
+                    Password: " . $new_password . "
+                ";
                 $inbox_add = [
                     'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                     'sender_user_id' => $user_id,
@@ -266,7 +272,13 @@ class UserController extends Controller
 
         $create = User::create($user_save);
         if ($create) {
-            $content = '~~~~~~~~~~~~~~~~~~~~~~~These are the credentials of the user you have just created~~~~~~~~~~~~~~~~~~~~~~~ <br> Username: ' . $username . '<br> Password: ' . $password;
+            $content =
+                "
+                    ~~~~~~~~~~~~~~~~~~~~~~~These are the credentials of the user you have just created~~~~~~~~~~~~~~~~~~~~~~~
+
+                    Username: " . $username . "
+                    Password: " . $password . "
+                ";
             $inbox_add = [
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,

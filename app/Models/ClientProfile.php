@@ -112,6 +112,16 @@ class ClientProfile extends Model
 
         return $firstName . " " . $middleName . " " . $lastName;
     }
+
+    public function getLocale($client_profile_id)
+    {
+        $client_profile = ClientProfile::find($client_profile_id);
+        $locale_id = $client_profile->locale_id;
+        $locale_info = Locale::find($locale_id);
+        $locale = $locale_info->locale;
+
+        return $locale;
+    }
     
     public static function getAssignedDoctorInfo($assigned_doctor_id)
     {

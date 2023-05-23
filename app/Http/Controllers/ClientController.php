@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-Use App\Http\Controllers\SempahoreController;
+use App\Http\Controllers\SempahoreController;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Locale;
@@ -17,6 +17,7 @@ use App\Models\MedicalCondition;
 use App\Models\MedicalOperation;
 use App\Models\MedicalCategory;
 use App\Models\History;
+use App\Models\Inbox;
 use App\Models\TempClientProfile;
 use Carbon\Carbon;
 
@@ -116,7 +117,6 @@ class ClientController extends Controller
         ]);
 
         $user_id = $request->userId;
-        $user_info = User::find($user_id);
         $client_profile_id = $request->clientProfileId;
         $client_profile_info = ClientProfile::find($client_profile_id);
 
@@ -129,10 +129,32 @@ class ClientController extends Controller
         $cp_update = $client_profile_info->update($update);
 
         if ($cp_update) {
-            $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-            $request->session()->flash('status', 'Doctor and Medical Category have been successfully saved!');
+            $medical_category = MedicalCategory::find($request->medicalCategory);
+            $medical_category_name = $medical_category->medical_category;
+            $content =
+            "
+                You have been assigned a Client Profile with the following name, locale, and medical category.
 
-            return redirect()->route($previous_route, [$user_id, $client_profile_id]);
+                Name: " . $client_profile_info->getFullName($client_profile_info->id) . "
+                Locale: " . $client_profile_info->getLocale($client_profile_info->id) . "
+                Medical Category: " . $medical_category_name . "
+            ";
+            $inbox_add = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $request->assignDoctor,
+                'content' => $content
+            ];
+            $create = Inbox::create($inbox_add);
+
+            if ($create) {
+                $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+                $request->session()->flash('status', 'Doctor and Medical Category have been successfully saved!');
+    
+                return redirect()->route($previous_route, [$user_id, $client_profile_id]);
+            } else {
+                return back()->withErrors('message', 'An error has occurred, Doctor and Medical were not saved.');
+            }
         } else {
             return back()->withErrors('message', 'An error has occurred, Doctor and Medical were not saved.');
         }
