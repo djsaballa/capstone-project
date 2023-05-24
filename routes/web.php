@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,3 +43,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/user.php';
 require __DIR__ . '/client.php';
 require __DIR__ . '/progress.php';
+require __DIR__ . '/search.php';
