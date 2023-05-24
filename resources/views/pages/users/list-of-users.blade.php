@@ -12,41 +12,43 @@
             <p>{{ Session::get('error') }}</p>
         </div>
     @endif
-    <h2 class="intro-y text-lg font-medium mt-10">
-        List of Users
-    </h2>
-    <div class="grid grid-cols-12 gap-6 mt-5">
-        @if ($user_info->role_id == 10 || $user_info->role_id == 11)
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('add_user', $user_info->id) }}">
-                <button class="btn btn-primary shadow-md mr-2">Add New User</button>
-            </a>
-        </div>
-        @endif
-        <div class="intro-y flex flex-wrap xl:flex mt-5">
+    <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-5">
+        <h2 class="intro-y text-lg font-medium mt-10">
+            List of Users
+        </h2>
+        <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500 ml-auto">
             <form action="{{ route('search_users') }}" method="GET">
                 <input type="hidden" name="userId" value="{{ $user_info->id }}">
-                <input class="form-control mb-2" type="text" name="keyword" placeholder="Search By User's Name...">
-                <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500">
-                    <button class="btn btn-primary w-24 ml-2" type="submit">Search</button>
-                    <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_users', $user_info->id) }}">Reset</a>
-                </div>
+                <input class="form-control py-3 px-4 w-full lg:w-64 box pr-10" type="text" name="keyword"
+                    id="search-input" placeholder="Search By User's Name...">
+                <a class="btn btn-secondary w-24 ml-2" href="{{ route('list_of_users', $user_info->id) }}">Reset</a>
             </form>
         </div>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        @if ($user_info->role_id == 10 || $user_info->role_id == 11)
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+                <a href="{{ route('add_user', $user_info->id) }}">
+                    <button class="btn btn-primary shadow-md mr-2">Add New User</button>
+                </a>
+            </div>
+        @endif
+
         <!-- BEGIN: Users Layout -->
         @foreach ($users as $user)
             <div class="intro-y col-span-12 md:col-span-6">
                 <div class="box">
                     <div class="flex flex-col lg:flex-row items-center p-5">
                         <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        @if ( !empty($user->picture) )
-                            <img src="{{ asset('storage/'.$user->picture) }}" class="rounded-full" alt="User Image">
-                        @else
-                            <img alt="User Image" class="rounded-full" src=" {{ asset('dist/images/profile-1.jpg')}}">
-                        @endif
+                            @if (!empty($user->picture))
+                                <img src="{{ asset('storage/' . $user->picture) }}" class="rounded-full" alt="User Image">
+                            @else
+                                <img alt="User Image" class="rounded-full" src=" {{ asset('dist/images/profile-1.jpg') }}">
+                            @endif
                         </div>
                         <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                            <a href="{{ route('view_user', [$user_info->id, $user->id]) }}" class="font-medium">{{ $user->getLFName($user->id) }}</a>
+                            <a href="{{ route('view_user', [$user_info->id, $user->id]) }}"
+                                class="font-medium">{{ $user->getLFName($user->id) }}</a>
                             @if ($user->getSecurityLevel($user->role_id) == 1)
                                 <div class="text-slate-500 text-xs mt-0.5">
                                     {{ $user->getLocaleName($user->locale_id) . ' - ' . $user->getRoleName($user->role_id) }}
@@ -66,23 +68,22 @@
                         </div>
                         <div class="flex mt-4 lg:mt-0">
                             @if ($user_info->role_id == 10 || $user_info->role_id == 11)
-                            <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
-                                <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
-                            </a>
+                                <a href="{{ route('edit_user', [$user_info->id, $user->id]) }}">
+                                    <button class="btn btn-primary py-1 px-2 mr-2">Edit</button>
+                                </a>
                             @endif
                             <a href="{{ route('view_user', [$user_info->id, $user->id]) }}">
                                 <button class="btn btn-secondary py-1 px-2 mr-2">View</button>
                             </a>
                             <a href="javascript:;">
-                                <button class="btn btn-danger py-1 px-2 mr-2"
-                                    onclick="getUserId( {{ $user->id }} )"
+                                <button class="btn btn-danger py-1 px-2 mr-2" onclick="getUserId( {{ $user->id }} )"
                                     data-tw-toggle="modal" data-tw-target="#archive-confirmation-modal">
                                     Archive</button>
                             </a>
                             @if ($user_info->role_id == 10 || $user_info->role_id == 11)
-                            <a href="{{ route('change_password', [$user_info->id, $user->id]) }}">
-                                <button class="btn btn-warning py-1 px-2 mr-2">Change Password</button>
-                            </a>
+                                <a href="{{ route('change_password', [$user_info->id, $user->id]) }}">
+                                    <button class="btn btn-warning py-1 px-2 mr-2">Change Password</button>
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -121,8 +122,7 @@
                             <button type="button" class="btn btn-outline-secondary w-24 mr-1"
                                 data-tw-dismiss="modal">Cancel</button>
                             <button type="button" id="archive-client-profile"
-                                onclick="archiveUser( {{ $user_info->id }} )"
-                                class="btn btn-danger w-24">Archive</button>
+                                onclick="archiveUser( {{ $user_info->id }} )" class="btn btn-danger w-24">Archive</button>
                         </div>
                     </div>
                 </div>
@@ -139,4 +139,4 @@
                 window.location.href = "/archive-user/" + user_id + "/" + employee_id;
             }
         </script>
-@endsection
+    @endsection

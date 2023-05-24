@@ -1,15 +1,10 @@
 @extends('layout.master')
 
 @section('content')
-    <div class="flex items-center mt-8">
-        <h2 class="intro-y text-lg font-medium mr-auto">
-            View User
-        </h2>
-    </div>
     <!-- BEGIN: Wizard Layout -->
     <div class="intro-y box lg:mt-5">
         <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-            <h2 class="font-medium text-base mr-auto">
+            <h2 class="intro-y text-lg font-medium mr-auto">
                 View User Profile
             </h2>
         </div>

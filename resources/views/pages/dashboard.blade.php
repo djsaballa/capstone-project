@@ -30,7 +30,7 @@
                 @endphp
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
+                        <div class="report-box">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="users" class="report-box__icon text-success"></i>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
+                        <div class="report-box ">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="archive" class="report-box__icon text-success"></i>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
+                        <div class="report-box ">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="user-check" class="report-box__icon text-success"></i>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                        <div class="report-box zoom-in">
+                        <div class="report-box ">
                             <div class="box p-5">
                                 <div class="flex">
                                     <i data-lucide="user-x" class="report-box__icon text-success"></i>
@@ -77,7 +77,7 @@
                     <div class="col-span-12 mt-8">
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box ">
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-lucide="refresh-cw" class="report-box__icon text-primary"></i>
@@ -88,10 +88,10 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box ">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="file-x" class="report-box__icon text-pending"></i>
+                                            <i data-lucide="x-circle" class="report-box__icon text-pending"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($terminated) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Terminated Cases</div>
@@ -99,10 +99,10 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box ">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="skull" class="report-box__icon text-warning"></i>
+                                            <i data-lucide="alert-circle" class="report-box__icon text-warning"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($expired) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Expired Cases</div>
@@ -110,10 +110,10 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box ">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <i data-lucide="x-circle" class="report-box__icon text-danger"></i>
+                                            <i data-lucide="check-circle-2" class="report-box__icon text-danger"></i>
                                         </div>
                                         <div class="text-3xl font-medium leading-8 mt-6">{{ count($closed) }}</div>
                                         <div class="text-base text-slate-500 mt-1">Closed Cases</div>
