@@ -355,7 +355,7 @@
                     <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500 ml-auto">
                         <form action="{{ route('search_archive_profiles') }}" method="GET"> 
                             <input type="hidden" name="userId" value="{{ $user_info->id }}">
-                            <input class="form-control py-3 px-4 w-full lg:w-64 box pr-10" type="text" name="keyword" id="search-input" placeholder="Search By Archived Client's Name...">
+                            <input class="form-control py-3 px-4 w-full lg:w-80 box pr-10" type="text" name="keyword" id="search-input" placeholder="Search By Archived Client's Name...">
                         </form>
                     </div>
                     </div>

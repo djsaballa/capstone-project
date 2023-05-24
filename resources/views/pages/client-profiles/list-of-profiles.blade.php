@@ -18,13 +18,13 @@
     <div class="w-full xl:w-auto flex items-center mt-3 xl:mt-0 text-slate-500 ml-auto">
         <form action="{{ route('search_client_profiles') }}" method="GET"> 
             <input type="hidden" name="userId" value="{{ $user_info->id }}">
-            <input class="form-control py-3 px-4 w-full lg:w-64 box pr-10" type="text" name="keyword" id="search-input" placeholder="Search By Client's Name...">
+            <input class="form-control py-3 px-4 w-full lg:w-80 box pr-10" type="text" name="keyword" id="search-input" placeholder="Search By Client's Name...">
             <a class="btn btn-secondary w-24 ml-2"
                 href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
         </form>
     </div>  
     </div>
-    <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+    <div class="w-full sm:w-auto mt-5">
         @if ($user_info->role_id == 1 || $user_info->role_id == 10 || $user_info->role_id == 11)
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
                 <a href="{{ route('add_client_profile_privacy', $user_info->id) }}">
