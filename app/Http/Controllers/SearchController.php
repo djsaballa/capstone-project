@@ -23,6 +23,14 @@ use Carbon\Carbon;
 
 class SearchController extends Controller
 {
+    private function isFullName($keyword)
+    {
+        $terms = explode(' ', $keyword);
+        $terms = array_filter($terms);
+
+        return count($terms) > 1;
+    }
+
     
     public function searchClientProfiles(Request $request)
     {
@@ -38,9 +46,13 @@ class SearchController extends Controller
 
         if ($security_level_id == 1) {
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->where('locale_id', $user_info->locale_id)
@@ -52,9 +64,13 @@ class SearchController extends Controller
             $security_locales = Locale::where('district_id', $user_info->district_id)->orderBy('locale', 'ASC')->get();
             $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->whereIn('locale_id', $filtered_locale_id)
@@ -66,9 +82,13 @@ class SearchController extends Controller
             $security_districts = District::where('division_id', $user_info->division_id)->orderBy('district', 'ASC')->get();
             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->whereIn('locale_id', $filtered_locale_id)
@@ -81,9 +101,13 @@ class SearchController extends Controller
 
             if ($user_info->role_id == 9) {
                 $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        if ($this->isFullName($keyword)) {
+                                            $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                        } else {
+                                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        }
                                     })
                                     ->orderBy('created_at', 'DESC')
                                     ->where('assigned_doctor_id', $user_id)
@@ -91,9 +115,13 @@ class SearchController extends Controller
                                     ->paginate(10);
             } else {
                 $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        if ($this->isFullName($keyword)) {
+                                            $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                        } else {
+                                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        }
                                     })
                                     ->orderBy('created_at', 'DESC')
                                     ->where('status', 'Active')
@@ -104,9 +132,13 @@ class SearchController extends Controller
             $security_divisions = Division::orderBy('division', 'ASC')->get();
 
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->where('status', 'Active')
@@ -130,9 +162,13 @@ class SearchController extends Controller
         if ($security_level_id == 1) {
             $client_profiles_total = ClientProfile::where('locale_id', $user_info->locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->where('locale_id', $user_info->locale_id)
@@ -145,9 +181,13 @@ class SearchController extends Controller
             $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
             $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')->whereIn('locale_id', $filtered_locale_id)
                                 ->whereIn('status', ['Terminated', 'Closed', 'Expired'])
@@ -159,9 +199,13 @@ class SearchController extends Controller
             $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
             $client_profiles_total = ClientProfile::whereIn('locale_id', $filtered_locale_id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->whereIn('locale_id', $filtered_locale_id)
@@ -175,9 +219,13 @@ class SearchController extends Controller
             if ($user_info->role_id == 9) {
                 $client_profiles_total = ClientProfile::where('assigned_doctor_id', $user_info->id)->whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        if ($this->isFullName($keyword)) {
+                                            $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                        } else {
+                                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        }
                                     })
                                     ->orderBy('created_at', 'DESC')
                                     ->where('assigned_doctor_id', $user_id)
@@ -186,9 +234,13 @@ class SearchController extends Controller
             } else {
                 $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
                 $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        if ($this->isFullName($keyword)) {
+                                            $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                        } else {
+                                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                        }
                                     })
                                     ->orderBy('created_at', 'DESC')->whereIn('status', ['Terminated', 'Closed', 'Expired'])
                                     ->paginate(10);
@@ -198,9 +250,13 @@ class SearchController extends Controller
             $security_divisions = Division::orderBy('division', 'ASC')->get();
             $client_profiles_total = ClientProfile::whereIn('status', ['Terminated', 'Closed', 'Expired'])->get();
             $client_profiles = ClientProfile::where(function ($query) use ($keyword) {
-                                    $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    if ($this->isFullName($keyword)) {
+                                        $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                                    } else {
+                                        $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                                    }
                                 })
                                 ->orderBy('created_at', 'DESC')
                                 ->whereIn('status', ['Terminated', 'Closed', 'Expired'])
@@ -220,9 +276,13 @@ class SearchController extends Controller
         $user_info = User::find($user_id);
 
         $users = User::where(function ($query) use ($keyword) {
-                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                            if ($this->isFullName($keyword)) {
+                                $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                            } else {
+                                $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                            }
                         })
                         ->where('status', 'Active')
                         ->orderBy('role_id', 'ASC')
@@ -244,15 +304,19 @@ class SearchController extends Controller
         $user_info = User::find($user_id);
 
         $users = User::where(function ($query) use ($keyword) {
-                            $query->where('first_name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                            if ($this->isFullName($keyword)) {
+                                $query->whereRaw("CONCAT(first_name, ' ', middle_name, ' ', last_name) LIKE ?", ['%' . $keyword . '%']);
+                            } else {
+                                $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('middle_name', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
+                            }
                         })
                         ->where('status', 'Archive')
                         ->orderBy('updated_at', 'DESC')
                         ->orderBy('last_name', 'ASC')
                         ->paginate(10);
-                        
+
         return view('pages.users.list-of-archive-users', compact('users', 'user_info'));
        
     }
