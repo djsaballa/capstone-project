@@ -290,7 +290,7 @@
                     <a class="btn btn-secondary w-24 ml-2"
                         href="{{ route('list_of_client_profiles', $user_info->id) }}">Reset</a>
                 </div>
-            @endif          
+            @endif
         </div>
         
         <!-- END DROPDOWN -->

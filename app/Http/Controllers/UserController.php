@@ -97,7 +97,39 @@ class UserController extends Controller
             session()->regenerateToken();
             return redirect('/');
         }
-        
+    }
+
+    public function dashboardYM($user_id, $yearmonth)
+    {
+        if (Auth::user()->id == $user_id) {
+            $user_info = User::find($user_id);
+            $security_level_id = $user_info->getSecurityLevel($user_info->role_id);
+    
+            if ($security_level_id == 1) {
+                $client_profiles = ClientProfile::where('locale_id', $user_info->locale_id)->orderBy('created_at', 'DESC')->get();
+            } elseif ($security_level_id == 2) {
+                $filtered_locale_id = Locale::where('district_id', $user_info->district_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->orderBy('created_at', 'DESC')->get();
+            } elseif ($security_level_id == 3) {
+                $filtered_locale_id = Locale::where('division_id', $user_info->division_id)->pluck('id');
+                $client_profiles = ClientProfile::whereIn('locale_id', $filtered_locale_id)->orderBy('created_at', 'DESC')->get();
+            } elseif ($security_level_id == 4) {
+                if ($user_info->role_id == 9) {
+                    $client_profiles = ClientProfile::where('assigned_doctor_id', $user_info->id)->orderBy('created_at', 'DESC')->get();
+                } else {
+                    $client_profiles = ClientProfile::orderBy('created_at', 'DESC')->get();
+                }
+            } elseif ($security_level_id >= 5) {
+                $client_profiles = ClientProfile::orderBy('created_at', 'DESC')->get();
+            }
+
+            return view('pages.dashboard', compact('user_info', 'client_profiles', 'yearmonth'));
+        } else {
+            Auth::guard('web')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+            return redirect('/');
+        }
     }
 
     // LIST OF USERS ---------------------------------------------------------------------------------------------------
@@ -145,7 +177,7 @@ class UserController extends Controller
                 $content =
                 "
                     ~~~~~~~~~~~~~~~~~~~~~~These are the new credentials of the user you have just edited~~~~~~~~~~~~~~~~~~~~~~
-                    
+
                     Username: " . $employee_info->username . "
                     Password: " . $new_password . "
                 ";

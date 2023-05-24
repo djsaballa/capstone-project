@@ -139,18 +139,36 @@
                         foreach ($client_profiles as $client_profile) {
                             $genders[] = ['gender' => $client_profile->gender, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
                         }
+                        foreach ($client_profiles as $client_profile) {
+                            $brethrens[] = ['baptism_date' => $client_profile->baptism_date, 'date' => Carbon::parse($client_profile->created_at)->format('Ym')];
+                        }
+
+                        if (isset($yearmonth)) {
+                            $year_month = $yearmonth;
+                        } else {
+                            $year_month = null;
+                        }
 
                         $thisMonthProfiles = count(
-                            array_filter($dates, function ($date) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
+                            array_filter($dates, function ($date) use ($year_month) {
+                                if (isset($year_month)) {
+                                    $thisMonth = $year_month;
+                                } else {
+                                    $now = Carbon::now();
+                                    $thisMonth = $now->format('Ym');
+                                }
                                 return $date == $thisMonth;
                             }),
                         );
                         
-                        $now = Carbon::now();
-                        $thisYear = $now->format('Y');
-                        $thisMonth = $now->format('m');
+                        if (isset($year_month)) {
+                            $thisYear = substr($year_month, 0, 4);
+                            $thisMonth = substr($year_month, 4, 2);
+                        } else {
+                            $now = Carbon::now();
+                            $thisYear = $now->format('Y');
+                            $thisMonth = $now->format('m');
+                        }
                         $daysInMonth = Carbon::createFromDate($thisYear, $thisMonth)->daysInMonth;
                         
                         foreach ($client_profiles as $client_profile) {
@@ -169,132 +187,126 @@
                         $sanitizedString = htmlspecialchars(implode(', ', $rowsByDay));
 
                         $data1 = count(
-                            array_filter($ages, function ($age) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age['age'] < 13 && $age['date'] == $thisMonth;
+                            array_filter($ages, function ($age) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age['age'] < 13 && $age['date'] == $thisYearMonth;
                             }),
                         );
                         $data2 = count(
-                            array_filter($ages, function ($age) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age['age'] >= 13 && $age['age'] <= 18 && $age['date'] == $thisMonth;
+                            array_filter($ages, function ($age) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age['age'] >= 13 && $age['age'] <= 18 && $age['date'] == $thisYearMonth;
                             }),
                         );
                         $data3 = count(
-                            array_filter($ages, function ($age) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age['age'] >= 19 && $age['age'] <= 60 && $age['date'] == $thisMonth;
+                            array_filter($ages, function ($age) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age['age'] >= 19 && $age['age'] <= 60 && $age['date'] == $thisYearMonth;
                             }),
                         );
                         $data4 = count(
-                            array_filter($ages, function ($age) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age['age'] > 60 && $age['date'] == $thisMonth;
+                            array_filter($ages, function ($age) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age['age'] > 60 && $age['date'] == $thisYearMonth;
                             }),
                         );
 
                         $data5 = count(
-                            array_filter($categories, function ($category) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $category['category'] == 4 && $category['date'] == $thisMonth;
+                            array_filter($categories, function ($category) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $category['category'] == 4 && $category['date'] == $thisYearMonth;
                             }),
                         );
                         $data6 = count(
-                            array_filter($categories, function ($category) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $category['category'] == 3 && $category['date'] == $thisMonth;
+                            array_filter($categories, function ($category) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $category['category'] == 3 && $category['date'] == $thisYearMonth;
                             }),
                         );
                         $data7 = count(
-                            array_filter($categories, function ($category) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $category['category'] == 2 && $category['date'] == $thisMonth;
+                            array_filter($categories, function ($category) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $category['category'] == 2 && $category['date'] == $thisYearMonth;
                             }),
                         );
                         $data8 = count(
-                            array_filter($categories, function ($category) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $category['category'] == 1 && $category['date'] == $thisMonth;
+                            array_filter($categories, function ($category) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $category['category'] == 1 && $category['date'] == $thisYearMonth;
                             }),
                         );
 
                         $data9 = count(
-                            array_filter($genders, function ($gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $gender['gender'] == 'Male' && $gender['date'] == $thisMonth;
+                            array_filter($genders, function ($gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $gender['gender'] == 'Male' && $gender['date'] == $thisYearMonth;
                             }),
                         );
                         $data10 = count(
-                            array_filter($genders, function ($gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $gender['gender'] == 'Female' && $gender['date'] == $thisMonth;
+                            array_filter($genders, function ($gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $gender['gender'] == 'Female' && $gender['date'] == $thisYearMonth;
                             }),
                         );
                         
                         $dataM1 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataF1 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] < 13 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataM2 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataF2 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] >= 13 && $age_gender['age'] <= 18 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataM3 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataF3 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] >= 19 && $age_gender['age'] <= 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataM4 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Male' && $age_gender['date'] == $thisYearMonth;
                             }),
                         );
                         $dataF4 = count(
-                            array_filter($age_genders, function ($age_gender) {
-                                $now = Carbon::now();
-                                $thisMonth = $now->format('Ym');
-                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisMonth;
+                            array_filter($age_genders, function ($age_gender) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return $age_gender['age'] > 60 && $age_gender['gender'] == 'Female' && $age_gender['date'] == $thisYearMonth;
+                            }),
+                        );
+                        $data11 = count(
+                            array_filter($brethrens, function ($brethren) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return !is_null($brethren['baptism_date'])  &&  $brethren['date'] == $thisYearMonth;
+                            }),
+                        );
+                        $data12 = count(
+                            array_filter($brethrens, function ($brethren) use ($year_month) {
+                                $thisYearMonth = isset($year_month) ? $year_month : Carbon::now()->format('Ym');
+                                return is_null($brethren['baptism_date'])  &&  $brethren['date'] == $thisYearMonth;
                             }),
                         );
                     @endphp
@@ -304,10 +316,11 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
-                            <!-- <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
-                                <input type="text" class="datepicker form-control sm:w-56 box pl-10">
-                            </div> -->
+                            <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                                <input type="month" id="datepicker" class="form-control sm:w-56 box pl-10" value="{{ isset($year_month) ? (substr($year_month, 0, 4) . '-' . substr($year_month, 4, 2)) : Carbon::now()->format('Y-m') }}">
+                                <a class="btn btn-secondary w-24 ml-2" href="{{ route('dashboard', $user_info->id) }}">Reset</a>
+                                <input id="user_id" value="{{ $user_info->id }}" hidden>
+                            </div>
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
@@ -318,14 +331,22 @@
                                         <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
                                             {{ $thisMonthProfiles }}
                                         </div>
-                                        <div class="mt-0.5 text-slate-500">This Month</div>
+                                        <div class="mt-0.5 text-slate-500">Profiles</div>
                                     </div>
                                     <div
                                         class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
                                     </div>
                                     <div>
-                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month
-                                            of {{ $now->monthName }}</div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
+                                            @if (isset($year_month))
+                                                @php
+                                                    $monthName = Carbon::createFromFormat('m', $thisMonth)->format('F');
+                                                @endphp
+                                                Month of {{ $monthName }} {{ $thisYear }}
+                                            @else
+                                                Month of {{ $now->monthName }} {{ $now->year }}
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -347,7 +368,13 @@
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">
                                 <div class="h-[213px]">
-                                    <canvas id="report-pie-chart"></canvas>
+                                    @if ($data1 == 0 && $data2 == 0 && $data3 == 0 && $data4 == 0)
+                                        <div class="intro-y text-center pt-20">
+                                            <span class="font-medium text-lg">No Data to Show</span>
+                                        </div>
+                                    @else
+                                        <canvas id="report-pie-chart"></canvas>
+                                    @endif
                                 </div>
                             </div>
                             <input id="data1" value="{{ $data1 }}" hidden>
@@ -357,23 +384,39 @@
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Under 13 Year Old</span> <span
-                                        class="font-medium ml-auto">{{ round(($data1 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Under 13 Year Old</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data1 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                    <span class="truncate">13 - 18 Years Old</span> <span
-                                        class="font-medium ml-auto">{{ round(($data2 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">13 - 18 Years Old</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data2 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">49 - 60 Years Old</span> <span
-                                        class="font-medium ml-auto">{{ round(($data3 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">49 - 60 Years Old</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data3 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                    <span class="truncate">Older 60 Years Old</span> <span
-                                        class="font-medium ml-auto">{{ round(($data4 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Older 60 Years Old</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data4 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -389,7 +432,13 @@
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">
                                 <div class="h-[213px]">
-                                    <canvas id="report-donut-chart"></canvas>
+                                    @if ($data5 == 0 && $data6 == 0 && $data7 == 0 && $data8 == 0)
+                                        <div class="intro-y text-center pt-20">
+                                            <span class="font-medium text-lg">No Data to Show</span>
+                                        </div>
+                                    @else
+                                        <canvas id="report-donut-chart"></canvas>
+                                    @endif
                                 </div>
                             </div>
                             <input id="data5" value="{{ $data5 }}" hidden>
@@ -399,23 +448,39 @@
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Terminal</span> <span
-                                        class="font-medium ml-auto">{{ round(($data5 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Terminal</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data5 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Surgical</span> <span
-                                        class="font-medium ml-auto">{{ round(($data6 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Surgical</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data6 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                    <span class="truncate">Chronic</span> <span
-                                        class="font-medium ml-auto">{{ round(($data7 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Chronic</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data7 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                    <span class="truncate">With Illness</span> <span
-                                        class="font-medium ml-auto">{{ round(($data8 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">With Illness</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data8 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -443,14 +508,22 @@
                                         <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
                                             {{ $thisMonthProfiles }}
                                         </div>
-                                        <div class="mt-0.5 text-slate-500">This Month</div>
+                                        <div class="mt-0.5 text-slate-500">Profiles</div>
                                     </div>
                                     <div
                                         class="w-px h-12 border border-r border-dashed border-slate-200 dark:border-darkmode-300 mx-4 xl:mx-5">
                                     </div>
                                     <div>
-                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">Month
-                                            of {{ $now->monthName }}</div>
+                                        <div class="text-primary dark:text-slate-300 text-lg xl:text-xl font-medium">
+                                            @if (isset($year_month))
+                                                @php
+                                                    $monthName = Carbon::createFromFormat('m', $thisMonth)->format('F');
+                                                @endphp
+                                                Month of {{ $monthName }} {{ $thisYear }}
+                                            @else
+                                                Month of {{ $now->monthName }} {{ $now->year }}
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +545,13 @@
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">
                                 <div class="h-[250px]">
-                                    <canvas id="report-donut-chart-gender"></canvas>
+                                    @if ($data9 == 0 && $data10 == 0)
+                                        <div class="intro-y text-center pt-20">
+                                            <span class="font-medium text-lg">No Data to Show</span>
+                                        </div>
+                                    @else
+                                        <canvas id="report-donut-chart-gender"></canvas>
+                                    @endif
                                 </div>
                             </div>
                             <input id="dataM" value="{{ $data9 }}" hidden>
@@ -480,13 +559,21 @@
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Male</span> <span
-                                        class="font-medium ml-auto">{{ round(($data9 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Male</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data9 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Female</span> <span
-                                        class="font-medium ml-auto">{{ round(($data10 / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Female</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data10 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -502,21 +589,35 @@
                         <div class="intro-y box p-5 mt-5">
                             <div class="mt-3">
                                 <div class="h-[250px]">
-                                    <canvas id="report-pie-chart-member"></canvas>
+                                    @if ($data11 == 0 && $data12 == 0)
+                                        <div class="intro-y text-center pt-20">
+                                            <span class="font-medium text-lg">No Data to Show</span>
+                                        </div>
+                                    @else
+                                        <canvas id="report-pie-chart-member"></canvas>
+                                    @endif
                                 </div>
                             </div>
-                            <input id="data11" value="{{ count($brethren) }}" hidden>
-                            <input id="data12" value="{{ count($non_brethren) }}" hidden>
+                            <input id="data11" value="{{ $data11 }}" hidden>
+                            <input id="data12" value="{{ $data12 }}" hidden>
                             <div class="w-52 sm:w-auto mx-auto mt-8">
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                                    <span class="truncate">Brethren</span> <span
-                                        class="font-medium ml-auto">{{ round((count($brethren) / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Brethren</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data11 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                    <span class="truncate">Non-Brethren</span> <span
-                                        class="font-medium ml-auto">{{ round((count($non_brethren) / count($client_profiles)) * 100) }}%</span>
+                                    <span class="truncate">Non-Brethren</span>
+                                    @if ($thisMonthProfiles == 0)
+                                        <span class="font-medium ml-auto">0%</span>
+                                    @else
+                                        <span class="font-medium ml-auto">{{ round(($data12 / $thisMonthProfiles) * 100) }}%</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -526,4 +627,21 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById("datepicker");
+            const user = document.getElementById("user_id");
+
+            input.addEventListener("change", function() {
+                const selectedDate = input.value;
+
+                const selectedMonth = selectedDate.substr(5, 2);
+                const selectedYear = selectedDate.substr(0, 4);
+
+                const year_month = selectedYear.toString() + selectedMonth.toString();
+                const user_id = user.value;
+                window.location.href = "/dashboard-ym/" + user_id + "/" + year_month;
+            });
+        });
+    </script>
 @endsection

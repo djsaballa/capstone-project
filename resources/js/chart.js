@@ -56,6 +56,7 @@ import Chart from "chart.js/auto";
                         },
                     },
                     y: {
+                        beginAtZero: true,
                         ticks: {
                             font: {
                                 size: 12,

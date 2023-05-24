@@ -18,6 +18,7 @@ import Litepicker from "litepicker";
                 maxYear: null,
                 months: true,
                 years: true,
+                days: false
             },
         };
 
