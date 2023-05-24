@@ -316,11 +316,11 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
-                            <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                            <!-- <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
                                 <input type="month" id="datepicker" class="form-control sm:w-56 box pl-10" value="{{ isset($year_month) ? (substr($year_month, 0, 4) . '-' . substr($year_month, 4, 2)) : Carbon::now()->format('Y-m') }}">
                                 <a class="btn btn-secondary w-24 ml-2" href="{{ route('dashboard', $user_info->id) }}">Reset</a>
                                 <input id="user_id" value="{{ $user_info->id }}" hidden>
-                            </div>
+                            </div> -->
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
