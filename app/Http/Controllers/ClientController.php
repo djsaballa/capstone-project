@@ -176,9 +176,9 @@ class ClientController extends Controller
         if ($user_info->role_id == 2) {
             $update = ['locale_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
         } elseif ($user_info->role_id == 4) {
-            $update = ['district_servant_remark' => $remark];
+            $update = ['zone_servant_remark' => $remark];
         } elseif ($user_info->role_id == 5) {
-            $update = ['division_servant_remark' => $remark];
+            $update = ['district_servant_remark' => $remark];
         } elseif ($user_info->role_id == 6) {
             $update = ['social_worker_recommendation' => $remark];
         }

@@ -43,8 +43,8 @@ return new class extends Migration
             $table->string('action_taken')->nullable();
             $table->binary('action_taken_attachment')->nullable();
             $table->string('locale_servant_remark')->nullable();
+            $table->string('zone_servant_remark')->nullable();
             $table->string('district_servant_remark')->nullable();
-            $table->string('division_servant_remark')->nullable();
             $table->string('social_worker_recommendation')->nullable();
             $table->string('status')->nullable();
             $table->foreignId('user_encoder_id')

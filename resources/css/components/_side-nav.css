@@ -1,5 +1,5 @@
 .side-nav {
-    width: 230px;
+    width: 180px;
     @apply pr-5 pb-16 overflow-x-hidden;
     @include media-breakpoint-down(xl) {
         width: 85px;

@@ -246,7 +246,7 @@
 
         </tr>
         <tr>
-            <td>{{ $client_profile_info->district_servant_remark }}</td>
+            <td>{{ $client_profile_info->zone_servant_remark }}</td>
         </tr>
     </table>
     <table style="margin-top: 2rem">
@@ -255,7 +255,7 @@
 
         </tr>
         <tr>
-            <td>{{ $client_profile_info->division_servant_remark }}</td>
+            <td>{{ $client_profile_info->district_servant_remark }}</td>
 
         </tr>
     </table>
