@@ -316,11 +316,51 @@
                             <h2 class="text-lg font-medium truncate mr-5">
                                 Client Profiles Chart
                             </h2>
-                            <!-- <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                                <input type="month" id="datepicker" class="form-control sm:w-56 box pl-10" value="{{ isset($year_month) ? (substr($year_month, 0, 4) . '-' . substr($year_month, 4, 2)) : Carbon::now()->format('Y-m') }}">
-                                <a class="btn btn-secondary w-24 ml-2" href="{{ route('dashboard', $user_info->id) }}">Reset</a>
+                            <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
+                                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
+                                @php
+                                    if (isset($year_month)) {
+                                        $pickerMonth = substr($year_month, 4, 2);
+                                    } else {
+                                        $now = Carbon::now();
+                                        $pickerMonth = $now->format('m');
+                                    }
+                                @endphp
+                                <select name="monthPicker" id="monthPicker" class="form-control sm:w-28 box pl-10">
+                                    <option value="{{ $pickerMonth }}" selected>{{ date("M", mktime(0, 0, 0, $pickerMonth, 1)) }}</option>
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sept</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                                @php
+                                    $now = Carbon::now();
+                                    if (isset($year_month)) {
+                                        $pickerYear = substr($year_month, 0, 4);
+                                    } else {
+                                        $pickerYear = $now->format('Y');
+                                    }
+                                        $nowYear = $now->format('Y');
+                                        $years = range(($nowYear), 2010);
+                                @endphp
+                                <select name="yearPicker" id="yearPicker" class="form-control sm:w-24 box pl-5">
+                                    <option value="{{ $pickerYear }}" selected>{{ $pickerYear }}</option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year }}">{{ $year }}</option>
+                                    @endforeach
+                                </select>
                                 <input id="user_id" value="{{ $user_info->id }}" hidden>
-                            </div> -->
+                                <button class="btn btn-primary w-20 ml-2" onclick="changeYearMonth()">Filter</button>
+                                <a class="btn btn-secondary w-20 ml-2" href="{{ route('dashboard', $user_info->id) }}">Reset</a>
+                            </div>
                             <input id="days" value="{{ $daysInMonth }}" hidden>
                             <input id="rowsByDay" value="{{ $sanitizedString }}" hidden>
                         </div>
@@ -627,21 +667,20 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const input = document.getElementById("datepicker");
+        function changeYearMonth() {
+            const year = document.getElementById("yearPicker");
+            const month = document.getElementById("monthPicker");
             const user = document.getElementById("user_id");
 
-            input.addEventListener("change", function() {
-                const selectedDate = input.value;
+            const selectedYear = year.value;
+            const selectedMonth = month.value;
 
-                const selectedMonth = selectedDate.substr(5, 2);
-                const selectedYear = selectedDate.substr(0, 4);
-
-                const year_month = selectedYear.toString() + selectedMonth.toString();
-                const user_id = user.value;
-                window.location.href = "/dashboard-ym/" + user_id + "/" + year_month;
-            });
-        });
+            const year_month = selectedYear.toString() + selectedMonth.toString();
+            const user_id = user.value;
+            console.log(year_month);
+            window.location.href = "/dashboard-ym/" + user_id + "/" + year_month;
+        };
     </script>
 @endsection
