@@ -402,9 +402,19 @@
                                             </div>
                                         </td>
                                         <td class="w-40">
-                                            <div class="flex items-center justify-center ">
+                                        @if ( $client_profile->status == 'Terminated' )
+                                            <div class="flex items-center justify-center whitespace-nowrap text-pending">
                                                 {{ $client_profile->status }}
                                             </div>
+                                        @elseif ( $client_profile->status == 'Expired' )
+                                            <div class="flex items-center justify-center whitespace-nowrap text-warning">
+                                                {{ $client_profile->status }}
+                                            </div>
+                                        @elseif ( $client_profile->status == 'Closed' )
+                                            <div class="flex items-center justify-center whitespace-nowrap text-danger">
+                                                {{ $client_profile->status }}
+                                            </div>
+                                        @endif
                                         </td>
                                         <td class="table-report__action w-400">
                                             <div class="flex justify-center items-center">
