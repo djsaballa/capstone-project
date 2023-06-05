@@ -175,17 +175,50 @@ class ClientController extends Controller
 
         if ($user_info->role_id == 2) {
             $update = ['locale_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
+            $zone_servant_id = User::where('district_id', $user_info->district_id)->where('role_id', '4')->pluck('id');
+            $zone_servant = User::find($zone_servant_id)->first();
+            $inbox_details = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $zone_servant->id,
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark'
+            ];
         } elseif ($user_info->role_id == 4) {
-            $update = ['zone_servant_remark' => $remark];
+            $update = ['zone_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
+            $district_servant_id = User::where('division_id', $user_info->division_id)->where('role_id', '5')->pluck('id');
+            $district_servant = User::find($district_servant_id)->first();
+            $inbox_details = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $district_servant->id,
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark'
+            ];
         } elseif ($user_info->role_id == 5) {
-            $update = ['district_servant_remark' => $remark];
+            $update = ['district_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
+            $social_worker_id = User::where('division_id', $user_info->division_id)->where('role_id', '6')->pluck('id');
+            $social_worker = User::find($social_worker_id)->first();
+            $inbox_details = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $social_worker->id,
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your recommendation'
+            ];
         } elseif ($user_info->role_id == 6) {
-            $update = ['social_worker_recommendation' => $remark];
+            $update = ['social_worker_recommendation' => ($user_info->getFullName($user_info->id).": ".$remark)];
+            $doc_coor_id = User::where('role_id', '8')->pluck('id');
+            $doc_coor = User::find($doc_coor_id)->first();
+            $inbox_details = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $doc_coor->id,
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for you to assign its Medical Category and Doctor-Specialist'
+            ];
         }
 
         $cp_update = $client_profile_info->update($update);
+        $create_inbox = Inbox::create($inbox_details);
 
-        if ($cp_update) {
+        if ($cp_update && $create_inbox) {
             $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
             $request->session()->flash('status', 'Remark has been successfully added!');
 
@@ -726,7 +759,6 @@ class ClientController extends Controller
             $action_taken_attachment = null;
         }
 
-
         $create_profile = [
             'picture' => $picture,
             'privacy_consent' => 1,
@@ -806,9 +838,23 @@ class ClientController extends Controller
                     ]);
                 }
             }
+            $locale_servant_id = User::where('locale_id', $user_id)->where('role_id', '2')->pluck('id');
+            $locale_servant = User::find($locale_servant_id)->first();
+            $inbox_details = [
+                'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
+                'sender_user_id' => $user_id,
+                'receiver_user_id' => $locale_servant->id,
+                'content' => 'A new client profile with the name '. $create->getFullName($create->id) .' has been created and is waiting for your remark'
+            ];
+            $create_inbox = Inbox::create($inbox_details);
 
-            $request->session()->flash('status', 'Client Profile has been created!');
-            return redirect()->route('list_of_client_profiles', $user_id);
+            if ($create_inbox) {
+                $request->session()->flash('status', 'Client Profile has been created!');
+                return redirect()->route('list_of_client_profiles', $user_id);
+            } else {
+                $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
+                return redirect()->route('list_of_client_profiles', $user_id);
+            }
         } else {
             $request->session()->flash('error', 'Something has gone wrong, please try again in a moment.');
             return redirect()->route('list_of_client_profiles', $user_id);

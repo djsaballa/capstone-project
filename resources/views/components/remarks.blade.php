@@ -30,7 +30,7 @@
                 <div class="mt-3">
                     <textarea class="form-control" name="remarks" row="10" placeholder="Type Remark Here"></textarea>
                 </div>
-                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5">
+                <div class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-1 mb-3">
                     <button class="btn btn-primary w-24 ml-2" type="submit">Add</button>
                 </div>
             </form>

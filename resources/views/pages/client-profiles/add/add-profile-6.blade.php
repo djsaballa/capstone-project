@@ -223,7 +223,7 @@
                                             @if ($old_input)
                                                 @php
                                                     $old_input_district = $districts->find( $old_input->district );
-                                                    $old_input_list_districts = $districts->where('division_id', $old_input_division->id);
+                                                    $old_input_list_districts = $districts->where('division_id', $old_input_division->division_id);
                                                 @endphp
                                                 <select id="district-filter-3" name="district" data-search="true"
                                                     class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )">
@@ -235,7 +235,7 @@
                                                 @if ( old('district') )
                                                     @php
                                                         $old_district = $districts->find( old('district') );
-                                                        $old_district_list_districts = $districts->where('division_id', $old_district->id);
+                                                        $old_district_list_districts = $districts->where('division_id', $old_district->division_id);
                                                     @endphp
                                                     <select id="district-filter-3" name="district" data-search="true"
                                                         class="w-full form-control" tabindex="-1" onchange="loadLocales3( {{ $locales_json }} )">
@@ -258,7 +258,7 @@
                                             @if ($old_input)
                                                 @php
                                                     $old_input_locale = $locales->find( $old_input->locale );
-                                                    $old_input_list_locales = $locales->where('district_id', $old_input_locale->id);
+                                                    $old_input_list_locales = $locales->where('district_id', $old_input_locale->district_id);
                                                 @endphp
                                                 <select id="locale-filter-3" name="locale" data-search="true"
                                                     class="w-full form-control" tabindex="-1">
@@ -270,7 +270,7 @@
                                                 @if ( old('locale') )
                                                     @php
                                                         $old_locale = $locales->find( old('locale') );
-                                                        $old_list_locales = $locales->where('district_id', $old_locale->id);
+                                                        $old_list_locales = $locales->where('district_id', $old_locale->district_id);
                                                     @endphp
                                                     <select id="locale-filter-3" name="locale" data-search="true"
                                                         class="w-full form-control" tabindex="-1">
@@ -298,7 +298,7 @@
                                     <div
                                         class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                         <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                            @if ($old_input)
+                                            @if ($old_input->picture)
                                                 @php
                                                     $picture = $old_input->picture;
                                                 @endphp
