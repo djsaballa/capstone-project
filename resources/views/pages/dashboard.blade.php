@@ -10,7 +10,7 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         General Report
                     </h2>
-                    <form action="{{route('generate_pdf') }}" method="get" target="__black" class="ml-auto flex">
+                    <form action="{{route('generate_pdf',[$user_info->id]) }}" method="get" target="__black" class="ml-auto flex">
                         @csrf
                     <button class="btn btn-primary shadow-md ml-auto flex items-center ">
                         <i class="w-4 h-4 mr-2" data-lucide="file"></i> Generate Monthly Report

@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     // DASHBOARD
     Route::get('/dashboard/{user_id}', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard-ym/{user_id}/{year_month}', [UserController::class, 'dashboardYM'])->name('dashboard_ym');
-    Route::get('/generate-pdf}', [ReportController::class, 'generatePDF'])->name('generate_pdf');
+    Route::get('/generate-pdf/{user_id}', [ReportController::class, 'generatePDF'])->name('generate_pdf');
 
     // INBOX
     Route::get('/inbox/{user_id}', [UserController::class, 'inbox'])->name('inbox');
