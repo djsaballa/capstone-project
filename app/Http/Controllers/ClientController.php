@@ -838,7 +838,7 @@ class ClientController extends Controller
                     ]);
                 }
             }
-            $locale_servant_id = User::where('locale_id', $user_id)->where('role_id', '2')->pluck('id');
+            $locale_servant_id = User::where('locale_id', $create->locale_id)->where('role_id', '2')->pluck('id');
             $locale_servant = User::find($locale_servant_id)->first();
             $inbox_details = [
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
