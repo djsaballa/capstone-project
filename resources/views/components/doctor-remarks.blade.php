@@ -33,7 +33,7 @@
       @if ($user_info->role_id == 8 || $user_info->role_id == 10 || $user_info->role_id == 11)
         <select class="form-select" name="medicalCategory" aria-label="Default select example">
           @if ($client_profile_info->medical_category_id == null)
-            <option selected disabled>Assign a Doctor</option>
+            <option selected disabled>Assign a Medical Category</option>
           @else
             <option value="{{ $client_profile_info->medical_category_id }}" selected>{{ $client_profile_info->getMedicalCategoryName($client_profile_info->medical_category_id) }}</option>
           @endif

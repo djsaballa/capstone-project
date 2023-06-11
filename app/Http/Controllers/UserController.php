@@ -528,17 +528,21 @@ class UserController extends Controller
         ]);
 
         $user_id = $request->userId;
+        $receiver = User::find($request->receiver);
 
         $inbox_add = [
             'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
             'sender_user_id' => $user_id,
-            'receiver_user_id' => $request->receiver,
+            'receiver_user_id' => $receiver->id,
             'content' => $request->content
         ];
 
         $create = Inbox::create($inbox_add);
 
         if ($create) {
+            $sempahore = new SemaphoreController();
+            $sempahore->sendSms($receiver->contact_number, 'You have received an inbox message.');
+
             $request->session()->flash('status', 'Message has been sent!');
             
             return redirect()->route('inbox', [$user_id]);

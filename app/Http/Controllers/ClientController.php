@@ -129,6 +129,8 @@ class ClientController extends Controller
         $cp_update = $client_profile_info->update($update);
 
         if ($cp_update) {
+            $assigned_doctor = User::find($request->assignDoctor);
+
             $medical_category = MedicalCategory::find($request->medicalCategory);
             $medical_category_name = $medical_category->medical_category;
             $content =
@@ -142,12 +144,15 @@ class ClientController extends Controller
             $inbox_add = [
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
-                'receiver_user_id' => $request->assignDoctor,
+                'receiver_user_id' => $assigned_doctor->id,
                 'content' => $content
             ];
             $create = Inbox::create($inbox_add);
 
             if ($create) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($assigned_doctor->contact_number, 'You have been assigned a Client Profile.');
+
                 $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
                 $request->session()->flash('status', 'Doctor and Medical Category have been successfully saved!');
     
@@ -181,7 +186,7 @@ class ClientController extends Controller
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
                 'receiver_user_id' => $zone_servant->id,
-                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark'
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark.'
             ];
         } elseif ($user_info->role_id == 4) {
             $update = ['zone_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
@@ -191,7 +196,7 @@ class ClientController extends Controller
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
                 'receiver_user_id' => $district_servant->id,
-                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark'
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark.'
             ];
         } elseif ($user_info->role_id == 5) {
             $update = ['district_servant_remark' => ($user_info->getFullName($user_info->id).": ".$remark)];
@@ -201,7 +206,7 @@ class ClientController extends Controller
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
                 'receiver_user_id' => $social_worker->id,
-                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your recommendation'
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your recommendation.'
             ];
         } elseif ($user_info->role_id == 6) {
             $update = ['social_worker_recommendation' => ($user_info->getFullName($user_info->id).": ".$remark)];
@@ -211,7 +216,7 @@ class ClientController extends Controller
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
                 'receiver_user_id' => $doc_coor->id,
-                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for you to assign its Medical Category and Doctor-Specialist'
+                'content' => 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for you to assign its Medical Category and Doctor-Specialist.'
             ];
         }
 
@@ -219,6 +224,20 @@ class ClientController extends Controller
         $create_inbox = Inbox::create($inbox_details);
 
         if ($cp_update && $create_inbox) {
+            if ($user_info->role_id == 2) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($zone_servant->contact_number, 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark.');
+            } elseif ($user_info->role_id == 4) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($district_servant->contact_number, 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your remark.');
+            } elseif ($user_info->role_id == 5) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($social_worker->contact_number, 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for your recommendation.');
+            } elseif ($user_info->role_id == 6) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($doc_coor->contact_number, 'A client profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .' is waiting for you to assign its Medical Category and Doctor-Specialist.');
+            }
+
             $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
             $request->session()->flash('status', 'Remark has been successfully added!');
 
@@ -844,11 +863,14 @@ class ClientController extends Controller
                 'date_sent' => Carbon::now()->format('Y/m/d H:i:s'),
                 'sender_user_id' => $user_id,
                 'receiver_user_id' => $locale_servant->id,
-                'content' => 'A new client profile with the name '. $create->getFullName($create->id) .' has been created and is waiting for your remark'
+                'content' => 'A new client profile with the name '. $create->getFullName($create->id) .' has been created and is waiting for your remark.'
             ];
             $create_inbox = Inbox::create($inbox_details);
 
             if ($create_inbox) {
+                $sempahore = new SemaphoreController();
+                $sempahore->sendSms($locale_servant->contact_number, 'A new client profile with the name '. $create->getFullName($create->id) .' has been created and is waiting for your remark.');
+    
                 $request->session()->flash('status', 'Client Profile has been created!');
                 return redirect()->route('list_of_client_profiles', $user_id);
             } else {
@@ -1470,8 +1492,6 @@ class ClientController extends Controller
     
                 $create = History::create($audit_log);
                 if ($create) {
-                    // $sempahore = new SemaphoreController();
-                    // $response = $sempahore->sendSms('09150913370', 'Etoh yung sms skl hahhaha');
                     session()->flash('status', 'Client Profile has been successfully archived.');
                     return redirect()->route('list_of_client_profiles', $user_id);
                 }
