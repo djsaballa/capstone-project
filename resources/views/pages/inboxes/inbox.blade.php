@@ -6,25 +6,24 @@
             Inbox
         </h2>
         <div class="col-span-12">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @if (Session::has('error'))
-            <div class="modal-body p-0">
-                <div class="p-5 text-center">
-                    <i data-lucide="x-circle" class="w-10 h-10 text-danger mx-auto mt-3"></i>
-                    <div class="modal-body text-danger">
-                        {{ Session::get('error') }}
-                    </div>
-                </div>
+            <div class="alert alert-danger">
+                <p>{{ Session::get('error') }}</p>
             </div>
         @endif
         @if (Session::has('status'))
-        <div class="modal-body p-0">
-            <div class="p-5 text-center">
-                <i data-lucide="check-circle-2" class="w-10 h-10 text-success mx-auto mt-3"></i>
-                <div class="modal-body text-success">
-                    {{ Session::get('status') }}
-                </div>
+            <div class="alert alert-success text-center text-white">
+                <p>{{ Session::get('status') }}</p>
             </div>
-        </div>
         @endif
             <!-- BEGIN: Modal Toggle -->
             <div class="text-end"> <a href="javascript:;" data-tw-toggle="modal"
