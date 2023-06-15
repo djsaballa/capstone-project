@@ -60,6 +60,9 @@ class ClientProfileSeeder extends Seeder
                     "locale_id" => $data['29'],
                     "assigned_doctor_id" => $data['30'],
                     "medical_category_id" => $data31,
+                    "created_at" => $data['32'],
+                    "updated_at" => $data['33'],
+
                 ]);
             }
             $firstline = false;
