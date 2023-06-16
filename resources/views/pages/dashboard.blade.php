@@ -13,7 +13,7 @@
                     <form action="{{route('generate_pdf',[$user_info->id]) }}" method="get" target="__black" class="ml-auto flex">
                         @csrf
                         <button class="btn btn-primary shadow-md ml-auto flex items-center ">
-                            <i class="w-4 h-4 mr-2" data-lucide="file"></i> Generate Monthly Report
+                            <i class="w-4 h-4 mr-2" data-lucide="file"></i> Comprehensive Report
                         </button>
                     </form>
                 </div>
