@@ -130,6 +130,16 @@ class ClientProfile extends Model
         return $assigned_doctor_info;
     }
 
+    public static function getAssignedDoctorName($assigned_doctor_id)
+    {
+        $assigned_doctor_info = User::find($assigned_doctor_id);
+        $firstName = $assigned_doctor_info->first_name;
+        $middleName = $assigned_doctor_info->middle_name;
+        $lastName = $assigned_doctor_info->last_name;
+        
+        return $firstName . " " . $middleName . " " . $lastName;
+    }
+
     public function getMedicalCategoryName($medical_category_id)
     {
         $medical_category = MedicalCategory::find($medical_category_id);

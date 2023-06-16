@@ -75,4 +75,12 @@ class MedicalCondition extends Model
 
         return $medical_operations;
     }
+
+    public function getDiseaseName($disease_id)
+    {
+        $disease_info = Disease::find($disease_id);
+        $disease = $disease_info->disease;
+
+        return $disease;
+    }
 }
