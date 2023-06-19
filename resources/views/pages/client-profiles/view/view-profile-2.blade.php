@@ -89,9 +89,8 @@
                             </h2>
                         </div>
                         <div class="m-3">
-                            <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (KALAGAYAN NG
-                                PASYENTE,
-                                PAMILYA, FINANSYAL, EMOSYONAL, PHYSICAL)</label>
+                            <label for="update-profile-form-5" class="form-label">BACKGROUND INFO (Patient's condition
+                                Family situation, Financial status, Emotional well-being, Physical health)</label>
                             <textarea id="update-profile-form-5" class="form-control" value="Input text here" disabled>{{ $client_profile_info->background_info }}</textarea>
                         </div>
                         <label for="update-profile-form-5" class="form-label font-medium m-3 mt-2">File Uploaded: </label>

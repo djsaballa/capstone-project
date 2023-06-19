@@ -205,11 +205,11 @@
                         <table class="table">
                             <thead class="table-dark">
                                 <tr class="bg-primary">
-                                    <th scope="col">Ano Sakit?</th>
-                                    <th scope="col">Kailan Pa?</th>
-                                    <th scope="col">Gamot na Iniinom?</th>
+                                    <th scope="col">Illness?</th>
+                                    <th scope="col">When did it start?</th>
+                                    <th scope="col">What medication are you taking?</th>
                                     <th scope="col">Dosage?</th>
-                                    <th scope="col">Gaano Kadalas Inumin?</th>
+                                    <th scope="col">How Frequent?</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -240,8 +240,8 @@
                             <table class="table">
                                 <thead class="table-dark">
                                     <tr class="bg-primary">
-                                        <th scope="col">Naging Operasyon</th>
-                                        <th scope="col">Petsa</th>
+                                        <th scope="col">What operations/surgeries have you had?</th>
+                                        <th scope="col">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
