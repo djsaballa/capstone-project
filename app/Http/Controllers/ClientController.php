@@ -151,7 +151,7 @@ class ClientController extends Controller
 
             if ($create) {
                 $sempahore = new SemaphoreController();
-                $sempahore->sendSms($assigned_doctor->contact_number, 'You have been assigned a Client Profile.');
+                $sempahore->sendSms($assigned_doctor->contact_number, 'You have been assigned a Client Profile with the name '. $client_profile_info->getFullName($client_profile_info->id) .'.');
 
                 $previous_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
                 $request->session()->flash('status', 'Doctor and Medical Category have been successfully saved!');
