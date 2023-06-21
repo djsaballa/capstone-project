@@ -133,7 +133,7 @@
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label"
-                                            id="update-profile-form-3-ts-label">Gender</label>
+                                            id="update-profile-form-3-ts-label">Sex</label>
                                         <select id="gender" name="gender" data-search="true"
                                             class="tom-select w-full tomselected" tabindex="-1" hidden="hidden">
                                             @if ($old_input)

@@ -367,7 +367,7 @@
                                 <tr>
                                     <th class="whitespace-nowrap"> </th>
                                     <th class="whitespace-nowrap">CLIENT'S NAME</th>
-                                    <th class="text-center whitespace-nowrap">GENDER</th>
+                                    <th class="text-center whitespace-nowrap">SEX</th>
                                     <th class="text-center whitespace-nowrap">CONTACT NUMBER</th>
                                     <th class="text-center whitespace-nowrap">LOCALE</th>
                                     <th class="text-center whitespace-nowrap">STATUS</th>

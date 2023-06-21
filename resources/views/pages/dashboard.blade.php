@@ -530,7 +530,7 @@
                     <div class="col-span-12 lg:col-span-6 mt-8">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Profiles by Gender & Age Group
+                                Profiles by Sex & Age Group
                             </h2>
                         </div>
                         <input id="dataM1" value="{{ $dataM1 }}" hidden>
@@ -579,7 +579,7 @@
                     <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                         <div class="intro-y flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
-                                Profiles by Gender
+                                Profiles by Sex
                             </h2>
                         </div>
                         <div class="intro-y box p-5 mt-5">

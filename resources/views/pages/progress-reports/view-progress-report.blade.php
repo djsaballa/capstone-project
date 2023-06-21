@@ -45,7 +45,7 @@
                                             <div class="mt-3 ">
                                                 <label for="update-profile-form-3-tomselected"
                                                     class="form-label font-medium"
-                                                    id="update-profile-form-3-ts-label">Gender:</label>
+                                                    id="update-profile-form-3-ts-label">Sex:</label>
                                                 <span class="ml-3">{{ $client_profile_info->gender }}</span>
                                             </div>
                                             <div class="mt-3 ">

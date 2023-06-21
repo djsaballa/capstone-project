@@ -61,7 +61,7 @@
                 <p>NAME:</p>
                 <p>ADDRESS:</p>
                 <p>AGE:</p>
-                <p>GENDER:</p>
+                <p>SEX:</p>
                 <p>BIRTHDATE:</p>
                 <p>OCCUPATION:</p>
                 <p>HEIGHT:</p>

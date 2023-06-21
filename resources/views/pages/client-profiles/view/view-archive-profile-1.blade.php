@@ -67,7 +67,7 @@
                                 <div class="col-span-6 2xl:col-span-3">
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-3-tomselected" class="form-label font-medium"
-                                            id="update-profile-form-3-ts-label">Gender:</label><span class="ml-3">{{ $client_profile_info->gender }}</span>
+                                            id="update-profile-form-3-ts-label">Sex:</label><span class="ml-3">{{ $client_profile_info->gender }}</span>
                                     </div>
                                     <div class="mt-3 ">
                                         <label for="update-profile-form-4" class="form-label font-medium">Age:</label><span class="ml-3">{{ $client_profile_info->age }}</span>
