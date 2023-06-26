@@ -10,12 +10,14 @@
                     <h2 class="text-lg font-medium truncate mr-5">
                         General Report
                     </h2>
-                    <form action="{{route('generate_pdf',[$user_info->id]) }}" method="get" target="__black" class="ml-auto flex">
-                        @csrf
-                        <button class="btn btn-primary shadow-md ml-auto flex items-center ">
-                            <i class="w-4 h-4 mr-2" data-lucide="file"></i> Comprehensive Report
-                        </button>
-                    </form>
+                    @if ($user_info->role_id == 1 || $user_info->role_id == 6 || $user_info->role_id == 10 || $user_info->role_id == 11)
+                        <form action="{{route('generate_pdf',[$user_info->id]) }}" method="get" target="__black" class="ml-auto flex">
+                            @csrf
+                            <button class="btn btn-primary shadow-md ml-auto flex items-center ">
+                                <i class="w-4 h-4 mr-2" data-lucide="file"></i> Comprehensive Report
+                            </button>
+                        </form>
+                    @endif
                 </div>
                 @php
                     use Carbon\Carbon;
