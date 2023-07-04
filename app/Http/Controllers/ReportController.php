@@ -40,13 +40,14 @@ class ReportController extends Controller
 
         return $pdf->stream('ADDFI SSIS.pdf');
     }
+
     public function generatePDF($user_id)
     {
         $user_info = User::find($user_id);
         $client_profiles = ClientProfile::all()->take(100);
         $medical_conditions = MedicalCondition::all();
         $date = Carbon::now()->format("M. d, Y");
-        
+    
         $data = compact('user_info', 'client_profiles', 'date', 'medical_conditions');
 
         $pdf = PDF::loadView('pdf.pdf-generate-report', $data);
