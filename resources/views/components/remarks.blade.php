@@ -7,20 +7,20 @@
     @if (preg_match('(client_profile)', $current_route))
         <div class="mt-3">
             <h2 class="text-lg font-medium truncate mr-5"> REMARKS</h2>
-            <textarea class="form-control" id="FormControlTextarea1" rows="25" disabled>
-                @if ($client_profile_info->locale_servant_remark)
-                {{ $client_profile_info->locale_servant_remark }}
-                @endif
-                @if ($client_profile_info->zone_servant_remark)
-                {{ $client_profile_info->zone_servant_remark }}
-                @endif
-                @if ($client_profile_info->district_servant_remark)
-                {{ $client_profile_info->district_servant_remark }}
-                @endif
-                @if ($client_profile_info->social_worker_recommendation)
-                {{ $client_profile_info->social_worker_recommendation }}
-                @endif
-            </textarea>
+            <div class="box bg-secondary">
+                <div class="intro-y p-3">
+                    @if ($client_profile_info->locale_servant_remark){{ $client_profile_info->locale_servant_remark }}@endif
+                </div>
+                <div class="intro-y p-3">
+                    @if ($client_profile_info->zone_servant_remark){{ $client_profile_info->zone_servant_remark }}@endif
+                </div>
+                <div class="intro-y p-3">
+                    @if ($client_profile_info->district_servant_remark){{ $client_profile_info->district_servant_remark }}@endif
+                </div>
+                <div class="intro-y p-3">
+                    @if ($client_profile_info->social_worker_recommendation){{ $client_profile_info->social_worker_recommendation }}@endif
+                </div>
+            </div>
         </div>
         @if ($user_info->role_id == 2 || $user_info->role_id == 4 || $user_info->role_id == 5 || $user_info->role_id == 6)
             <form action="{{ route('add_remark') }}" method="POST">
